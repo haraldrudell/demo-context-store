@@ -12,16 +12,18 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
   throw new Error('Production builds must have NODE_ENV=production.');
 }
 
+const contexts = {
+  [path.join(require.resolve('adbkit'), '..')]: './src/',
+  [path.join(require.resolve('adbkit-monkey'), '..')]: './src',
+  [path.join(require.resolve('adbkit-logcat'), '..')]: './src',
+}
+
 export default {
   bail: true,
   devtool: 'source-map',
   entry: {[paths.entryName]: paths.appIndexJs},
   output: {
     path: paths.appBuild,
-    /*devtoolModuleFilenameTemplate: info =>
-      path
-        .relative(paths.appSrc, info.absoluteResourcePath)
-        .replace(/\\/g, '/'),*/
   },
   target: 'node',
   resolve: {
@@ -33,6 +35,12 @@ export default {
       new ModuleScopePlugin(paths.appSrc),
     ],
   },
+  externals: [(context, request, callback) => {
+    const requestStart = contexts[context]
+    if (requestStart && request.startsWith(requestStart))
+      callback(null, request, 'commonjs')
+    else callback()
+  }],
   module: {
     strictExportPresence: true,
     rules: [
@@ -57,9 +65,11 @@ export default {
           babelrc: false,
           compact: false,
           presets: [
-            ['env', {targets:{node: 'current'}}],
-            'stage-2',
+            'node8',
           ],
+//          plugins: [
+//            'transform-remove-strict-mode',
+//          ],
         },
       },
     ],
