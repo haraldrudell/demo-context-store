@@ -7,6 +7,7 @@ const UPDATE_LAUNCHCOMPLETE = 4
 export default class AsyncModerator {
   constructor(concurrent) {
     this.concurrent = concurrent
+    this.t0 = Date.now()
     const o = {}
     this.promise = new Promise((resolve, reject) => {
       o.resolve = resolve
@@ -98,7 +99,7 @@ export default class AsyncModerator {
       default: throw new Error(`update bad operator: ${Number(v)}`)
     }
 
-    let s = `  total: ${this.foundTasks}${this.launchComplete ? '' : '…'} completed: ${this.completedTasks} remaining: ${this.foundTasks - this.completedTasks}`
+    let s = `  ${this.getElapsed(Date.now())} total: ${this.foundTasks}${this.launchComplete ? '' : '…'} completed: ${this.completedTasks} remaining: ${this.foundTasks - this.completedTasks}`
 
     const sLength = s.length
     const spaces = this.sLength - sLength
@@ -112,5 +113,26 @@ export default class AsyncModerator {
       console.log()
       this.promise.resolve()
     }
+  }
+
+  getElapsed(t1) {
+    let result = ''
+    let seconds = Math.floor((t1 - this.t0) / 1e3)
+
+    const hourInSeconds = 3600
+    if (seconds >= hourInSeconds) {
+      const hours = Math.floor(seconds / hourInSeconds)
+      result += `${hours}:`
+      seconds = seconds % hourInSeconds
+    }
+
+    const minuteInSeconds = 60
+    const minutes = Math.floor(seconds / minuteInSeconds)
+    result += `${minutes < 10 ? '0' + minutes : minutes}:`
+
+    seconds = seconds % 60
+    result += `${seconds < 10 ? '0' + seconds : seconds}`
+
+    return result
   }
 }
