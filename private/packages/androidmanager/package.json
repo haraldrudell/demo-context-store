@@ -1,0 +1,54 @@
+{
+  "name": "androidmanager",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "start": "./node_modules/.bin/babel-node src",
+    "build": "./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/babel-node config/Build",
+    "clean": "./node_modules/.bin/babel-node config/Clean",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "singleFile": {
+    "name": "androidmanager",
+    "entry": "run"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets:": {
+            "node": "current"
+          }
+        }
+      ],
+      "stage-2"
+    ]
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "rules": {
+      "strict": 0
+    }
+  },
+  "dependencies": {
+    "adbkit": "^2.10.0",
+    "fs-extra": "^4.0.1",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "cross-env": "^5.0.4",
+    "eslint": "^4.4.1",
+    "eslint-loader": "^1.9.0",
+    "react-dev-utils": "^3.0.2",
+    "webpack": "^3.4.1"
+  }
+}
