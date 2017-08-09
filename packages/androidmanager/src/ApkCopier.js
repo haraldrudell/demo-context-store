@@ -10,6 +10,7 @@ export default class ApkCopier extends ApkReader {
   constructor(o) {
     super(o)
     this.directory = o.directory
+    this.apkCopierResult = o.apkCopierResult
   }
 
   async next() {
@@ -40,12 +41,17 @@ export default class ApkCopier extends ApkReader {
         .once('end', () => resolve(hash.digest('hex')))
     })
 
-    const socket = await this.client.shell(this.serialNumber, `dumpsys package ${apk.packageName} | sed -n '${'s/^ *versionName=\\(.*\\)$/\\1/p'}'`)
+    const cmd = `dumpsys package ${apk.packageName} | grep -e '^ *versionName=' | head -1`
+    const socket = await this.client.shell(this.serialNumber, cmd)
     const version = await new Promise((resolve, reject) => {
       let version = ''
       socket
         .on('data', s => version += s)
-        .once('end', () => resolve(version))
+        .once('end', () => {
+          const i = version.indexOf('=')
+          if (!~i) reject(new Error(`Android command failed: ${cmd}`))
+          else resolve(version.substring(i + 1).replace(/[^\x20-\x7E]+/g, ''))
+        })
         .on('error', reject)
         .setEncoding('utf8')
     })
@@ -53,9 +59,26 @@ export default class ApkCopier extends ApkReader {
     const outfile = `${apk.packageName}${version ? '-' + version : ''}-${digest}.apk`
     const absPath = path.join(this.directory, outfile)
 
-    const v = await fs.pathExists(absPath).then(v => true, e => false)
-    if (!v) console.log(`\nwriting: ${absPath}\n`)
-    if (!v) await fs.move(tempfile, absPath)
+    const exists = await fs.pathExists(absPath)
+
+    if (!exists) console.log(`\nwriting: ${absPath}`)
+
+    if (!exists) await fs.move(tempfile, absPath)
     else await fs.remove(tempfile)
+
+    const result = this.apkCopierResult
+
+    if (isNaN(result.packageCount)) result.packageCount = 1
+    else result.packageCount++
+
+    if (isNaN(result.newCount)) result.newCount = 0
+    if (!exists) result.newCount++
+
+    if (!Array.isArray(result.packages)) result.packages = []
+    result.packages.push({
+      packageName: apk.packageName,
+      version,
+      sha256: digest,
+    })
   }
 }

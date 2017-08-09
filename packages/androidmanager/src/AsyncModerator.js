@@ -29,7 +29,6 @@ export default class AsyncModerator {
   // iterators become tasks
 
   addAsyncIterator(i) {
-console.log('addAsyncIterator', i)
     this.iterators.push(i)
     this._launchEverything()
   }
@@ -51,7 +50,6 @@ console.log('addAsyncIterator', i)
     while (this._haveSlots() && iterators.length) {
       const iterator = iterators[0]
       const i = await iterator.next()
-console.log('_launchIteratorItems', i.value)
       if (i.value) {
         this._update(UPDATE_FOUNDTASK)
         this._launchTask(i.value)
