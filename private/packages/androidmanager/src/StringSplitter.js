@@ -17,18 +17,13 @@ export default class StringSplitter {
     const regExp = o.regExp || /\r?\n|\r(?!\n)/
     if (!(regExp instanceof RegExp)) throw new Error('StringSplitter: regExp not instance of RegExp')
     this.regExp = regExp
-    console.log('StringSplitter constructor fetcher:', this.fetcher, 'splitterList:', this.splitterList, 'regExp:', this.regExp, 'maxPatternLength:', this.maxPatternLength)
   }
 
   async getLine() { // string or false on EOF
     let resolveList = this.getLineList
     if (!resolveList) resolveList = this.getLineList = []
-    else {
-      console.log('StringSplitter.getLineWait')
-      await new Promise(resolve => this.getLineList.push(resolve))
-      console.log('StringSplitter.getLineWaitEnd')
-    }
-    console.log('StringSplitter.getLine')
+    else await new Promise(resolve => this.getLineList.push(resolve))
+
     let s = this.s
 
     // ensure we have data and not invoked after EOF
@@ -48,12 +43,10 @@ export default class StringSplitter {
         if (s1) s += s1
         else break
       }
-      console.log(`characters: ${s.length} isEnd: ${!!this.isEnd}`)
 
       // if we found a previous EOL, skip it
       if (this.skipMatch) {
         this.skipMatch = false
-        console.log('skipM', s.length, s.charCodeAt(0))
         const matchedString = this.splitterList.some(splitter => {
           if (s.startsWith(splitter)) {
             s = s.substring(splitter.length)
@@ -92,8 +85,6 @@ export default class StringSplitter {
       readMore = true
     }
 
-    console.log('getLine result:', result, result.length, this.isEnd)
-
     if (this.getLineList.length) {
       this.getLineList.shift()()
     } else this.getLineList = null
@@ -122,7 +113,6 @@ export default class StringSplitter {
       }
     }
 
-    console.log(`StringSplitter._invokeFetcher '${result}' isEnd: ${!!this.isEnd}`)
     return result
   }
 }
