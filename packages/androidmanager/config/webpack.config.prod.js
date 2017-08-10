@@ -5,6 +5,7 @@ import path from 'path'
 import webpack from 'webpack'
 import eslintFormatter from 'react-dev-utils/eslintFormatter'
 import ModuleScopePlugin from 'react-dev-utils/ModuleScopePlugin'
+import fs from 'fs'
 
 const env = getClientEnvironment('')
 
@@ -67,14 +68,23 @@ export default {
           presets: [
             'node8',
           ],
-//          plugins: [
-//            'transform-remove-strict-mode',
-//          ],
         },
       },
     ],
   },
   plugins: [
+    function() {
+      this.plugin('done', () => {
+        try {
+          fs.mkdirSync('./bin')
+        } catch (e) {}
+        const s = fs.createWriteStream('bin/androidmanager')
+        s.write('#!/usr/bin/env node\n', e => {
+          fs.createReadStream('build/androidmanager.js').pipe(s)
+            .on('finish', () => fs.chmodSync('bin/androidmanager', '755'))
+        })
+      })
+    },
     new webpack.DefinePlugin(env.stringified),
   ],
 }
