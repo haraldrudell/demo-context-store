@@ -48,7 +48,7 @@ export default class ApkCopier extends ApkReader {
 
   async writeSummary() {
     const r = this.apkCopierResult
-    console.log(`${this.adb.name}: packages: ${r.packageCount} new: ${r.newCount}`)
+    console.log(`\n${this.adb.name}: packages: ${r.packageCount} new: ${r.newCount}`)
     if (r.newCount) await this.savePackageList()
   }
 

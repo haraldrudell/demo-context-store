@@ -37,15 +37,12 @@ export default class AdbShim {
 
   async shellOneLine(cmd) {
     const output = await this.shell(cmd)
-    if (output.includes('\n')) throw new Error(`Expected one-line result: ${cmd} '${output}`)
+    if (output.includes('\n')) throw new Error(`AdbShim.shellOneLine ${this.name} Expected one-line result: ${cmd} '${output}`)
     return output
   }
 
   async shell(cmd) {
-    const socket = await this.client.shell(this.serial, cmd).catch(e => {
-      console.error(`AdbShim.shell ${this.name} '${cmd}'`)
-      throw e
-    })
+    const socket = await this.shellSocket(cmd)
     return new Promise((resolve, reject) => {
       let output = ''
       socket
@@ -57,11 +54,19 @@ export default class AdbShim {
         })
         .on('error', reject)
         .setEncoding('utf8')
+    }).catch(e => {
+      console.error(`AdbShim.shell ${this.name} streaming '${cmd}'`)
+      throw e
     })
   }
 
+  getErrorHandler = message => e => {
+    console.error(message)
+    throw e
+  }
+
   shellSocket = async (cmd) =>
-    await this.client.shell(this.serial, cmd).catch(e => {
+    this.client.shell(this.serial, cmd).catch(e => {
       console.error(`AdbShim.shellSocket ${this.name} '${cmd}'`)
       throw e
     })
@@ -85,14 +90,15 @@ export default class AdbShim {
   }
 
   async _pull(from, to) {
-    const pullTransfer = await this.client.pull(this.serial, from)
+    const eh = this.getErrorHandler(`AdbShim.pull ${this.name} ${from}`)
+    const pullTransfer = await this.client.pull(this.serial, from).catch(eh)
     return new Promise((resolve, reject) =>
       pullTransfer
         .on('error', reject)
         .pipe(fs.createWriteStream(to))
         .on('error', reject)
         .once('finish', resolve)
-    )
+    ).catch(eh)
   }
 
   async hash(file, algorithm) {
@@ -102,11 +108,15 @@ export default class AdbShim {
         .on('data', d => hash.update(d))
         .on('error', reject)
         .once('end', () => resolve(hash.digest('hex')))
+    }).catch(e => {
+      console.error(`AdbShim.hash ${file}`)
+      throw e
     })
   }
 
   async getPackageVersion(packageName) {
     const output = await this.shell(`dumpsys package ${packageName} | grep -e '^ *versionName='`)
+      .catch(e => {console.error(`AdbShim.getPackageVersion ${this.name}`); throw e})
 
     const version = output.split('\n').reduce((accumulate, line) => {
       if (!accumulate) {
@@ -122,16 +132,19 @@ export default class AdbShim {
   async getDeviceName(save) {
     const marker = 'hostname.'
     const pattern = `/sdcard/Safe/${marker}*`
-    const cmd = `ls ${pattern}`
+    const errorMarker = 'ERROR'
+    const cmd = `ls ${pattern} || echo ${errorMarker}`
 
-    const output = await this.shellOneLine(cmd)
+    const output = await this.shell(cmd)
+      .catch(e => {console.error(`AdbShim.getDeviceName ${this.name}`); throw e})
     const i = output.indexOf(marker)
-    if (!~i) throw new Error(`Android device ${this.name} has no file ${pattern}`)
+    if (output.endsWith(errorMarker) || output.includes('\n') || !~i)
+      throw new Error(`AdbShim.getDeviceName device ${this.name} has not been named in ${pattern}`)
 
     const deviceName = output.substring(i + 9)
-    if (!deviceName) throw new Error(`No device name for serial ${this.name}`)
+    if (!deviceName) throw new Error(`AdbShim.getDeviceName No device name for serial ${this.name}`)
     if (save) this.name = this.deviceName = deviceName
 
-      return deviceName
+    return deviceName
   }
 }
