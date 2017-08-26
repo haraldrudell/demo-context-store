@@ -1,3 +1,7 @@
+/*
+© 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
+*/
 const UPDATE_RESET = 0
 const UPDATE_FOUNDTASK = 1
 const UPDATE_LAUNCHTASK = 2

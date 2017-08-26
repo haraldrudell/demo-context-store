@@ -40,7 +40,7 @@ export default class AndroidManager {
   }
 
   errorHandler = e => {
-    console.error('\nAndroidManager.errorHandler')
+    console.error('\nAndroidManager.errorHandler invoked:')
     console.error(e)
     console.error(new Error('errorHandler invocation'))
     process.exit(1)
