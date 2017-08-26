@@ -1,3 +1,7 @@
+/*
+© 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
+*/
 import adb from 'adbkit'
 import fs from 'fs'
 import crypto from 'crypto'
@@ -72,10 +76,34 @@ export default class AdbShim {
     })
 
   async md5sumFar(remoteFile) {
-    const s = await this.shell(`md5sum ${remoteFile}`)
+    const md5cmd = this.md5sumCmd || await (this.md5sumPromise || (this.md5sumPromise = this.findMd5sum()))
+    const cmd = `${md5cmd} ${remoteFile}`
+    const s = await this.shell(cmd)
     const md5 = s.substring(0, s.indexOf(' '))
-    if (md5.length !== 32 || md5.replace(/[0-9a-f]/g, '').length) throw new Error(`remote md5 failed for ${remoteFile} md5: ${md5}`)
+    if (md5.length !== 32 || md5.replace(/[0-9a-f]/g, '').length) throw new Error(`AdbShim.md5sumFar failed: ${this.name} command: '${cmd}' output: '${s}' parsed md5: '${md5}'`)
     return md5
+  }
+
+  static md5empty = 'd41d8cd98f00b204e9800998ecf8427e'
+  static md5cmds = ['md5sum', '/data/hq/bin/md5sum']
+  async findMd5sum() {
+    let success
+    let cmd
+    let message
+    for (let aCmd of AdbShim.md5cmds) {
+      const shellCmd = `${aCmd}  </dev/null`
+      const md5 = await this.shell(shellCmd) // is md5sum or error message
+      if ((success = md5.startsWith(AdbShim.md5empty))) {
+        cmd = aCmd
+        break
+      }
+      if (!cmd) {
+        cmd = aCmd
+        message = md5
+      }
+    }
+    if (!success) throw new Error(`AdbShim.findMd5sum ${this.name} failed: ${cmd} output: ${message}`)
+    return (this.md5sumCmd = cmd)
   }
 
   async pull(from, to) {
@@ -86,11 +114,11 @@ export default class AdbShim {
     const md5far = results[0]
     const md5near = await this.hash(to, 'md5')
     if (md5far !== md5near)
-      throw new Error(`md5 mismatch:\n${md5far} android: ${from}\n${md5near} ${to}`)
+      throw new Error(`AdbShim.pull md5 mismatch:\n${md5far} android: ${from}\n${md5near} ${to}`)
   }
 
   async _pull(from, to) {
-    const eh = this.getErrorHandler(`AdbShim.pull ${this.name} ${from}`)
+    const eh = this.getErrorHandler(`AdbShim.pull failed: ${this.name} ${from}`)
     const pullTransfer = await this.client.pull(this.serial, from).catch(eh)
     return new Promise((resolve, reject) =>
       pullTransfer
@@ -116,7 +144,7 @@ export default class AdbShim {
 
   async getPackageVersion(packageName) {
     const output = await this.shell(`dumpsys package ${packageName} | grep -e '^ *versionName='`)
-      .catch(e => {console.error(`AdbShim.getPackageVersion ${this.name}`); throw e})
+      .catch(e => {console.error(`AdbShim.getPackageVersion ${this.name} package: '${packageName}'`); throw e})
 
     const version = output.split('\n').reduce((accumulate, line) => {
       if (!accumulate) {
@@ -124,7 +152,7 @@ export default class AdbShim {
         return line.substring(i + 1).trim().replace(/[^\x20-\x7E]+/g, '')
       } else return accumulate
     }, '')
-    if (!version) throw new Error(`AdbShim.getPackageVersion bad response: '${output}'`)
+    if (!version) throw new Error(`AdbShim.getPackageVersion bad response ${this.name} package ${packageName}: '${output}'`)
 
     return version
   }

@@ -1,3 +1,7 @@
+/*
+© 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
+*/
 import ApkReader from './ApkReader'
 
 import uuidv4 from 'uuid/v4'
@@ -30,7 +34,7 @@ export default class ApkCopier extends ApkReader {
     const results = await Promise.all([
       adb.pull(apkfile, tempfile),
       adb.getPackageVersion(packageName),
-    ])
+    ]).catch(e => {console.error(`ApkCopier.copyApk failed for package: '${packageName}' apk file: '${apkfile}'`); throw e})
     const version = results[1]
     const sha256 = await adb.hash(tempfile)
     const outfile = path.join(adb.directory, `${packageName}${version ? '-' + version : ''}-${sha256}.apk`)
