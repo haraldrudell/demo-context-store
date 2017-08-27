@@ -32,8 +32,7 @@ class Process {
   }
 
   static errorHandler(e) {
-    console.error('Process.errorHandler')
-    if (!(e instanceof Error)) e = new Error(util.format('Error was value: ', e))
+    console.error('Process.errorHandler:')
     console.error(e)
     console.error(new Error('Process.errorHandler invokation').stack)
     process.exit(1)

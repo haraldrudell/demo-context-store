@@ -1,8 +1,7 @@
 {
   "name": "sw",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A Lerna monolithic repository",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,9 +9,15 @@
     "type": "git",
     "url": "gt:sw"
   },
-  "author": "",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "ISC",
+  "babel": {
+    "presets": [
+      "node8"
+    ]
+  },
   "dependencies": {
+    "babel-preset-node8": "^1.1.2",
     "lerna": "^2.1.0"
   }
 }

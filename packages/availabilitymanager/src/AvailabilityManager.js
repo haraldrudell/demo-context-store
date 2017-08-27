@@ -7,37 +7,12 @@ import fs from 'fs-extra'
 
 export default class AvailabilityManager {
   async run(o) {
-    const options = {
-      directory: '/x/tostorage/devices/generic/apk',
-      devicesDirectory: '/x/tostorage/devices',
-      sixDay: this.getSixDay(),
-    }
-    const d = options.directory
-    if (!await fs.pathExists(d)) throw new Error(`Directory does not exist: ${d}`)
-
-    const asyncModerator = new AsyncModerator(60)
-    asyncModerator.promise.then(this.done).catch(this.errorHandler)
-
-    const serials = o.serial ? [o.serial] : await AdbShim.getSerials()
-    for (let serial of serials) {
-      const adb = Object.assign(new AdbShim({serial}), options)
-      await adb.getDeviceName(true)
-      console.log(`name: ${adb.deviceName} serial: ${serial}`)
-      asyncModerator.addAsyncIterator(new ApkCopier(adb))
-    }
-    asyncModerator.setAllSubmitted()
-  }
-
-  done = v => console.log(`AndroidManager successful exit`)
-
-  getSixDay() {
-    const msDiff = -new Date().getTimezoneOffset() * 60000
-    const date = new Date(Date.now() + msDiff).toISOString()
-    return `${date.substring(2, 4)}${date.substring(5, 7)}${date.substring(8, 10)}`
+    process.nextTick(() => {throw new Error('uncaught')})
+    console.log('AvailabilityManager.run')
   }
 
   errorHandler = e => {
-    console.error('\nAndroidManager.errorHandler invoked:')
+    console.error('\AvailabilityManager.errorHandler invoked:')
     console.error(e)
     console.error(new Error('errorHandler invocation'))
     process.exit(1)

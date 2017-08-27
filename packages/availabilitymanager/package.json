@@ -39,6 +39,7 @@
     }
   },
   "dependencies": {
+    "asyncprocess": "0.0.1",
     "commander": "^2.11.0",
     "cross-env": "^5.0.4",
     "fs-extra": "^4.0.1",
