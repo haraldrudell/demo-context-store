@@ -1,0 +1,59 @@
+{
+  "name": "androidmanager",
+  "version": "0.1.0",
+  "description": "Node.js based Android device management",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "ISC",
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/babel-node src/run",
+    "build": "./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/babel-node config/Build",
+    "clean": "./node_modules/.bin/babel-node config/Clean",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haraldrudell/androidmanager"
+  },
+  "keywords": [
+    "Android",
+    "adb",
+    "apk",
+    "app"
+  ],
+  "singleFile": {
+    "name": "androidmanager",
+    "entry": "run"
+  },
+  "babel": {
+    "presets": [
+      "node8"
+    ]
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "rules": {
+      "strict": 0
+    }
+  },
+  "dependencies": {
+    "adbkit": "^2.11.0",
+    "commander": "^2.11.0",
+    "cross-env": "^5.0.4",
+    "fs-extra": "^4.0.1",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
+    "babel-preset-node8": "^1.1.2",
+    "eslint": "^4.4.1",
+    "eslint-loader": "^1.9.0",
+    "react-dev-utils": "^3.0.2",
+    "webpack": "^3.4.1"
+  }
+}
