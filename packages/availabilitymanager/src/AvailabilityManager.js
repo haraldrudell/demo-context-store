@@ -9,8 +9,11 @@ import Monitor from './Monitor'
 export default class AvailabilityManager {
   allowedEntries = {defaultRoute: this, gateway: this}
 
-  async run(o) {
+  async run(o, pd) {
     if (!o) o = false
+
+    if (o.ifs) await this.listInterfaces()
+
     const profile = this.profile = String(o.profile || '')
     const profileData = o && o.profiles && o.profiles[profile]
     if (!profileData) throw new Error(`Profile not defined: ${profile}`)
@@ -19,9 +22,10 @@ export default class AvailabilityManager {
     const ok = !list || await this.executeList(list)
 
     const {cmdName} = o
-    if (monitor) new Monitor({monitor, profile, errorLogger: this.errorLogger, cmdName})
+    const errorHandler = pd.errorHandler
+    if (monitor) new Monitor({monitor, profile, cmdName, errorHandler})
 
-    if (ok) console.log('Completed successfully')
+    if (ok && !monitor) console.log('Completed successfully')
   }
 
   async executeList(list) {
@@ -64,6 +68,13 @@ export default class AvailabilityManager {
     const promises = []
     for (let task of tasks) promises.push(task.run())
     return promises
+  }
+
+  async listInterfaces() {
+    const network = new Network()
+    const {error, list} = await network.listInterfaces()
+    if (error) console.log('listInterfaces.error', error)
+    console.log('listInterfaces.list', list)
   }
 
   errorLogger = e => console.error(e)

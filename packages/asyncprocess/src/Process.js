@@ -19,6 +19,7 @@ class Process {
       process.on('uncaughtException', (pd.uncaughtHandler = Process.uncaughtException))
     if (!options.allowReject && !pd.rejectHandler)
       process.on('unhandledRejection', (pd.rejectHandler = Process.unhandledRejection))
+    pd.errorHandler = Process.errorHandler
 
     // hooks prior to object construction
     if (typeof options.fn === 'function') options.fn(options, pd)
@@ -49,7 +50,7 @@ class Process {
   static exit(e, message) {
     console.error(`${message}:`)
     console.error(e)
-    console.error(new Error('Process.errorHandler invokation'))
+    console.error(new Error('Process.errorHandler invocation'))
     process.exit(1)
   }
 }

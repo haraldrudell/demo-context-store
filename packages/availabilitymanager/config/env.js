@@ -2,7 +2,10 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
+import packageJson from '../package.json'
+
 import fs from 'fs'
+import os from 'os'
 import path from 'path'
 import paths from './paths'
 
@@ -50,6 +53,10 @@ export default function getClientEnvironment(publicUrl) {
       {
         NODE_ENV: process.env.NODE_ENV || 'development',
         PUBLIC_URL: publicUrl,
+        THE_VERSION: packageJson.version,
+        THE_BUILD: new Date().toISOString() + ' ' + os.hostname().replace(/\..*$/, ''),
+        THE_NAME: packageJson.singleFile && packageJson.singleFile.name ||
+          packageJson.name,
       }
     )
   const stringified = {

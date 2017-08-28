@@ -24,8 +24,16 @@ export default class Network {
   async defaultRoute(x) {
     if (x) return new Result({isFailure: true, message: 'FAIL'})
     const iface = await new Promise((resolve, reject) =>
-      network.get_active_interface((e, aif) => !e ? resolve(aif) : reject(e)))
+      network.get_active_interface((e, aif) => {
+        if (e && e.message.startsWith('No active')) e = null
+        if (!e) resolve(aif)
+        else reject(e)
+      }))
       return new DefaultRouteResult(iface)
+  }
+
+  async listInterfaces() {
+    return new Promise(resolve => network.get_interfaces_list((error, list) => resolve({error, list})))
   }
 }
 

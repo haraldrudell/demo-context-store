@@ -4,7 +4,9 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 */
 import AvailabilityManager from './AvailabilityManager'
 import instantiate from 'asyncprocess'
-import packageJson from '../package.json'
+import getGlobals from './globals'
+import {getISOTime} from './Status'
+
 import fs from 'fs-extra'
 import commander from 'commander'
 import os from 'os'
@@ -18,15 +20,19 @@ instantiate({
 })
 
 async function loadAllOptions(options) {
+  const r = getGlobals()
+  const theHost = os.hostname().replace(/\..*$/, '')
+  const now = Date.now()
+  console.log(`\n\n=== ${theHost}:${r.THE_NAME + ':' || ''}${process.pid} ${getISOTime(now)}`)
 
   // get command-line options
-  const commandName = packageJson.singleFile && packageJson.singleFile.name ||
-  packageJson.name
+  const commandName = r.THE_NAME
   commander
     .name(commandName)
-    .version(packageJson.version)
-    .option('--profile <name>', 'monitoring profile, default "default"', 'default')
+    .version(`${r.THE_VERSION}${r.THE_BUILD ? ' built: ' + r.THE_BUILD : ''}`)
+    .option('--profile <name>', 'monitoring profile, default "default"')
     .option('--file <name>', 'parameter yaml file')
+    .option('--ifs', 'list detected interfaces')
     .parse(process.argv)
   if (commander.args.length) throw new Error(`Unknown addional parameters: '${commander.args.join(' ')}'`)
   const cmdOptions = commander.opts()
@@ -36,6 +42,10 @@ async function loadAllOptions(options) {
   // get yaml options
   if (!cmdOptions.file) cmdOptions.file = await findYamlFilename(commandName)
   const yamlOptions = await loadYaml(cmdOptions.file)
+
+  if (!cmdOptions.profile) cmdOptions.profile = yamlOptions.hostprofiles
+    ? theHost
+    : 'default'
 
   // save options
   if (!options.asyncArg) options.asyncArg = {}

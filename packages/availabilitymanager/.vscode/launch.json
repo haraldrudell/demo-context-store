@@ -5,7 +5,7 @@
       "type": "node",
       "request": "launch",
       "name": "build/apkmanager",
-      "program": "${workspaceRoot}/build/apkmanager.js",
+      "program": "${workspaceRoot}/build/availer.js",
       "stopOnEntry": true,
       "sourceMaps": true
     },

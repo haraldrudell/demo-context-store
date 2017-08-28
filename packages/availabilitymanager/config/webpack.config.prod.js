@@ -12,15 +12,8 @@ import ModuleScopePlugin from 'react-dev-utils/ModuleScopePlugin'
 import fs from 'fs'
 
 const env = getClientEnvironment('')
-
 if (env.stringified['process.env'].NODE_ENV !== '"production"') {
   throw new Error('Production builds must have NODE_ENV=production.');
-}
-
-const contexts = {
-  [path.join(require.resolve('adbkit'), '..')]: './src/',
-  [path.join(require.resolve('adbkit-monkey'), '..')]: './src',
-  [path.join(require.resolve('adbkit-logcat'), '..')]: './src',
 }
 
 export default {
@@ -40,12 +33,6 @@ export default {
       new ModuleScopePlugin(paths.appSrc),
     ],
   },
-  externals: [(context, request, callback) => {
-    const requestStart = contexts[context]
-    if (requestStart && request.startsWith(requestStart))
-      callback(null, request, 'commonjs')
-    else callback()
-  }],
   module: {
     strictExportPresence: true,
     rules: [
@@ -64,7 +51,7 @@ export default {
       },
       {
         test: /\.js$/,
-        include: paths.appSrc,
+        include: [paths.appSrc, path.join(paths.appSrc, '../../asyncprocess/src')],
         loader: require.resolve('babel-loader'),
         options: {
           babelrc: false,
@@ -76,16 +63,19 @@ export default {
       },
     ],
   },
+  externals: {
+    xml2js: 'xml2js'
+  },
   plugins: [
     function() {
       this.plugin('done', () => {
         try {
           fs.mkdirSync('./bin')
         } catch (e) {}
-        const s = fs.createWriteStream('bin/androidmanager')
+        const s = fs.createWriteStream('bin/' + paths.entryName)
         s.write('#!/usr/bin/env node\n', e => {
-          fs.createReadStream('build/androidmanager.js').pipe(s)
-            .on('finish', () => fs.chmodSync('bin/androidmanager', '755'))
+          fs.createReadStream('build/' + paths.entryName + '.js').pipe(s)
+            .on('finish', () => fs.chmodSync('bin/' + paths.entryName, '755'))
         })
       })
     },

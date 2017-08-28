@@ -15,22 +15,37 @@ class SysLog {
     port: 514,
     rfc3164: false,
     fixDate: true,
+    errorLog: console.error,
   }
 
   static log(t) {
-    let client = SysLog.client
-    if (client === false) throw new Error('syslog client permanently closed')
-    if (!client) SysLog.client = client = SysLog._openClient()
+    const client = SysLog._getClient()
+
+    // get a resolve function for when this logging complete
     let resolve2
-    SysLog.promise.then(v => new Promise(resolve => resolve2 = resolve))
+    const p = new Promise(resolve => resolve2 = resolve)
+
+    // queue this promise in the pre-close promise-chain
+    SysLog.promise.then(v => p)
+
+    SysLog.options.tcpTimeout = 0 // does not work
+
+    // adjust to the timezone used by this host
     const d = SysLog.options.fixDate
       ? {timestamp: new Date(Date.now() - new Date().getTimezoneOffset() * 6e4)}
       : undefined
-    console.log(d)
+
     return new Promise((resolve, reject) => client.log(t, d, e => {
-      resolve2()
+      resolve2() // resolve from pre-close chain
       !e ? resolve() : reject(e)
     })).catch(e => {SysLog.errorLog(e); return e})
+  }
+
+  static _getClient() {
+    const client = SysLog.client
+    if (client) return client
+    if (client === false) throw new Error('syslog client permanently closed')
+    return SysLog.client = SysLog._openClient()
   }
 
   static _openClient() {
@@ -46,7 +61,7 @@ class SysLog {
     }
   }
 
-  static errorLog = e => console.error('SysLog:') + console.error(e)
+  static errorLog = e => console.error('SysLog:') + SysLog.options.errorHandler(e)
 }
 
 export default SysLog.log
