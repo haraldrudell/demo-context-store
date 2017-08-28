@@ -4,6 +4,7 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 */
 import NetworkMonitor from './NetworkMonitor'
 import os from 'os'
+import {options as syslogOptions, default as log} from './SysLog'
 
 export default class Monitor {
   constructorMap = {
@@ -21,6 +22,8 @@ export default class Monitor {
       process: now - process_ms,
     }
     console.log(`Computer up since ${this.getISOTime(status.computer)} monitor: ${this.getISOTime(status.process)}`)
+    syslogOptions.appName = o.cmdName
+    log('syslogs').then(e => !e ? console.log('log complete') : console.error('syslog failed:', e))
   }
 
   eventConsumer(o) {

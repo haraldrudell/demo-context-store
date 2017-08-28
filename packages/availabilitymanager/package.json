@@ -24,7 +24,7 @@
     "app"
   ],
   "singleFile": {
-    "name": "availabilitymanager",
+    "name": "availer",
     "entry": "run"
   },
   "babel": {

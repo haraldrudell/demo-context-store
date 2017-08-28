@@ -10,6 +10,7 @@ export default class AvailabilityManager {
   allowedEntries = {defaultRoute: this, gateway: this}
 
   async run(o) {
+    if (!o) o = false
     const profile = this.profile = String(o.profile || '')
     const profileData = o && o.profiles && o.profiles[profile]
     if (!profileData) throw new Error(`Profile not defined: ${profile}`)
@@ -17,7 +18,8 @@ export default class AvailabilityManager {
     const {list, monitor} = profileData
     const ok = !list || await this.executeList(list)
 
-    if (monitor) new Monitor({monitor, profile})
+    const {cmdName} = o
+    if (monitor) new Monitor({monitor, profile, errorLogger: this.errorLogger, cmdName})
 
     if (ok) console.log('Completed successfully')
   }
@@ -63,4 +65,6 @@ export default class AvailabilityManager {
     for (let task of tasks) promises.push(task.run())
     return promises
   }
+
+  errorLogger = e => console.error(e)
 }

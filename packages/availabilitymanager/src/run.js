@@ -31,6 +31,7 @@ async function loadAllOptions(options) {
   if (commander.args.length) throw new Error(`Unknown addional parameters: '${commander.args.join(' ')}'`)
   const cmdOptions = commander.opts()
   delete cmdOptions.version
+  cmdOptions.cmdName = commandName
 
   // get yaml options
   if (!cmdOptions.file) cmdOptions.file = await findYamlFilename(commandName)
