@@ -16,10 +16,17 @@ class SysLog {
     rfc3164: false,
     fixDate: true,
     errorLog: console.error,
+    tcpTimeout: 0, // 0 does not work
   }
 
   static log(t) {
     const client = SysLog._getClient()
+
+    // for tcp the buggy thing emits timeout errors
+    // we have to use tcp, b/c udp logs whether logging is functional or not
+    // options parsing does not distinguish between timeout value missing or 0
+    // we can fix that now!
+    client.tcpTimeout = SysLog.options.tcpTimeout
 
     // get a resolve function for when this logging complete
     let resolve2
@@ -27,8 +34,6 @@ class SysLog {
 
     // queue this promise in the pre-close promise-chain
     SysLog.promise.then(v => p)
-
-    SysLog.options.tcpTimeout = 0 // does not work
 
     // adjust to the timezone used by this host
     const d = SysLog.options.fixDate
