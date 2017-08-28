@@ -4,6 +4,7 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 */
 import Network from './Network'
 import Task from './LoggingTask'
+import Monitor from './Monitor'
 
 export default class AvailabilityManager {
   allowedEntries = {defaultRoute: this, gateway: this}
@@ -13,8 +14,10 @@ export default class AvailabilityManager {
     const profileData = o && o.profiles && o.profiles[profile]
     if (!profileData) throw new Error(`Profile not defined: ${profile}`)
 
-    const {list} = profileData
+    const {list, monitor} = profileData
     const ok = !list || await this.executeList(list)
+
+    if (monitor) new Monitor({monitor, profile})
 
     if (ok) console.log('Completed successfully')
   }

@@ -1,4 +1,7 @@
 profiles:
+  watch:
+    monitor:
+    - NetworkMonitor
   default:
     list:
     - defaultRoute

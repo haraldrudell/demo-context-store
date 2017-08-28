@@ -43,7 +43,9 @@
     "commander": "^2.11.0",
     "cross-env": "^5.0.4",
     "fs-extra": "^4.0.1",
+    "js-yaml": "^3.9.1",
     "network": "^0.3.2",
+    "syslog-client": "^1.1.1",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
