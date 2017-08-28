@@ -1,0 +1,20 @@
+profiles:
+  default:
+    list:
+    - defaultRoute
+    - Default gateway:
+        fn: gateway
+        depends: defaultRoute
+        args:
+        - 5
+    - failingTask:
+        depends: Default gateway
+        fn: defaultRoute
+        args: true
+    - skippedTask:
+        depends: failingTask
+        fn: defaultRoute
+    tests:
+      defaultroute:
+      gateway:
+        depends: defaultroute
