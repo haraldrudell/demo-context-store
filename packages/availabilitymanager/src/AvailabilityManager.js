@@ -4,15 +4,16 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 */
 import Network from './Network'
 import Task from './LoggingTask'
-import Monitor from './Monitor'
+import EventMonitor from './EventMonitor'
 
 export default class AvailabilityManager {
   allowedEntries = {defaultRoute: this, gateway: this}
 
   async run(o, pd) {
     if (!o) o = false
+      if (o.file) console.log(`Read: ${o.file}`)
 
-    if (o.ifs) await this.listInterfaces()
+    if (o.ifs) await this.listInterfaces() // debug: list all interfaces
 
     const profile = this.profile = String(o.profile || '')
     const profileData = o && o.profiles && o.profiles[profile]
@@ -23,7 +24,7 @@ export default class AvailabilityManager {
 
     const {cmdName} = o
     const errorHandler = pd.errorHandler
-    if (monitor) new Monitor({monitor, profile, cmdName, errorHandler})
+    if (monitor) new EventMonitor({monitor, profile, cmdName, errorHandler})
 
     if (ok && !monitor) console.log('Completed successfully')
   }

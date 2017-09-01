@@ -3,7 +3,7 @@
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
 import network from 'network'
-import Result from './Result'
+import DefaultRouteResult from './DefaultRouteResult'
 
 export default class Network {
   static instance
@@ -22,7 +22,6 @@ export default class Network {
   }
 
   async defaultRoute(x) {
-    if (x) return new Result({isFailure: true, message: 'FAIL'})
     const iface = await new Promise((resolve, reject) =>
       network.get_active_interface((e, aif) => {
         if (e && e.message.startsWith('No active')) e = null
@@ -34,18 +33,5 @@ export default class Network {
 
   async listInterfaces() {
     return new Promise(resolve => network.get_interfaces_list((error, list) => resolve({error, list})))
-  }
-}
-
-class DefaultRouteResult extends Result {
-  constructor(iface) {
-    super(iface)
-    this.iface = iface
-  }
-  toString() {
-    const {iface} = this
-    return !this.isFailure
-      ? `${iface.name} ${iface.ip_address} ${iface.type} gw ${iface.gateway_ip}`
-      : 'Default route missing'
   }
 }

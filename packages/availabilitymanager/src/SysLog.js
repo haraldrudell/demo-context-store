@@ -71,5 +71,4 @@ class SysLog {
 
 export default SysLog.log
 export const close = SysLog.close
-export const wait = SysLog.wait
 export const options = SysLog.options

@@ -28,8 +28,9 @@ async function spawner({cmd, args, stdio, cpr}) {
 }
 
 export async function getCmdLines(o) {
-  const {lineFn} = o
-  if (typeof lineFn !== 'function') throw new Error(`getCmdLines lieFn not function: ${typeof lineFn}`)
+  const {lineFn} = o || false
+  const ef = typeof lineFn
+  if (ef !== 'function') throw new Error(`getCmdLines lieFn not function: ${ef}`)
 
   const cpr = {}
   const p = spawner({...o, cpr})
@@ -48,7 +49,7 @@ export async function getCmd(o) {
   const p = spawner({...o, cpr})
   const p2 = new Promise((resolve, reject) => {
     let s = ''
-    cpo.cp.on('data', s1 => s += s1)
+    cpr.cp.on('data', s1 => s += s1)
       .once('end', () => resolve(s))
       .on('error', reject)
       .setEncoding('utf8')

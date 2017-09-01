@@ -7,19 +7,18 @@ import Status from './Status'
 import os from 'os'
 
 export default class ProcessStatus extends Status {
-  constructor() {
-    super()
-    const now = Date.now()
-    const uptime_s = os.uptime()
+  constructor(o = false) {
+    super({...o, printable: 'Process', isUp: true, lastFunctional: 1, everWorked: true})
+    const oneSecond = 1e3
+    const host_uptime_ms = os.uptime() * oneSecond
     const process_ms = process.uptime()
-    this.computer = now - uptime_s * 1e3
-    this.process = now - process_ms
-    this.id = 'process'
+    this.hostUpTimeval = this.now - host_uptime_ms
+    this.processTimeval = this.now - process_ms
   }
+
   toLog() {
-    return `Monitoring started. host up since: ${this.getISOTime(this.computer)}`
-  }
-  toString() {
-    return `Monitoring up since: ${this.getISOTime(this.process)} host: ${this.getISOTime(this.computer)}`
+    return `Monitoring since ${this.getISOTime(this.processTimeval, false, true)}. ` +
+      `Host up since: ${this.getISOTime(this.hostUpTimeval, false, true)} ` +
+      `ms: ${this.now % 1e3}`
   }
 }

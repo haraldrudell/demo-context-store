@@ -1,4 +1,31 @@
 profiles:
+
+  route:
+    monitor:
+    - Default Route:
+        # monitor the host's default route
+        # A missing default route means the Internet is not available
+        # Detected immediately by using Linux ip monitor route
+        fn: DefaultRouteMonitor
+
+  ping:
+    monitor:
+    - Google dns:
+        # ping Google dns every 5 s
+        # 1 s required response time
+        # Any missing ping response is failure
+        # Failure detected within 1.5 - 2.5 s
+        fn: Pinger
+        interval: 1000
+        timeout: 1500
+        spawn:
+          cmd: ping
+          args:
+          - -nDi5
+          - -W1
+          - -s0
+          - 8.8.8.8
+
   watch:
     monitor:
     - NetworkMonitor
