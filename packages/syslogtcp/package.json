@@ -1,0 +1,12 @@
+{
+  "name": "syslogtcp",
+  "version": "0.0.1",
+  "description": "Allow logging over tcp",
+  "main": "src/Process",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "UNLICENSED",
+  "private": true
+}

@@ -1,0 +1,56 @@
+# from https:#github.com/facebook/react/blob/master/.eslintrc.js v15.6.1
+
+root: true
+
+extends: fbjs
+
+plugins:
+- react
+- react-internal
+
+rules:
+  accessor-pairs: off
+  brace-style: [error, 1tbs]
+  comma-dangle: [error, always-multiline]
+  consistent-return: off
+  dot-location: [error, property]
+  dot-notation: error
+  eol-last: error
+  eqeqeq: [error, allow-null]
+  indent: off
+  jsx-quotes: [error, prefer-double]
+  keyword-spacing: [error, {after: true, before: true}]
+  no-bitwise: off
+  no-inner-declarations: [error, functions]
+  no-multi-spaces: error
+  no-restricted-syntax: [error, WithStatement]
+  no-shadow: error
+  no-unused-expressions: error
+  no-unused-vars: [error, {args: none}]
+  no-useless-concat: off
+  quotes: [error, single, {avoidEscape: true, allowTemplateLiterals: true }]
+  space-before-blocks: error
+  space-before-function-paren: off
+
+  # React & JSX
+  # Our transforms set this automatically
+  react/jsx-boolean-value: [error, always]
+  react/jsx-no-undef: error
+  # We dont care to do this
+  react/jsx-sort-prop-types: off
+  react/jsx-space-before-closing: error
+  react/jsx-uses-react: error
+  react/no-is-mounted: off
+  # This isnt useful in our test code
+  react/react-in-jsx-scope: error
+  react/self-closing-comp: error
+  # We dont care to do this
+  react/jsx-wrap-multilines: [error, {declaration: false, assignment: false}]
+
+  # CUSTOM RULES
+  # the second argument of warning/invariant should be a literal string
+  react-internal/warning-and-invariant-args: error
+  react-internal/no-primitive-constructors: error
+
+globals:
+  expectDev: true

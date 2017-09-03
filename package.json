@@ -10,7 +10,7 @@
     "url": "gt:sw"
   },
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "babel": {
     "presets": [
       "node8"

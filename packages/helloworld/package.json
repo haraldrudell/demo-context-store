@@ -1,0 +1,33 @@
+{
+  "name": "helloworld",
+  "version": "0.0.1",
+  "description": "Single-file executable demonstration",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/cmdline-scripts start",
+    "build": "./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/babel-node config/Build",
+    "clean": "./node_modules/.bin/babel-node config/Clean",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gt:sw"
+  },
+  "keywords": [
+    "app"
+  ],
+  "singleFile": {
+    "name": "helloworld",
+    "entry": "run"
+  },
+  "private": true,
+  "dependencies": {
+  },
+  "devDependencies": {
+    "cmdline-scripts": "0.0.1"
+  }
+}

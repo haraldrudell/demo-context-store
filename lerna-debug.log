@@ -1,0 +1,354 @@
+0 silly input []
+1 silly flags { _: [ 'bootstrap' ], args: [] }
+2 verbose rootPath /opt/foxyboy/sw
+3 info version 2.1.0
+4 silly existsSync /opt/foxyboy/sw/VERSION
+5 silly initialize attempt
+6 silly initialize success
+7 silly execute attempt
+8 info Bootstrapping 6 packages
+9 info lifecycle preinstall
+10 silly runScript preinstall androidmanager
+11 silly androidmanager
+12 silly runScript preinstall asyncprocess
+13 silly asyncprocess
+14 silly runScript preinstall cmdline-scripts
+15 silly cmdline-scripts
+16 silly runScript preinstall helloworld
+17 silly helloworld
+18 silly runScript preinstall syslogtcp
+19 silly syslogtcp
+20 silly runScript preinstall availabilitymanager
+21 silly availabilitymanager
+22 silly hasMatchingDependency availabilitymanager asyncprocess
+23 silly hasDependencyInstalled androidmanager babel-preset-node8
+24 silly dependencyIsSatisfied [ 'babel-preset-node8',
+24 silly dependencyIsSatisfied   '^1.1.2',
+24 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/androidmanager/node_modules' ]
+25 verbose dependencyIsSatisfied babel-preset-node8 true
+26 silly hasDependencyInstalled availabilitymanager babel-preset-node8
+27 silly dependencyIsSatisfied [ 'babel-preset-node8',
+27 silly dependencyIsSatisfied   '^1.1.2',
+27 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+28 verbose dependencyIsSatisfied babel-preset-node8 true
+29 silly hasDependencyInstalled androidmanager babel-cli
+30 silly dependencyIsSatisfied [ 'babel-cli',
+30 silly dependencyIsSatisfied   '^6.24.1',
+30 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/androidmanager/node_modules' ]
+31 verbose dependencyIsSatisfied babel-cli true
+32 silly hasDependencyInstalled availabilitymanager babel-cli
+33 silly dependencyIsSatisfied [ 'babel-cli',
+33 silly dependencyIsSatisfied   '^6.24.1',
+33 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+34 verbose dependencyIsSatisfied babel-cli true
+35 silly hasDependencyInstalled androidmanager babel-core
+36 silly dependencyIsSatisfied [ 'babel-core',
+36 silly dependencyIsSatisfied   '^6.25.0',
+36 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/androidmanager/node_modules' ]
+37 verbose dependencyIsSatisfied babel-core true
+38 silly hasDependencyInstalled availabilitymanager babel-core
+39 silly dependencyIsSatisfied [ 'babel-core',
+39 silly dependencyIsSatisfied   '^6.25.0',
+39 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+40 verbose dependencyIsSatisfied babel-core true
+41 silly hasDependencyInstalled androidmanager babel-eslint
+42 silly dependencyIsSatisfied [ 'babel-eslint',
+42 silly dependencyIsSatisfied   '^7.2.3',
+42 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/androidmanager/node_modules' ]
+43 verbose dependencyIsSatisfied babel-eslint true
+44 silly hasDependencyInstalled availabilitymanager babel-eslint
+45 silly dependencyIsSatisfied [ 'babel-eslint',
+45 silly dependencyIsSatisfied   '^7.2.3',
+45 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+46 verbose dependencyIsSatisfied babel-eslint true
+47 silly hasDependencyInstalled androidmanager babel-loader
+48 silly dependencyIsSatisfied [ 'babel-loader',
+48 silly dependencyIsSatisfied   '^7.1.1',
+48 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/androidmanager/node_modules' ]
+49 verbose dependencyIsSatisfied babel-loader true
+50 silly hasDependencyInstalled availabilitymanager babel-loader
+51 silly dependencyIsSatisfied [ 'babel-loader',
+51 silly dependencyIsSatisfied   '^7.1.1',
+51 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+52 verbose dependencyIsSatisfied babel-loader true
+53 silly hasDependencyInstalled androidmanager eslint
+54 silly dependencyIsSatisfied [ 'eslint',
+54 silly dependencyIsSatisfied   '^4.4.1',
+54 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/androidmanager/node_modules' ]
+55 verbose dependencyIsSatisfied eslint true
+56 silly hasDependencyInstalled availabilitymanager eslint
+57 silly dependencyIsSatisfied [ 'eslint',
+57 silly dependencyIsSatisfied   '^4.4.1',
+57 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+58 verbose dependencyIsSatisfied eslint true
+59 silly hasDependencyInstalled androidmanager eslint-loader
+60 silly dependencyIsSatisfied [ 'eslint-loader',
+60 silly dependencyIsSatisfied   '^1.9.0',
+60 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/androidmanager/node_modules' ]
+61 verbose dependencyIsSatisfied eslint-loader true
+62 silly hasDependencyInstalled availabilitymanager eslint-loader
+63 silly dependencyIsSatisfied [ 'eslint-loader',
+63 silly dependencyIsSatisfied   '^1.9.0',
+63 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+64 verbose dependencyIsSatisfied eslint-loader true
+65 silly hasDependencyInstalled androidmanager react-dev-utils
+66 silly dependencyIsSatisfied [ 'react-dev-utils',
+66 silly dependencyIsSatisfied   '^3.0.2',
+66 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/androidmanager/node_modules' ]
+67 verbose dependencyIsSatisfied react-dev-utils true
+68 silly hasDependencyInstalled availabilitymanager react-dev-utils
+69 silly dependencyIsSatisfied [ 'react-dev-utils',
+69 silly dependencyIsSatisfied   '^3.0.2',
+69 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+70 verbose dependencyIsSatisfied react-dev-utils true
+71 silly hasDependencyInstalled androidmanager webpack
+72 silly dependencyIsSatisfied [ 'webpack',
+72 silly dependencyIsSatisfied   '^3.4.1',
+72 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/androidmanager/node_modules' ]
+73 verbose dependencyIsSatisfied webpack true
+74 silly hasDependencyInstalled availabilitymanager webpack
+75 silly dependencyIsSatisfied [ 'webpack',
+75 silly dependencyIsSatisfied   '^3.4.1',
+75 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+76 verbose dependencyIsSatisfied webpack true
+77 silly hasDependencyInstalled androidmanager adbkit
+78 silly dependencyIsSatisfied [ 'adbkit',
+78 silly dependencyIsSatisfied   '^2.11.0',
+78 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/androidmanager/node_modules' ]
+79 verbose dependencyIsSatisfied adbkit true
+80 silly hasDependencyInstalled androidmanager commander
+81 silly dependencyIsSatisfied [ 'commander',
+81 silly dependencyIsSatisfied   '^2.11.0',
+81 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/androidmanager/node_modules' ]
+82 verbose dependencyIsSatisfied commander true
+83 silly hasDependencyInstalled availabilitymanager commander
+84 silly dependencyIsSatisfied [ 'commander',
+84 silly dependencyIsSatisfied   '^2.11.0',
+84 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+85 verbose dependencyIsSatisfied commander true
+86 silly hasDependencyInstalled androidmanager cross-env
+87 silly dependencyIsSatisfied [ 'cross-env',
+87 silly dependencyIsSatisfied   '^5.0.4',
+87 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/androidmanager/node_modules' ]
+88 verbose dependencyIsSatisfied cross-env true
+89 silly hasDependencyInstalled availabilitymanager cross-env
+90 silly dependencyIsSatisfied [ 'cross-env',
+90 silly dependencyIsSatisfied   '^5.0.4',
+90 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+91 verbose dependencyIsSatisfied cross-env true
+92 silly hasDependencyInstalled androidmanager fs-extra
+93 silly dependencyIsSatisfied [ 'fs-extra',
+93 silly dependencyIsSatisfied   '^4.0.1',
+93 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/androidmanager/node_modules' ]
+94 verbose dependencyIsSatisfied fs-extra true
+95 silly hasDependencyInstalled availabilitymanager fs-extra
+96 silly dependencyIsSatisfied [ 'fs-extra',
+96 silly dependencyIsSatisfied   '^4.0.1',
+96 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+97 verbose dependencyIsSatisfied fs-extra true
+98 silly hasDependencyInstalled androidmanager uuid
+99 silly dependencyIsSatisfied [ 'uuid',
+99 silly dependencyIsSatisfied   '^3.1.0',
+99 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/androidmanager/node_modules' ]
+100 verbose dependencyIsSatisfied uuid true
+101 silly hasDependencyInstalled availabilitymanager uuid
+102 silly dependencyIsSatisfied [ 'uuid',
+102 silly dependencyIsSatisfied   '^3.1.0',
+102 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+103 verbose dependencyIsSatisfied uuid true
+104 silly hasDependencyInstalled availabilitymanager js-yaml
+105 silly dependencyIsSatisfied [ 'js-yaml',
+105 silly dependencyIsSatisfied   '^3.9.1',
+105 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+106 verbose dependencyIsSatisfied js-yaml true
+107 silly hasDependencyInstalled availabilitymanager network
+108 silly dependencyIsSatisfied [ 'network',
+108 silly dependencyIsSatisfied   '^0.3.2',
+108 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+109 verbose dependencyIsSatisfied network true
+110 silly hasDependencyInstalled availabilitymanager syslog-client
+111 silly dependencyIsSatisfied [ 'syslog-client',
+111 silly dependencyIsSatisfied   '^1.1.1',
+111 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/availabilitymanager/node_modules' ]
+112 verbose dependencyIsSatisfied syslog-client true
+113 silly hasDependencyInstalled helloworld cmdline-scipts
+114 silly dependencyIsSatisfied [ 'cmdline-scipts',
+114 silly dependencyIsSatisfied   '0.0.1',
+114 silly dependencyIsSatisfied   '/opt/foxyboy/sw/packages/helloworld/node_modules' ]
+115 verbose dependencyIsSatisfied cmdline-scipts false
+116 silly root dependencies []
+117 silly leaf dependencies {
+117 silly leaf dependencies   "androidmanager": [
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "babel-preset-node8@^1.1.2",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "babel-cli@^6.24.1",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "babel-core@^6.25.0",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "babel-eslint@^7.2.3",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "babel-loader@^7.1.1",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "eslint@^4.4.1",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "eslint-loader@^1.9.0",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "react-dev-utils@^3.0.2",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "webpack@^3.4.1",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "adbkit@^2.11.0",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "commander@^2.11.0",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "cross-env@^5.0.4",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "fs-extra@^4.0.1",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "uuid@^3.1.0",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     }
+117 silly leaf dependencies   ],
+117 silly leaf dependencies   "availabilitymanager": [
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "babel-preset-node8@^1.1.2",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "babel-cli@^6.24.1",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "babel-core@^6.25.0",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "babel-eslint@^7.2.3",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "babel-loader@^7.1.1",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "eslint@^4.4.1",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "eslint-loader@^1.9.0",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "react-dev-utils@^3.0.2",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "webpack@^3.4.1",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "commander@^2.11.0",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "cross-env@^5.0.4",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "fs-extra@^4.0.1",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "uuid@^3.1.0",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "js-yaml@^3.9.1",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "network@^0.3.2",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     },
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "syslog-client@^1.1.1",
+117 silly leaf dependencies       "isSatisfied": true
+117 silly leaf dependencies     }
+117 silly leaf dependencies   ],
+117 silly leaf dependencies   "helloworld": [
+117 silly leaf dependencies     {
+117 silly leaf dependencies       "dependency": "cmdline-scipts@0.0.1",
+117 silly leaf dependencies       "isSatisfied": false
+117 silly leaf dependencies     }
+117 silly leaf dependencies   ]
+117 silly leaf dependencies }
+118 info Installing external dependencies
+119 verbose actions 1 actions, concurrency 4
+120 silly installInDir helloworld [ 'cmdline-scipts@0.0.1' ]
+121 silly installInDir backup /opt/foxyboy/sw/packages/helloworld/package.json
+122 silly rename [ '/opt/foxyboy/sw/packages/helloworld/package.json',
+122 silly rename   '/opt/foxyboy/sw/packages/helloworld/package.json.lerna_backup' ]
+123 silly installInDir writing tempJson { dependencies: { 'cmdline-scipts': '0.0.1' } }
+124 silly getExecOpts { cwd: '/opt/foxyboy/sw/packages/helloworld' }
+125 silly installInDir [ 'npm', [ 'install' ] ]
+126 silly installInDir cleanup /opt/foxyboy/sw/packages/helloworld/package.json
+127 silly renameSync [ '/opt/foxyboy/sw/packages/helloworld/package.json.lerna_backup',
+127 silly renameSync   '/opt/foxyboy/sw/packages/helloworld/package.json' ]
+128 verbose installed leaf helloworld
+129 error execute Error: Command failed: npm install
+129 error execute npm ERR! code E404
+129 error execute npm ERR! 404 Not Found: cmdline-scipts@0.0.1
+129 error execute
+129 error execute npm ERR! A complete log of this run can be found in:
+129 error execute npm ERR!     /home/foxyboy/.npm/_logs/2017-09-02T23_36_39_148Z-debug.log
+129 error execute
+129 error execute     at Promise.all.then.arr (/opt/foxyboy/sw/node_modules/execa/index.js:236:11)
+129 error execute     at <anonymous>
+129 error execute     at process._tickCallback (internal/process/next_tick.js:188:7)
+129 error execute  callback with error
+129 error execute  { Error: Command failed: npm install
+129 error execute npm ERR! code E404
+129 error execute npm ERR! 404 Not Found: cmdline-scipts@0.0.1
+129 error execute
+129 error execute npm ERR! A complete log of this run can be found in:
+129 error execute npm ERR!     /home/foxyboy/.npm/_logs/2017-09-02T23_36_39_148Z-debug.log
+129 error execute
+129 error execute     at Promise.all.then.arr (/opt/foxyboy/sw/node_modules/execa/index.js:236:11)
+129 error execute     at <anonymous>
+129 error execute     at process._tickCallback (internal/process/next_tick.js:188:7)
+129 error execute   stack: 'Error: Command failed: npm install\nnpm ERR! code E404\nnpm ERR! 404 Not Found: cmdline-scipts@0.0.1\n\nnpm ERR! A complete log of this run can be found in:\nnpm ERR!     /home/foxyboy/.npm/_logs/2017-09-02T23_36_39_148Z-debug.log\n\n    at Promise.all.then.arr (/opt/foxyboy/sw/node_modules/execa/index.js:236:11)\n    at <anonymous>\n    at process._tickCallback (internal/process/next_tick.js:188:7)',
+129 error execute   code: 1,
+129 error execute   killed: false,
+129 error execute   stdout: '',
+129 error execute   stderr: 'npm ERR! code E404\nnpm ERR! 404 Not Found: cmdline-scipts@0.0.1\n\nnpm ERR! A complete log of this run can be found in:\nnpm ERR!     /home/foxyboy/.npm/_logs/2017-09-02T23_36_39_148Z-debug.log\n',
+129 error execute   failed: true,
+129 error execute   signal: null,
+129 error execute   cmd: 'npm install',
+129 error execute   timedOut: false }

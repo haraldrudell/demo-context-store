@@ -1,0 +1,36 @@
+{
+  "name": "cmdline-scripts",
+  "version": "0.0.1",
+  "description": "Build scripts for Node.js command-line applications",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/babel-node src/run",
+    "build": "./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/babel-node config/Build",
+    "clean": "./node_modules/.bin/babel-node config/Clean",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "cmdline-scripts": "./bin/cmdline-scripts.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gt:sw"
+  },
+  "keywords": [
+    "app"
+  ],
+  "singleFile": {
+    "name": "helloworld",
+    "entry": "run"
+  },
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "cross-spawn": "^5.1.0",
+    "fs-extra": "^4.0.1"
+  }
+}

@@ -5,7 +5,7 @@ profiles:
     - Default Route:
         # monitor the host's default route
         # A missing default route means the Internet is not available
-        # Detected immediately by using Linux ip monitor route
+        # Detected immediately (~90 ms) by using Linux ip monitor route
         fn: DefaultRouteMonitor
 
   ping:
