@@ -31,7 +31,7 @@ export default class Pinger extends Monitor {
     const o = await sendPing({target, retries, timeout, packetSize})
     if (!o.e) {
       const {stdout, retries, first, last} = o
-      if (retries) console.log(`${getISOTime(first)} ${this.printable} retries: ${retries} last: ${getISOTime(first, true, true)} ms: ms: ${first % 1e3}`)
+      if (retries) console.log(`${getISOTime(first)} ${this.printable} retries: ${retries} last: ${getISOTime(first, true, true)} ms: ${first % 1e3}`)
       this.handlePingResponse({upSince: first, stdout})
     } else {
       const {e} = o
