@@ -4,6 +4,7 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 */
 import DefaultRouteMonitor from './DefaultRouteMonitor'
 import Pinger from './Pinger'
+import CommandLiner from './CommandLiner'
 import {options as syslogOptions, default as syslog} from './SysLog'
 import ProcessStatus from './ProcessStatus'
 
@@ -14,6 +15,7 @@ export default class EventMonitor {
   static constructorMap = {
     DefaultRouteMonitor: DefaultRouteMonitor,
     Pinger: Pinger,
+    CommandLiner: CommandLiner,
   }
 
   constructor({monitor, profile, errorHandler, cmdName, constructorMap = EventMonitor.constructorMap}) {
@@ -66,7 +68,7 @@ export default class EventMonitor {
     try {
       console.log(status.toString())
     } catch (e) {
-      console.error('EventMonitor.eventConsumer: data:', status) // toString failed, so do inspect
+      console.error('EventMonitor.eventConsumer: Status.toString failed:', status) // toString failed, so do inspect
       throw e
     }
     syslog(status.toLog())

@@ -2,7 +2,7 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
-import Status from './Status'
+import {INIT, UP, DOWN, BLOCKED, UNBLOCKED, default as Status} from './Status'
 
 import {EventEmitter} from 'events'
 
@@ -11,29 +11,20 @@ export default class Monitor extends EventEmitter {
     super()
     if (depends) {
       if (!Array.isArray(depends)) depends = [depends]
-      this.depends = depends.reduce((r, v) => {r[v] = true; return r}, {})
+      this.depends = depends.reduce((r, v) => {r[String(v)] = true; return r}, {})
       this.downs = {}
       eventBus.on('change', this.manageDependencies)
     }
     Object.assign(this, {eventBus, printable})
+    this.status = new Status({isUp: INIT, printable, monitorSince: this.monitorSince = Date.now()})
   }
 
-  hadNoSelfEvents = () => this.selfUp === undefined
-  isSelfUp = () => this.selfUp
+  hadNoUpDownEvents = () => this.status.hadNoUpDownEvents()
+  isSelfUp = () => this.status.isSelfUp()
 
-  updateStatus(isUp, now = Date.now(), lastFunctional, everWorked) {
-    const isUpBoolean = this.selfUp = !!isUp
-    Object.assign(this, {lastFunctional, everWorked})
-    if (this.isUp !== null) this.emitStatusChange(isUpBoolean, now)
-  }
-
-  emitStatusChange(isUp, now) {
-    this.isUp = isUp // false true null
-    const last = this.lastStatusChange
-    this.lastStatusChange = now
-    const {printable, lastFunctional, everWorked} = this
-    const downs = isUp === null ? Object.keys(this.downs) : null
-    this.emit('data', new Status({isUp, now, last, printable, downs, lastFunctional, everWorked}))
+  updateStatus(o) {
+    this.status = this.status.getNextStatus(o)
+    if (!this.status.isBlocked) this.emit('data', this.status)
   }
 
   manageDependencies = status => {
@@ -41,23 +32,21 @@ export default class Monitor extends EventEmitter {
     if (this.depends[printable]) { // we depend on this
       const downs = this.downs
       const wasDown = downs[printable]
-      if (!status.isUp) { // a dependency went down
+      if (status.isBlocked || status.isUp === DOWN) { // a dependency is down
         if (!wasDown) { // and it was not down before
           downs[printable] = true // add to list of down dependencies
-          if (Object.keys(downs).length === 1) this.updateBlocking(true, status.now) // signal we are now blocked
+          if (Object.keys(downs).length === 1 && !this.status.isBlocked) { // need to change state to blocked
+            const time = status.isBlocked ? status.blockedSince : status.firstFailure
+            this.emit('data', this.status = this.status.getNextStatus({isUp: BLOCKED, blockedSince: time, downs}))
+          }
         }
-      } else if (wasDown) { // a dependency that was down is now up
+      } else if (status.isUp === UP && wasDown) { // a dependency that was down is now up
         delete downs[printable]
-        if (Object.keys(downs).length === 0) this.updateBlocking(false, status.now) // we are no longer blocked
+        if (Object.keys(downs).length === 0) { // need to signal that we are unblocked
+          const time = o.unblockedSince || o.upSince
+          this.emit('data', this.status = this.status.getNextStatus({isUp: UNBLOCKED, unblockedSince: time}))
+        }
       }
     }
-  }
-
-  updateBlocking(isBlocked, now) {
-    if (isBlocked) {
-      if (this.selfUp) this.emitStatusChange(null, now) // from up to blocked
-      else this.isUp = null // silently from down to blocked
-    } else if (this.selfUp) this.emitStatusChange(true, now) // from blocked to up
-    else this.isUp = false // silently from blocked to down
   }
 }

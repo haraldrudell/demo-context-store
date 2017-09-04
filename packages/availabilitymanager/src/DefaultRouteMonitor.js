@@ -4,6 +4,7 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 */
 import Network from './Network'
 import CommandMonitor from './CommandMonitor'
+import {UP, DOWN} from './Status'
 
 import {getCmdLines} from './spawner'
 
@@ -16,10 +17,8 @@ export default class DefaultRouteMonitor extends CommandMonitor {
   constructor(o) {
     super(o)
     this.nw = new Network()
-    this.lastFunctional = Date.now()
-    this.everWorked = false
     this.checkRoute().catch(this.errorHandler) // provide initial state
-    this.issueCommand({...DefaultRouteMonitor.command, lineFn: this.ipLine})
+    this.issueCommand({...DefaultRouteMonitor.command, lineFn: this.ipLine, timeout: 0})
   }
 
   async checkRoute2() {
@@ -33,13 +32,20 @@ export default class DefaultRouteMonitor extends CommandMonitor {
   }
 
   async checkRoute() {
+    const upSince = Date.now() // Result has no timestamp
     const result = await this.nw.defaultRoute()
-    const isUp = !result.isFailure
-    const now = Date.now() // Result has no timestamp
+    const isUp = !result.isFailure ? UP : DOWN
 
-    if (isUp && !this.everWorked) this.everWorked = true
-    if (isUp != this.isSelfUp()) this.updateStatus(isUp, now, this.lastFunctional, this.everWorked)
-    if (isUp) this.lastFunctional = now
+    if (isUp != this.status.isUp) {
+      if (isUp === UP) {
+        this.lastFunctional = upSince
+        this.updateStatus({isUp, upSince})
+      } else {
+        const {lastFunctional} = this
+        const firstFailure = upSince
+        this.updateStatus({isUp, firstFailure, lastFunctional})
+      }
+    }
   }
 
   // default via 192.168.1.12 dev enx000ec6fa54d2 proto static metric 100

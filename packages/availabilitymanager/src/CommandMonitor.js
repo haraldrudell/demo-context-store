@@ -7,10 +7,10 @@ import {getCmdLines} from './spawner'
 
 export default class CommandMonitor extends Monitor {
   constructor(o) {
-    super(o)
-    const {errorHandler} = o
+    super(o || false)
+    const {errorHandler} = o || false
     const eh = typeof errorHandler
-    if (eh !== 'function') throw new Error(`Pinger: errorHandler not function: ${eh}`)
+    if (eh !== 'function') throw new Error(`CommandMonitor: errorHandler not function: ${eh}`)
     Object.assign(this, {errorHandler})
   }
 
