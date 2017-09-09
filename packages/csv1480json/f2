@@ -1,0 +1,5 @@
+
+> csv1480json@0.0.1 start /opt/foxyboy/sw/packages/csv1480json
+> babel-node src/CsvJsonConverter
+
+stdout will keep strings: false if encoding: utf8

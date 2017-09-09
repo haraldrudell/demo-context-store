@@ -1,0 +1,56 @@
+{
+  "name": "csv1480json",
+  "version": "0.0.1",
+  "description": "Node.js based service manager",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "ISC",
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/babel-node src/run",
+    "build": "./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/babel-node config/Build",
+    "clean": "./node_modules/.bin/babel-node config/Clean",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haraldrudell"
+  },
+  "keywords": [
+    "Android",
+    "adb",
+    "apk",
+    "app"
+  ],
+  "singleFile": {
+    "name": "csv1480json",
+    "entry": "run"
+  },
+  "babel": {
+    "presets": [
+      "node8"
+    ]
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "rules": {
+      "strict": 0
+    }
+  },
+  "private": true,
+  "dependencies": {
+    "cross-env": "^5.0.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
+    "babel-preset-node8": "^1.1.2",
+    "eslint": "^4.4.1",
+    "eslint-loader": "^1.9.0",
+    "react-dev-utils": "^3.0.2",
+    "webpack": "^3.4.1"
+  }
+}
