@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "./node_modules/.bin/babel-node src/run",
+    "bin": "./node_modules/.bin/cross-env BABEL_ENV=bin ./node_modules/.bin/babel --out-file bin/cmdline-scripts.js src/cmdline-scripts.js",
     "build": "./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/babel-node config/Build",
     "clean": "./node_modules/.bin/babel-node config/Clean",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +21,26 @@
     "type": "git",
     "url": "gt:sw"
   },
+  "babel": {
+    "env": {
+      "bin": {
+        "presets": [
+          [
+            "env"
+          ],
+          "stage-3"
+        ],
+        "plugins": [
+          [
+            "./src/babel-plugins/preprender",
+            {
+              "banner": "#!/usr/bin/env node\n/*\n© 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)\nThis source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.\n*/\n"
+            }
+          ]
+        ]
+      }
+    }
+  },
   "keywords": [
     "app"
   ],
@@ -30,7 +51,21 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
+    "@comandeer/babel-plugin-banner": "^1.0.0",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-add-header-comment": "^1.0.3",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-node8": "^1.1.2",
+    "babel-preset-stage-3": "^6.24.1",
+    "cross-env": "^5.0.5",
     "cross-spawn": "^5.1.0",
-    "fs-extra": "^4.0.1"
+    "eslint": "^4.4.1",
+    "eslint-loader": "^1.9.0",
+    "fs-extra": "^4.0.1",
+    "react-dev-utils": "^3.0.2",
+    "webpack": "^3.4.1"
   }
 }

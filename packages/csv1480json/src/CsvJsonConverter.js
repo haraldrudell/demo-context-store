@@ -14,7 +14,6 @@ export default class CsvJsonConverter extends Pipeline {
     this.useHeader = !!useHeader
     this.csv = ''
     this.recordNo = 1
-    console.log(this.useHeader, Object.keys(o || false))
   }
 
   addData = string => this.csv += string
@@ -51,11 +50,10 @@ export default class CsvJsonConverter extends Pipeline {
     let fields = this.fields || (this.fields = [])
     let field
     while (this.isField(field = this.getField())) fields.push(field)
-    console.log('getFieldList end:', field, fields)
     if (field === FIELD_RECORD) {
       this.fields = null
       return fields
-    } else return false // need to wait for more data or end of records
+    } else return false // need to wait for more data or end of file
   }
 
   getField() { // string or FIELD_*
@@ -70,18 +68,17 @@ export default class CsvJsonConverter extends Pipeline {
       this.csv = csv = csv.substring(chs)
       return FIELD_RECORD // we have a complete record
     }
-
-    if (!csv && isEnd) return fields ? FIELD_RECORD : FIELD_EOF
+    
+    if (!csv && isEnd) return fields ? FIELD_RECORD : FIELD_EOF // end of file: submit record or end of file
 
     const m = `Record ${recordNo} field ${fields + 1}`
 
     if (fields)
       if (csvCh === ',') csvCh = (this.csv = csv = csv.substring(1))[0]
-      else throw new Error(`${m} missing field-separating comma`) // TODO insert location
+      else throw new Error(`${m} missing field-separating comma`)
 
     if (csvCh === '"') { // double-quoted field
-      let quoteSearchIndex =  this.quoteSearchIndex || 1 // where to start looking
-      let index
+      let quoteSearchIndex = this.quoteSearchIndex || 1 // where to start looking
       for (;;) {
         let index = csv.indexOf('"', quoteSearchIndex)
         if (!~index) // no end-quote yet
