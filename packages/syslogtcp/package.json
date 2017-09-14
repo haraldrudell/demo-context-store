@@ -9,6 +9,9 @@
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
   "private": true,
+  "engines": {
+    "node": ">=4.8"
+  },
   "dependencies": {
     "syslog-client": "^1.1.1"
   }
