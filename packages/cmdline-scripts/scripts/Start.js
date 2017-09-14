@@ -7,14 +7,4 @@ export default class Start {
   async run() {
     console.log('Start.run')
   }
-
-  doWebpack = config => new Promise((resolve, reject) => webpack(config, (err, status) => {
-    if (!err) {
-      if (status.hasErrors()) err = new Error('webpack errors')
-      if (status.hasWarnings()) err = new Error('webpack waringns')
-      console.log(status.toString())
-    }
-    if (!err) resolve(status)
-    else reject(err)
-  }))
 }
