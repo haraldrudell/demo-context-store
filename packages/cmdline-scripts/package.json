@@ -18,16 +18,6 @@
     "type": "git",
     "url": "gt:sw"
   },
-  "peerDevDependencies": [
-    "babel-cli",
-    "babel-core",
-    "babel-loader",
-    "webpack",
-    "eslint",
-    "eslint-loader",
-    "eslint-plugin-react",
-    "react-dev-utils"
-  ],
   "babel": {
     "env": {
       "development": {
