@@ -67,6 +67,11 @@ class Syslog {
     }
   }
 
+  static async connect() { // only relevant for tcp
+    const c = Syslog._getClient()
+    return new Promise((resolve, reject) => c.getTransport((e, t) => !e ? resolve() : reject()))
+  }
+
   static _getClient() {
     const client = Syslog.client
     if (client) return client
@@ -91,3 +96,4 @@ class Syslog {
 export default Syslog.log
 export const close = Syslog.close
 export const setOptions = Syslog.setOptions
+export const testConnect = Syslog.connect
