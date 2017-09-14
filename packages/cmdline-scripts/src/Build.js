@@ -3,6 +3,7 @@
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
 import spawn from './spawn'
+import instantiate from './Process'
 
 import path from 'path'
 import fs from 'fs-extra'
@@ -15,23 +16,40 @@ export default class Build {
     this.babel = path.join(require.resolve('babel-cli'), '../bin/babel.js')
     await this.transpilePlugins()
     await this.transpileBinaries()
+    await this.transpileScripts()
+    await this.transpileWebpackConfig()
   }
 
-  transpilePlugins() {
+  async transpilePlugins() {
     const pluginsDir = path.join(this.buildDir, 'babel-plugins')
     const pluginsSrc = path.join(__dirname, '../src/babel-plugins')
     await spawn({cmd: this.babel, args: ['--out-dir', pluginsDir, pluginsSrc], options: {env: {BABEL_ENV: 'plugins'}}})
   }
 
-  transpileBinaries() {
+  async transpileBinaries() {
     const binSrc = path.join(__dirname, '../src/binaries')
     await spawn({cmd: this.babel, args: ['--out-dir', this.binDir, binSrc], options: {env: {BABEL_ENV: 'binaries'}}})
   }
 
+  async transpileScripts() {
+    const scriptsSrc = path.join(__dirname, '../scripts')
+    await spawn({cmd: this.babel, args: ['--out-dir', this.buildDir, scriptsSrc], options: {env: {BABEL_ENV: 'production'}}})
+  }
+
+  async transpileWebpackConfig() {
+    const webpackSrc = path.join(__dirname, '../config')
+    await spawn({cmd: this.babel, args: ['--out-dir', this.buildDir, webpackSrc], options: {env: {BABEL_ENV: 'production'}}})
+  }
+
   async clean() {
-    console.log('build', this.buildDir)
-    //await fs.remove(buildDir)
-    console.log('bin', this.binDir)
-    //await fs.remove(binDir)
+    await fs.remove(this.buildDir)
+    await fs.remove(this.binDir)
   }
 }
+
+instantiate({
+  construct: Build,
+  async: 'run',
+  require: typeof require !== 'undefined' && require,
+  module: typeof module !== 'undefined' && module,
+})

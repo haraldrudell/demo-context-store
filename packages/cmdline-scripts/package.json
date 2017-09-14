@@ -8,11 +8,7 @@
     "node": ">=8"
   },
   "scripts": {
-    "start": "./node_modules/.bin/babel-node src/run",
-    "binaries": "./node_modules/.bin/cross-env BABEL_ENV=binaries ./node_modules/.bin/babel --out-dir bin src/binaries",
-    "plugins": "./node_modules/.bin/cross-env BABEL_ENV=plugins ./node_modules/.bin/babel --out-dir build/babel-plugins src/babel-plugins",
     "build": "./node_modules/.bin/cross-env BABEL_ENV=production ./node_modules/.bin/babel-node src/Build",
-    "clean": "./node_modules/.bin/babel-node config/Clean",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
@@ -43,8 +39,11 @@
             "env"
           ],
           "stage-2"
-        ]
-      },
+        ],
+        "plugins": [
+          "transform-runtime"
+      ]
+    },
       "binaries": {
         "presets": [
           [
