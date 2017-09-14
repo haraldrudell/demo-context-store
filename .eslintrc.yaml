@@ -6,7 +6,6 @@ extends: fbjs
 
 plugins:
 - react
-- react-internal
 
 rules:
   accessor-pairs: off
@@ -20,10 +19,13 @@ rules:
   indent: off
   jsx-quotes: [error, prefer-double]
   keyword-spacing: [error, {after: true, before: true}]
+  max-len: off
   no-bitwise: off
+  no-console: off
   no-inner-declarations: [error, functions]
   no-multi-spaces: error
   no-restricted-syntax: [error, WithStatement]
+  semi: off
   no-shadow: error
   no-unused-expressions: error
   no-unused-vars: [error, {args: none}]
@@ -46,11 +48,6 @@ rules:
   react/self-closing-comp: error
   # We dont care to do this
   react/jsx-wrap-multilines: [error, {declaration: false, assignment: false}]
-
-  # CUSTOM RULES
-  # the second argument of warning/invariant should be a literal string
-  react-internal/warning-and-invariant-args: error
-  react-internal/no-primitive-constructors: error
 
 globals:
   expectDev: true
