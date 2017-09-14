@@ -11,7 +11,8 @@ class Prepender {
   }
 
   prependerProgram = (nodePath, pluginPass) => {
-    nodePath.hub.file.shebang = this.isType(pluginPass.opts.shebang || Prepender.shebang, 'shebang should be string')
+    const shebang = pluginPass.opts.shebang
+    nodePath.hub.file.shebang = this.isType(shebang !== undefined ? shebang : Prepender.shebang, 'shebang should be string')
 
     const text = pluginPass.opts.text
     if (text !== undefined) {
