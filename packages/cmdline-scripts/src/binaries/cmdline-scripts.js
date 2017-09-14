@@ -21,7 +21,7 @@ async function run(scriptAndArgsList, errorHandler) {
   const construct = require(transpiledFile).default
   const ct = typeof construct
   if (ct !== 'function') errorHandler(new Error(`Internal error: transpilation of script ${scriptName} at ${transpiledFile} default export not function: ${ct}`), true)
-  await new construct({errorHandler}).run()
+  await new construct({errorHandler}).run({args: scriptAndArgsList.slice(1)})
   console.log(`${scriptName} completed successfully`)
 }
 
