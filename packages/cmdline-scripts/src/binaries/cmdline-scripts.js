@@ -40,7 +40,7 @@ async function ensureTranspilation(srcFile, transpiledFile) { // 'Build'
 
 async function transpile({srcFile, transpiledFile}) {
   const babel = path.join(require.resolve('babel-cli'), '../bin/babel.js')
-  await spawn({cmd: babel, args: ['--out-file', transpiledFile, srcFile], options: {env: {BABEL_ENV: 'development'}}})
+  await spawn({cmd: babel, args: ['--out-file', transpiledFile, srcFile], options: {env: {BABEL_ENV: 'transpile'}}})
 }
 
 async function errorHandler(e, controlled) {

@@ -10,6 +10,9 @@ import fs from 'fs'
 import getClientEnvironment from './env'
 
 const env = getClientEnvironment('')
+const matchResult = String(process.version).match(/^v([0-9]+)/)
+const num = Number(matchResult && matchResult[1])
+const nodeMajorVersion = num > 0 ? num : 0 // 8, default 0
 
 export default (paths) => ({
   bail: true,
@@ -28,6 +31,7 @@ export default (paths) => ({
   },
   module: {
     strictExportPresence: true,
+    nonsense: console.log('config, __filename'),
     rules: [
       {
         test: /\.js$/,
@@ -49,10 +53,17 @@ export default (paths) => ({
         options: {
           babelrc: false,
           compact: false,
-          presets: [
-            'node8',
+          presets: [99].concat(nodeMajorVersion >= 8
+              ? require.resolve('babel-preset-node8') // more efficient than env somehow
+              : [[require.resolve('babel-preset-env'), {targets: {node: 'current'}}],
+                require.resolve('babel-plugin-transform-class-properties'),])
+            .push(
+              require.resolve('babel-plugin-transform-object-rest-spread'),
+            ),
+          plugins: [
+            'transform-runtime',
           ],
-        },
+          },
       },
     ],
   },
@@ -65,7 +76,10 @@ export default (paths) => ({
         const s = fs.createWriteStream(paths.appBinExecutable)
         s.write('#!/usr/bin/env node\n', e => {
           fs.createReadStream(paths.appBuildJs).pipe(s)
-            .on('finish', () => fs.chmodSync(paths.appBinExecutable, '755'))
+            .on('finish', () => {
+              fs.chmodSync(paths.appBinExecutable, '755')
+              console.log(path.relative(paths.appDirectory, paths.appBinExecutable))
+            })
         })
       })
     },
