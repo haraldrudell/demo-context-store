@@ -29,7 +29,7 @@ class Syslog {
     Syslog.outputCompletePromise.then(v => p)
 
     // adjust to the timezone used by this host
-    const d = SyslogClient.options.fixDate
+    const d = Syslog.options.fixDate
       ? {timestamp: new Date(Date.now() - new Date().getTimezoneOffset() * 6e4)}
       : undefined
 
