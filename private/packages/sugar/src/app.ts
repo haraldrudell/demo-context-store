@@ -29,10 +29,10 @@ class Post {
   public title: string
   public heading: string
   public author: string
-  
+
   constructor(d: any) {
     this.href = d.url_seo
-    this.img = d.images.xl.url
+    this.img = '/Daisy-ridley-at-disney-s-d23-expo-2015_1.jpg' //d.images.xl.url
     this.heading = d.heading
     this.title = d.title
     this.author = d.author_name
@@ -45,9 +45,9 @@ export class PostService {
   public static isBrowser: boolean = typeof XMLHttpRequest == 'function'
   protected static cache = new Map()
   public result: number
-    
+
   constructor(public http: Http) {
-    let isFirst = !PostService.instance 
+    let isFirst = !PostService.instance
     if (isFirst) {
       PostService.instance = this
       console.log('postService created')
@@ -70,7 +70,7 @@ export class PostService {
               })},
             (err: any) => {this.logError('http get: ' + err); cb(err)}
           )
-          
+
       // Node.js fetch Post via http
       } else postLoader.loadObject(nid, (e: any, o: Post) => {
         if (!e) this.putCache(nid, o)
@@ -82,12 +82,12 @@ export class PostService {
       cb(null, data)
     }
   }
-  
+
   protected putCache(nid: number, post: Post) {
     console.log('cache put:', nid)
     PostService.cache.set(nid, post)
   }
-  
+
   protected logError(err:any) {
     console.error('There was an error: ' + err);
   }
@@ -131,9 +131,9 @@ export class PostService {
 class StreamPost {
   protected _nid: number
   public post: Post
-  
+
   constructor(private postService: PostService) {}
-  
+
   set nid(nid: number) {
     this._nid = nid
     this.postService.getPost(nid, (err: any, post: Post) => {
@@ -142,14 +142,14 @@ class StreamPost {
       }
     })
   }
-  
+
   get nid() {return this._nid}
-  
+
   get isRendering() {
     console.log('rendering', this.nid)
     return ''
   }
-  
+
   followExternalLink(url: string) {
     var w: any
     if (w = postLoader.getWindow()) {
@@ -176,7 +176,13 @@ class XLarge {
   template: `
     <div id=content>{{isRendering}}
       <div class="ikb-header">
-        <div class="title">Everything So Far Rendered Server Side</div>
+        <div class="title">
+        Proof of Concept: upgrade of site to present technology<br/><br/>
+        Demonstrates that benefits can be attained prior to production<br/><br/>
+        45-hour hack:<br/><br/>
+        Everything So Far Rendered Server Side<br/><br/>
+        Click Load More at bottom to see client-side rendering
+        </div>
       </div>
       <stream-post *ng-for="#article of articles" [nid]="article"></stream-post>
     </div>
@@ -193,12 +199,12 @@ export class App {
   public didClick: boolean
   protected more: number[] = [39359743, 38824014]
   protected renderCount: number = 0
-  
+
   get isRendering() {
     console.log('rendering: app:', ++this.renderCount)
     return ''
   }
-  
+
   loadMore() {
     if (!this.didClick) {
       this.didClick = true;
