@@ -1,0 +1,18 @@
+{
+  "name": "webpacklibrary",
+  "version": "0.0.1",
+  "description": "Allow logging over tcp",
+  "scripts": {
+    "build": "../../node_modules/.bin/rollup --config",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "node": ">=4.8"
+  },
+  "dependencies": {
+    "syslog-client": "^1.1.1"
+  }
+}
