@@ -5,7 +5,7 @@ const FIELD_EOF = 1 // end of file
 const FIELD_NONE = 2 // data for complete field not seen yet
 const FIELD_RECORD = 3 // got a complete record
 
-const separators  = Array.from(',\r\n')
+const separators = Array.from(',\r\n')
 
 export default class CsvJsonConverter extends Pipeline {
   constructor(o) {
@@ -68,7 +68,7 @@ export default class CsvJsonConverter extends Pipeline {
       this.csv = csv = csv.substring(chs)
       return FIELD_RECORD // we have a complete record
     }
-    
+
     if (!csv && isEnd) return fields ? FIELD_RECORD : FIELD_EOF // end of file: submit record or end of file
 
     const m = `Record ${recordNo} field ${fields + 1}`
@@ -96,7 +96,7 @@ export default class CsvJsonConverter extends Pipeline {
     }
 
     // it is an unquoted field
-    const index = separators.map(ch => csv.indexOf(ch)).reduce((r, index) => !~index ? r : !~r ? index : Math.min(r, index))
+    const index = separators.map(ch => csv.indexOf(ch)).reduce((r, sepIndex) => !~sepIndex ? r : !~r ? sepIndex : Math.min(r, sepIndex))
     if (!~index) // none of the separators appeared
       if (isEnd) {
         this.csv = ''
