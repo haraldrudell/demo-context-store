@@ -1,0 +1,135 @@
+{
+  "name": "lib-scripts",
+  "version": "0.0.1",
+  "description": "Build scripts for Node.js command-line applications",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=4.8"
+  },
+  "scripts": {
+    "build": "../../node_modules/.bin/rollup --config",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "lib-scripts": "./bin/lib-scripts.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gt:sw"
+  },
+  "babel": {
+    "env": {
+      "development": {
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ],
+        "plugins": [
+          "transform-class-properties",
+          "transform-object-rest-spread",
+          [
+            "./build/babel-plugins/prepender",
+            {
+              "shebang": "",
+              "text": [
+                "© 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)",
+                "This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree."
+              ]
+            }
+          ],
+          "transform-runtime"
+        ]
+      },
+      "production": {
+        "presets": [
+          [
+            "env"
+          ]
+        ],
+        "plugins": [
+          "transform-class-properties",
+          "transform-object-rest-spread",
+          [
+            "./build/babel-plugins/prepender",
+            {
+              "shebang": "",
+              "text": [
+                "© 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)",
+                "This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree."
+              ]
+            }
+          ],
+          "transform-runtime"
+        ]
+      },
+      "binaries": {
+        "presets": [
+          [
+            "env"
+          ]
+        ],
+        "plugins": [
+          "transform-class-properties",
+          "transform-object-rest-spread",
+          [
+            "./build/babel-plugins/prepender",
+            {
+              "text": [
+                "© 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)",
+                "This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree."
+              ]
+            }
+          ],
+          "transform-runtime"
+        ]
+      },
+      "plugins": {
+        "presets": [
+          [
+            "env"
+          ]
+        ],
+        "plugins": [
+          "transform-class-properties",
+          "transform-object-rest-spread"
+        ]
+      }
+    }
+  },
+  "keywords": [
+    "app"
+  ],
+  "private": true,
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-node8": "^1.2.0",
+    "babel-runtime": "^6.26.0",
+    "cross-env": "^5.0.5",
+    "cross-spawn-async": "0.0.1",
+    "eslint": "^4.6.1",
+    "eslint-config-fbjs": "^2.0.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-flowtype": "^2.35.1",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.3.0",
+    "eslint-plugin-relay": "0.0.19",
+    "fs-extra": "^4.0.2",
+    "react-dev-utils": "^4.0.1",
+    "webpack": "^3.5.6"
+  }
+}
