@@ -42,8 +42,11 @@ class SysLog {
 
     return new Promise((resolve, reject) => client.log(t, d, e => {
       resolve2() // resolve from pre-close chain
-      !e ? resolve() : reject(e)
-    })).catch(e => {SysLog.errorLog(e); return e})
+      return !e ? resolve() : reject(e)
+    })).catch(e => {
+      SysLog.errorLog(e)
+      return e
+    })
   }
 
   static _getClient() {

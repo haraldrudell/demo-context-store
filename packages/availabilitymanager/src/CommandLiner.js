@@ -14,7 +14,7 @@ export default class CommandLiner extends CommandMonitor {
     const {interval, spawn, timeout, warning} = o || false
     const interval2 = interval >= oneSecond ? Number(interval) : tenSeconds
     this.timeout = timeout >= 2 * interval2 ? Number(timeout) : 2 * interval2
-    this.warning = warning >=0 ? Number(warning) : 0
+    this.warning = warning >= 0 ? Number(warning) : 0
     setInterval(this.checkTimeout, interval2)
     this.issueCommand({...spawn, lineFn: this.ipLine})
   }
@@ -33,7 +33,7 @@ export default class CommandLiner extends CommandMonitor {
     const overage = this.getOverage(upSince, this.warning)
     if (overage) console.log(`${getISOTime(upSince)} ${this.printable} warning: ${overage / oneSecond} s ms: ${upSince % 1e3}`)
     this.lastFunctional = upSince
-    !this.isSelfUp() && this.updateStatus({isUp: UP, upSince})
+    if (!this.isSelfUp()) this.updateStatus({isUp: UP, upSince})
   })().catch(this.errorHandler)
 
   getOverage(now, limit) {

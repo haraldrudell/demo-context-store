@@ -3,21 +3,17 @@
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
 import AvailabilityManager from './AvailabilityManager'
-import instantiate from 'asyncprocess'
 import getGlobals from './globals'
 import {getISOTime} from './Status'
-
+import classRunner from 'classrunner'
+import '../../a'
 import fs from 'fs-extra'
 import commander from 'commander'
 import os from 'os'
 import path from 'path'
 import yaml from 'js-yaml'
 
-instantiate({
-  asyncFn: loadAllOptions,
-  construct: AvailabilityManager,
-  async: 'run',
-})
+classRunner({construct: AvailabilityManager, options: loadAllOptions})
 
 async function loadAllOptions(options) {
   const r = getGlobals()

@@ -30,6 +30,7 @@ export default class Pinger extends Monitor {
     const {target, retries, timeout, packetSize} = this
     const o = await sendPing({target, retries, timeout, packetSize})
     if (!o.e) {
+      // eslint-disable-next-line no-shadow
       const {stdout, retries, first, last} = o
       if (retries) console.log(`${getISOTime(last)} ${this.printable} retries: ${retries} first failure: ${getISOTime(first, true, true)} ms: ${last % 1e3}`)
       this.handlePingResponse({upSince: first, stdout})
@@ -48,7 +49,7 @@ export default class Pinger extends Monitor {
 
   handlePingResponse({upSince, stdout}) {
     this.lastFunctional = upSince
-    !this.isSelfUp() && this.updateStatus({isUp: UP, upSince})
+    if (!this.isSelfUp()) this.updateStatus({isUp: UP, upSince})
   }
 
   handlePingTimeout({firstFailure, lastFailure, stdout}) {

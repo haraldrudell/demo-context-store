@@ -18,7 +18,7 @@ export default class Status {
   }
 
   toLog() {
-    const {ts, printable, isBlocked, downs, lastAvailable, unblockedSince, blockedSince, isUp, upSince, lastFunctional} = this
+    const {ts, printable, isBlocked, downs, lastAvailable, /*unblockedSince, blockedSince, */isUp, upSince, lastFunctional} = this
     let result = `${printable}:`
     if (isBlocked) {
       result += ` blocked by: ${downs.join('+')}`
@@ -84,6 +84,7 @@ export default class Status {
       } else {
         if (prev.isUp === UP) Object.assign(o, {isUp: UP, upSince})
         else if (prev.isUp === DOWN) {
+          // eslint-disable-next-line no-shadow
           const {firstFailure, lastFailure, lastFunctional} = prev
           Object.assign(o, {isUp: DOWN, firstFailure, lastFailure, lastFunctional})
         } else o.isUp = INIT
@@ -94,7 +95,7 @@ export default class Status {
           if (!Array.isArray(downs)) downs = [downs]
           downs.forEach((v, index) => this._checkString(v, `downs:${index}`, m))
           isBlocked = true
-          lastAvailable = upSince ? blockedSince : lastFunctional
+          lastAvailable = upSince ? blockedSince : lastFunctional
           Object.assign(o, {blockedSince, downs, lastAvailable})
         } else if (isUp === UNBLOCKED) {
           this._checkTimeval(ts = unblockedSince, 'unblockedSince', m)
@@ -105,7 +106,8 @@ export default class Status {
       } // UP
     } // INIT
     if ((isBlocked = prev.isBlocked)) {
-      const {blockedSince, downs, lastAvailable} = prev
+          // eslint-disable-next-line no-shadow
+          const {blockedSince, downs, lastAvailable} = prev
       Object.assign(o, {blockedSince, downs, lastAvailable})
     } // an event after unblock clears unblock
 

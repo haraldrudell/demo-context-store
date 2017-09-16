@@ -11,7 +11,9 @@ export default class Monitor extends EventEmitter {
     super()
     if (depends) {
       if (!Array.isArray(depends)) depends = [depends]
-      this.depends = depends.reduce((r, v) => {r[String(v)] = true; return r}, {})
+      this.depends = depends.reduce((r, v) => {
+        r[String(v)] = true; return r
+      }, {})
       this.downs = {}
       eventBus.on('change', this.manageDependencies)
     }
@@ -43,7 +45,7 @@ export default class Monitor extends EventEmitter {
       } else if (status.isUp === UP && wasDown) { // a dependency that was down is now up
         delete downs[printable]
         if (Object.keys(downs).length === 0) { // need to signal that we are unblocked
-          const time = o.unblockedSince || o.upSince
+          const time = status.unblockedSince || status.upSince
           this.emit('data', this.status = this.status.getNextStatus({isUp: UNBLOCKED, unblockedSince: time}))
         }
       }

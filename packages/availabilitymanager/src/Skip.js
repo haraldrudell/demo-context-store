@@ -4,7 +4,7 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 */
 import Result from './Result'
 
-export class Skip extends Result {
+export default class Skip extends Result {
   constructor(o) {
     super(o)
     this.isSkip = true

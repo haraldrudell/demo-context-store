@@ -6,8 +6,6 @@ import Network from './Network'
 import CommandMonitor from './CommandMonitor'
 import {UP, DOWN} from './Status'
 
-import {getCmdLines} from './spawner'
-
 export default class DefaultRouteMonitor extends CommandMonitor {
   static command = {
     cmd: 'ip',
@@ -27,7 +25,7 @@ export default class DefaultRouteMonitor extends CommandMonitor {
     const now = Date.now() // Result has no timestamp
 
     if (isUp && !this.everWorked) this.everWorked = true
-    if (isUp != this.isSelfUp()) this.updateStatus(isUp, now, this.lastFunctional, this.everWorked)
+    if (isUp !== this.isSelfUp()) this.updateStatus(isUp, now, this.lastFunctional, this.everWorked)
     if (isUp) this.lastFunctional = now
   }
 
@@ -36,7 +34,7 @@ export default class DefaultRouteMonitor extends CommandMonitor {
     const result = await this.nw.defaultRoute()
     const isUp = !result.isFailure ? UP : DOWN
 
-    if (isUp != this.status.isUp) {
+    if (isUp !== this.status.isUp) {
       if (isUp === UP) {
         this.lastFunctional = upSince
         this.updateStatus({isUp, upSince})

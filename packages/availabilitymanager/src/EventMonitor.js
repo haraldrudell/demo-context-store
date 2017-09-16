@@ -8,7 +8,6 @@ import CommandLiner from './CommandLiner'
 import {options as syslogOptions, default as syslog} from './SysLog'
 import ProcessStatus from './ProcessStatus'
 
-import util from 'util'
 import {EventEmitter} from 'events'
 
 export default class EventMonitor {
@@ -23,7 +22,7 @@ export default class EventMonitor {
     syslogOptions.appName = cmdName
     syslogOptions.errorHandler = errorHandler
 
-    this.eventBus = new EventEmitter
+    this.eventBus = new EventEmitter()
     this.state = {}
     this.eventConsumer(new ProcessStatus())
 

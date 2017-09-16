@@ -22,9 +22,10 @@ export default async function sendPing({target, retries, timeout, packetSize}) {
     last = !last ? first : Date.now()
     attempts++
     let e
-    const {stdout, stderr} = await getCmd({cmd, args, timeout}).catch(err => e = err)
+    const {stdout} = await getCmd({cmd, args, timeout}).catch(err => e = err)
 
     if (!e) {
+      // eslint-disable-next-line no-shadow
       const retries = attempts - 1
       return {stdout, retries, first, last}
     }
@@ -33,7 +34,7 @@ export default async function sendPing({target, retries, timeout, packetSize}) {
 
     if (attempts > retries) {
       e = new PingTimeoutError(stdout)
-      Object.assign(e,  {first, last, attempts})
+      Object.assign(e, {first, last, attempts})
       return {e}
     }
   }

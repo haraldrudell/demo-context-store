@@ -11,7 +11,7 @@ export default class AvailabilityManager {
 
   async run(o, pd) {
     if (!o) o = false
-      if (o.file) console.log(`Read: ${o.file}`)
+    if (o.file) console.log(`Read: ${o.file}`)
 
     if (o.ifs) await this.listInterfaces() // debug: list all interfaces
 
@@ -22,11 +22,13 @@ export default class AvailabilityManager {
     const {list, monitor} = profileData
     const ok = !list || await this.executeList(list)
 
+    let result
     const {cmdName} = o
-    const errorHandler = pd.errorHandler
-    if (monitor) new EventMonitor({monitor, profile, cmdName, errorHandler})
+    const {errorHandler} = pd
+    if (monitor) result = new EventMonitor({monitor, profile, cmdName, errorHandler})
 
     if (ok && !monitor) console.log('Completed successfully')
+    return result
   }
 
   async executeList(list) {

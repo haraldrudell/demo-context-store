@@ -35,7 +35,9 @@ export default function globals() {
       if (!result.THE_VERSION) result.THE_VERSION = o.version
       if (!result.THE_NAME) result.THE_NAME = o.singleFile && o.singleFile.name ||
         o.name
-    } catch (e) {console.error(e)}
+    } catch (e) {
+      console.error(e)
+    }
   }
   return result
 }

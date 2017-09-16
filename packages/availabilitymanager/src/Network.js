@@ -17,8 +17,8 @@ export default class Network {
 
   async gateway() {
     const ip = await new Promise((resolve, reject) =>
-      network.get_gateway_ip((e, ip) => !e ? resolve(ip) : reject(e)))
-    return new Result({message: `TODO: arping ${ip}`})
+      network.get_gateway_ip((e, ipr) => !e ? resolve(ipr) : reject(e)))
+    return new DefaultRouteResult({message: `TODO: arping ${ip}`})
   }
 
   async defaultRoute(x) {
