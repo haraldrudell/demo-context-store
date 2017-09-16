@@ -9,7 +9,7 @@ import rollupConfigGenerator from 'rollupconfig'
 // rollup input/output/external: https://rollupjs.org/#big-list-of-options
 if (!pkg.main) throw new Error('package.json main field not set')
 const inputOutputExternal = {
-  input: 'src/clean.js',
+  input: 'src/cleanlib.js',
   output: [{file: `${pkg.main}.js`, format: 'cjs'}],
   external: Object.keys(pkg.dependencies || {}).concat(Object.keys(lerna.devDependencies || {})),
 }
