@@ -1,0 +1,30 @@
+{
+  "name": "rollupapp",
+  "version": "0.0.1",
+  "description": "Demonstrate app assembly using Rollup",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "helloworld": "../../node_modules/.bin/rollup --config helloworld/rollup.config.js",
+    "es2017": "../../node_modules/.bin/rollup --config es2017/rollup.config.js",
+    "runclass": "../../node_modules/.bin/rollup --config runclass/rollup.config.js",
+    "start": "./node_modules/.bin/cmdline-scripts Start",
+    "build": "../../node_modules/.bin/rollup --config",
+    "clean": "./node_modules/.bin/cmdline-scripts Clean",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gt:sw"
+  },
+  "keywords": [
+    "app"
+  ],
+  "private": true,
+  "dependencies": {
+    "spawn-async": "0.0.1"
+  }
+}
