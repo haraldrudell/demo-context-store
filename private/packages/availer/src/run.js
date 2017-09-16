@@ -5,13 +5,15 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 import AvailabilityManager from './AvailabilityManager'
 import getGlobals from './globals'
 import {getISOTime} from './Status'
+
 import classRunner from 'classrunner'
-import '../../a'
+
 import fs from 'fs-extra'
 import commander from 'commander'
+import yaml from 'js-yaml'
+
 import os from 'os'
 import path from 'path'
-import yaml from 'js-yaml'
 
 classRunner({construct: AvailabilityManager, options: loadAllOptions})
 

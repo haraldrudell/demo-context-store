@@ -1,15 +1,17 @@
 {
   "name": "availer",
   "version": "0.0.1",
-  "description": "Node.js based service manager",
+  "description": "Service manager and monitoring",
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "engines": {
     "node": ">=8"
   },
   "scripts": {
-    "start": "./node_modules/.bin/babel-node src/run",
+    "start": "../../node_modules/.bin/babel-node src/run",
     "build": "./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/babel-node config/Build",
+    "buildrollup": "../../node_modules/.bin/rollup --config",
+    "runbuild": "node build/availer",
     "clean": "./node_modules/.bin/babel-node config/Clean",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,17 +28,6 @@
   "singleFile": {
     "name": "availer",
     "entry": "run"
-  },
-  "babel": {
-    "presets": [
-      "node8"
-    ]
-  },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "rules": {
-      "strict": 0
-    }
   },
   "private": true,
   "dependencies": {
