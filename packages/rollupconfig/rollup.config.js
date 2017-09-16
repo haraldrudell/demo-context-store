@@ -9,12 +9,13 @@ import babel from 'rollup-plugin-babel'
 import json from 'rollup-plugin-json'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
+import nodeIgnores from './src/nodepackages'
 
 if (!pkg.main) throw new Error('package.json main field not set')
 export default {
   input: 'src/rollupConfigGenerator.js',
   output: [{file: `${pkg.main}.js`, format: 'cjs'}],
-  external: ['util', 'fs'].concat(Object.keys(lernaDependencies || {})),
+  external: nodeIgnores.concat(Object.keys(lernaDependencies || {})),
   plugins: [
     eslint(),
     babel({
@@ -22,6 +23,11 @@ export default {
       include: '**/*.js',
       exclude: 'node_modules/**',
       plugins: [
+        (babel) => ({
+          visitor: {
+            Program: (nodePass, pluginPass) => console.log('source file:', pluginPass.file.opts.filename)
+          }
+        }),
         'transform-class-properties',
         'transform-object-rest-spread',
       ],
