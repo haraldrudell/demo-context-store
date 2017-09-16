@@ -1,0 +1,51 @@
+== Google +1 request
+
+Request URL:https://www.googleapis.com/rpc?key=AIzaSyCKSbrvQasunBoV16zDH9R33D88CeLr9gQ
+Request Method:POST
+Status Code:200 OK
+Query String Parametersview URL encoded
+key:AIzaSyCKSbrvQasunBoV16zDH9R33D88CeLr9gQ
+Request Payload
+[{"method":"pos.plusones.getSignupState","id":"pos.plusones.getSignupState","params":{"source":"widget","nolog":true,"tk":"CiUIj7O90vQmEhxodHRwOi8vd3d3LmhhcmFsZHJ1ZGVsbC5jb20vEiJBT2JHU0FqT2s0ZnFybjRKY095RWZRQXZOX1U2UEFRNDZR","userId":"@viewer","groupId":"@self"},"jsonrpc":"2.0","key":"pos.plusones.getSignupState","apiVersion":"v1"}]
+Response Headersview source
+access-control-allow-origin:https://www.googleapis.com
+cache-control:no-cache, no-store, max-age=0, must-revalidate
+content-encoding:gzip
+content-length:184
+content-type:application/json; charset=UTF-8
+date:Mon, 14 May 2012 07:46:09 GMT
+expires:Fri, 01 Jan 1990 00:00:00 GMT
+pragma:no-cache
+server:GSE
+status:200 OK
+version:HTTP/1.1
+x-content-type-options:nosniff
+x-frame-options:SAMEORIGIN
+x-xss-protection:1; mode=block
+
+=== preview
+0: {error:{code:401, message:Login Required, data:[,…]}, id:pos.plusones.getSignupState}
+error: {code:401, message:Login Required, data:[,…]}
+id: "pos.plusones.getSignupState"
+
+
+=== response
+[
+ {
+  "error": {
+   "code": 401,
+   "message": "Login Required",
+   "data": [
+    {
+     "domain": "global",
+     "reason": "required",
+     "message": "Login Required",
+     "locationType": "header",
+     "location": "Authorization"
+    }
+   ]
+  },
+  "id": "pos.plusones.getSignupState"
+ }
+]
+

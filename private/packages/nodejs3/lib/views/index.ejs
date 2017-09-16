@@ -1,0 +1,7 @@
+<h1><%= title %></h1>
+<p>Available views</p>
+<ol>
+<% routing.forEach(function (view) {
+    %><li><a href=<%= '/' + view %>><%= view.substring(0, 1).toUpperCase() + view.substring(1) %></a></li><%
+    }) %>
+</ol>

@@ -1,0 +1,43 @@
+{
+	"name": "personalpresence",
+	"description": "Personal Homepage for Harald Rudell",
+	"author": "Harald Rudell <harald.rudell@therudells.com> (http://www.haraldrudell.com)",
+	"keywords": [
+		"Harald Rudell"
+	],
+	"version": "0.0.0",
+	"private": true,
+	"contributors": [
+		{
+			"name": "Harald Rudell",
+			"email": "harald.rudell@therudells.com",
+			"web": "http://www.haraldrudell.com"
+		}
+	],
+	"devDependencies": {
+		"loglocation": "git+ssh://gt:loglocation.git",
+		"mochawrapper": "git+ssh://gt:mochawrapper.git",
+		"grunts": "git+ssh://gt:grunts.git",
+		"grunt-contrib-watch": "",
+		"grunt-simple-mocha": "",
+		"grunt": ""
+	},
+	"dependencies": {
+		"twlink": "git+ssh://gt:twlink.git",
+		"webfiller": ">= 0.1.4",
+		"express": ">= 3",
+		"applego": "git+ssh://gt:applego.git",
+		"apprunner": "git+ssh://gt:apprunner.git",
+		"haraldops": ">= 0.1.9",
+		"haraldutil": ">= 0.1.18"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://gt:personalpresence.git"
+	},
+	"scripts": {
+		"start": "node app",
+		"test": "grunt simplemocha",
+		"changelog": "git log --format=\"%ad %s\" --date=short"
+	}
+}

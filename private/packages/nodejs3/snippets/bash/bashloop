@@ -1,0 +1,31 @@
+#! /bin/bash
+# bashloop
+# Looping bash constructs
+# © 2013 Harald Rudell <harald.rudell@therudells.com> (http://haraldrudell.com) All rights reserved.
+
+# http://www.gnu.org/software/bash/manual/bashref.html#Looping-Constructs
+
+echo; echo; echo "=== $(basename $0) $(date --rfc-3339=s)"
+LINENO= # make it work with sh
+set -eu
+
+echo; echo "- until ...; do ...; done"
+X=0
+until [ $X -gt 2 ]; do X=X+1; done
+X=$?
+echo "Exit status: number of iterations: $X"
+
+echo; echo "- while ...; do ...; done"
+X=0
+while [ $X -lt 2 ]; do X=X+1; done
+X=$?
+echo "Exit status: number of iterations: $X"
+
+echo; echo "- for name [ [in [words …] ] ; ] do ...; done"
+for X in 1 2; do ; done
+X=$?
+echo "Exit status: number of iterations: $X"
+
+echo; echo "- for name [ [in [words …] ] ; ] do ...; done"
+
+echo; echo "for ((expr1; expr2; expr3)) ; do ...; done

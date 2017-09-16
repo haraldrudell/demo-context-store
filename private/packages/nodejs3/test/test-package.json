@@ -1,0 +1,7 @@
+{
+	"ignore": [
+		"snippets/modules/express/express3/node_modules",
+		"test",
+		"node_modules"
+	]
+}

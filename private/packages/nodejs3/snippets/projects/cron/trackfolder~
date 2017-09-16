@@ -1,0 +1,43 @@
+# !/bin/bash
+# trackfolder
+#
+# maintain a git repository for a filesystem folder
+#
+# Written by Harald Rudell
+# version: 120427 first version
+
+set -eu
+
+# ensure only one instance
+SCRIPTNAME=$(basename $0)
+PIDFILE=/tmp/$SCRIPTNAME
+if [ -r $PIDFILE ]; then
+	OTHERPID=$(cat $PIDFILE)
+	[ $(ps h $OTHERPID | wc -l) -gt 0 ] && echo "$SCRIPTNAME is already running" && exit 1
+fi
+echo $$ >$PIDFILE
+
+echo "1:"
+
+# verify argument
+[ "$#" -lt 2 ] && echo "trackfolder usage: folder repofolder" && exit 1
+[ "$1" == "" ] && echo "argument 1 should be folder" && exit 1
+[ ${1:0:1} != "/" ] && echo "argument 1 must begin with slash" && exit 1
+[ ! -d "$1" ] && echo "folder $1 does not exist" && exit 1
+[ "$2" == "" ] && echo "argument 2 should be folder" && exit 1
+[ ! -d "$2" ] && echo "folder $1 does not exist" && exit 1
+[ ${2:0:1} != "/" ] && echo "argument 2 must begin with slash" && exit 1
+
+cd $1
+
+# init repository
+if [ ! -r ".git" ]; then
+	git init --separate-git-dir="$2"
+fi
+
+# update repository
+git add --all . >/dev/null
+git commit -m "updates commited on $(date +%FT%T%z)" >/dev/null
+
+#done
+

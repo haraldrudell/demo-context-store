@@ -1,0 +1,8 @@
+{
+	"user": "vaktparad@gmail.com",
+	"pass": "gorudell",
+	"to": "harald@therudells.com",
+	"hostUrl": "http://localhost:3009",
+	"responder": "/status",
+	"testmail": true
+}

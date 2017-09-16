@@ -1,0 +1,80 @@
+{
+	"haraldops": {
+		"mailsend": {
+      "service": "sendmail",
+			"user": "",
+			"pass": "",
+      "from": "nodejs3@c38",
+      "to": "is@inbox247.com"
+		},
+		"responder": "/status"
+	},
+	"anomaly": {
+		"noEmail": "2/11/2013"
+	},
+	"api": {
+		"path": [
+			{
+				"folder": "lib"
+			},
+			{
+				"file": "applego"
+			}
+		],
+		"apiMap": {
+        "nodejs3": {
+          "onLoad": true
+        },
+			"expressapi": {
+				"ejs": true,
+				"ejspartials": true,
+				"ejsroutes": true,
+				"fbgate": false,
+				"websockets": false,
+				"port": 2001,
+				"url": "http://www.haraldrudell.com",
+				"interface": "localhost",
+				"sessionSecret": "verygreat",
+				"routeconfigurator": {
+					"noDisplayViews": [
+						"layout",
+						"index"
+					],
+					"pageRedirects": {
+						"harald": "http://www.haraldrudell.com",
+						"javascript": "http://js.haraldrudell.com"
+					}
+				}
+			},
+			"routeconfigurator": {
+				"folder": "lib/routes"
+			},
+			"webfillerapi": {
+				"defExt": "html"
+			}
+		}
+	},
+	"views": {
+		"ops": {
+			"whitelist": [
+				"775861653"
+			]
+		},
+    		"fb2": {
+			"fb": {
+				"facebook2Secret": "4588577f8609a3c7babcb8b273f9f74b",
+				"fbAppId": "313462668742181",
+				"fbAppSecret": "ffd6c0c7af649b3605012af36244a13a",
+				"fbHost": "http://localhost:3000",
+				"fbAuthUri": "fbauth",
+				"fbEnter": "fb2",
+				"fbCbUri": "auth/facebook/callback",
+				"fbUnauthroized": "unauthorized",
+				"fbScope": "email",
+				"fbWhiteList": [
+					"775861653"
+				]
+			}
+		}
+	}
+}

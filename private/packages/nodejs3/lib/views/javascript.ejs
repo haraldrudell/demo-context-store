@@ -1,0 +1,52 @@
+<div id=content>
+<a href=http://www.flickr.com/photos/nicsuzor/2554668884/in/set-72157605450653914><img src=/images/jskitten.jpg /></a>
+<h1>JavaScript</h1>
+<p>Written by <a href=http://www.haraldrudell.com>Harald Rudell</a></p>
+<h3>Why Use This Page?</h3>
+<p>This document is a quick reference to JavaScript usage.<p.>
+<ul>
+<li><a href=<%= host %>>This page</a> is faster than Google instant!</li>
+<li>The <a rel=external href=http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf>standard</a> is 258 pages, <a href=<%= host %>>this page</a> is a single page!</li>
+</ul>
+<h3>Introduction</h3>
+<p>JavaScript has six language types and several built-in objects. This brief demonstrates how to determine variable types, convert between types, and the usage of built-in objects. Please enjoy responsibly!</p>
+<% for (var typename in types) {
+	var table = types[typename]%> 
+	<h2><%= typename %></h2> <%
+	if (table.comment) { %>
+		<p><%= table.comment %></p> <%
+	}
+	if (table.expressions.length) { %>
+	<table>
+		<th>expression</th><th>value</th><th>comment</th></tr>
+		<% table.expressions.forEach(function (row) {
+		%><tr>
+			<td><strong><%- row.jsHtml %></strong></td>
+			<td class=jsvalue><%= row.value %></td>
+			<td class=table-text><%= row.comment %></td>
+		</tr><% }) %>
+	</table>
+	<% }
+	}
+if (precedence) {
+	var level = 1 %>
+	<h1>Operator Precedence</h1>
+	<table><%
+	precedence.forEach(function (data) { %>
+		<tr><td><%= level %>.</td>
+			<td><%
+			for (var operator in data) {
+				if (operator != 'a') { %>
+				<strong><%= operator %></strong>
+				<%= data[operator] %><br/><%
+				}
+			} %>
+			</td>
+			<td><%= data.a %></td>
+		</tr><%
+		level++
+	}) %>
+	</table><%
+} %>
+</div>
+<p>Written by <a href="http://www.haraldrudell.com">Harald Rudell</a></p>

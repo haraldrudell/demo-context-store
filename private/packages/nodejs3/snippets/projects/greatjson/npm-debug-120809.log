@@ -1,0 +1,41 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@1.1.45
+3 info using node@v0.8.5-pre
+4 verbose config file /home/foxyboy/.npmrc
+5 verbose config file /usr/local/etc/npmrc
+6 verbose config file /usr/local/lib/node_modules/npm/npmrc
+7 verbose publish [ '.' ]
+8 verbose read json /home/foxyboy/Desktop/c505/node/greatjson/package.json
+9 verbose cache add [ '.', null ]
+10 silly cache add name=undefined spec="." args=[".",null]
+11 verbose parsed url { pathname: '.', path: '.', href: '.' }
+12 silly lockFile 3a52ce78- .
+13 verbose lock . /home/foxyboy/.npm/3a52ce78-.lock
+14 verbose read json package.json
+15 verbose tar pack [ '/home/foxyboy/tmp/npm-17105/1344512555923-0.7636979466769844/tmp.tgz',
+15 verbose tar pack   '.' ]
+16 verbose tarball /home/foxyboy/tmp/npm-17105/1344512555923-0.7636979466769844/tmp.tgz
+17 verbose folder .
+18 info prepublish greatjson@0.0.3
+19 silly lockFile 5bd6473c-55923-0-7636979466769844-tmp-tgz /home/foxyboy/tmp/npm-17105/1344512555923-0.7636979466769844/tmp.tgz
+20 verbose lock /home/foxyboy/tmp/npm-17105/1344512555923-0.7636979466769844/tmp.tgz /home/foxyboy/.npm/5bd6473c-55923-0-7636979466769844-tmp-tgz.lock
+21 error tar pack Error reading .
+22 silly lockFile 5bd6473c-55923-0-7636979466769844-tmp-tgz /home/foxyboy/tmp/npm-17105/1344512555923-0.7636979466769844/tmp.tgz
+23 error TypeError: Cannot call method 'filter' of undefined
+23 error     at Packer.IgnoreReader.addIgnoreRules (/usr/local/lib/node_modules/npm/node_modules/fstream-npm/node_modules/fstream-ignore/ignore.js:148:13)
+23 error     at Packer.IgnoreReader.addIgnoreFile (/usr/local/lib/node_modules/npm/node_modules/fstream-npm/node_modules/fstream-ignore/ignore.js:133:10)
+23 error     at fs.readFile (fs.js:176:14)
+23 error     at fs.close (/usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:94:5)
+23 error     at Object.oncomplete (fs.js:297:15)
+24 error If you need help, you may report this log at:
+24 error     <http://github.com/isaacs/npm/issues>
+24 error or email it to:
+24 error     <npm-@googlegroups.com>
+25 error System Linux 3.2.0-29-generic
+26 error command "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+27 error cwd /home/foxyboy/Desktop/c505/node/greatjson
+28 error node -v v0.8.5-pre
+29 error npm -v 1.1.45
+30 error type non_object_property_call
+31 verbose exit [ 1, true ]

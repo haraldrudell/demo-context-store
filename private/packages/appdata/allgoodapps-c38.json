@@ -1,0 +1,36 @@
+{
+	"haraldops": {
+		"mailsend": {
+			"user": "vaktparad@gmail.com",
+			"pass": "gorudell",
+			"to": "harald@therudells.com"
+		}
+	},
+	"api": {
+		"path": [
+			{
+				"folder": "lib"
+			},
+			{
+				"file": "applego"
+			}
+		],
+		"apiMap": {
+			"expressapi": {
+				"onLoad": true,
+				"websockets": false,
+				"fbgate": false,
+				"sessionSecret": "greatjson",
+				"interface": "localhost",
+				"port": 3005,
+				"url": "http://www.allgoodapps.com"
+			}
+		}
+	},
+	"views": {
+		"index": {
+			"url": "",
+			"title": "AttireSoft, Inc."
+		}
+	}
+}

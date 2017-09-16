@@ -1,0 +1,18 @@
+<img src="http://placekitten.com/300/100"/>
+<h1>Closure</h1>
+<% var code =
+"function outer() {\n" +
+"  var local = 1\n" +
+"  function inner() {\n" +
+"    return ++local\n" +
+"  }\n" +
+"  return inner" +
+"}\n" +
+"var closure1 = outer()\n" +
+"var closure2 = outer()\n" +
+"var x = '' + closure1() + closure1() + closure2()\n" +
+"x"
+%>
+<div><%= code %><br/>
+<% result = eval(code) %>
+result: <%= typeof(result) %> <strong><%= result %></strong></div>

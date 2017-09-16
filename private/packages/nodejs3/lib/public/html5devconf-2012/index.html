@@ -1,0 +1,170 @@
+<!doctype html>  
+<html lang="en">
+	
+	<head>
+		<meta charset="utf-8">
+		
+		<title>Webfiller</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+	
+	<body>
+		
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+
+			<div class=slides>
+				<section>
+					<h2>Webfiller</h2>
+					<p>html5 dual-side rendering<br/>
+					<p style="padding-top: 1in">Harald Rudell</p>
+					<p style="padding-top: 1in">haraldrudell.com</p>
+					<p style="font-size: 50%; position: absolute; bottom: 0;">haraldrudell.com/html5devconf-2012</p>
+				</section>
+
+				<section>
+					<h3>Webfiller started...</h3>
+					<br/>
+					<ul>
+						<li>html5: Simpler markup</li>
+						<li>Browser: render using json data</li>
+						<li>Node.js: same code server/browser</li>
+					</ul><br/><br/>
+						<p style="font-size: 50%; position: absolute; bottom: 0;">dev.w3.org/html5/markup/syntax.html</p>
+				</section>
+
+				<section>
+					<h3>Templates</h3>
+					<br/>
+					<pre><code contenteditable>
+<% posList.forEach(function (position) { %>
+	&lt;li>&lt;a href="&lt;%= position.url %>">&lt;%= position.title %>&lt;/a>
+	&lt;%= position.id %><%
+					</code></pre>
+					<pre><code contenteditable>
+a = "&lt;li>&lt;a href=\"" + position.url + "\">" + position.title + "&lt;/a>&lt;/li>" 
+					</code></pre>
+					<br/>
+					<p>jsp&apos;s where invented 1999</p>
+				</section>
+
+				<section>
+					<h3>Ideas</h3>
+					<ul>
+						<li>No code in your markup</li>
+						<li>No markup in your code</li>
+						<li>Bind in json</li>
+					</ul>
+					<p style="padding-top: 1in">...simplest wins</p>
+				</section>
+
+
+				<section>
+					<h3>Demo</h3>
+					<p>e3.haraldrudell.com</p>
+				</section>
+
+				<section>
+					<h3>Single-Page App in Express</h3>
+					<pre><code contenteditable style="max-height: 500px">
+function handleIndex(defaults, view) {
+	var opts = {title: appName,
+		bindings: exports.fragments.index}
+	response.render(view, opts)
+...
+exports.fragments = {
+	index: {
+		'': [{
+			fragment: ['head']
+			},{
+			fragment: ['indexres']
+		}],
+		h1: 'title',
+	},
+	head: {
+		title: 'title',
+	},
+	indexres: {}
+}
+					</code></pre>
+				</section>
+
+				<section>
+				<h3>Webfiller</h3>
+				<p>Renders html</p>
+				</section>
+
+				<section>
+					<h2>Thanks for your time!</h2><br/>
+					<p style="padding-top: 0.6in">Harald Rudell</p>
+					<p style="padding-top: 1.6in; padding-bottom: 0.6in">haraldrudell.com/html5devconf-2012</p>
+					<div style="font-size: 60%">
+						<p style="position:absolute; left: 0;">github</p>
+						<ul style="padding-top: 1.1em; position:absolute; left: 0; line-height: 1.1em">
+							<li>webfiller and tagfinder</li>
+							<li>nodegod: web interface to node apps</li>
+							<li>haraldops haraldutil apprunner: the bare essentials</li>
+							<li>mochawrapper: easier mocha</li>
+							<li>greatjson: json parser</li>
+						</ul>
+					</div>
+				</section>
+
+			</div>
+			
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+			
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/zoom-js/zoom.js', condition: function() { return !!document.body.classList; } },
+					{ src: '/socket.io/socket.io.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
+					{ src: 'plugin/speakernotes/client.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } }
+				]
+			});
+			
+		</script>
+
+	</body>
+</html>

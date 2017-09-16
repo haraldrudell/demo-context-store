@@ -1,0 +1,20 @@
+testLog
+haha
+closeFile
+end of file
+testLog: 4 tests
+1. console.log
+3. process.stdout.writecloseFile
+end of file
+testLog: 4 tests
+1. console.log
+3. process.stdout.write
+closeFile
+end of file
+testLog: 4 tests
+1. console.log
+2. console.error
+3. process.stdout.write
+4. process.stderr.write
+closeFile
+end of file

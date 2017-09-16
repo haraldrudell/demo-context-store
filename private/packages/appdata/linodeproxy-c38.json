@@ -1,0 +1,56 @@
+{
+	"haraldops": {
+		"mailsend": {
+			"user": "vaktparad@gmail.com",
+			"pass": "gorudell",
+			"to": "harald@therudells.com"
+		}
+	},
+	"api": {
+		"apiMap": {
+			"linodeproxy": {
+				"onLoad": true,
+				"port": 1080,
+				"url": "http://www.haraldrudell.com",
+				"httpProxyOptions": {
+					"hostnameOnly": true,
+					"router": {
+						"haraldrudell.com": {
+							"statusCode": 301,
+							"headers": {
+								"Location": "http://www.haraldrudell.com"
+							},
+							"data": "redirecting to www.haraldrudell.com"
+						},
+						"www.allgoodapps.com": {
+							"statusCode": 301,
+							"headers": {
+                "Location": "http://www.attiresoft.com"
+              },
+              "data": "redirecting to www.attiresoft.com"
+						},
+						"attiresoft.com": {
+							"statusCode": 301,
+							"headers": {
+								"Location": "http://www.attiresoft.com"
+							},
+							"data": "redirecting to www.attiresoft.com"
+						},
+						"allgoodapps.com": {
+							"statusCode": 301,
+							"headers": {
+                "Location": "http://www.attiresoft.com"
+              },
+              "data": "redirecting to www.attiresoft.com"
+						},
+						"sugar.haraldrudell.com": "127.0.0.1:3000",
+						"www.attiresoft.com": "127.0.0.1:3005",
+						"js.haraldrudell.com": "127.0.0.1:2001",
+						"www.haraldrudell.com": "127.0.0.1:3008"
+					}
+				},
+				"notFound": "<!doctype html><meta charset=\"UTF-8\"/><title>Hostname not found</title><body><h1>Hostname not found</h1><p>This server does not host '%s'</p></body>"
+			}
+		}
+	}
+}

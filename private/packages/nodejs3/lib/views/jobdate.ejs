@@ -1,0 +1,41 @@
+<!-- jobdate.ejs -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= title %></title>
+
+		<!--<- partial('headpartials/head-scripts') >-->
+		<script src=http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js></script>
+		<script src=/javascripts/jquery.cookies.2.2.0.js></script>
+		<script src=/javascripts/hr.js></script>
+
+		<!--<- partial('headpartials/head-analytics') >-->
+		<script>
+		var _gaq = _gaq || []
+		_gaq.push(['_setAccount', 'UA-25361517-1'])
+		_gaq.push(['_setDomainName', '.haraldrudell.com'])
+		_gaq.push(['_trackPageview'])
+		</script>
+		<script async='' src=http://www.google-analytics.com/ga.js></script>
+
+		<!--<- partial('headpartials/head-css') >-->
+		<link rel='stylesheet' href='/stylesheets/style.css' />
+
+	</head>
+	<body>
+<h1><%= title %></h1><%
+
+if (jobs.length) { %>
+	<h2>Available Positions</h2>
+	<p>Total <%= jobs.length %></p>
+	<ol><% jobs.forEach(function (job) { %>
+		<li><%= day(job.firstSeen) %>&emsp;
+<!--<%= job.lastSaw ? day(job.lastSaw) : '-' %>&emsp;-->
+			<a href="<%= job.url %>"><%= job.title %></a>&emsp;
+			<%= job.name %>&emsp;
+			<%= job.id %></li><%
+	}) %>
+	</ol><%
+} %>
+	</body>
+</html>

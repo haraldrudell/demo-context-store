@@ -1,0 +1,37 @@
+2012-05-17T08:17Z HEAD http://www.haraldrudell.com/+15 74.125.179.95:52341 urlresolver
+(/home/fasenode/nodejs3/views/+15)
+This type of response MUST NOT have a body. Ignoring data passed to end().
+Error: console.error invocation
+    at Error (unknown source)
+    at Object.myConsoleError (/home/fasenode/nodejs3/node_modules/haraldops/lib/errorstack.js:25:11)
+    at ServerResponse.end (http.js:662:13)
+    at /home/fasenode/nodejs3/node_modules/express/node_modules/connect/lib/middleware/session.js:281:15
+    at Array.0 (/home/fasenode/nodejs3/node_modules/express/node_modules/connect/lib/middleware/session/memory.js:75:11)
+    at EventEmitter._tickCallback (node.js:190:38)
+
+
+
+This type of response MUST NOT have a body. Ignoring data passed to end().
+This type of response MUST NOT have a body. Ignoring data passed to end().
+Error: console.error invocation
+    at Error (unknown source)
+    at Object.myConsoleError (/home/fasenode/linodeproxy/app.js:37:10)
+    at ServerResponse.end (http.js:662:13)
+    at /home/fasenode/linodeproxy/app.js:148:12
+    at Server.<anonymous> (/home/fasenode/linodeproxy/node_modules/http-proxy/lib/node-http-proxy.js:322:7)
+    at Server.emit (events.js:70:17)
+    at HTTPParser.onIncoming (http.js:1610:12)
+    at HTTPParser.parserOnHeadersComplete [as onHeadersComplete] (http.js:91:29)
+    at Socket.ondata (http.js:1506:22)
+    at TCP.onread (net.js:374:27)
+Error: console.error invocation
+    at Error (unknown source)
+    at Object.myConsoleError (/home/fasenode/linodeproxy/app.js:37:10)
+    at ServerResponse.end (http.js:662:13)
+    at /home/fasenode/linodeproxy/app.js:148:12
+    at Server.<anonymous> (/home/fasenode/linodeproxy/node_modules/http-proxy/lib/node-http-proxy.js:322:7)
+    at Server.emit (events.js:70:17)
+    at HTTPParser.onIncoming (http.js:1610:12)
+    at HTTPParser.parserOnHeadersComplete [as onHeadersComplete] (http.js:91:29)
+    at Socket.ondata (http.js:1506:22)
+    at TCP.onread (net.js:374:27)

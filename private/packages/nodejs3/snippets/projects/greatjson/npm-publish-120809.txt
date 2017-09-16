@@ -1,0 +1,53 @@
+foxyboy@c505:~/Desktop/c505/node/greatjson$ npm publish
+npm ERR! tar pack Error reading .
+npm ERR! TypeError: Cannot call method 'filter' of undefined
+npm ERR!     at Packer.IgnoreReader.addIgnoreRules (/usr/local/lib/node_modules/npm/node_modules/fstream-npm/node_modules/fstream-ignore/ignore.js:148:13)
+npm ERR!     at Packer.IgnoreReader.addIgnoreFile (/usr/local/lib/node_modules/npm/node_modules/fstream-npm/node_modules/fstream-ignore/ignore.js:133:10)
+npm ERR!     at fs.readFile (fs.js:176:14)
+npm ERR!     at fs.close (/usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:94:5)
+npm ERR!     at Object.oncomplete (fs.js:297:15)
+npm ERR! If you need help, you may report this log at:
+npm ERR!     <http://github.com/isaacs/npm/issues>
+npm ERR! or email it to:
+npm ERR!     <npm-@googlegroups.com>
+
+npm ERR! System Linux 3.2.0-29-generic
+npm ERR! command "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+npm ERR! cwd /home/foxyboy/Desktop/c505/node/greatjson
+npm ERR! node -v v0.8.5-pre
+npm ERR! npm -v 1.1.45
+npm ERR! type non_object_property_call
+npm ERR! addLocalDirectory Could not pack "." to "/home/foxyboy/tmp/npm-17105/1344512555923-0.7636979466769844/tmp.tgz"
+npm ERR! addLocal Could not install .
+npm ERR! SyntaxError: Unexpected token z
+npm ERR!     at Object.parse (native)
+npm ERR!     at Packer.readRules (/usr/local/lib/node_modules/npm/node_modules/fstream-npm/fstream-npm.js:188:33)
+npm ERR!     at Packer.IgnoreReader.addIgnoreFile (/usr/local/lib/node_modules/npm/node_modules/fstream-npm/node_modules/fstream-ignore/ignore.js:132:22)
+npm ERR!     at fs.readFile (fs.js:176:14)
+npm ERR!     at fs.close (/usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:94:5)
+npm ERR!     at Object.oncomplete (fs.js:297:15)
+npm ERR! If you need help, you may report this log at:
+npm ERR!     <http://github.com/isaacs/npm/issues>
+npm ERR! or email it to:
+npm ERR!     <npm-@googlegroups.com>
+
+npm ERR! System Linux 3.2.0-29-generic
+npm ERR! command "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+npm ERR! cwd /home/foxyboy/Desktop/c505/node/greatjson
+npm ERR! node -v v0.8.5-pre
+npm ERR! npm -v 1.1.45
+npm ERR! file /home/foxyboy/Desktop/c505/node/greatjson/test/data/package.json
+npm ERR! path /home/foxyboy/Desktop/c505/node/greatjson/test/data
+npm ERR! type unexpected_token
+npm ERR! fstream_path /home/foxyboy/Desktop/c505/node/greatjson/test/data
+npm ERR! fstream_type Directory
+npm ERR! fstream_class Packer
+npm ERR! fstream_stack Packer.readRules (/usr/local/lib/node_modules/npm/node_modules/fstream-npm/fstream-npm.js:191:10)
+npm ERR! fstream_stack Packer.IgnoreReader.addIgnoreFile (/usr/local/lib/node_modules/npm/node_modules/fstream-npm/node_modules/fstream-ignore/ignore.js:132:22)
+npm ERR! fstream_stack fs.readFile (fs.js:176:14)
+npm ERR! fstream_stack fs.close (/usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:94:5)
+npm ERR! fstream_stack Object.oncomplete (fs.js:297:15)
+npm ERR! 
+npm ERR! Additional logging details can be found in:
+npm ERR!     /home/foxyboy/Desktop/c505/node/greatjson/npm-debug.log
+npm ERR! not ok code 0

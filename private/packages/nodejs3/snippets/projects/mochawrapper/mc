@@ -1,0 +1,44 @@
+# Research how to forward a bash command invocation to JavaScript
+
+# Requirements
+# Capture arguments as they were input, eg. "a" "a b"
+# Find the folder where JavaScript code is located
+# Forward any non-zero exit codes back to invoking script
+# Ensure color printouts are maintained, eg. mocha
+# Be efficient
+
+# Does not work:
+# dirname: extra operand `b'
+# Try `dirname --help' for more information.
+#dirname a b
+
+# prints: '.'
+#dirname "a b"
+
+# For a path containing spaces, prints:
+# (a b/mc)
+#echo "(${BASH_SOURCE[0]})"
+
+# does not work
+#dirname ${BASH_SOURCE[0]}
+
+# does work
+#dirname "${BASH_SOURCE[0]}"
+
+# does not work
+#cd $(dirname "${BASH_SOURCE[0]}")
+
+# does work
+#cd "$(dirname "${BASH_SOURCE[0]}")"
+
+DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+echo $DIR
+#node -e "require(__dirname + '/../lib/mochacoverage.js').run()" "$@"
+
+# BASH_SOURCE is not defined for npm run-script invocations
+
+# this does work: node file.js "$@"
+# this works: node file.js "a" "b c"
+# this does not work: node file.js $@
+# this does not work: node file.js $*
+# this does not work: node file.js "$*"

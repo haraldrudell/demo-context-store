@@ -1,0 +1,12 @@
+{
+	"api": {
+		"path": [
+			{
+				"folder": "lib"
+			},
+			{
+				"file": "applego"
+			}
+		]
+	}
+}

@@ -1,0 +1,125 @@
+/*
+photog.css
+
+blur 25 opacity 99 width 500/374  height 139
+http://css3please.com/
+http://www.wordpressthemeshock.com/css-drop-shadow/
+*/
+
+.class_box_shadow { /* a box removing residue shadow effect from the vertical space in between cards */
+	position:relative; /* position enclosed left and right divs using this div */
+	padding: 1.5em 0 1.5em 0; /* provide vertical spacing between cards */
+	display: inline-block; /* shrink to fit width of card */
+	background-color: #fff5d6; /* remove any shadow artifacts in vertical space between cards */
+}
+
+.tweet { /* the picture-frame looking box around each tweet */
+	/*position: relative;*/
+	height: 7em; /* 5 text lines + 1 em top and bottom padding */
+	width: 18em; /* size width after text, leaving some for space on the sides for shadow effects */
+	border: 0.4em solid white; /* white photo-looking border, in addition to width and height */
+	background: #ccc; /* card color gray */
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.8); /* outer shadow, no offset = centered, 10 px, 80% black */
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+	text-align: center; /* centers the text of the tweets */
+	word-wrap: break-word; /* wrap lines that contains no spaces */
+}
+
+.tweetspan1 { /* the wrapper for the text of each tweet */
+	display: inline-block; /* center the entire tweet, not by each line */
+	height: 100%;
+	vertical-align: middle; /* center vertically */
+	margin-right: -0.4em
+}
+
+.tweetspan2 { /* the wrapper for the text of each tweet */
+	display: inline-block; /* center the entire tweet, not by each line */
+	vertical-align: middle; /* center vertically */
+	width: 17em; /* padding on the sides*/
+}
+
+.tweetlink { /* how links in the tweet text are styled */
+	font-weight: bold;
+	color: black;
+	text-decoration: none;
+}
+
+/*
+these are applied to a left and a right div elements
+- following the tweet div
+- inside the class_box_shadow div
+*/
+.sh_sides_left { /* upper left 30% width */
+	position:absolute;
+	left:0; top:0;
+	width: 30%; height:100%; /* the left 30% of class_box_shadow div */
+	z-index:-10;
+}
+
+.sh_sides_left:before {
+	position:absolute;
+	left:0; top:30px;
+	content: "";
+	width: 150px; height:100px;
+	-moz-transform: skew(30deg,0deg) translate(30px,0);
+	-webkit-transform: skew(30deg,0deg) translate(30px,0px);
+	/* 30 skew means x coordinates at bottom move right and at top move left */
+	/* first skew (around center): x coordinates modified: pixels at bottom move right */
+	/* second skew: y coordinates modified: pixels to the right move down */
+	/* 25 px to the right */
+	transform: skew(30deg,0deg) translate(30px,0px);
+	-moz-box-shadow: -15px 10px 25px rgba(0, 0, 0, 0.99);
+	-webkit-box-shadow: -15px 10px 25px rgba(0, 0, 0, 0.99);
+	box-shadow: -15px 10px 25px rgba(0, 0, 0, 0.99);
+}
+
+.sh_sides_left:after{ /* lower left shadow */
+	position:absolute;
+	left:0; bottom:30px;
+	content: "";
+	width: 150px; height:100px;
+	/* skew -30 means bottom corner is moved half the box height more to the left than top */
+	/* translate 30px means the box is moved to the right */
+	/* the width of the shade box should be about 40% of the card width */
+	-moz-transform: skew(-30deg,0deg) translate(30px,0);
+	-webkit-transform: skew(-30deg,0deg) translate(30px,0);
+	transform: skew(-30deg,0deg) translate(30px,0);
+	-moz-box-shadow: -15px -10px 25px rgba(0, 0, 0, 0.99);
+	-webkit-box-shadow: -15px -10px 25px rgba(0, 0, 0, 0.99);
+	box-shadow: -15px -10px 25px rgba(0, 0, 0, 0.99);
+}
+
+.sh_sides_right{ /* upper right 30% width */
+	position:absolute;
+	right:0; top:0;
+	width: 30%; height:100%;/*50% here weird box above */
+	z-index:-10;
+}
+
+.sh_sides_right:before{
+	position:absolute;
+	right:0; top:30px;
+	content: "";
+	width: 150px; height:100px; /* 2. 100 to 65*cleans up bottom right */
+	-moz-transform: skew(-30deg,0deg) translate(-30px,0);
+	-webkit-transform: skew(-30deg,0deg) translate(-30px,0);
+	/* pixels at bottom move left */
+	transform: skew(-30deg,0deg) translate(-30px,0);
+	-moz-box-shadow: 15px 10px 25px rgba(0, 0, 0, 0.99);
+	-webkit-box-shadow: 15px 10px 25px rgba(0, 0, 0, 0.99);
+	box-shadow: 15px 10px 25px rgba(0, 0, 0, 0.99);
+}
+
+.sh_sides_right:after{
+	position:absolute;
+	right:0; bottom:30px;
+	content: "";
+	width: 150px; height:100px;/* 3. 100 to 65 cleans up bottom left*/
+	-moz-transform: skew(30deg,0deg) translate(-30px,0);
+	-webkit-transform: skew(30deg,0deg) translate(-30px,0);
+	transform: skew(30deg,0deg) translate(-30px,0);
+	-moz-box-shadow: 15px -10px 25px rgba(0, 0, 0, 0.99);
+	-webkit-box-shadow: 15px -10px 25px rgba(0, 0, 0, 0.99);
+	box-shadow: 15px -10px 25px rgba(0, 0, 0, 0.99);
+}

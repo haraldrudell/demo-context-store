@@ -1,0 +1,116 @@
+.slider{
+	overflow: hidden;
+	position: relative;
+	z-index: 5;
+}
+.slider-box{
+	left: 0;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+}
+.slider-box .slider-item{
+	border: none;
+	float: left;
+	z-index: 1;
+}
+.slider-nav, 
+.slider-control{
+	background-color: #fdfdfd;
+	/*box-shadow: 1px 1px 1px #555;*/
+	border-radius: 5px;
+	bottom: 10px;
+	overflow: hidden;
+	padding: 7px 10px;
+	position: absolute;
+	z-index: 10;
+}
+.slider-nav{
+	right: 10px;
+}
+.slider-nav a:link, .slider-nav a:visited, .slider-nav a:active{
+	float: left;
+	background-color: #666;
+	border-radius: 5px;
+	box-shadow: inset 1px 1px #333;
+	display: block;
+	margin: 0 5px;
+	outline: none;
+	width: 8px;
+	height: 8px;	
+}
+.slider-nav a:hover{}
+.slider-nav a.slider-nav-focus{
+	background-color: #222;
+	box-shadow: inset 1px 1px 1px #000;
+}
+.slider-control{
+	left: 10px;
+}
+.slider-control a:link, .slider-control a:visited, .slider-control a:active{
+
+}
+.slider-control a:hover{
+
+}
+.slider-play, .slider-stop{
+	display: block;
+	float: left;
+	margin: 0 5px;
+	outline: none;
+}
+.slider-play{
+	width: 0;
+	height: 0;
+	border-top: 4px solid transparent;
+	border-bottom: 4px solid transparent;
+	border-left: 4px solid #666;
+	box-shadow: inset 1px 1px #333;
+}
+.slider-stop{
+	background-color: #666;
+	box-shadow: inset 1px 1px #333;
+	height: 8px;
+	width: 7px;
+}
+.slider-arrow{
+	background-color: #fff;
+	display: none;
+	outline: none;
+	position: absolute;
+	z-index: 10;
+}
+.slider-prev, .slider-next{
+	height: 40px;
+	top: 45%;
+	width: 34px;
+}
+.slider-prev{
+	background: #fff url(../img/prev.png) center center no-repeat;
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+	left: 0;
+}
+.slider-next{
+	background: #fff url(../img/next.png) center center no-repeat;
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	right: 0;
+}
+.slider-up, .slider-down{
+	height: 35px;
+	left: 45%;
+	width: 40px;
+}
+.slider-up{
+	background: #fff url(../img/up.png) center center no-repeat;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	top: 0;
+}
+.slider-down{
+	background: #fff url(../img/down.png) center center no-repeat;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	bottom: 0;
+}

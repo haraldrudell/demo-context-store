@@ -1,0 +1,73 @@
+.class_box_shadow{
+    width: 374px;
+    min-width: 200px;
+    min-height: 60px;
+    margin: auto;
+    background: #ccc;
+    border: 5px solid white;
+    position:relative;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.8);
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.8);
+    margin-top:1em;
+}
+.sh_sides_left{
+    width: 30%; height:100%;
+    position:absolute;
+    z-index:-10;
+    left:0; top:0;
+    }
+.sh_sides_left:before{
+    content: "";
+    width: 150px; height:100px;
+    position:absolute;
+    left:0; top:0;
+    -moz-transform: skew(30deg,0deg) translate(25px,0);
+    -webkit-transform: skew(30deg,0deg) translate(25px,0px);
+    transform: skew(30deg,0deg) translate(25px,0px);
+    -moz-box-shadow: -15px 10px 25px rgba(0, 0, 0, 0.70);
+    -webkit-box-shadow: -15px 10px 25px rgba(0, 0, 0, 0.70);
+    box-shadow: -15px 10px 25px rgba(0, 0, 0, 0.70);
+}
+.sh_sides_left:after{
+    content: "";
+    width: 150px; height:100px;
+    position:absolute;
+    left:0; bottom:0;
+    -moz-transform: skew(-30deg,0deg) translate(25px,0);
+    -webkit-transform: skew(-30deg,0deg) translate(25px,0);
+    transform: skew(-30deg,0deg) translate(25px,0);
+    -moz-box-shadow: -15px -10px 25px rgba(0, 0, 0, 0.70);
+    -webkit-box-shadow: -15px -10px 25px rgba(0, 0, 0, 0.70);
+    box-shadow: -15px -10px 25px rgba(0, 0, 0, 0.70);
+}
+.sh_sides_right{
+    width: 30%; height:100%;
+    position:absolute;
+    z-index:-10;
+    right:0; top:0;
+}
+.sh_sides_right:before{
+    content: "";
+    width: 150px; height:100px;
+    position:absolute;
+    right:0; top:0;
+    -moz-transform: skew(-30deg,0deg) translate(-25px,0);
+    -webkit-transform: skew(-30deg,0deg) translate(-25px,0);
+    transform: skew(-30deg,0deg) translate(-25px,0);
+    -moz-box-shadow: 15px 10px 25px rgba(0, 0, 0, 0.70);
+    -webkit-box-shadow: 15px 10px 25px rgba(0, 0, 0, 0.70);
+    box-shadow: 15px 10px 25px rgba(0, 0, 0, 0.70);
+}
+.sh_sides_right:after{
+    content: "";
+    width: 150px; height:100px;
+    position:absolute;
+    right:0; bottom:0;
+    -moz-transform: skew(30deg,0deg) translate(-25px,0);
+    -webkit-transform: skew(30deg,0deg) translate(-25px,0);
+    transform: skew(30deg,0deg) translate(25px,0);
+    -moz-box-shadow: 15px -10px 25px rgba(0, 0, 0, 0.70);
+    -webkit-box-shadow: 15px -10px 25px rgba(0, 0, 0, 0.70);
+    box-shadow: 15px -10px 25px rgba(0, 0, 0, 0.70);
+}

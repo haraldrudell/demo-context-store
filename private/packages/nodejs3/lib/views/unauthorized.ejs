@@ -1,0 +1,26 @@
+<!-- unauthorized.ejs -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= title %> - Unauthorized</title>
+		<script>if(window.location.hash=='#_=_')window.location.href=window.location.href.split('#')[0]</script>
+<style>
+body {
+	font: 14pt "Lucida Grande", Helvetica, Arial, sans-serif;
+	padding: 1em;
+	background-color: #fff5d6;
+}
+.container {
+	max-width: 6in;
+}
+</style>
+	</head>
+	<body>
+	<div class=container>
+		<h1><%= title %></h1>
+		<h2>Authorization Required</h2>
+		<p>This application requires a Facebook identity. Unfortunately, we were unable to connect with a suitable Facebook identity. Please feel free to <a href=<%= retryurl %>>try again</a>.</p>
+		<p>Authorization message: <%= message %></p>
+	</div>
+	</body>
+</html>

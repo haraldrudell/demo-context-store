@@ -1,0 +1,152 @@
+2013-01-17 snippets
+2013-01-13 apprunner 0.2.0
+2013-01-11 snippet syntax
+2013-01-09 js page precedence, function enhanced, snippet research
+2013-01-02 some research
+2013-01-01 nodegod research: deflect sigint and MasterServer
+2012-12-31 linkup change in id
+2012-12-31 Added error listener that skips dbbg
+2012-12-31 nodegod research
+2012-12-29 support apprunner 0.1.2
+2012-12-27 snippets array replacevar
+2012-12-25 proper frontend errors displayed properly
+2012-12-25 own jsdom
+2012-12-25 jobscraper works
+2012-12-25 scrapemanager spelling, uglify-js at 1.3.4
+2012-12-25 fixed proper and jobdate, spellings in scrapemanager, jobs still broken
+2012-12-24 Update snippets
+2012-12-21 config changes after testing mongod
+2012-10-16 pres
+2012-10-16 pres html5devconf
+2012-09-20 fix start with new api spec
+2012-09-16 jobs completes with new mongo
+2012-09-16 jobsdate works
+2012-09-16 scraper using mongo api
+2012-09-16 more javascript exploring number objects
+2012-09-12 new apprunner
+2012-09-11 apprunner
+2012-09-09 style reset
+2012-09-09 hardware accelerated
+2012-09-09 fixed tweet scroller
+2012-08-27 LinkUp added
+2012-08-27 mochawrapper
+2012-08-24 javascript reseatch and final nodeunit
+2012-08-14 Merge branch 'master' of githome:nodejs3
+2012-08-14 sfjs presentation
+2012-08-09 greatjson included
+2012-08-08 some more regexps for greatjson
+2012-08-08 regexps for greatjson
+2012-08-07 completed research functionpointers.js
+2012-08-06 findfirst fixed with $set, now works for writing
+2012-08-06 ready to write to database with findfirst
+2012-08-05 wrote findfirst to confirm recent new positions
+2012-08-05 refactored through pagescraper, all tests pass
+2012-07-31 removed require in dbsync
+2012-07-31 scraper back to perfect
+2012-07-31 proper test view for scraper
+2012-07-30 refactor of scraper, lots of html5 work
+2012-07-24 ontime implemented, snippet for mod
+2012-07-24 statistics in scraper, delete mongowrap store
+2012-07-24 update to express 3
+2012-07-23 refactored page scraping, added tests
+2012-07-23 snippets for mongo unique index and error detection, test dispatch statistics
+2012-07-22 redid testing of mongo, started dispatch timer, working on google everyauth
+2012-07-05 updated javascript renders localhost and fasenode
+2012-07-03 yui example
+2012-07-02 socktest and mongoindex
+2012-07-01 applego implemented, socketio view working
+2012-06-24 nodegod back to default, table first code
+2012-06-24 sfjs presentation
+2012-06-24 implemented trouble emails for job scraper
+2012-06-16 job id, jobdateview, peridoc 24hour scrub
+2012-06-14 works, and test-mongo added
+2012-06-13 test works dbCheck implemented
+2012-06-13 test passes
+2012-06-13 test runs error free but db not implemented
+2012-06-13 test-scrub working, jobscrub.js recovered
+2012-06-13 move scrubstore into separate folder, mongo and test research
+2012-06-12 refactor move scrub to lib
+2012-06-12 filters well for product, jsdom research
+2012-06-11 job scraber works for AdBrite, javascript and mongo research
+2012-06-09 Fixed array copying breaking routing
+2012-06-09 enable use without fb2
+2012-06-09 change title sitemap, remove hash on fb2 page
+2012-06-09 whitelist implemented
+2012-06-09 Facebook authentication, refactored routing, express greenfield example, updated nodeapi: path and qs
+2012-05-26 aggregate commit from mynewfeature
+2012-05-26 second mynewfeature checkin
+2012-05-26 first mynrefeature checkin
+2012-05-26 removed apps branch, using separate repos
+2012-05-26 refactored routing
+2012-05-24 Some referral patches
+2012-05-24 bump
+2012-05-24 bump
+2012-05-24 bump
+2012-05-24 comment removed
+2012-05-24 haraldops 0.0.19
+2012-05-24 haraldops 0.0.18
+2012-05-24 newer haraldops
+2012-05-24 new haraldops pinging, routes extracted
+2012-05-24 deployments folder
+2012-05-24 fix use ignoreUri from defaults
+2012-05-24 fb authentication, ignoreUri in .json snippets, google+ test pages
+2012-05-14 All social buttons implemented
+2012-05-13 Added session cookies, retrieval and tracking of thereferer cookie
+2012-05-13 Tweet topics and users links
+2012-05-13 Margin above tweet scroller, regrouped right pane
+2012-05-13 Twitter follow and tweet added
+2012-05-12 Refactored html rendering
+2012-05-12 Fixed event tracking - takes 6 minutes
+2012-05-12 event named Exit from Extit
+2012-05-12 event named Exit
+2012-05-12 moved analytics back to layout.ejs, fixed outbound event tracking, business degree first
+2012-05-12 tweet scroller
+2012-05-11 slider before final refactor
+2012-05-11 tracking and external links implemented
+2012-05-10 photograph into text column
+2012-05-10 new homepage, redirects ready, snippet updates
+2012-05-08 restructured project, added some node api and javascript explorers
+2012-04-24 bump
+2012-04-24 bump
+2012-04-24 bump
+2012-04-24 bump
+2012-04-24 removed faked private dependency
+2012-04-24 test with private dependency
+2012-04-24 test with private dependency
+2012-04-24 remove connect=1.6.1
+2012-04-22 explored references, almost done with json
+2012-04-20 0.2.4
+2012-04-20 uses haraldops 0.0.10
+2012-04-14 qa 0.4.2
+2012-04-14 qa 0.4.2
+2012-04-14 connect 1.6.1
+2012-04-14 add connect for no.de
+2012-04-14 new rev
+2012-04-14 haraldops haralutil on github
+2012-04-04 https to allgoodapps, updated haraldops
+2012-04-04 fixed deployment to no.de, hostname in email
+2012-04-04 node_modules ignore
+2012-04-04 ops monitoring
+2011-11-24 deploy folder, ignored
+2011-11-06 operator precedence
+2011-11-05 added test requests to check setTimeout
+2011-11-05 cleared up timeouts, output now safe
+2011-11-04 socks.js cleaned up, multiple runs possible, loose web.js
+2011-11-02 Procfile web.js
+2011-11-02 create a web.js
+2011-11-02 rename to web in Procfile
+2011-11-01 procfile
+2011-11-01 socket.io reponse code
+2011-11-01 load socket.io module
+2011-11-01 socketio
+2011-11-01 merged package.json
+2011-11-01 add socket.io to dependencies
+2011-11-01 some javascript
+2011-10-29 package.json syntax
+2011-10-29 prepared for joyent
+2011-10-29 javascript default view, better app.js logging
+2011-10-29 sdk in dev mode
+2011-10-28 updates
+2011-10-01 filled in number object etc
+2011-09-27 first commit to git.q5
+2011-09-23 first commit

@@ -1,0 +1,8 @@
+Name:	connect.sid
+Content:	LrS388cJJ26Qn5An9N2tyLQ3.19TLnsmJ8ih3MKqMwcBskm3gjqoHewRHmRrvUD%2BjgDA
+Domain:	sky.allgoodapps.com
+Path:	/
+Send for:	Any kind of connection
+Accessible to script:	No (HttpOnly)
+Created:	Saturday, June 9, 2012 7:47:58 PM
+Expires:	Saturday, June 9, 2012 11:47:57 PM

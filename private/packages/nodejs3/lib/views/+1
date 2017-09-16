@@ -1,0 +1,5 @@
+<!DOCTYPE html><html><head><title>+1 Button</title>
+<script src=https://apis.google.com/js/plusone.js></script>
+</head><body>
+<g:plusone></g:plusone>
+</body></html>

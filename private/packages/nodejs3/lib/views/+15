@@ -1,0 +1,11 @@
+<!DOCTYPE html><html><head><title>+1 Button html5</title>
+<script src=https://apis.google.com/js/plusone.js></script>
+<script>
+if (typeof HRMODULE == 'undefined') HRMODULE = {}
+HRMODULE.trackpluss = function(params) {
+	console.log('trackpluss:', params)
+}
+</script>
+</head><body>
+<div class=g-plusone callback=HRMODULE.trackpluss></div>
+</body></html>

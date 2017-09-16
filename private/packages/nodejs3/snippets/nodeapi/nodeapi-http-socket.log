@@ -1,0 +1,912 @@
+{ allowHalfOpen: true,
+  server: 
+   { allowHalfOpen: true,
+     connections: 2,
+     _handle: 
+      { socket: [Circular],
+        onconnection: 
+         { [Function: onconnection]
+           [arguments]: null,
+           [length]: 1,
+           [prototype]: { [constructor]: [Circular] },
+           [caller]: null,
+           [name]: 'onconnection' },
+        writeQueueSize: 0 },
+     httpAllowHalfOpen: false,
+     _events: 
+      { connection: 
+         { [Function: connectionListener]
+           [arguments]: null,
+           [length]: 1,
+           [prototype]: { [constructor]: [Circular] },
+           [caller]: null,
+           [name]: 'connectionListener' },
+        request: 
+         { [Function: requestListener]
+           [arguments]: 
+            { '0': 
+               { url: '/favicon.ico',
+                 httpVersionMinor: 1,
+                 httpVersion: '1.1',
+                 socket: [Circular],
+                 httpVersionMajor: 1,
+                 trailers: {},
+                 upgrade: false,
+                 headers: 
+                  { host: 'localhost:1080',
+                    'accept-encoding': 'gzip,deflate,sdch',
+                    'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5',
+                    connection: 'keep-alive',
+                    'accept-language': 'en-US,en;q=0.8',
+                    'accept-charset': 'UTF-8,*;q=0.5',
+                    accept: '*/*' },
+                 connection: [Circular],
+                 client: [Circular],
+                 statusCode: null,
+                 complete: false,
+                 method: 'GET',
+                 readable: true },
+              '1': 
+               { shouldKeepAlive: true,
+                 socket: [Circular],
+                 outputEncodings: [ [length]: 0 ],
+                 _hasBody: true,
+                 _last: false,
+                 chunkedEncoding: false,
+                 connection: [Circular],
+                 writable: true,
+                 _trailer: '',
+                 useChunkedEncodingByDefault: true,
+                 _events: 
+                  { finish: 
+                     { [Function]
+                       [arguments]: null,
+                       [length]: 0,
+                       [prototype]: { [constructor]: [Circular] },
+                       [caller]: null,
+                       [name]: '' } },
+                 finished: false,
+                 output: [ [length]: 0 ] },
+              [length]: 2,
+              [callee]: [Circular] },
+           [length]: 2,
+           [prototype]: { [constructor]: [Circular] },
+           [caller]: 
+            { [Function]
+              [arguments]: 
+               { '0': 'request',
+                 '1': 
+                  { url: '/favicon.ico',
+                    httpVersionMinor: 1,
+                    httpVersion: '1.1',
+                    socket: [Circular],
+                    httpVersionMajor: 1,
+                    trailers: {},
+                    upgrade: false,
+                    headers: 
+                     { host: 'localhost:1080',
+                       'accept-encoding': 'gzip,deflate,sdch',
+                       'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5',
+                       connection: 'keep-alive',
+                       'accept-language': 'en-US,en;q=0.8',
+                       'accept-charset': 'UTF-8,*;q=0.5',
+                       accept: '*/*' },
+                    connection: [Circular],
+                    client: [Circular],
+                    statusCode: null,
+                    complete: false,
+                    method: 'GET',
+                    readable: true },
+                 '2': 
+                  { shouldKeepAlive: true,
+                    socket: [Circular],
+                    outputEncodings: [ [length]: 0 ],
+                    _hasBody: true,
+                    _last: false,
+                    chunkedEncoding: false,
+                    connection: [Circular],
+                    writable: true,
+                    _trailer: '',
+                    useChunkedEncodingByDefault: true,
+                    _events: 
+                     { finish: 
+                        { [Function]
+                          [arguments]: null,
+                          [length]: 0,
+                          [prototype]: { [constructor]: [Circular] },
+                          [caller]: null,
+                          [name]: '' } },
+                    finished: false,
+                    output: [ [length]: 0 ] },
+                 [length]: 3,
+                 [callee]: [Circular] },
+              [length]: 0,
+              [prototype]: { [constructor]: [Circular] },
+              [caller]: 
+               { [Function]
+                 [arguments]: 
+                  { '0': 
+                     { url: '/favicon.ico',
+                       httpVersionMinor: 1,
+                       httpVersion: '1.1',
+                       socket: [Circular],
+                       httpVersionMajor: 1,
+                       trailers: {},
+                       upgrade: false,
+                       headers: 
+                        { host: 'localhost:1080',
+                          'accept-encoding': 'gzip,deflate,sdch',
+                          'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5',
+                          connection: 'keep-alive',
+                          'accept-language': 'en-US,en;q=0.8',
+                          'accept-charset': 'UTF-8,*;q=0.5',
+                          accept: '*/*' },
+                       connection: [Circular],
+                       client: [Circular],
+                       statusCode: null,
+                       complete: false,
+                       method: 'GET',
+                       readable: true },
+                    '1': true,
+                    [length]: 2,
+                    [callee]: [Circular] },
+                 [length]: 2,
+                 [prototype]: { [constructor]: [Circular] },
+                 [caller]: 
+                  { [Function]
+                    [arguments]: 
+                     { '0': 
+                        { url: '/favicon.ico',
+                          shouldKeepAlive: true,
+                          versionMajor: 1,
+                          versionMinor: 1,
+                          upgrade: false,
+                          headers: 
+                           [ 'Host',
+                             'localhost:1080',
+                             'Connection',
+                             'keep-alive',
+                             'Accept',
+                             '*/*',
+                             'User-Agent',
+                             'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5',
+                             'Accept-Encoding',
+                             'gzip,deflate,sdch',
+                             'Accept-Language',
+                             'en-US,en;q=0.8',
+                             'Accept-Charset',
+                             'UTF-8,*;q=0.5',
+                             [length]: 14 ],
+                          method: 'GET' },
+                       [length]: 1,
+                       [callee]: [Circular] },
+                    [length]: 1,
+                    [prototype]: { [constructor]: [Circular] },
+                    [caller]: 
+                     { [Function]
+                       [arguments]: 
+                        { '0': <SlowBuffer 47 45 54 20 2f 66 61 76 69 63 6f 6e 2e 69 63 6f 20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c 68 6f 73 74 3a 31 30 38 30 0d 0a 43 6f ...>,
+                          '1': 0,
+                          '2': 304,
+                          [length]: 3,
+                          [callee]: [Circular] },
+                       [length]: 3,
+                       [prototype]: { [constructor]: [Circular] },
+                       [caller]: 
+                        { [Function: onread]
+                          [arguments]: 
+                           { '0': <SlowBuffer 47 45 54 20 2f 66 61 76 69 63 6f 6e 2e 69 63 6f 20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c 68 6f 73 74 3a 31 30 38 30 0d 0a 43 6f ...>,
+                             '1': 0,
+                             '2': 304,
+                             [length]: 3,
+                             [callee]: [Circular] },
+                          [length]: 3,
+                          [prototype]: { [constructor]: [Circular] },
+                          [caller]: null,
+                          [name]: 'onread' },
+                       [name]: '' },
+                    [name]: '' },
+                 [name]: '' },
+              [name]: '' },
+           [name]: 'requestListener' } } },
+  errorEmitted: false,
+  _idleTimeout: 120000,
+  onend: 
+   { [Function]
+     [arguments]: null,
+     [length]: 0,
+     [prototype]: { [constructor]: [Circular] },
+     [caller]: null,
+     [name]: '' },
+  _idleNext: 
+   { allowHalfOpen: true,
+     server: 
+      { allowHalfOpen: true,
+        connections: 2,
+        _handle: 
+         { socket: [Circular],
+           onconnection: 
+            { [Function: onconnection]
+              [arguments]: null,
+              [length]: 1,
+              [prototype]: { [constructor]: [Circular] },
+              [caller]: null,
+              [name]: 'onconnection' },
+           writeQueueSize: 0 },
+        httpAllowHalfOpen: false,
+        _events: 
+         { connection: 
+            { [Function: connectionListener]
+              [arguments]: null,
+              [length]: 1,
+              [prototype]: { [constructor]: [Circular] },
+              [caller]: null,
+              [name]: 'connectionListener' },
+           request: 
+            { [Function: requestListener]
+              [arguments]: 
+               { '0': 
+                  { url: '/favicon.ico',
+                    httpVersionMinor: 1,
+                    httpVersion: '1.1',
+                    socket: [Circular],
+                    httpVersionMajor: 1,
+                    trailers: {},
+                    upgrade: false,
+                    headers: 
+                     { host: 'localhost:1080',
+                       'accept-encoding': 'gzip,deflate,sdch',
+                       'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5',
+                       connection: 'keep-alive',
+                       'accept-language': 'en-US,en;q=0.8',
+                       'accept-charset': 'UTF-8,*;q=0.5',
+                       accept: '*/*' },
+                    connection: [Circular],
+                    client: [Circular],
+                    statusCode: null,
+                    complete: false,
+                    method: 'GET',
+                    readable: true },
+                 '1': 
+                  { shouldKeepAlive: true,
+                    socket: [Circular],
+                    outputEncodings: [ [length]: 0 ],
+                    _hasBody: true,
+                    _last: false,
+                    chunkedEncoding: false,
+                    connection: [Circular],
+                    writable: true,
+                    _trailer: '',
+                    useChunkedEncodingByDefault: true,
+                    _events: 
+                     { finish: 
+                        { [Function]
+                          [arguments]: null,
+                          [length]: 0,
+                          [prototype]: { [constructor]: [Circular] },
+                          [caller]: null,
+                          [name]: '' } },
+                    finished: false,
+                    output: [ [length]: 0 ] },
+                 [length]: 2,
+                 [callee]: [Circular] },
+              [length]: 2,
+              [prototype]: { [constructor]: [Circular] },
+              [caller]: 
+               { [Function]
+                 [arguments]: 
+                  { '0': 'request',
+                    '1': 
+                     { url: '/favicon.ico',
+                       httpVersionMinor: 1,
+                       httpVersion: '1.1',
+                       socket: [Circular],
+                       httpVersionMajor: 1,
+                       trailers: {},
+                       upgrade: false,
+                       headers: 
+                        { host: 'localhost:1080',
+                          'accept-encoding': 'gzip,deflate,sdch',
+                          'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5',
+                          connection: 'keep-alive',
+                          'accept-language': 'en-US,en;q=0.8',
+                          'accept-charset': 'UTF-8,*;q=0.5',
+                          accept: '*/*' },
+                       connection: [Circular],
+                       client: [Circular],
+                       statusCode: null,
+                       complete: false,
+                       method: 'GET',
+                       readable: true },
+                    '2': 
+                     { shouldKeepAlive: true,
+                       socket: [Circular],
+                       outputEncodings: [ [length]: 0 ],
+                       _hasBody: true,
+                       _last: false,
+                       chunkedEncoding: false,
+                       connection: [Circular],
+                       writable: true,
+                       _trailer: '',
+                       useChunkedEncodingByDefault: true,
+                       _events: 
+                        { finish: 
+                           { [Function]
+                             [arguments]: null,
+                             [length]: 0,
+                             [prototype]: { [constructor]: [Circular] },
+                             [caller]: null,
+                             [name]: '' } },
+                       finished: false,
+                       output: [ [length]: 0 ] },
+                    [length]: 3,
+                    [callee]: [Circular] },
+                 [length]: 0,
+                 [prototype]: { [constructor]: [Circular] },
+                 [caller]: 
+                  { [Function]
+                    [arguments]: 
+                     { '0': 
+                        { url: '/favicon.ico',
+                          httpVersionMinor: 1,
+                          httpVersion: '1.1',
+                          socket: [Circular],
+                          httpVersionMajor: 1,
+                          trailers: {},
+                          upgrade: false,
+                          headers: 
+                           { host: 'localhost:1080',
+                             'accept-encoding': 'gzip,deflate,sdch',
+                             'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5',
+                             connection: 'keep-alive',
+                             'accept-language': 'en-US,en;q=0.8',
+                             'accept-charset': 'UTF-8,*;q=0.5',
+                             accept: '*/*' },
+                          connection: [Circular],
+                          client: [Circular],
+                          statusCode: null,
+                          complete: false,
+                          method: 'GET',
+                          readable: true },
+                       '1': true,
+                       [length]: 2,
+                       [callee]: [Circular] },
+                    [length]: 2,
+                    [prototype]: { [constructor]: [Circular] },
+                    [caller]: 
+                     { [Function]
+                       [arguments]: 
+                        { '0': 
+                           { url: '/favicon.ico',
+                             shouldKeepAlive: true,
+                             versionMajor: 1,
+                             versionMinor: 1,
+                             upgrade: false,
+                             headers: 
+                              [ 'Host',
+                                'localhost:1080',
+                                'Connection',
+                                'keep-alive',
+                                'Accept',
+                                '*/*',
+                                'User-Agent',
+                                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5',
+                                'Accept-Encoding',
+                                'gzip,deflate,sdch',
+                                'Accept-Language',
+                                'en-US,en;q=0.8',
+                                'Accept-Charset',
+                                'UTF-8,*;q=0.5',
+                                [length]: 14 ],
+                             method: 'GET' },
+                          [length]: 1,
+                          [callee]: [Circular] },
+                       [length]: 1,
+                       [prototype]: { [constructor]: [Circular] },
+                       [caller]: 
+                        { [Function]
+                          [arguments]: 
+                           { '0': <SlowBuffer 47 45 54 20 2f 66 61 76 69 63 6f 6e 2e 69 63 6f 20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c 68 6f 73 74 3a 31 30 38 30 0d 0a 43 6f ...>,
+                             '1': 0,
+                             '2': 304,
+                             [length]: 3,
+                             [callee]: [Circular] },
+                          [length]: 3,
+                          [prototype]: { [constructor]: [Circular] },
+                          [caller]: 
+                           { [Function: onread]
+                             [arguments]: 
+                              { '0': <SlowBuffer 47 45 54 20 2f 66 61 76 69 63 6f 6e 2e 69 63 6f 20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c 68 6f 73 74 3a 31 30 38 30 0d 0a 43 6f ...>,
+                                '1': 0,
+                                '2': 304,
+                                [length]: 3,
+                                [callee]: [Circular] },
+                             [length]: 3,
+                             [prototype]: { [constructor]: [Circular] },
+                             [caller]: null,
+                             [name]: 'onread' },
+                          [name]: '' },
+                       [name]: '' },
+                    [name]: '' },
+                 [name]: '' },
+              [name]: 'requestListener' } } },
+     errorEmitted: false,
+     _idleTimeout: 120000,
+     onend: 
+      { [Function]
+        [arguments]: null,
+        [length]: 0,
+        [prototype]: { [constructor]: [Circular] },
+        [caller]: null,
+        [name]: '' },
+     _idleNext: 
+      { _idleNext: [Circular],
+        ontimeout: 
+         { [Function]
+           [arguments]: null,
+           [length]: 0,
+           [prototype]: { [constructor]: [Circular] },
+           [caller]: null,
+           [name]: '' },
+        _idlePrev: [Circular] },
+     bytesWritten: 0,
+     _handle: 
+      { onread: 
+         { [Function: onread]
+           [arguments]: 
+            { '0': <SlowBuffer 47 45 54 20 2f 66 61 76 69 63 6f 6e 2e 69 63 6f 20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c 68 6f 73 74 3a 31 30 38 30 0d 0a 43 6f ...>,
+              '1': 0,
+              '2': 304,
+              [length]: 3,
+              [callee]: [Circular] },
+           [length]: 3,
+           [prototype]: { [constructor]: [Circular] },
+           [caller]: null,
+           [name]: 'onread' },
+        socket: [Circular],
+        writeQueueSize: 0 },
+     _flags: 0,
+     _idlePrev: [Circular],
+     writable: true,
+     _idleStart: Thu, 10 May 2012 14:08:06 GMT,
+     ondrain: 
+      { [Function]
+        [arguments]: null,
+        [length]: 0,
+        [prototype]: { [constructor]: [Circular] },
+        [caller]: null,
+        [name]: '' },
+     destroyed: false,
+     _pendingWriteReqs: 0,
+     bytesRead: 0,
+     ondata: 
+      { [Function]
+        [arguments]: null,
+        [length]: 3,
+        [prototype]: { [constructor]: [Circular] },
+        [caller]: null,
+        [name]: '' },
+     _events: 
+      { close: 
+         { [Function]
+           [arguments]: null,
+           [length]: 0,
+           [prototype]: { [constructor]: [Circular] },
+           [caller]: null,
+           [name]: '' },
+        error: 
+         { [Function]
+           [arguments]: null,
+           [length]: 1,
+           [prototype]: { [constructor]: [Circular] },
+           [caller]: null,
+           [name]: '' },
+        timeout: 
+         { [Function]
+           [arguments]: null,
+           [length]: 0,
+           [prototype]: { [constructor]: [Circular] },
+           [caller]: null,
+           [name]: '' } },
+     _connectQueueSize: 0,
+     readable: true },
+  bytesWritten: 0,
+  _handle: 
+   { onread: 
+      { [Function: onread]
+        [arguments]: 
+         { '0': <SlowBuffer 47 45 54 20 2f 66 61 76 69 63 6f 6e 2e 69 63 6f 20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c 68 6f 73 74 3a 31 30 38 30 0d 0a 43 6f ...>,
+           '1': 0,
+           '2': 304,
+           [length]: 3,
+           [callee]: [Circular] },
+        [length]: 3,
+        [prototype]: { [constructor]: [Circular] },
+        [caller]: null,
+        [name]: 'onread' },
+     socket: [Circular],
+     writeQueueSize: 0 },
+  _flags: 0,
+  _idlePrev: 
+   { _idleNext: [Circular],
+     ontimeout: 
+      { [Function]
+        [arguments]: null,
+        [length]: 0,
+        [prototype]: { [constructor]: [Circular] },
+        [caller]: null,
+        [name]: '' },
+     _idlePrev: 
+      { allowHalfOpen: true,
+        server: 
+         { allowHalfOpen: true,
+           connections: 2,
+           _handle: 
+            { socket: [Circular],
+              onconnection: 
+               { [Function: onconnection]
+                 [arguments]: null,
+                 [length]: 1,
+                 [prototype]: { [constructor]: [Circular] },
+                 [caller]: null,
+                 [name]: 'onconnection' },
+              writeQueueSize: 0 },
+           httpAllowHalfOpen: false,
+           _events: 
+            { connection: 
+               { [Function: connectionListener]
+                 [arguments]: null,
+                 [length]: 1,
+                 [prototype]: { [constructor]: [Circular] },
+                 [caller]: null,
+                 [name]: 'connectionListener' },
+              request: 
+               { [Function: requestListener]
+                 [arguments]: 
+                  { '0': 
+                     { url: '/favicon.ico',
+                       httpVersionMinor: 1,
+                       httpVersion: '1.1',
+                       socket: [Circular],
+                       httpVersionMajor: 1,
+                       trailers: {},
+                       upgrade: false,
+                       headers: 
+                        { host: 'localhost:1080',
+                          'accept-encoding': 'gzip,deflate,sdch',
+                          'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5',
+                          connection: 'keep-alive',
+                          'accept-language': 'en-US,en;q=0.8',
+                          'accept-charset': 'UTF-8,*;q=0.5',
+                          accept: '*/*' },
+                       connection: [Circular],
+                       client: [Circular],
+                       statusCode: null,
+                       complete: false,
+                       method: 'GET',
+                       readable: true },
+                    '1': 
+                     { shouldKeepAlive: true,
+                       socket: [Circular],
+                       outputEncodings: [ [length]: 0 ],
+                       _hasBody: true,
+                       _last: false,
+                       chunkedEncoding: false,
+                       connection: [Circular],
+                       writable: true,
+                       _trailer: '',
+                       useChunkedEncodingByDefault: true,
+                       _events: 
+                        { finish: 
+                           { [Function]
+                             [arguments]: null,
+                             [length]: 0,
+                             [prototype]: { [constructor]: [Circular] },
+                             [caller]: null,
+                             [name]: '' } },
+                       finished: false,
+                       output: [ [length]: 0 ] },
+                    [length]: 2,
+                    [callee]: [Circular] },
+                 [length]: 2,
+                 [prototype]: { [constructor]: [Circular] },
+                 [caller]: 
+                  { [Function]
+                    [arguments]: 
+                     { '0': 'request',
+                       '1': 
+                        { url: '/favicon.ico',
+                          httpVersionMinor: 1,
+                          httpVersion: '1.1',
+                          socket: [Circular],
+                          httpVersionMajor: 1,
+                          trailers: {},
+                          upgrade: false,
+                          headers: 
+                           { host: 'localhost:1080',
+                             'accept-encoding': 'gzip,deflate,sdch',
+                             'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5',
+                             connection: 'keep-alive',
+                             'accept-language': 'en-US,en;q=0.8',
+                             'accept-charset': 'UTF-8,*;q=0.5',
+                             accept: '*/*' },
+                          connection: [Circular],
+                          client: [Circular],
+                          statusCode: null,
+                          complete: false,
+                          method: 'GET',
+                          readable: true },
+                       '2': 
+                        { shouldKeepAlive: true,
+                          socket: [Circular],
+                          outputEncodings: [ [length]: 0 ],
+                          _hasBody: true,
+                          _last: false,
+                          chunkedEncoding: false,
+                          connection: [Circular],
+                          writable: true,
+                          _trailer: '',
+                          useChunkedEncodingByDefault: true,
+                          _events: 
+                           { finish: 
+                              { [Function]
+                                [arguments]: null,
+                                [length]: 0,
+                                [prototype]: { [constructor]: [Circular] },
+                                [caller]: null,
+                                [name]: '' } },
+                          finished: false,
+                          output: [ [length]: 0 ] },
+                       [length]: 3,
+                       [callee]: [Circular] },
+                    [length]: 0,
+                    [prototype]: { [constructor]: [Circular] },
+                    [caller]: 
+                     { [Function]
+                       [arguments]: 
+                        { '0': 
+                           { url: '/favicon.ico',
+                             httpVersionMinor: 1,
+                             httpVersion: '1.1',
+                             socket: [Circular],
+                             httpVersionMajor: 1,
+                             trailers: {},
+                             upgrade: false,
+                             headers: 
+                              { host: 'localhost:1080',
+                                'accept-encoding': 'gzip,deflate,sdch',
+                                'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5',
+                                connection: 'keep-alive',
+                                'accept-language': 'en-US,en;q=0.8',
+                                'accept-charset': 'UTF-8,*;q=0.5',
+                                accept: '*/*' },
+                             connection: [Circular],
+                             client: [Circular],
+                             statusCode: null,
+                             complete: false,
+                             method: 'GET',
+                             readable: true },
+                          '1': true,
+                          [length]: 2,
+                          [callee]: [Circular] },
+                       [length]: 2,
+                       [prototype]: { [constructor]: [Circular] },
+                       [caller]: 
+                        { [Function]
+                          [arguments]: 
+                           { '0': 
+                              { url: '/favicon.ico',
+                                shouldKeepAlive: true,
+                                versionMajor: 1,
+                                versionMinor: 1,
+                                upgrade: false,
+                                headers: 
+                                 [ 'Host',
+                                   'localhost:1080',
+                                   'Connection',
+                                   'keep-alive',
+                                   'Accept',
+                                   '*/*',
+                                   'User-Agent',
+                                   'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5',
+                                   'Accept-Encoding',
+                                   'gzip,deflate,sdch',
+                                   'Accept-Language',
+                                   'en-US,en;q=0.8',
+                                   'Accept-Charset',
+                                   'UTF-8,*;q=0.5',
+                                   [length]: 14 ],
+                                method: 'GET' },
+                             [length]: 1,
+                             [callee]: [Circular] },
+                          [length]: 1,
+                          [prototype]: { [constructor]: [Circular] },
+                          [caller]: 
+                           { [Function]
+                             [arguments]: 
+                              { '0': <SlowBuffer 47 45 54 20 2f 66 61 76 69 63 6f 6e 2e 69 63 6f 20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c 68 6f 73 74 3a 31 30 38 30 0d 0a 43 6f ...>,
+                                '1': 0,
+                                '2': 304,
+                                [length]: 3,
+                                [callee]: [Circular] },
+                             [length]: 3,
+                             [prototype]: { [constructor]: [Circular] },
+                             [caller]: 
+                              { [Function: onread]
+                                [arguments]: 
+                                 { '0': <SlowBuffer 47 45 54 20 2f 66 61 76 69 63 6f 6e 2e 69 63 6f 20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c 68 6f 73 74 3a 31 30 38 30 0d 0a 43 6f ...>,
+                                   '1': 0,
+                                   '2': 304,
+                                   [length]: 3,
+                                   [callee]: [Circular] },
+                                [length]: 3,
+                                [prototype]: { [constructor]: [Circular] },
+                                [caller]: null,
+                                [name]: 'onread' },
+                             [name]: '' },
+                          [name]: '' },
+                       [name]: '' },
+                    [name]: '' },
+                 [name]: 'requestListener' } } },
+        errorEmitted: false,
+        _idleTimeout: 120000,
+        onend: 
+         { [Function]
+           [arguments]: null,
+           [length]: 0,
+           [prototype]: { [constructor]: [Circular] },
+           [caller]: null,
+           [name]: '' },
+        _idleNext: [Circular],
+        bytesWritten: 0,
+        _handle: 
+         { onread: 
+            { [Function: onread]
+              [arguments]: 
+               { '0': <SlowBuffer 47 45 54 20 2f 66 61 76 69 63 6f 6e 2e 69 63 6f 20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c 68 6f 73 74 3a 31 30 38 30 0d 0a 43 6f ...>,
+                 '1': 0,
+                 '2': 304,
+                 [length]: 3,
+                 [callee]: [Circular] },
+              [length]: 3,
+              [prototype]: { [constructor]: [Circular] },
+              [caller]: null,
+              [name]: 'onread' },
+           socket: [Circular],
+           writeQueueSize: 0 },
+        _flags: 0,
+        _idlePrev: [Circular],
+        writable: true,
+        _idleStart: Thu, 10 May 2012 14:08:06 GMT,
+        ondrain: 
+         { [Function]
+           [arguments]: null,
+           [length]: 0,
+           [prototype]: { [constructor]: [Circular] },
+           [caller]: null,
+           [name]: '' },
+        destroyed: false,
+        _pendingWriteReqs: 0,
+        bytesRead: 0,
+        ondata: 
+         { [Function]
+           [arguments]: null,
+           [length]: 3,
+           [prototype]: { [constructor]: [Circular] },
+           [caller]: null,
+           [name]: '' },
+        _events: 
+         { close: 
+            { [Function]
+              [arguments]: null,
+              [length]: 0,
+              [prototype]: { [constructor]: [Circular] },
+              [caller]: null,
+              [name]: '' },
+           error: 
+            { [Function]
+              [arguments]: null,
+              [length]: 1,
+              [prototype]: { [constructor]: [Circular] },
+              [caller]: null,
+              [name]: '' },
+           timeout: 
+            { [Function]
+              [arguments]: null,
+              [length]: 0,
+              [prototype]: { [constructor]: [Circular] },
+              [caller]: null,
+              [name]: '' } },
+        _connectQueueSize: 0,
+        readable: true } },
+  writable: true,
+  _httpMessage: 
+   { shouldKeepAlive: true,
+     socket: [Circular],
+     outputEncodings: [ [length]: 0 ],
+     _hasBody: true,
+     _last: false,
+     chunkedEncoding: false,
+     connection: [Circular],
+     writable: true,
+     _trailer: '',
+     useChunkedEncodingByDefault: true,
+     _events: 
+      { finish: 
+         { [Function]
+           [arguments]: null,
+           [length]: 0,
+           [prototype]: { [constructor]: [Circular] },
+           [caller]: null,
+           [name]: '' } },
+     finished: false,
+     output: [ [length]: 0 ] },
+  _idleStart: Thu, 10 May 2012 14:08:07 GMT,
+  ondrain: 
+   { [Function]
+     [arguments]: null,
+     [length]: 0,
+     [prototype]: { [constructor]: [Circular] },
+     [caller]: null,
+     [name]: '' },
+  destroyed: false,
+  _pendingWriteReqs: 0,
+  bytesRead: 304,
+  ondata: 
+   { [Function]
+     [arguments]: 
+      { '0': <SlowBuffer 47 45 54 20 2f 66 61 76 69 63 6f 6e 2e 69 63 6f 20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c 68 6f 73 74 3a 31 30 38 30 0d 0a 43 6f ...>,
+        '1': 0,
+        '2': 304,
+        [length]: 3,
+        [callee]: [Circular] },
+     [length]: 3,
+     [prototype]: { [constructor]: [Circular] },
+     [caller]: 
+      { [Function: onread]
+        [arguments]: 
+         { '0': <SlowBuffer 47 45 54 20 2f 66 61 76 69 63 6f 6e 2e 69 63 6f 20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c 68 6f 73 74 3a 31 30 38 30 0d 0a 43 6f ...>,
+           '1': 0,
+           '2': 304,
+           [length]: 3,
+           [callee]: [Circular] },
+        [length]: 3,
+        [prototype]: { [constructor]: [Circular] },
+        [caller]: null,
+        [name]: 'onread' },
+     [name]: '' },
+  _events: 
+   { close: 
+      [ { [Function]
+          [arguments]: null,
+          [length]: 0,
+          [prototype]: { [constructor]: [Circular] },
+          [caller]: null,
+          [name]: '' },
+        { [Function: onServerResponseClose]
+          [arguments]: null,
+          [length]: 0,
+          [prototype]: { [constructor]: [Circular] },
+          [caller]: null,
+          [name]: 'onServerResponseClose' },
+        [length]: 2 ],
+     error: 
+      { [Function]
+        [arguments]: null,
+        [length]: 1,
+        [prototype]: { [constructor]: [Circular] },
+        [caller]: null,
+        [name]: '' },
+     timeout: 
+      { [Function]
+        [arguments]: null,
+        [length]: 0,
+        [prototype]: { [constructor]: [Circular] },
+        [caller]: null,
+        [name]: '' } },
+  _connectQueueSize: 0,
+  readable: true }
+request from 127.0.0.1:44634
+header 'host': 'localhost:1080'
+url: '/favicon.ico'
+

@@ -1,0 +1,117 @@
+/* All Good Apps.com */
+
+html { /* background gradient covering entire viewport */
+	background-image:
+		repeating-linear-gradient(
+			-45deg,
+			#ffeeb8,
+			#fff5d6 50px,
+			#ffeeb8 100px);
+	background-image:
+		-webkit-repeating-linear-gradient(
+			-45deg, /* 0 means horizontal, positive is clockwise */
+			#ffeeb8,
+			#fff5d6 2cm,
+			#ffeeb8 4cm);
+}
+
+body { /* left and top margins, font selection */
+	margin-left: 1em;
+	margin-top: 1em;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+/*
+content div has full page width
+center div has slider width and is centered inside content
+headerbox is right aligned with slider and flows left
+- company name to the left
+- options flowing right
+slider clears headerbox and is centered
+*/
+.content {
+	text-align: center;
+}
+
+.center {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.headerbg {
+	min-width: 1000px;
+	background-color: #fff5d6;
+	border-radius: 1em;	
+}
+
+.headerbox { /* We want app title in upper left */
+	margin-bottom: 1em;
+	padding-left: 2em;
+	padding-right: 2em;
+	text-align: left;
+}
+
+.headerbox h1 { /* App name at left edge, options flowing right */
+	display: inline;
+}
+
+.headerbox span { /* spacing for top level navigation flowing right */
+	margin-left: 2em;
+	font-weight: bold;
+}
+
+#slider { /* centered focus of view */
+	clear: both;
+	width: 1000px;
+	height: 636px;
+	background-color: #fff5d6;
+	margin-bottom: 2em;
+	border: 2px solid gray;
+	border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
+}
+
+/*
+Link collection below slider
+*/
+.linkbox {
+	margin-bottom: 2em;
+}
+
+.linkbox h2 {
+	display: inline;
+}
+
+.linkbox span {
+	margin-left: 2em;
+	font-weight: bold;
+}
+
+/*
+account in optionsright:
+	add spacing below each entry
+	make images vertical align centered
+*/
+.account {
+	padding-bottom: 1em;
+}
+
+.account img {
+	vertical-align: middle;
+}
+
+/* feature in optionsright:
+	add spacing below each entry
+*/
+.feature {
+	padding-bottom: 1em;
+}
+
+.footer {
+	clear: both;
+	border: 2px solid red;
+}
+/*
+a {
+	color: #00B7FF;
+}*/

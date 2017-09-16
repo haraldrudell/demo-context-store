@@ -1,0 +1,49 @@
+#! /bin/bash
+# checkrestart
+# Wait for a server to go down, then come back up using ping
+# © 2013 Harald Rudell <harald.rudell@therudells.com> (http://haraldrudell.com)  All rights reserved.
+
+set -eu
+echo; echo; echo "=== $(basename $0) $(date --rfc-3339=s)"
+LINENO= # avoid termination for sh: LINENO is not defined
+
+INITIALWAIT=; [ $# -gt 0 ] && [ "$1" = w ] && INITIALWAIT=1
+IP=192.168.1.2
+if [ "$INITIALWAIT" ]; then [ $# -gt 1 ] && IP=$2
+else [ $# -gt 0 ] && IP=$1
+fi
+echo "ip: $IP"
+
+echo -n "Checking host state... "
+STATE=unknown
+if ping -c1 -W1 $IP >/dev/null; then # ping response: host is booting or up
+	if nmap -p 22 $IP | grep -c open >/dev/null; then STATE=up
+	else STATE=booting
+	fi
+else STATE=down
+fi
+echo "Host is $STATE"
+
+if [ "$INITIALWAIT" ] && [ $STATE = up ]; then
+echo -n "Waiting for host to shut down $(date --rfc-3339=s)..."
+while ping -c1 -W1 $IP >/dev/null; do sleep 2; done
+STATE=down
+echo "Host is now $STATE"
+fi
+
+if [ $STATE = down ]; then
+echo -n "Waiting for host to boot $(date --rfc-3339=s)..."
+A=$(date +%s)
+while true; do ping -c1 $IP >/dev/null && break; sleep 2; done
+STATE=booting
+echo " $(($(date +%s) - A)) s: host is now $STATE"
+fi
+
+if [ $STATE != up ]; then
+A=$(date +%s)
+echo -n "Waiting for ssh port to open $(date --rfc-3339=s)..."
+while true; do nmap -p 22 $IP | grep -c open >/dev/null && break; sleep 2; done
+echo " $(($(date +%s) - A)) s"
+STATE=up
+echo "Host is $STATE $(date --rfc-3339=s)"
+fi

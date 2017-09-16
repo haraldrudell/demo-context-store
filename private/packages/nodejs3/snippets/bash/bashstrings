@@ -1,0 +1,8 @@
+#! /bin/bash
+# bashstrings
+# String manipulation in bash script
+# © 2013 Harald Rudell <harald.rudell@therudells.com> (http://haraldrudell.com) All rights reserved.
+
+X=AB
+echo "${X:1}"
+echo "${#X}"

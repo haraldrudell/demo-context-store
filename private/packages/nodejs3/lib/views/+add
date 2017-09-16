@@ -1,0 +1,7 @@
+<!DOCTYPE html><html><head><title>Google+ Badge</title>
+<script src=https://apis.google.com/js/plusone.js></script>
+</head><body>
+<div style="border: 1px solid black">
+<div class="g-plus" data-href="https://plus.google.com/111308661866690769955" rel="author" data-width="300" data-height="69"></div>
+</div>
+</body></html>
