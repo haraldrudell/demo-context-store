@@ -10,32 +10,38 @@ import webpack from 'webpack'
 import {spawn} from 'child_process'
 
 export default class TranspiledRunner {
-  async run(args) { // args: [ 'Build', … ], default BABEL_ENV=development
-    console.log('TranspiledRunner.run')
-    const scriptName = args[0]
-    const scriptBasename = `${scriptName}.js`
-    const projectDir = path.join(__dirname, '..')
-    const esDir = path.join(projectDir, 'scripts')
-    const scriptFile = path.join(esDir, scriptBasename)
-    if (!await fs.exists(scriptFile)) throw new Error(`Unknown command ${scriptName}: file does not exist: ${scriptFile}`)
+  static esFile = 'runscripts'
+  static esDir = 'scriptrun'
+  static runDir = '../tmp'
+  static ext = '.js'
+  static node = 'node'
 
-    const transpileDir = path.join(projectDir, 'tmp')
-    const transpiledFile = path.join(transpileDir, scriptBasename)
+  async run(args) {
+    console.log('TranspiledRunner.run')
+    const projectDir = process.cwd()
+    const entry = TranspiledRunner.esFile
+    const filename = `${entry}${TranspiledRunner.ext}`
+    const runDir = path.join(projectDir, TranspiledRunner.runDir)
+    const transpiledFile = path.join(runDir, filename)
+
     if (!await fs.exists(transpiledFile)) {
-      console.log(`TranspiledRunner: transpiling: ${scriptName}`)
+      const esDir = path.join(projectDir, TranspiledRunner.esDir)
+      const esFile = path.join(esDir, filename)
+      console.log(`TranspiledRunner: transpiling: ${esFile}`)
       await this.compile(
         webpackConfigGenerator({
-          entry: {[scriptName]: [scriptFile, path.join(__dirname, 'asyncClassRunner')]},
-          appBuild: transpileDir,
+          entry: {[entry]: esFile},
+          appBuild: runDir,
           appNodeModules: path.resolve(projectDir, 'node_modules'),
           appSrc: esDir,
           nodePath: process.env.NODE_PATH || '',
       })).catch(e => this.undoTranspile(e, transpiledFile))
     }
 
-    args = [transpiledFile].concat(args.slice(1))
-    console.log(`TranspiledRunner spawning: node ${args.join(' ')}`)
-    await this.spawn({cmd: 'node', args})
+    const cmd = TranspiledRunner.node
+    args = [transpiledFile].concat(args)
+    console.log(`TranspiledRunner spawning: ${cmd} ${args.join(' ')}`)
+    return this.spawn({cmd, args})
   }
 
   async undoTranspile(e, transpiledFile) {
@@ -51,7 +57,7 @@ export default class TranspiledRunner {
   }
 
   async spawn({cmd, args, options}) {
-    return new Promise((resolve, reject) => spawn(cmd, args, {...options, stdio: 'inherit'})
+    return new Promise((resolve, reject) => spawn(cmd, args, {stdio: 'inherit', ...options})
     .once('close', (status, signal) => {
       if (status === 0 && !signal) resolve(status)
       else {
@@ -70,17 +76,4 @@ export default class TranspiledRunner {
     if (stats.hasErrors()) throw new Error('Webpack errors')
     if (stats.hasWarnings())  throw new Error('Webpack warnings')
   }
-
-  static instantiate(...args) {
-    return new TranspiledRunner().run(...args)
-  }
-
-  static errorHandler(e) {
-    console.error(e instanceof Error && e.message || e)
-    process.exit(1)
-  }
 }
-
-if (typeof require !== 'undefined' && require &&
-  typeof module !== 'undefined' && require.main === module)
-  TranspiledRunner.instantiate(process.argv.slice(2)).catch(TranspiledRunner.errorHandler)

@@ -8,8 +8,8 @@
     "node": ">=4.8"
   },
   "scripts": {
-    "build": "./node_modules/.bin/babel-node ./scriptrun/TranspiledRunner Build",
-    "clean": "./node_modules/.bin/cross-env BABEL_ENV=nodecurrent ./node_modules/.bin/babel-node ./scriptrun/TranspiledRunner Clean",
+    "build": "./node_modules/.bin/cross-env BABEL_ENV=nodecurrent ./node_modules/.bin/babel-node ./scriptrun/transpile Build",
+    "clean": "./node_modules/.bin/cross-env BABEL_ENV=nodecurrent ./node_modules/.bin/babel-node ./scriptrun/transpile Clean",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
@@ -155,7 +155,7 @@
   "private": true,
   "dependencies": {
     "cross-env": "^5.0.5",
-    "cross-spawn-async": "0.0.1",
+    "spawn-async": "0.0.1",
     "fs-extra": "^4.0.2"
   },
   "devDependencies": {

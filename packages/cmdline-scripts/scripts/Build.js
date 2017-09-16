@@ -2,29 +2,31 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
-import spawn from 'cross-spawn-async'
+import spawn from 'spawn-async'
+import Clean from './Clean'
 
 import path from 'path'
 import fs from 'fs-extra'
-console.log('Build')
+
+console.log('Build parse')
+
 export default class Build {
   async run() {
-    const projectDir = path.join(__dirname, '..')
-    this.buildDir = path.join(projectDir, 'build')
-    this.binDir = path.join(projectDir, 'bin')
-    await this.clean()
+    console.log('Build.run')
+    await new Clean().run()
 
     this.babel = path.join(require.resolve('babel-cli'), '../bin/babel.js')
     console.log('bef')
     await this.transpilePlugins()
     console.log('bef9re')
-    await this.transpileCrossSpawn(),
+    await this.transpileCrossSpawn()
     console.log('after')
-    return Promise.all([
+    await Promise.all([
       this.transpileBinaries(),
       this.transpileScripts(),
       this.transpileWebpackConfig(),
     ])
+    console.log('Build complete.')
   }
 
   async transpilePlugins() {
@@ -50,13 +52,6 @@ export default class Build {
 
   async transpileCrossSpawn() {
     const outfile = path.join(this.buildDir, 'spawn.js')
-    return spawn({cmd: this.babel, args: ['--out-file', outfile, require.resolve('cross-spawn-async')], options: {env: {BABEL_ENV: 'production'}}})
-  }
-
-  async clean() {
-    return Promise.all([
-      fs.remove(this.buildDir),
-      fs.remove(this.binDir),
-    ])
+    return spawn({cmd: this.babel, args: ['--out-file', outfile, require.resolve('spawn-async')], options: {env: {BABEL_ENV: 'production'}}})
   }
 }
