@@ -3,103 +3,80 @@
 All rights reserved.
 */
 import NetworkBase from './NetworkBase'
+import LineReader from 'linesai'
+
+import fs from 'fs-extra'
 
 export default class Linux extends NetworkBase {
-  var os    = require('os'),
-      exec  = require('child_process').exec,
-      async = require('async');
+  static procNetDev = '/proc/net/dev'
+  static sysDevicesVirtualNet = '/sys/devices/virtual/net'
+  static procNetRoute = '/proc/net/route'
+  static defaultRoute = '0.0.0.0'
 
-  function trim_exec(cmd, cb) {
-    exec(cmd, function(err, out) {
-      if (out && out.toString() != '')
-        cb(null, out.toString().trim())
-      else
-        cb(err)
-    })
+  async getDefaultRoute() {
+    let result
+    for (let route of await this.getRoutes())
+      if (route.dest === Linux.defaultRoute)
+        if (!result || route.metric < result.metric) result = route
+    return result
   }
 
-  // If no wifi, then there is no error but cbed get's a null in second param.
-  exports.get_active_network_interface_name = function(cb) {
-    var cmd = "netstat -rn | grep UG | awk '{print $NF}'";
-    exec(cmd, function(err, stdout) {
-      if (err) return cb(err);
+  async getInterfaces(includeVirtual) { // cat --show-all /proc/net/dev
+    const result = new Set()
+    const f = Linux.procNetDev
+    const lr = new LineReader(fs.createReadStream(f))
+    for (let i = 0; ; i++) {
+      const line = await lr.readLine()
+      if (line === false) break
+      if (i < 2) continue // skip 2 header lines
+      const match = line.match(/ *([^:]+)/)
+      if (!match) throw new Error(`Network.Linux.getInterfaces: failed to parse ${f}: ${line}`)
+      result.add(match[1])
+    }
+    if (includeVirtual) await this._addVirtualInterfaces(result)
+    return Array.from(result).sort()
+  }
 
-      var raw = stdout.toString().trim().split('\n');
-      if (raw.length === 0 || raw === [''])
-        return cb(new Error('No active network interface found.'));
+  async _addVirtualInterfaces(result) {
+    for (let ifname of await fs.readdir(Linux.sysDevicesVirtualNet)) result.add(ifname)
+  }
 
-      cb(null, raw[0]);
-    });
-  };
-
-  exports.interface_type_for = function(nic_name, cb) {
-    exec('cat /proc/net/wireless | grep ' + nic_name, function(err, out) {
-      return cb(null, err ? 'Wired' : 'Wireless')
-    })
-  };
-
-  exports.mac_address_for = function(nic_name, cb) {
-    var cmd = 'cat /sys/class/net/' + nic_name + '/address';
-    trim_exec(cmd, cb);
-  };
-
-  exports.gateway_ip_for = function(nic_name, cb) {
-    trim_exec("ip r | grep " + nic_name + " | grep default | cut -d ' ' -f 3", cb);
-  };
-
-  exports.netmask_for = function(nic_name, cb) {
-    var cmd = "ifconfig " + nic_name + " 2> /dev/null | egrep 'netmask|Mask:' | awk '{print $4}' | sed 's/Mask://'";
-    trim_exec(cmd, cb);
-  };
-
-  exports.get_network_interfaces_list = function(cb) {
-
-    var count = 0,
-        list = [],
-        nics = os.networkInterfaces();
-
-    function append_data(obj) {
-      async.parallel([
-        function(cb) {
-          exports.mac_address_for(obj.name, cb)
-        },
-        function(cb) {
-          exports.gateway_ip_for(obj.name, cb)
-        },
-        function(cb) {
-          exports.netmask_for(obj.name, cb)
-        },
-        function(cb) {
-          exports.interface_type_for(obj.name, cb)
-        }
-      ], function(err, results) {
-        if (results[0]) obj.mac_address = results[0];
-        if (results[1]) obj.gateway_ip  = results[1];
-        if (results[2]) obj.netmask     = results[2];
-        if (results[3]) obj.type        = results[3];
-
-        list.push(obj);
-        --count || cb(null, list);
+  async getRoutes() { // cat --show-all /proc/net/route
+    const result = []
+    const f = Linux.procNetRoute
+    const lr = new LineReader(fs.createReadStream(f))
+    for (let i = 0; ; i++) {
+      const line = await lr.readLine()
+      if (line === false) break
+      if (i < 1) continue // skip header line
+      const match = line.match(/([^\t]+)\t([^\t]+)\t([^\t]+)\t(([^\t]+)\t){3}([^\t]+)\t([^\t]+)/)
+      if (!match) throw new Error(`Network.Linux.getRoutes: failed to parse ${f}: ${line}`)
+      result.push({
+        dest: this._getIpv4(match[2]),
+        gw:  this._getIpv4(match[3]),
+        iface: match[1],
+        metric: Number(match[6]),
+        mask: this._getIpv4(match[7]),
+        suffix: this._getSuffix(match[7]),
       })
     }
+    return result.sort(this._routeSort)
+  }
 
-    for (var key in nics) {
-      if (key != 'lo0' && key != 'lo' && !key.match(/^tun/)) {
+  _routeSort(r1, r2) {
+    return r1.dest < r2.dest || r1.metric < r2.metrics
+      ? -1
+      : 1
+  }
 
-        count++;
-        var obj = { name: key };
+  _getIpv4(s) { // 8 characters
+    let result = []
+    for (let i = 6; i >= 0; i -= 2) result.push(parseInt(s.substr(i, 2), 16))
+    return result.join('.')
+  }
 
-        nics[key].forEach(function(type) {
-          if (type.family == 'IPv4') {
-            obj.ip_address = type.address;
-          }
-        });
-
-        append_data(obj);
-      }
-    }
-
-    if (count == 0)
-      cb(new Error('No interfaces found.'))
+  _getSuffix(s) {
+    const n = parseInt(s, 16)
+    return n === 0 ? n : n.toString(2).length
   }
 }

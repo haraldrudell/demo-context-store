@@ -5,6 +5,7 @@
   "main": "lib/Network.js",
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config",
+    "clean": "./node_modules/.bin/clean lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
@@ -12,5 +13,13 @@
   "private": true,
   "engines": {
     "node": ">=8"
+  },
+  "dependencies": {
+    "fs-extra": "",
+    "linesai": "0.0.1"
+  },
+  "devDependencies": {
+    "clean": "0.0.1",
+    "rollupconfig": "0.0.1"
   }
 }
