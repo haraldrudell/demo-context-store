@@ -1,0 +1,30 @@
+{
+  "name": "getopt2018",
+  "version": "0.0.1",
+  "description": "Modern options parsing",
+  "main": "lib/OptionsParser",
+  "scripts": {
+    "build": "../../node_modules/.bin/rollup --config",
+    "clean": "./node_modules/.bin/clean lib",
+    "test": "../../node_modules/.bin/jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "../../jest.transform.js"
+    }
+  },
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "fs-extra": "^4.0.1",
+    "js-yaml": "^3.9.1"
+  },
+  "devDependencies": {
+    "rollupconfig": "0.0.1",
+    "clean": "0.0.1"
+  }
+}

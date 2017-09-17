@@ -10,9 +10,8 @@
   "scripts": {
     "start": "../../node_modules/.bin/babel-node src/run",
     "build": "../../node_modules/.bin/rollup --config",
-    "buildobsolete": "./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/babel-node config/Build",
-    "runbuild": "node build/availer",
-    "clean": "./node_modules/.bin/babel-node config/Clean",
+    "runbuild": "build/availer",
+    "clean": "./node_modules/.bin/clean build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,26 +19,21 @@
     "url": "https://github.com/haraldrudell"
   },
   "keywords": [
-    "Android",
-    "adb",
-    "apk",
-    "app"
+    "Service",
+    "route",
+    "ip",
+    "ping"
   ],
-  "singleFile": {
-    "name": "availer",
-    "entry": "run"
-  },
   "private": true,
   "dependencies": {
-    "asyncprocess": "0.0.1",
     "classrunner": "0.0.1",
-    "clean": "0.0.1",
-    "cross-env": "^5.0.4",
     "fs-extra": "^4.0.1",
-    "js-yaml": "^3.9.1",
+    "getopt2018": "0.0.1",
     "network-portable": "0.0.1",
-    "rollupconfig": "0.0.1",
-    "syslogtcp": "0.0.1",
-    "uuid": "^3.1.0"
+    "syslogtcp": "0.0.1"
+  },
+  "devDependencies": {
+    "clean": "0.0.1",
+    "rollupconfig": "0.0.1"
   }
 }
