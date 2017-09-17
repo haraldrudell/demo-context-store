@@ -2,10 +2,16 @@
   "name": "linesai",
   "version": "0.0.1",
   "description": "Async line iterator for read streams",
-  "main": "lib/linesai.js",
+  "main": "lib/LineReader",
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "./node_modules/.bin/clean lib",
+    "test": "../../node_modules/.bin/jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "../../jest.transform.js"
+    }
   },
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
@@ -14,6 +20,7 @@
     "node": ">=8"
   },
   "devDependencies": {
-    "rollupconfig": "0.0.1"
+    "rollupconfig": "0.0.1",
+    "clean": "0.0.1"
   }
 }
