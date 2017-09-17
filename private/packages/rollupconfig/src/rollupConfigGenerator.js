@@ -47,6 +47,7 @@ const generatorBabelOptions = Object.assign({}, rollupBabelPluginOptions, {
     },
     'transform-class-properties',
     'transform-object-rest-spread',
+    'transform-async-generator-functions',
     /*
     The 'extends' Babel helper is used more than once in your code. It's strongly recommended that you use
     the "external-helpers" plugin or the "es2015-rollup" preset. See https://github.com/rollup/rollup-plu
