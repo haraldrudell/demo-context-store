@@ -14,10 +14,10 @@ export default function classRunner({construct, options, stack}) {
     const ct = typeof construct
     if (ct !== 'function') throw new Error(`classRunner: construct argument not function: ${ct}`)
     if (stack !== undefined) stackTrace = !!stack
-    if (typeof options === 'function') options = options()
-    const instance = new construct(options)
+    if (typeof options === 'function') options = await options()
+    const instance = new construct(options, errorHandler)
     return typeof instance.run === 'function'
-      ? instance.run(options && options.run || options)
+      ? instance.run(options && options.run || options, errorHandler)
       : instance
   })().catch(errorHandler)
 }
