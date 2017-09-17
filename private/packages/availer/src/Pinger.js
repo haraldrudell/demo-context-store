@@ -3,7 +3,7 @@
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
 import {UP, DOWN, getISOTime} from './Status'
-import {PingTimeoutError, default as sendPing} from './sendPing'
+import {PingTimeoutError, sendPing} from './sendPing'
 import Monitor from './Monitor'
 
 const oneSecond = 1e3

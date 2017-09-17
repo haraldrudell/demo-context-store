@@ -9,7 +9,6 @@ import {getISOTime} from './Status'
 import classRunner from 'classrunner'
 
 import fs from 'fs-extra'
-import commander from 'commander'
 import yaml from 'js-yaml'
 
 import os from 'os'
@@ -17,37 +16,90 @@ import path from 'path'
 
 classRunner({construct: AvailabilityManager, options: loadAllOptions})
 
-async function loadAllOptions(options) {
-  const r = getGlobals()
-  const theHost = os.hostname().replace(/\..*$/, '')
-  const now = Date.now()
-  console.log(`\n\n=== ${theHost}:${r.THE_NAME + ':' || ''}${process.pid} ${getISOTime(now)}`)
+const HAS_ARG = 1
+const IS_HELP = 0
+const optionMap = {
+  help: IS_HELP,
+  profile: HAS_ARG,
+  file: HAS_ARG,
+}
 
-  // get command-line options
-  const commandName = r.THE_NAME
-  commander
-    .name(commandName)
-    .version(`${r.THE_VERSION}${r.THE_BUILD ? ' built: ' + r.THE_BUILD : ''}`)
-    .option('--profile <name>', 'monitoring profile, default "default"')
-    .option('--file <name>', 'parameter yaml file')
-    .option('--ifs', 'list detected interfaces')
-    .parse(process.argv)
-  if (commander.args.length) throw new Error(`Unknown addional parameters: '${commander.args.join(' ')}'`)
-  const cmdOptions = commander.opts()
-  delete cmdOptions.version
-  cmdOptions.cmdName = commandName
+async function loadAllOptions() {
+  const r = getGlobals() // string values injected at transpile
+  const b = r.THE_NAME || path.basename(__filename)
+  const commandName = r.THE_NAME || b.slice(0, -path.extname(b))
+
+  // display greeting
+  const theHost = os.hostname().replace(/\..*$/, '')
+  const processLaunch = Date.now() - process.uptime()
+  console.log(`\n\n=== ${theHost}:${r.THE_NAME + ':' || ''}${process.pid} ${getISOTime(processLaunch)}`)
+
+  const options = getOpt(process.argv.slice(2))
+  const isError = options instanceof Error
+  if (!options || isError) {
+    console.log(getUsage(r))
+    if (isError) console.error(options.message)
+    process.exit(isError ? 1 : 0)
+  }
 
   // get yaml options
-  if (!cmdOptions.file) cmdOptions.file = await findYamlFilename(commandName)
-  const yamlOptions = await loadYaml(cmdOptions.file)
+  if (!options.file) options.file = await findYamlFilename(commandName)
+  const yamlOptions = await loadYaml(options.file)
 
-  if (!cmdOptions.profile) cmdOptions.profile = yamlOptions.hostprofiles
+  if (!options.profile) options.profile = yamlOptions.hostprofiles
     ? theHost
     : 'default'
+  return {...yamlOptions, ...options}
+}
 
-  // save options
-  if (!options.asyncArg) options.asyncArg = {}
-  Object.assign(options.asyncArg, cmdOptions, yamlOptions)
+function getOpt(argv, allowStrings) {
+  const options = {}
+  const strings = []
+
+  while (argv.length) {
+    const token = argv.shift()
+    if (token === '--') { // remaining tokens are non-options
+      Array.prototype.push.apply(strings, argv.slice(1))
+      break
+    }
+    const ch = token[0]
+    if (ch !== '-') { // string token
+      strings.push(token)
+      continue
+    }
+    const ch2 = token[1]
+    const nohypens = token.substring(ch2 === '-' ? 2 : 1)
+    const option = getBeforeEqual(nohypens)
+    const hadEqual = option.length !== nohypens.length
+    const optionType = optionMap[option]
+    if (optionType === undefined) return new Error(`Unknown option: ${token}`)
+    if (optionType === IS_HELP) return
+    if (optionType === HAS_ARG) {
+      if (!hadEqual && !argv.length) return new Error(`Missing argument for option ${token}`)
+      options[option] = hadEqual ? nohypens.substring(option.length + 1) : argv.shift()
+    } else return new Error(`Unimplemented option type: ${optionType}`)
+  }
+  if (strings.length) {
+    if (!allowStrings) return new Error(`Extra arguments: ${strings.join(' ')}`)
+    options.strings = strings
+  }
+  return options
+}
+
+function getBeforeEqual(s) {
+  const i = s.indexOf('=')
+  return ~i
+    ? s.substring(0, i)
+    : s
+}
+
+function getUsage(r) {
+  return (
+  `${r.THE_NAME || ''}\n` +
+  `${r.THE_VERSION}${r.THE_BUILD ? ' built: ' + r.THE_BUILD : ''}\n` +
+  `  -profile name, default 'default'\n` +
+  `  -file name, paraneter yaml file\n`
+  )
 }
 
 async function findYamlFilename(name) {

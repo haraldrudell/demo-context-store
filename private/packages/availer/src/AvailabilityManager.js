@@ -9,7 +9,7 @@ import EventMonitor from './EventMonitor'
 export default class AvailabilityManager {
   allowedEntries = {defaultRoute: this, gateway: this}
 
-  async run(o, pd) {
+  async run(o, errorHandler) {
     if (!o) o = false
     if (o.file) console.log(`Read: ${o.file}`)
 
@@ -24,7 +24,6 @@ export default class AvailabilityManager {
 
     let result
     const {cmdName} = o
-    const {errorHandler} = pd
     if (monitor) result = new EventMonitor({monitor, profile, cmdName, errorHandler})
 
     if (ok && !monitor) console.log('Completed successfully')

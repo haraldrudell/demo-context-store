@@ -9,8 +9,8 @@
   },
   "scripts": {
     "start": "../../node_modules/.bin/babel-node src/run",
-    "build": "./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/babel-node config/Build",
-    "buildrollup": "../../node_modules/.bin/rollup --config",
+    "build": "../../node_modules/.bin/rollup --config",
+    "buildobsolete": "./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/babel-node config/Build",
     "runbuild": "node build/availer",
     "clean": "./node_modules/.bin/babel-node config/Clean",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -34,11 +34,10 @@
     "asyncprocess": "0.0.1",
     "classrunner": "0.0.1",
     "clean": "0.0.1",
-    "commander": "^2.11.0",
     "cross-env": "^5.0.4",
     "fs-extra": "^4.0.1",
     "js-yaml": "^3.9.1",
-    "network": "^0.3.2",
+    "network-portable": "0.0.1",
     "rollupconfig": "0.0.1",
     "syslog-client": "^1.1.1",
     "uuid": "^3.1.0"

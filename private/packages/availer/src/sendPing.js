@@ -7,7 +7,7 @@ import {getCmd} from './spawner'
 const cmd = 'ping'
 const oneSecond = 1e3
 
-export default async function sendPing({target, retries, timeout, packetSize}) {
+export async function sendPing({target, retries, timeout, packetSize}) {
   const timeoutS = timeout >= oneSecond && Math.round(timeout / oneSecond)
   retries = retries >= 0 ? Math.round(retries) : 0
   timeout = (timeoutS + 1) * oneSecond
