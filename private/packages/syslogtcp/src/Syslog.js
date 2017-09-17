@@ -42,7 +42,7 @@ class Syslog {
   static setOptions(o) {
     if (o) {
       const {options} = Syslog
-      for (p of Syslog.optionsList) {
+      for (let p of Syslog.optionsList) {
         const v = o[p]
         if (v === null) delete options[p]
         else if (v !== undefined) options[p] = v
@@ -93,7 +93,7 @@ class Syslog {
   static errorHandler = e => console.error('Syslog:') + console.error(e)
 }
 
-export default Syslog.log
+export const syslog = Syslog.log
 export const close = Syslog.close
 export const setOptions = Syslog.setOptions
 export const testConnect = Syslog.connect
