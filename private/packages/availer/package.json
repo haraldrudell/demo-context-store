@@ -39,7 +39,7 @@
     "js-yaml": "^3.9.1",
     "network-portable": "0.0.1",
     "rollupconfig": "0.0.1",
-    "syslog-client": "^1.1.1",
+    "syslogtcp": "0.0.1",
     "uuid": "^3.1.0"
   }
 }

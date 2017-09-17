@@ -14,8 +14,6 @@ import yaml from 'js-yaml'
 import os from 'os'
 import path from 'path'
 
-classRunner({construct: AvailabilityManager, options: loadAllOptions})
-
 const HAS_ARG = 1
 const IS_HELP = 0
 const optionMap = {
@@ -24,15 +22,17 @@ const optionMap = {
   file: HAS_ARG,
 }
 
+classRunner({construct: AvailabilityManager, options: loadAllOptions})
+
 async function loadAllOptions() {
   const r = getGlobals() // string values injected at transpile
   const b = r.THE_NAME || path.basename(__filename)
-  const commandName = r.THE_NAME || b.slice(0, -path.extname(b))
+  const commandName = r.THE_NAME || b.substring(0, b.length - path.extname(b).length)
 
   // display greeting
   const theHost = os.hostname().replace(/\..*$/, '')
   const processLaunch = Date.now() - process.uptime()
-  console.log(`\n\n=== ${theHost}:${r.THE_NAME + ':' || ''}${process.pid} ${getISOTime(processLaunch)}`)
+  console.log(`\n\n=== ${theHost}:${commandName + ':' || ''}${process.pid} ${getISOTime(processLaunch)}`)
 
   const options = getOpt(process.argv.slice(2))
   const isError = options instanceof Error
@@ -49,7 +49,7 @@ async function loadAllOptions() {
   if (!options.profile) options.profile = yamlOptions.hostprofiles
     ? theHost
     : 'default'
-  return {...yamlOptions, ...options}
+  return {...yamlOptions, cmdName: commandName, ...options}
 }
 
 function getOpt(argv, allowStrings) {

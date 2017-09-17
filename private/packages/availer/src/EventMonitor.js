@@ -5,7 +5,7 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 import DefaultRouteMonitor from './DefaultRouteMonitor'
 import Pinger from './Pinger'
 import CommandLiner from './CommandLiner'
-import {options as syslogOptions, default as syslog} from './SysLog'
+import {setOptions, syslog} from 'syslogtcp'
 import ProcessStatus from './ProcessStatus'
 
 import {EventEmitter} from 'events'
@@ -19,8 +19,7 @@ export default class EventMonitor {
 
   constructor({monitor, profile, errorHandler, cmdName, constructorMap = EventMonitor.constructorMap}) {
     Object.assign(this, {errorHandler, profile, constructorMap})
-    syslogOptions.appName = cmdName
-    syslogOptions.errorHandler = errorHandler
+    setOptions({appName: cmdName})
 
     this.eventBus = new EventEmitter()
     this.state = {}
