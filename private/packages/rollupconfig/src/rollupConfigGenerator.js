@@ -107,9 +107,10 @@ function rollupConfigGenerator(o) {
   return result
 }
 
-function rollupConfigWarningsMuffler(message) {
-  if (message) {
-    const {code, source} = message
+function rollupConfigWarningsMuffler(messageObject) {
+  const m = 'rollupconfig.warningsMuffler:'
+  if (messageObject) {
+    const {code, source, missing, message} = messageObject
   // https://github.com/rollup/rollup/issues/794
   // https://github.com/rollup/rollup/wiki/Troubleshooting#this-is-undefined
   /*{ code: 'THIS_IS_UNDEFINED',
@@ -121,9 +122,20 @@ function rollupConfigWarningsMuffler(message) {
     id: '/opt/foxyboy/sw/packages/syslogtcp/src/Syslog.js',
     toString: [Function] }
   */
-    if (code === 'THIS_IS_UNDEFINED') return
+    if (code === 'THIS_IS_UNDEFINED') {
+      console.log(`${m} rollup issue 794`)
+      return
+    }
     // https://github.com/rollup/rollup-plugin-babel/issues/13
-    if (code === 'UNRESOLVED_IMPORT' && source.startsWith('babel-runtime/')) return
+    if (code === 'UNRESOLVED_IMPORT' && source.startsWith('babel-runtime/')) {
+      console.log(`${m} babel issue 13`)
+      return
+    }
+    // https://github.com/rollup/rollup/issues/1408
+    if (code === 'MISSING_EXPORT' && missing === 'default' && message.endsWith('es6.object.to-string.js\'')) {
+      console.log(`${m} rollup issue 1408`)
+      return
+    }
   }
-  console.error(message)
+  console.error(messageObject)
 }
