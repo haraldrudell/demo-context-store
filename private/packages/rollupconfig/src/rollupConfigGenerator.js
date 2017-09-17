@@ -1,9 +1,10 @@
 /*
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
-This source code is licensed under license found in the LICENSE file in the root directory of this source tree.
+All rights reerved.
 */
 import nodeIgnores from './nodepackages'
 import chmodPlugin from './chmodPlugin'
+import warningsMuffler from './warningsMuffler'
 
 import babelPlugin from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
@@ -78,7 +79,7 @@ function rollupConfigGenerator(o) {
     : generatorBabelOptions
 
   const result = Object.assign({
-    onwarn: rollupConfigWarningsMuffler,
+    onwarn: warningsMuffler,
     plugins: [
       eslint(rollupEslintPluginOptions),
       babelPlugin(babelOptions),
@@ -105,37 +106,4 @@ function rollupConfigGenerator(o) {
   }
 
   return result
-}
-
-function rollupConfigWarningsMuffler(messageObject) {
-  const m = 'rollupconfig.warningsMuffler:'
-  if (messageObject) {
-    const {code, source, missing, message} = messageObject
-  // https://github.com/rollup/rollup/issues/794
-  // https://github.com/rollup/rollup/wiki/Troubleshooting#this-is-undefined
-  /*{ code: 'THIS_IS_UNDEFINED',
-    message: 'The \'this\' keyword is equivalent to \'undefined\' at the top level of an ES module, and has been rewritten',
-    url: 'https://github.com/rollup/rollup/wiki/Troubleshooting#this-is-undefined',
-    pos: 12,
-    loc: { file: '/opt/foxyboy/sw/packages/syslogtcp/src/Syslog.js', line: 1, column: 12 },
-    frame: '1: var _this = this;\n               ^\n2: \n3: /*',
-    id: '/opt/foxyboy/sw/packages/syslogtcp/src/Syslog.js',
-    toString: [Function] }
-  */
-    if (code === 'THIS_IS_UNDEFINED') {
-      console.log(`${m} rollup issue 794`)
-      return
-    }
-    // https://github.com/rollup/rollup-plugin-babel/issues/13
-    if (code === 'UNRESOLVED_IMPORT' && source.startsWith('babel-runtime/')) {
-      console.log(`${m} babel issue 13`)
-      return
-    }
-    // https://github.com/rollup/rollup/issues/1408
-    if (code === 'MISSING_EXPORT' && missing === 'default' && message.endsWith('es6.object.to-string.js\'')) {
-      console.log(`${m} rollup issue 1408`)
-      return
-    }
-  }
-  console.error(messageObject)
 }
