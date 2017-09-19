@@ -9,7 +9,8 @@ export default function chmodPlugin(mode) {
     name: 'chmodPlugin',
     onwrite(bundle, data) {
       const filename = bundle && (bundle.file || bundle.dest)
-      if (filename) fs.chmodSync(filename, mode >= 0 ? Number(mode) : 0o755) // rwxr-xr-x
+      if (!filename) throw new Error('chmodPlugin.onwrite: filename missing')
+      fs.chmodSync(filename, mode >= 0 ? Number(mode) : 0o755) // rwxr-xr-x
     },
   }
 }

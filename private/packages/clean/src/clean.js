@@ -22,7 +22,7 @@ async function clean(args) {
 }
 
 async function removeIfExist(p) {
-  if (await fs.exists(p)) fs.remove(p)
+  if (await fs.exists(p)) await fs.remove(p)
 }
 
 function errorHandler(e) {

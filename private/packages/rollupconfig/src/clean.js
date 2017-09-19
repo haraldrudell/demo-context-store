@@ -7,7 +7,7 @@ import path from 'path'
 
 export default async function clean(args) {
   if (typeof args === 'string') args = [args]
-  else if (!Array.isArray(args)) throw new Error('clean: argument not non-empty string or array')
+  else if (!Array.isArray(args) || !args.length) throw new Error('clean: argument not non-empty string or array')
   for (let [index, s] of args) {
     const st = typeof s
     if (st !== 'string' || !s) throw new Error(`clean: index ${index}: not non-empty string: ${st}`)
@@ -20,5 +20,5 @@ export default async function clean(args) {
 }
 
 async function removeIfExist(p) {
-  if (await fs.exists(p)) fs.remove(p)
+  if (await fs.exists(p)) await fs.remove(p)
 }
