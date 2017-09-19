@@ -52,8 +52,12 @@ function getRollupPlugins(rollup) {
   }
   const babelOptions = Object.assign({
     babelrc: false, // unlike babel-node, rollup fails if an es2015 module transformer is included
+    presets: [['env', {modules: false}]],
     plugins: [
-      'transform-class-properties',
+      'external-helpers',
+      ['transform-runtime', {helpers: false, polyfill: false,
+        moduleName: 'rollup-regenerator-runtime',
+      }],
     ].concat(print ? babelPrintFilename : [])
   }, includeExclude)
   if (print) console.log('Rollup-Babel options:', util.inspect(babelOptions, {colors: true, depth: null}))
