@@ -1,6 +1,6 @@
 /*
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
-All rights reerved.
+All rights reserved.
 */
 import clean from './clean'
 
@@ -12,9 +12,7 @@ doClean().catch(errorHandler)
 
 async function doClean() {
   const {argv} = process
-  return clean(argv.length > 2
-    ? argv.slice(2)
-    : await getRollupClean())
+  return clean(argv.length > 2 ? argv.slice(2) : await getRollupClean())
 }
 
 async function getRollupClean() {

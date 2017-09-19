@@ -10,6 +10,8 @@ import chmodPlugin from './src/chmodPlugin'
 
 import eslint from 'rollup-plugin-eslint'
 import babel from 'rollup-plugin-babel'
+import resolve from 'rollup-plugin-node-resolve'
+import commonjs from 'rollup-plugin-commonjs'
 import shebangPlugin from 'rollup-plugin-shebang'
 
 import util from 'util'
@@ -21,6 +23,7 @@ export default rollupList
 const pkg = new PackageJson() // cannot be imported because we don’t know where it is
 const {input, external, rollup} = pkg
 if (!input) throw new Error(`${pkg.filename}: rollup.input not defined`)
+if (rollup.print) console.log('package.json rollup.print true: verbose output')
 
 const plugins = getRollupPlugins(rollup)
 
@@ -49,13 +52,17 @@ function getRollupPlugins(rollup) {
   }
   const babelOptions = Object.assign({
     babelrc: false, // unlike babel-node, rollup fails if an es2015 module transformer is included
-    plugins: [].concat(print ? babelPrintFilename : [])
+    plugins: [
+      'transform-class-properties',
+    ].concat(print ? babelPrintFilename : [])
   }, includeExclude)
   if (print) console.log('Rollup-Babel options:', util.inspect(babelOptions, {colors: true, depth: null}))
 
   return [
     eslint(includeExclude),
     babel(babelOptions),
+    resolve(),
+    commonjs(),
     cleanPlugin(clean),
   ]
 }
