@@ -5,7 +5,7 @@ This source code is licensed under license found in the LICENSE file in the root
 import fs from 'fs-extra'
 import path from 'path'
 
-export default (list) => clean(list).catch(errorHandler)
+export default list => clean(list).catch(errorHandler)
 
 async function clean(args) {
   if (typeof args === 'string') args = [args]
