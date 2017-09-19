@@ -1,0 +1,32 @@
+{
+  "name": "entity",
+  "version": "0.0.1",
+  "description": "Data encapsulation for cloud use",
+  "main": "lib/Entity",
+  "scripts": {
+    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
+    "clean": "./node_modules/.bin/clean lib",
+    "test": "../../node_modules/.bin/jest"
+  },
+  "clean": [
+    "lib"
+  ],
+  "rollup": {
+    "input": "src/Entity.js",
+    "output": true,
+    "clean": true
+  },
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "uid-generator": ""
+  },
+    "devDependencies": {
+    "rollupconfig": "0.0.1",
+    "clean": "0.0.1"
+  }
+}
