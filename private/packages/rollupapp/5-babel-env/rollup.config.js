@@ -3,6 +3,7 @@
 All rights reserved.
 */
 import babel from 'rollup-plugin-babel'
+import resolve from 'rollup-plugin-node-resolve'
 
 import util from 'util'
 
@@ -14,25 +15,49 @@ const config = {
 export default config
 console.log(`node ${config.output.file}`)
 
+// determine running Node.js major version
+const matchResult = String(process.version).match(/^v([0-9]+)/)
+const num = Number(matchResult && matchResult[1])
+const nodeMajorVersion = num > 0 ? num : 0 // 8, default 0
+console.log(`Node.js major version: ${nodeMajorVersion} >= 8: ${nodeMajorVersion >= 8}`)
+const n8plus = nodeMajorVersion >= 8
+
 const babelOptions = {
   babelrc: false,
-  runtimeHelpers: true,
-  presets: [['env', {modules: false}]],
+  presets: [].concat(!n8plus ? [['env', {modules: false}]] : []),
   plugins: [
-    'transform-class-properties',
-    'transform-object-rest-spread',
-    'external-helpers',
-    'transform-runtime',
-  ]
+    'external-helpers', // babel externalized helpers
+    'transform-regenerator', // function*
+    // rollup-regenerator-runtime is inserted into the bundle
+    // rollup therefore needs rollup-plugin-node-resolve
+    // it is an ECMAScript 2015 module, so commonjs is not required
+    ['transform-runtime', {helpers: false, polyfill: false,
+      moduleName: 'rollup-regenerator-runtime'
+    }]
+  ].concat(n8plus ? [ // transforms not in Node.js version 8.4
+    // stage-1 170919
+    'transform-export-extensions', // export * as ns… export a from…
+    // stage-2 170919
+    'transform-class-properties', // class f { a = 1…
+    // stage-3 170919
+    'transform-object-rest-spread', // {...o}
+    'transform-async-generator-functions', // for await…
+    //
+    'syntax-trailing-function-commas',
+    'transform-es2015-block-scoping',
+    ['transform-es2015-for-of', {loose: true}],
+    'transform-inline-consecutive-adds',
+    'minify-dead-code-elimination',
+  ] : []),
 }
 
 const rollupBabelOptions = Object.assign({
-  externalHelpers: true,
 }, babelOptions)
 
 Object.assign(config, {
   plugins: [
     babel(rollupBabelOptions),
+    resolve(),
   ]
 })
 
