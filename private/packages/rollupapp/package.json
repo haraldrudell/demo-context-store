@@ -8,9 +8,12 @@
     "node": ">=8"
   },
   "scripts": {
-    "helloworld": "../../node_modules/.bin/rollup --config helloworld/rollup.config.js",
-    "es2017": "../../node_modules/.bin/rollup --config es2017/rollup.config.js",
-    "runclass": "../../node_modules/.bin/rollup --config runclass/rollup.config.js",
+    "helloworld": "../../node_modules/.bin/rollup --config 0-helloworld/rollup.config.js",
+    "es2017": "../../node_modules/.bin/rollup --config 1-es2017/rollup.config.js",
+    "runclass": "../../node_modules/.bin/rollup --config 2-runclass/rollup.config.js",
+    "nobabel": "../../node_modules/.bin/rollup --config 3-no-rollup-babel/rollup.config.js",
+    "cleanerr": "../../node_modules/.bin/rollup --config 4-clean/rollup.config.js",
+    "babelenv": "../../node_modules/.bin/rollup --config 5-babel-env/rollup.config.js",
     "start": "./node_modules/.bin/cmdline-scripts Start",
     "build": "../../node_modules/.bin/rollup --config",
     "clean": "./node_modules/.bin/cmdline-scripts Clean",

@@ -5,10 +5,12 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 import babel from 'rollup-plugin-babel'
 import util from 'util'
 
+const nodejsExternals = ['dgram', 'events', 'net', 'os', 'util']
+
 const inputOutputExternal = {
-  input: 'helloworld/helloworld.js',
-  output: [{file: `helloworld/helloworld-cjs.js`, format: 'cjs'}],
-  external: undefined /*[].concat(nodejsExternals)*/,
+  input: '1-es2017/es2017.js',
+  output: [{file: `1-es2017/es2017-cjs.js`, format: 'cjs'}],
+  external: [].concat(nodejsExternals),
 }
 console.log(`node ${inputOutputExternal.output[0].file}`)
 const rollupPluginBabelOptions = {
@@ -17,6 +19,9 @@ const rollupPluginBabelOptions = {
 
 const babelOptions = Object.assign({},
   rollupPluginBabelOptions,
+  {plugins: [
+    'babel-plugin-transform-object-rest-spread',
+  ]},
 )
 
 const object = [Object.assign({},

@@ -10,8 +10,8 @@ import util from 'util'
 const nodejsExternals = ['dgram', 'events', 'net', 'os', 'util', 'child_process']
 
 const inputOutputExternal = {
-  input: 'runclass/runclass.js',
-  output: [{file: `runclass/runclass-cjs.js`, format: 'cjs'}],
+  input: '2-runclass/runclass.js',
+  output: [{file: `2-runclass/runclass-cjs.js`, format: 'cjs'}],
   external: [].concat(nodejsExternals),
 }
 console.log(`node ${inputOutputExternal.output[0].file}`)
@@ -38,4 +38,5 @@ const object = [Object.assign({},
 console.log('Rollup configuration output for:', __filename)
 console.log('Object:', util.inspect(object, {colors: true, depth: null}))
 console.log('Babel options:', util.inspect(babelOptions, {colors: true, depth: null}))
+console.log('\nThe Missing xports warning is rollup issue 1408, see wanringsMuffler.js')
 export default object
