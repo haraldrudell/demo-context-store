@@ -1,6 +1,6 @@
 /*
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
-All rights reerved.
+All rights reserved.
 */
 const m = 'rollupconfig.warningsMuffler:'
 export default function rollupConfigWarningsMuffler(messageObject) {
