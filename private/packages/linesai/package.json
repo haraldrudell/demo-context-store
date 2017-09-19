@@ -8,11 +8,6 @@
     "clean": "./node_modules/.bin/clean lib",
     "test": "../../node_modules/.bin/jest"
   },
-  "jest": {
-    "transform": {
-      "^.+\\.js$": "../../jest.transform.js"
-    }
-  },
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
   "private": true,
