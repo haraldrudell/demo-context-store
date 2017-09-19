@@ -32,9 +32,8 @@ export default config
 const rollupPlugins = getRollupPluginOptions(pkg.rollup.print)
 
 if (configIsArray) {
-  const {rollup: rollup0} = pkg
+  const {external: ex, rollup: rollup0} = pkg
   let {clean} = rollup0
-  const {external: ex} = rollup0
   for (let [input, values] of Object.entries(rollupInput)) {
     const {main: ma, module: mo, external = ex, shebang} = values || false
     const main = ma !== true ? ma : pkg.main

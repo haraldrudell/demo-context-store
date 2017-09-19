@@ -30,7 +30,8 @@
     "clean": [
       "build",
       "lib"
-    ]
+    ],
+    "node": true
   },
   "repository": {
     "type": "git",
