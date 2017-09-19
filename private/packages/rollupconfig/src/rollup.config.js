@@ -7,8 +7,8 @@ import PackageJson from './PackageJson'
 import chmodPlugin from './chmodPlugin'
 import warningsMuffler from './warningsMuffler'
 import cleanPlugin from './cleanPlugin'
-import getRollupOutput from './output'
-import babelPrintFilename from './printFilename'
+import {getRollupOutput, deleteUndefined} from './output'
+import babelPrintFilename from './babelPrintFilename'
 
 import babelPlugin from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
@@ -82,7 +82,7 @@ const rollupNodeResolveOptions = Object.assign({
 
 Object.assign(o, {
   input,
-  output = getRollupOutput({pkg}),
+  output: getRollupOutput(pkg),
   external,
   onwarn: warningsMuffler,
   plugins: [
@@ -94,9 +94,10 @@ Object.assign(o, {
     ].concat(rollup.shebang ? [shebangPlugin(), chmodPlugin()] : [])
     .concat(rollup.clean ? cleanPlugin(rollup.clean) : []),
 })
+deleteUndefined(o)
 
 if (rollup.print) {
   console.log('Rollup options:', util.inspect(o, {colors: true, depth: null}))
-  console.log('Babel options:', util.inspect(babelOptions, {colors: true, depth: null}))
+  console.log('Babel options:', util.inspect(rollupBabelOptions, {colors: true, depth: null}))
   console.log('Node Resolve  options:', util.inspect(rollupNodeResolveOptions, {colors: true, depth: null}))
 }

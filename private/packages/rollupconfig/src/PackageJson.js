@@ -7,7 +7,7 @@ import path from 'path'
 import nodeIgnores from './nodepackages'
 
 export default class PackageJson {
-  construct(
+  constructor(
     packageJson = path.join(fs.realpathSync(process.cwd()), 'package.json'),
     extension = '.js') {
     const json = JSON.parse(fs.readFileSync(packageJson, 'utf8'))
@@ -26,7 +26,7 @@ export default class PackageJson {
 
   _getExternal() {
     const external = [] // use array b/c elements has to be added to set one by one
-    const {rollup, dependencies} = this.pkg
+    const {rollup, dependencies} = this.json
     if (rollup) {
       const {node, external: x, dependencies: d} = rollup
       if (Array.isArray(x)) Array.prototype.push.apply(external, x)
@@ -37,7 +37,7 @@ export default class PackageJson {
   }
 
   _getJsFile(v) {
-    const v = String(v ||'') || undefined // non-empty string or undefined
+    v = String(v || '') || undefined // non-empty string or undefined
     if (v) {
       const hasExtension = path.extname(v).length
       return `${v}${hasExtension ? '' : this.extension}`

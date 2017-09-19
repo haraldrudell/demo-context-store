@@ -6,6 +6,8 @@ import clean from './clean'
 
 import fs from 'fs-extra'
 
+import path from 'path'
+
 doClean().catch(errorHandler)
 
 async function doClean() {

@@ -14,10 +14,13 @@
     "test": "../../node_modules/.bin/jest"
   },
   "rollup": {
+    "input": "src/rollup.config",
     "clean": [
       "lib",
       "build"
-    ]
+    ],
+    "dependencies": true,
+    "node": true
   },
   "bin": {
     "clean": "build/cleanbin.js"
@@ -29,5 +32,14 @@
   "keywords": [
     "app"
   ],
-  "private": true
+  "private": true,
+  "dependencies": {
+    "fs-extra": "",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.1",
+    "rollup-plugin-eslint": "^4.0.0",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-shebang": "^0.1.4"
+  }
 }
