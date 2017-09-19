@@ -25,30 +25,24 @@ const n8plus = nodeMajorVersion >= 8
 const babelOptions = {
   babelrc: false,
   presets: [].concat(!n8plus ? [['env', {modules: false}]] : []),
-  plugins: [
+  plugins: [].concat(n8plus ? [ // transforms not in Node.js version 8.4
+    'transform-class-properties', // class f { a = 1… stage-2 170919
+    'transform-object-rest-spread', // {...o} stage-3 170919
+    'transform-export-extensions', // export * as ns… export a from… stage-1 170919
+    'transform-async-generator-functions', // for await… stage-3 170919
+    'transform-es2015-block-scoping',
+    ['transform-es2015-for-of', {loose: true}],
+    'transform-inline-consecutive-adds',
+    'minify-dead-code-elimination',
+  ] : []).concat([
     'external-helpers', // babel externalized helpers
-    'transform-regenerator', // function*
     // rollup-regenerator-runtime is inserted into the bundle
     // rollup therefore needs rollup-plugin-node-resolve
     // it is an ECMAScript 2015 module, so commonjs is not required
     ['transform-runtime', {helpers: false, polyfill: false,
       moduleName: 'rollup-regenerator-runtime'
     }]
-  ].concat(n8plus ? [ // transforms not in Node.js version 8.4
-    // stage-1 170919
-    'transform-export-extensions', // export * as ns… export a from…
-    // stage-2 170919
-    'transform-class-properties', // class f { a = 1…
-    // stage-3 170919
-    'transform-object-rest-spread', // {...o}
-    'transform-async-generator-functions', // for await…
-    //
-    'syntax-trailing-function-commas',
-    'transform-es2015-block-scoping',
-    ['transform-es2015-for-of', {loose: true}],
-    'transform-inline-consecutive-adds',
-    'minify-dead-code-elimination',
-  ] : []),
+  ]),
 }
 
 const rollupBabelOptions = Object.assign({
