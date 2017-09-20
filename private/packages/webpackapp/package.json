@@ -9,9 +9,9 @@
   },
   "scripts": {
     "start": "../../node_modules/.bin/cmdline-scripts Start",
-    "build": "../../node_modules/.bin/rollup --config",
+    "build": "echo \"170920 webpackapp build nimp\" && : ../../node_modules/.bin/rollup --config",
     "clean": "./node_modules/.bin/cmdline-scripts Clean",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"170920 webpackapp test nimp\""
   },
   "repository": {
     "type": "git",

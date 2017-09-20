@@ -2,7 +2,7 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
-const UPDATE_RESET = 0
+//const UPDATE_RESET = 0
 const UPDATE_FOUNDTASK = 1
 const UPDATE_LAUNCHTASK = 2
 const UPDATE_COMPLETEDTASK = 3
@@ -127,14 +127,14 @@ export default class AsyncModerator {
     if (seconds >= hourInSeconds) {
       const hours = Math.floor(seconds / hourInSeconds)
       result += `${hours}:`
-      seconds = seconds % hourInSeconds
+      seconds %= hourInSeconds
     }
 
     const minuteInSeconds = 60
     const minutes = Math.floor(seconds / minuteInSeconds)
     result += `${minutes < 10 ? '0' + minutes : minutes}:`
 
-    seconds = seconds % 60
+    seconds %= 60
     result += `${seconds < 10 ? '0' + seconds : seconds}`
 
     return result

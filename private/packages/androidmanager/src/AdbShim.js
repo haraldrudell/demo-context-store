@@ -109,7 +109,7 @@ export default class AdbShim {
   async pull(from, to) {
     const results = await Promise.all([
       this.md5sumFar(from),
-      this._pull(from, to)
+      this._pull(from, to),
     ])
     const md5far = results[0]
     const md5near = await this.hash(to, 'md5')
@@ -144,7 +144,10 @@ export default class AdbShim {
 
   async getPackageVersion(packageName) {
     const output = await this.shell(`dumpsys package ${packageName} | grep -e '^ *versionName='`)
-      .catch(e => {console.error(`AdbShim.getPackageVersion ${this.name} package: '${packageName}'`); throw e})
+      .catch(e => {
+        console.error(`AdbShim.getPackageVersion ${this.name} package: '${packageName}'`)
+        throw e
+      })
 
     const version = output.split('\n').reduce((accumulate, line) => {
       if (!accumulate) {
@@ -164,7 +167,10 @@ export default class AdbShim {
     const cmd = `ls ${pattern} || echo ${errorMarker}`
 
     const output = await this.shell(cmd)
-      .catch(e => {console.error(`AdbShim.getDeviceName ${this.name}`); throw e})
+      .catch(e => {
+        console.error(`AdbShim.getDeviceName ${this.name}`)
+        throw e
+      })
     const i = output.indexOf(marker)
     if (output.endsWith(errorMarker) || output.includes('\n') || !~i)
       throw new Error(`AdbShim.getDeviceName device ${this.name} has not been named in ${pattern}`)

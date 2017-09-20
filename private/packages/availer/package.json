@@ -12,7 +12,7 @@
     "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
     "runbuild": "build/availer",
     "clean": "./node_modules/.bin/clean build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "../../node_modules/.bin/jest"
   },
   "rollup": {
     "print": true,

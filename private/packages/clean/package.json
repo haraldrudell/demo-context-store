@@ -12,9 +12,9 @@
     "clean": "build/clean"
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ./node_modules/rollupconfig/lib/rollup.config.js",
+    "build": "echo \"170920 clean obsoleted by rollupconfig\" : \"../../node_modules/.bin/rollup --config ./node_modules/rollupconfig/lib/rollup.config.js\"",
     "clean": "./node_modules/.bin/clean",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"170920 clean obsoleted by rollupconfig\""
   },
   "rollup": {
     "print": true,

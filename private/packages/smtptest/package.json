@@ -4,7 +4,8 @@
   "description": "Probe smtp servers",
   "main": "build/run.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "echo \"170920 smtptest nimp\"",
+    "test": "echo \"170920 smtptest nimp\""
   },
   "author": "",
   "license": "ISC"

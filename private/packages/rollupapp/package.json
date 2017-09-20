@@ -20,7 +20,7 @@
     "build": "../../node_modules/.bin/rollup --config",
     "cfg": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
     "clean": "./node_modules/.bin/cmdline-scripts Clean",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"170920 rollupapp test nimp\""
   },
   "rollup": {
     "node": true,

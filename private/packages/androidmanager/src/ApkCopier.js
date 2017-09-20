@@ -34,7 +34,10 @@ export default class ApkCopier extends ApkReader {
     const results = await Promise.all([
       adb.pull(apkfile, tempfile),
       adb.getPackageVersion(packageName),
-    ]).catch(e => {console.error(`ApkCopier.copyApk failed for package: '${packageName}' apk file: '${apkfile}'`); throw e})
+    ]).catch(e => {
+      console.error(`ApkCopier.copyApk failed for package: '${packageName}' apk file: '${apkfile}'`)
+      throw e
+    })
     const version = results[1]
     const sha256 = await adb.hash(tempfile)
     const outfile = path.join(adb.directory, `${packageName}${version ? '-' + version : ''}-${sha256}.apk`)

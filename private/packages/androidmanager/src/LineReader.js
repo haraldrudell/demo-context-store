@@ -6,9 +6,9 @@ import {EventEmitter} from 'events'
 import StringSplitter from './StringSplitter'
 
 export default class LineReader extends EventEmitter {
-  constructor(readStream) {
+  constructor(readable) {
     super()
-    this.readStream = readStream
+    this.readable = readable
       .once('end', this._end)
       .on('error', this._error)
       .setEncoding('utf8')
@@ -22,10 +22,10 @@ export default class LineReader extends EventEmitter {
   _getData = async () => {
     let result
     while (true) {
-      result = this.readStream.read()
+      result = this.readable.read()
       const resultType = typeof result
       if (resultType === 'string') break
-      if (result !== null) throw new Error(`stream bad data type: ${dType}`)
+      if (result !== null) throw new Error(`stream bad data type: ${resultType}`)
       if (this.isEnd) {
         result = false
         break
@@ -34,12 +34,12 @@ export default class LineReader extends EventEmitter {
       await new Promise((resolve, reject) => {
         retry = resolve
         cancel = reject
-        this.readStream
+        this.readable
           .once('readable', retry)
           .once('end', retry)
           .once('error', cancel)
       })
-      this.readStream
+      this.readable
         .removeListener('readable', retry)
         .removeListener('end', retry)
         .removeListener('error', cancel)
@@ -51,7 +51,7 @@ export default class LineReader extends EventEmitter {
 
   _error = e => {
     this.isError = true
-    readStream.removeListener('end', this._end)
+    this.readable.removeListener('end', this._end)
     this.emit('error', e)
   }
 }

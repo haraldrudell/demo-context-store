@@ -1,3 +1,7 @@
+/*
+© 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
+All rights reserved.
+*/
 import Pipeline from './Pipeline'
 
 // getField result

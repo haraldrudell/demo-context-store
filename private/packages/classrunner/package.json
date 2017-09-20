@@ -11,7 +11,7 @@
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
     "clean": "./node_modules/.bin/clean",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"170920 classrunner test nimp\""
   },
   "rollup": {
     "nodelatest": true,

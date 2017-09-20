@@ -6,7 +6,7 @@
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
     "clean": "./node_modules/.bin/clean build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"170920 syslogtcp test nimp\""
   },
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
@@ -23,5 +23,8 @@
   },
   "dependencies": {
     "syslog-client": "^1.1.1"
+  },
+  "devDependencies": {
+    "rollupconfig": "0.0.1"
   }
 }

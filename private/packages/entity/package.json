@@ -4,7 +4,7 @@
   "description": "Data encapsulation for cloud use",
   "main": "lib/Entity",
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
+    "build": "echo \"170920 entity build nimp\" && : ../../node_modules/.bin/rollup --config ../../rollup.config.js",
     "clean": "./node_modules/.bin/clean lib",
     "test": "../../node_modules/.bin/jest"
   },

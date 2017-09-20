@@ -8,9 +8,9 @@
     "node": ">=4.8"
   },
   "scripts": {
-    "build": "./node_modules/.bin/cross-env BABEL_ENV=nodecurrent ./node_modules/.bin/babel-node ./scriptrun/transpile Build",
+    "build": "echo \"170920 cmdline-scripts obsoleted by rollupconfig\" : ./node_modules/.bin/cross-env BABEL_ENV=nodecurrent ./node_modules/.bin/babel-node ./scriptrun/transpile Build",
     "clean": "./node_modules/.bin/cross-env BABEL_ENV=nodecurrent ./node_modules/.bin/babel-node ./scriptrun/transpile Clean",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"170920 cmdline-scripts test nimp\""
   },
   "bin": {
     "cmdline-scripts": "./bin/cmdline-scripts.js"
