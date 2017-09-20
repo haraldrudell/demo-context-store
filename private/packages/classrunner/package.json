@@ -1,5 +1,6 @@
 {
   "name": "classrunner",
+  "main": "lib/classrunner-cjs",
   "version": "0.0.1",
   "description": "Launch a class optionally with async run method",
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
@@ -15,8 +16,17 @@
   },
   "rollup": {
     "nodelatest": true,
-    "input": "src/classRunner.js",
-    "clean": "lib"
+    "input": [
+      {
+      "input": "src/classRunner.js",
+      "main": true
+    },
+    {
+      "input": "src/classRunner.js",
+      "module": true
+    }
+  ],
+  "clean": "lib"
   },
   "repository": {
     "type": "git",

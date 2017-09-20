@@ -3,14 +3,24 @@
   "version": "0.0.1",
   "description": "Modern options parsing",
   "module": "lib/OptionsParser",
+  "main": "lib/OptionsParser-cjs",
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
     "clean": "./node_modules/.bin/clean",
     "test": "../../node_modules/.bin/jest"
   },
   "rollup": {
-    "input": "src/OptionsParser.js",
-    "node": true,
+    "input": [
+      {
+      "input": "src/OptionsParser.js",
+      "main": true
+    },
+    {
+      "input": "src/OptionsParser.js",
+      "module": true
+    }
+  ],
+  "node": true,
     "nodelatest": true,
     "clean": "lib"
   },

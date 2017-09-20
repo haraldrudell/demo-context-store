@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Allow logging over tcp",
   "module": "lib/syslog.js",
+  "main": "lib/syslog-cjs",
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
     "clean": "./node_modules/.bin/clean build",
@@ -13,8 +14,17 @@
   "rollup": {
   "node": true,
   "nodelatest": true,
-  "input": "src/Syslog.js",
-  "module": true,
+  "input": [
+    {
+      "input": "src/Syslog.js",
+      "main": true
+    },
+    {
+      "input": "src/Syslog.js",
+      "module": true
+    }
+  ],
+"module": true,
   "clean": "lib"
 },
 "private": true,

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Manipulate networking for Linux, macOS and Windows",
   "module": "lib/Network.js",
+  "main": "lib/Network-cjs",
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
     "clean": "./node_modules/.bin/clean build",
@@ -13,7 +14,16 @@
   "rollup": {
     "node": true,
     "nodelatest": true,
-    "input": "src/Network.js",
+    "input": [
+      {
+        "input": "src/Network.js",
+        "main": true
+      },
+      {
+        "input": "src/Network.js",
+        "module": true
+      }
+    ],
     "module": true,
     "clean": "lib"
   },

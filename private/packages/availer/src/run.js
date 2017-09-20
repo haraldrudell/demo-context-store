@@ -6,14 +6,11 @@ import AvailabilityManager from './AvailabilityManager'
 import getGlobals from './globals'
 import {getISOTime} from './Status'
 import {od, OptionsParser, findYamlFilename, loadYaml} from 'getopt2018'
-import babel from 'babel-core'
 
 import classRunner from 'classrunner'
 
 import os from 'os'
 import path from 'path'
-
-babel.buildExternalHelpers()
 
 const optionsData = {
   file: [od.mustHaveArg, 'name of yaml parameter file'],
