@@ -2,7 +2,7 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-const m = 'rollupconfig.warningsMuffler:'
+const m = 'rollupconfig.warningsMuffler: muffled'
 export default function rollupConfigWarningsMuffler(messageObject) {
   const {code, source, missing, message} = messageObject
 

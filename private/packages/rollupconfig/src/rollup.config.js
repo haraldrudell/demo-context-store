@@ -3,11 +3,10 @@
 All rights reserved.
 */
 // ECMAScipt 2015 as supported by rollup. No class properties, async generators or object spread operator
-import PackageJson from './PackageJson'
+import {deleteUndefined, getRollupOutput, assembleConfig} from './RollupPackageJson'
 import chmodPlugin from './chmodPlugin'
 import warningsMuffler from './warningsMuffler'
 import cleanPlugin from './cleanPlugin'
-import {getRollupOutput, deleteUndefined} from './output'
 import babelPrintFilename from './babelPrintFilename'
 
 import babelPlugin from 'rollup-plugin-babel'
@@ -21,74 +20,56 @@ import util from 'util'
 import fs from 'fs'
 import path from 'path'
 
-// read package.json
-const projectDir = fs.realpathSync(process.cwd()) // project directory without symlinks
-const pkg = new PackageJson(path.join(projectDir, 'package.json')) // cannot be imported because we don’t know where it is
-const {input: rollupInput} = pkg
-const configIsArray = typeof rollupInput === 'object'
-const config = configIsArray ? [] : getConfig(rollupPlugins, pkg)
-export default config
+export default assembleConfig(getBaseConfig, getConfig)
 
-const rollupPlugins = getRollupPluginOptions(pkg.rollup.print)
-
-if (configIsArray) {
-  const {external: ex, rollup: rollup0} = pkg
-  let {clean} = rollup0
-  for (let [input, values] of Object.entries(rollupInput)) {
-    const {main: ma, module: mo, external = ex, shebang} = values || false
-    const main = ma !== true ? ma : pkg.main
-    const module = mo !== true ? mo : pkg.module
-    const rollup = {clean, shebang}
-    config.push(getConfig(rollupPlugins, {input, main, module, external, rollup}))
-    clean = false
-  }
-}
-
-function getConfig(plugins, {input, main, module, output, external, rollup}) {
-  const o = {
+function getConfig({baseConfig, input, main, module, output, external, shebang, clean, print}) {
+  const config = Object.assign({}, baseConfig, {
     input,
     output: getRollupOutput({main, module, output}),
     external,
     onwarn: warningsMuffler,
-    plugins: plugins.concat(rollup.shebang ? [shebangPlugin(), chmodPlugin()] : [])
-      .concat(rollup.clean ? cleanPlugin(rollup.clean) : []),
-  }
-  deleteUndefined(o)
+    plugins: baseConfig.plugins.concat(shebang ? [shebangPlugin(), chmodPlugin()] : [])
+      .concat(clean ? cleanPlugin(clean) : []),
+  })
+  deleteUndefined(config)
 
-  if (rollup.print) console.log(`Rollup options for ${input}: ${util.inspect(o, {colors: true, depth: null})}`)
-  return o
+  if (print) console.log(`Rollup options for ${input}: ${util.inspect(config, {colors: true, depth: null})}`)
+
+  return config
 }
 
-function getRollupPluginOptions(print) {
+function getBaseConfig({print, nodelatest}) {
   // determine running Node.js major version
   const matchResult = String(process.version).match(/^v([0-9]+)/)
   const num = Number(matchResult && matchResult[1])
   const nodeMajorVersion = num > 0 ? num : 0 // 8, default 0
   console.log(`Node.js major version: ${nodeMajorVersion} >= 8: ${nodeMajorVersion >= 8}`)
-  const n8plus = nodeMajorVersion >= 8
+  const useN8Plus = nodelatest ? nodeMajorVersion >= 8 : false
 
   // babel-core https://babeljs.io/docs/core-packages/#options
   const babelCoreOptions = {
     babelrc: false, // do not process package,json or .babelrc files, rollup has the canonical Babel configuraiton
-    presets: n8plus ? undefined : [['env', {modules: false}]],
-    plugins: (n8plus ? [ // transforms not in Node.js version 8.4
+    //runtimeHelpers: true,
+    presets: useN8Plus ? undefined : [['env', {modules: false}]], // grandma gets preset-env
+    plugins: [
       'transform-class-properties', // class f { a = 1… stage-2 170919
       'transform-object-rest-spread', // {...o} stage-3 170919
       'transform-export-extensions', // export * as ns… export a from… stage-1 170919
       'transform-async-generator-functions', // for await… stage-3 170919
+    ].concat(useN8Plus ? [ // transforms not in Node.js v8.4
       'transform-es2015-block-scoping',
       ['transform-es2015-for-of', {loose: true}],
       'transform-inline-consecutive-adds',
       'minify-dead-code-elimination',
     ] : []).concat([
       babelPrintFilename,
-      'external-helpers', // babel externalized helpers
-      // rollup-regenerator-runtime is inserted into the bundle
+      //'external-helpers', // babel externalized helpers
+      // the module rollup-regenerator-runtime is inserted into the bundle by rollup-regenerator-runtime
       // rollup therefore needs rollup-plugin-node-resolve
-      // it is an ECMAScript 2015 module, so commonjs is not required
-      ['transform-runtime', {helpers: false, polyfill: false,
-        moduleName: 'rollup-regenerator-runtime',
-      }],
+      // it is an ECMAScript 2015 module, so rollup-plugin-commonjs is not required
+      // helpers are required for transpiling classes to ECMAScript 5.1
+      // polyfill is required for asyn and generators
+      'transform-runtime',
     ]),
   }
 
@@ -110,7 +91,9 @@ function getRollupPluginOptions(print) {
       include: '**/*.js',
   }
   const rollupBabelOptions = Object.assign({
-      externalHelpers: true,
+      // bundle in Babel external helpers
+      // https://github.com/rollup/rollup-plugin-babel#usage
+      runtimeHelpers: true,
     },
     rollupPluginsIncludeExlude,
     babelCoreOptions)
@@ -120,6 +103,7 @@ function getRollupPluginOptions(print) {
 
   // resolve https://www.npmjs.com/package/resolve
   // resolve is used by rollup-plugin-node-resolve below
+  const projectDir = fs.realpathSync(process.cwd()) // project directory without symlinks
   const resolveOptions = {
     // some unused requires should fail while Rollup should still succeed
     // this enables for example mock modules solving the problem
@@ -130,19 +114,21 @@ function getRollupPluginOptions(print) {
   // if input code accesses modules using node_module directories, rollup-plugin-node-resolve is required
   const rollupNodeResolveOptions = Object.assign({
     preferBuiltins: true, // browser-related packages have overrides to Node.js standard library. Ignore those
+    extensions: ['.js', '.json'],
   }, Object.keys(resolveOptions).length ? {customResolveOptions: resolveOptions} : {})
 
   // if imported modules are in common js format (using exports) rollup-plugin-commonjs is required
 
   if (print) {
     console.log('Babel options:', util.inspect(rollupBabelOptions, {colors: true, depth: null}))
-    console.log('Node Resolve  options:', util.inspect(rollupNodeResolveOptions, {colors: true, depth: null}))
+    console.log('Node Resolve options:', util.inspect(rollupNodeResolveOptions, {colors: true, depth: null}))
   }
-    return [
-      eslint(rollupEslintOptions),
-      babelPlugin(rollupBabelOptions),
-      json(), // required for import of .json files
-      resolve(rollupNodeResolveOptions),
-      commonjs(),
-      ]
+
+  return {plugins: [
+    eslint(rollupEslintOptions),
+    babelPlugin(rollupBabelOptions),
+    json(), // required for import of .json files
+    resolve(rollupNodeResolveOptions),
+    commonjs(),
+  ]}
 }

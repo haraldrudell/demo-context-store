@@ -35,26 +35,27 @@ class Syslog {
 
     return new Promise((resolve, reject) => client.log(t, d, e => {
       resolveEndPromise() // resolve from pre-close chain
-      !e ? resolve() : reject(e)
-    })).catch(e => {SyslogClient.errorListener(e); return e})
+      return !e ? resolve() : reject(e)
+    })).catch(e => {
+      SyslogClient.errorListener(e)
+      return e
+    })
   }
 
-  static setOptions(o) {
-    if (o) {
-      const {options} = Syslog
-      for (let p of Syslog.optionsList) {
-        const v = o[p]
-        if (v === null) delete options[p]
-        else if (v !== undefined) options[p] = v
-      }
-      const {fixDate, errorHandler} = o
-      if (fixDate !== undefined) options.fixdate = !!fixdate
-      if (errorHandler === null) delete options.errorHandler
-      else if (errorHandler !== undefined) {
-        const te = typeof errorHandler
-        if (te !== 'function') throw new Error(`Syslog.setOptions errorHandler not function: ${te}`)
-        options.errorHandler = errorHandler
-      }
+  static setOptions(o = false) {
+    const {options, optionsList} = Syslog
+    for (let p of optionsList) {
+      const v = o[p]
+      if (v === null) delete options[p]
+      else if (v !== undefined) options[p] = v
+    }
+    const {fixDate, errorHandler} = o
+    if (fixDate !== undefined) options.fixDate = !!fixDate
+    if (errorHandler === null) delete options.errorHandler
+    else if (errorHandler !== undefined) {
+      const te = typeof errorHandler
+      if (te !== 'function') throw new Error(`Syslog.setOptions errorHandler not function: ${te}`)
+      options.errorHandler = errorHandler
     }
   }
 

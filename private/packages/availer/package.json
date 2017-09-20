@@ -9,10 +9,22 @@
   },
   "scripts": {
     "start": "../../node_modules/.bin/babel-node src/run",
-    "build": "../../node_modules/.bin/rollup --config",
+    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
     "runbuild": "build/availer",
     "clean": "./node_modules/.bin/clean build",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "rollup": {
+    "print": true,
+    "node": true,
+    "nodelatest": false,
+    "input": "src/run",
+    "output": {
+      "file": "build/availer",
+      "format": "cjs"
+    },
+    "shebang": true,
+    "clean": "build"
   },
   "repository": {
     "type": "git",
@@ -33,7 +45,6 @@
     "syslogtcp": "0.0.1"
   },
   "devDependencies": {
-    "clean": "0.0.1",
     "rollupconfig": "0.0.1"
   }
 }

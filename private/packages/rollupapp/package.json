@@ -14,10 +14,32 @@
     "nobabel": "../../node_modules/.bin/rollup --config 3-no-rollup-babel/rollup.config.js",
     "cleanerr": "../../node_modules/.bin/rollup --config 4-clean/rollup.config.js",
     "babelenv": "../../node_modules/.bin/rollup --config 5-babel-env/rollup.config.js",
+    "helpers": "../../node_modules/.bin/rollup --config 6-babelhelpers/rollup.config.js",
+    "regen": "../../node_modules/.bin/rollup --config 7-regen/rollup.config.js",
     "start": "./node_modules/.bin/cmdline-scripts Start",
     "build": "../../node_modules/.bin/rollup --config",
+    "cfg": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
     "clean": "./node_modules/.bin/cmdline-scripts Clean",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "rollup": {
+    "node": true,
+    "input": [
+      {
+        "input": "7-regen/regen",
+        "output": {
+          "file":"7-regen/regen-cfg",
+          "format": "cjs"
+        }
+      },
+      {
+        "input": "6-babelhelpers/helper",
+        "output": {
+          "file":"6-babelhelpers/helper-cfg",
+          "format": "cjs"
+        }
+      }
+    ]
   },
   "repository": {
     "type": "git",

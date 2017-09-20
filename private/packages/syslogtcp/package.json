@@ -2,15 +2,22 @@
   "name": "syslogtcp",
   "version": "0.0.1",
   "description": "Allow logging over tcp",
-  "main": "lib/syslog.js",
-  "module": "es/syslog.js",
+  "module": "lib/syslog.js",
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config",
+    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
+    "clean": "./node_modules/.bin/clean build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
-  "private": true,
+  "rollup": {
+  "node": true,
+  "nodelatest": true,
+  "input": "src/Syslog.js",
+  "module": true,
+  "clean": "lib"
+},
+"private": true,
   "engines": {
     "node": ">=4.8"
   },

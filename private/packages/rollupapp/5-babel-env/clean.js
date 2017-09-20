@@ -1,11 +1,11 @@
 /*
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
-All rights reserved.
+This source code is licensed under license found in the LICENSE file in the root directory of this source tree.
 */
 import fs from 'fs-extra'
 import path from 'path'
 
-export default async function cleanx(args) {
+export default async function clean(args) {
   if (typeof args === 'string') args = [args]
   else if (!Array.isArray(args) || !args.length) throw new Error('clean: argument not non-empty string or array')
   for (let [index, s] of args) {

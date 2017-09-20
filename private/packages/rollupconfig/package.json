@@ -7,7 +7,7 @@
   "engines": {
     "node": ">=8"
   },
-  "main": "lib/rollup.config.js",
+  "module": "lib/rollup.config.js",
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config",
     "clean": "../../node_modules/.bin/babel-node src/cleanbin",
@@ -15,7 +15,20 @@
   },
   "rollup": {
     "print": true,
-    "input": "src/rollup.config",
+    "input": [
+      {
+        "input": "src/rollup.config",
+        "module": true
+      },
+      {
+        "input": "src/cleanbin.js",
+        "output": {
+          "file": "build/clean",
+          "format": "cjs"
+        },
+        "shebang": true
+      }
+    ],
     "clean": [
       "lib",
       "build"

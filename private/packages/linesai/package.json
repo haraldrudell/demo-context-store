@@ -4,8 +4,8 @@
   "description": "Async line iterator for read streams",
   "main": "lib/LineReader",
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config",
-    "clean": "./node_modules/.bin/clean lib",
+    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
+    "clean": "./node_modules/.bin/clean",
     "test": "../../node_modules/.bin/jest"
   },
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
@@ -14,8 +14,15 @@
   "engines": {
     "node": ">=8"
   },
+  "rollup": {
+    "node": true,
+    "nodelatest": true,
+    "input": "src/LineReader",
+    "clean": [
+      "lib"
+    ]
+  },
   "devDependencies": {
-    "rollupconfig": "0.0.1",
-    "clean": "0.0.1"
+    "rollupconfig": "0.0.1"
   }
 }

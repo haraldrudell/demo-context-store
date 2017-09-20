@@ -7,9 +7,9 @@ var path = _interopDefault(require('path'));
 
 /*
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
-All rights reserved.
+This source code is licensed under license found in the LICENSE file in the root directory of this source tree.
 */
-var cleanx = (async function (args) {
+var clean = (async function (args) {
   if (typeof args === 'string') args = [args];else if (!Array.isArray(args) || !args.length) throw new Error('clean: argument not non-empty string or array');
   for (var _iterator = args, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
     var _ref;
@@ -47,7 +47,7 @@ doClean().catch(errorHandler);
 
 async function doClean() {
   var { argv } = process;
-  return cleanx(argv.length > 2 ? argv.slice(2) : await getRollupClean());
+  return clean(argv.length > 2 ? argv.slice(2) : await getRollupClean());
 }
 
 async function getRollupClean() {

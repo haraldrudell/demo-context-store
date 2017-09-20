@@ -2,7 +2,7 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import cleanx from './cleany'
+import clean from './clean'
 
 import fs from 'fs-extra'
 
@@ -12,7 +12,7 @@ doClean().catch(errorHandler)
 
 async function doClean() {
   const {argv} = process
-  return cleanx(argv.length > 2 ? argv.slice(2) : await getRollupClean())
+  return clean(argv.length > 2 ? argv.slice(2) : await getRollupClean())
 }
 
 async function getRollupClean() {

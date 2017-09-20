@@ -2,11 +2,11 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 This source code is licensed under license found in the LICENSE file in the root directory of this source tree.
 */
-import PackageJson from './src/PackageJson'
-import {getRollupOutput, deleteUndefined} from './src/output'
+import {deleteUndefined, getRollupOutput, assembleConfig} from './src/RollupPackageJson'
 import babelPrintFilename from './src/babelPrintFilename'
 import cleanPlugin from './src/cleanPlugin'
 import chmodPlugin from './src/chmodPlugin'
+import warningsMuffler from './src/warningsMuffler'
 
 import eslint from 'rollup-plugin-eslint'
 import babel from 'rollup-plugin-babel'
@@ -16,36 +16,24 @@ import shebangPlugin from 'rollup-plugin-shebang'
 
 import util from 'util'
 
-const rollupList = []
-export default rollupList
+export default assembleConfig(getBaseConfig, getConfig)
 
-// read package.json
-const pkg = new PackageJson() // cannot be imported because we don’t know where it is
-const {input, external, rollup} = pkg
-if (!input) throw new Error(`${pkg.filename}: rollup.input not defined`)
-if (rollup.print) console.log('package.json rollup.print true: verbose output')
+function getConfig({baseConfig, input, main, module, output, external, shebang, clean, print}) {
+  const config = Object.assign({}, baseConfig, {
+    input,
+    output: getRollupOutput({main, module, output}),
+    external,
+    onwarn: warningsMuffler,
+    plugins: baseConfig.plugins.concat(shebang ? [shebangPlugin(), chmodPlugin()] : [])
+      .concat(clean ? cleanPlugin(clean) : []),
+  })
+  deleteUndefined(config)
 
-const plugins = getRollupPlugins(rollup)
+  if (print) console.log(`Rollup options for ${input}: ${util.inspect(config, {colors: true, depth: null})}`)
+  return config
+}
 
-rollupList.push({
-  input,
-  output: getRollupOutput(pkg),
-  plugins,
-  external,
-}, {
-  input: 'src/cleanbin.js',
-  output: [{file: 'build/clean', format: 'cjs'}],
-  plugins: [shebangPlugin(), chmodPlugin()].concat(plugins),
-  external,
-})
-
-// remove properties that have undefined value
-for (let config of rollupList) deleteUndefined(config)
-
-if (rollup.print) console.log('Rollup options:', util.inspect(rollupList, {colors: true, depth: null}))
-
-function getRollupPlugins(rollup) {
-  const {print, clean} = rollup
+function getBaseConfig({print}) {
   const includeExclude = {
     include: '**/*.js',
     exclude: 'node_modules/**',
@@ -60,13 +48,13 @@ function getRollupPlugins(rollup) {
       }],
     ].concat(print ? babelPrintFilename : [])
   }, includeExclude)
+
   if (print) console.log('Rollup-Babel options:', util.inspect(babelOptions, {colors: true, depth: null}))
 
-  return [
+  return {plugins: [
     eslint(includeExclude),
     babel(babelOptions),
     resolve(),
     commonjs(),
-    cleanPlugin(clean),
-  ]
+  ]}
 }
