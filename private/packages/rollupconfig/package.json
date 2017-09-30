@@ -8,6 +8,7 @@
     "node": ">=8"
   },
   "module": "lib/rollup.config.js",
+  "main": "lib/rollup.config-cjs.js",
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config",
     "clean": "../../node_modules/.bin/babel-node src/cleanbin",
@@ -19,6 +20,13 @@
       {
         "input": "src/rollup.config",
         "module": true
+      },
+      {
+        "input": "src/rollup.config",
+        "output": {
+          "file": "lib/rollup.config-cjs.js",
+          "format": "es"
+        }
       },
       {
         "input": "src/cleanbin.js",
