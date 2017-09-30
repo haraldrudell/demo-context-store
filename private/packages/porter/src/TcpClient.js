@@ -10,8 +10,9 @@ export default class TcpClient extends Socket {
   static state = {}
   static tim = setInterval(TcpClient.status, 1e3)
   static pendingConnects = []
-  state = {}
   static maxOpening = 50
+  static s0
+  state = {}
 
   constructor(o) {
     super()
@@ -66,13 +67,11 @@ export default class TcpClient extends Socket {
   connectWrapper = () => this.doConnect().catch(this.errorListener)
 
   update(event) {
-    if (this.state[event] === undefined) {
-      this.state[event] = 1
-      if (TcpClient.state[event] === undefined) {
-        TcpClient.state[event] = 1
-        if (event === 'errored') TcpClient.status()
-      } else TcpClient.state[event]++
-    } else this.state[event]++
+    const v = this.state[event] === undefined ? this.state[event] = 1 : ++this.state[event]
+    if (v === 1) {
+      const s = TcpClient.state[event] === undefined ? TcpClient.state[event] = 1 : ++TcpClient.state[event]
+      if (s === 1 && event === 'errored') TcpClient.status()
+    }
   }
 
   instrument() {
@@ -123,6 +122,8 @@ export default class TcpClient extends Socket {
     this.update('closed')
     this.removeListener('data', this.dataListener)
       .removeListener('timeout', this.timeoutListener)
+    const {emitter} = this
+    emitter.removeListener('shutdown', this.shutdownListener)
   }
   closeListener = () => this.close().catch(this.errorListener)
 
@@ -140,6 +141,6 @@ export default class TcpClient extends Socket {
   static status() {
     let s = ''
     for (let e of Object.keys(TcpClient.state)) s += ` ${e}: ${TcpClient.state[e]}`
-    console.log(s)
+    if (s !== TcpClient.s0) console.log(TcpClient.s0 = s)
   }
 }

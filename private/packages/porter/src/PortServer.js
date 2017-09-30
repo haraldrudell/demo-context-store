@@ -17,7 +17,6 @@ export default class PortServer extends Server {
       .on('error', this.failureWrapper)
       .setMaxListeners(0)
       .listen({port: 0, host: '127.0.0.1', ...listen})
-    this.interval = setInterval(() => console.log(`socket count: ${this.listenerCount('shutdown')}`), 1e3)
   }
 
   async _listening() {
