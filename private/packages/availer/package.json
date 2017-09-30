@@ -17,7 +17,7 @@
   "rollup": {
     "print": true,
     "node": true,
-    "nodelatest": false,
+    "nodelatest": true,
     "input": "src/run",
     "output": {
       "file": "build/availer",
