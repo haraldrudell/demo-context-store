@@ -5,33 +5,41 @@
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
   "engines": {
-    "node": ">=8"
+    "node": ">=4.8.1"
   },
-  "module": "lib/rollup.config.js",
   "main": "lib/rollup.config-cjs.js",
+  "module": "lib/rollup.config.js",
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config",
-    "clean": "../../node_modules/.bin/babel-node src/cleanbin",
-    "test": "../../node_modules/.bin/jest"
+    "build": "rollup --config",
+    "clean": "nmrun babel-node src/cleanbin",
+    "lint": "eslint rollup.config.js",
+    "test": "nmrun jest"
   },
   "rollup": {
     "print": true,
     "input": [
       {
         "input": "src/rollup.config",
-        "module": true
+        "module": true,
+        "dependencies": true
       },
       {
         "input": "src/rollup.config",
-        "output": {
-          "file": "lib/rollup.config-cjs.js",
-          "format": "es"
-        }
+        "main": true,
+        "dependencies": true
       },
       {
         "input": "src/cleanbin.js",
         "output": {
           "file": "build/clean",
+          "format": "cjs"
+        },
+        "shebang": true
+      },
+      {
+        "input": "src/rollup.js",
+        "output": {
+          "file": "build/rollup",
           "format": "cjs"
         },
         "shebang": true
@@ -41,11 +49,11 @@
       "lib",
       "build"
     ],
-    "dependencies": true,
     "node": true
   },
   "bin": {
-    "clean": "build/clean"
+    "clean": "build/clean",
+    "rollup": "build/rollup"
   },
   "repository": {
     "type": "git",
@@ -56,12 +64,18 @@
   ],
   "private": true,
   "dependencies": {
-    "fs-extra": "",
+    "babel-core": "^6.26.0",
+    "fs-extra": ">=4.0.2",
+    "rollup": "^0.50.0",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.1",
     "rollup-plugin-eslint": "^4.0.0",
     "rollup-plugin-json": "^2.3.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-shebang": "^0.1.4"
+  },
+  "devDependencies": {
+    "eslint": "^4.8.0",
+    "nmrun": "0.0.1"
   }
 }

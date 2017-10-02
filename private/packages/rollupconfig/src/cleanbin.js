@@ -21,6 +21,6 @@ async function getRollupClean() {
 }
 
 function errorHandler(e) {
-  console.error(e instanceof Error ? e.message : e)
+  console.error(/*e instanceof Error ? e.message : */e)
   process.exit(1)
 }

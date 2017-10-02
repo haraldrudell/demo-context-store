@@ -7,13 +7,14 @@ import fs from 'fs'
 import path from 'path'
 
 export default class PackageJson {
-  constructor(packageJson = path.join(fs.realpathSync(process.cwd()), 'package.json')) {
-    const json = JSON.parse(fs.readFileSync(packageJson, 'utf8'))
-    Object.assign(this, {filename: packageJson, json})
-    if (!json) this.throw('bad json')
+  constructor(o) {
+    const {filename = path.join(fs.realpathSync(process.cwd()), 'package.json')} = o || false
+    const json = JSON.parse(fs.readFileSync(filename, 'utf8'))
+    Object.assign(this, {filename, json})
+    if (!json) this._throw('bad json')
   }
 
-  throw(s, p) {
-    throw new Error(`${p || 'PackageJson'}: ${s} in: ${this.filename}`)
+  _throw(message, className) {
+    throw new Error(`${className || 'PackageJson'}: ${message} in: ${this.filename}`)
   }
 }

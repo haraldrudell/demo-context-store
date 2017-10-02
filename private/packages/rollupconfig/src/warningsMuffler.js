@@ -4,7 +4,7 @@ All rights reserved.
 */
 const m = 'rollupconfig.warningsMuffler: muffled'
 export default function rollupConfigWarningsMuffler(messageObject) {
-  const {code, source, missing, message} = messageObject
+  const {code, source, missing, message, id} = messageObject
 
   /*
   https://github.com/rollup/rollup/issues/794
@@ -45,6 +45,25 @@ export default function rollupConfigWarningsMuffler(messageObject) {
   */
   if (code === 'MISSING_EXPORT' && missing === 'default' && message.endsWith('es6.object.to-string.js\'')) {
     console.log(`${m} rollup issue 1408`)
+    return
+  }
+
+  /*
+  https://github.com/rollup/rollup/issues/825
+  { code: 'EVAL',
+  message: 'Use of eval is strongly discouraged, as it poses security risks and may cause issues with minification',
+  url: 'https://github.com/rollup/rollup/wiki/Troubleshooting#avoiding-eval',
+  pos: 248,
+  loc:
+   { file: '/opt/foxyboy/sw/private/packages/rollupconfig/node_modules/to-fast-properties/index.js',
+     line: 10,
+     column: 1 },
+  frame: ' 8:   ic();\n 9:   return o;\n10:   eval("o" + o); // ensure no dead code elimination\n      ^\n11: }',
+  id: '/opt/foxyboy/sw/private/packages/rollupconfig/node_modules/to-fast-properties/index.js',
+  toString: [Function] }
+  */
+  if (code === 'EVAL' && id.includes('node_modules/to-fast-properties')) {
+    console.log(`${m} rollup issue 825`)
     return
   }
 
