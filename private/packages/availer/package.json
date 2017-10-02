@@ -8,16 +8,16 @@
     "node": ">=8"
   },
   "scripts": {
-    "start": "../../node_modules/.bin/babel-node src/run",
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
-    "runbuild": "build/availer",
-    "clean": "./node_modules/.bin/clean build",
-    "test": "../../node_modules/.bin/jest"
+    "start": "nmrun babel-node src/run",
+    "build": "rollup --config node:rollupconfig",
+    "runbuild": "node build/availer",
+    "clean": "clean build",
+    "test": "nmrun jest"
   },
   "rollup": {
     "print": true,
     "node": true,
-    "nodelatest": true,
+    "targets": "current",
     "input": "src/run",
     "output": {
       "file": "build/availer",
@@ -45,6 +45,7 @@
     "syslogtcp": "0.0.1"
   },
   "devDependencies": {
+    "nmrun": "0.0.1",
     "rollupconfig": "0.0.1"
   }
 }
