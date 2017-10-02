@@ -3,35 +3,17 @@
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
 import babel from 'rollup-plugin-babel'
-import util from 'util'
 
-const nodejsExternals = ['dgram', 'events', 'net', 'os', 'util']
-
-const inputOutputExternal = {
+export default {
   input: '1-es2017/es2017.js',
   output: [{file: `1-es2017/es2017-cjs.js`, format: 'cjs'}],
-  external: [].concat(nodejsExternals),
+  external: ['dgram', 'events', 'net', 'os', 'util'],
+  plugins: [
+    babel({
+      babelrc: false,
+      plugins: [
+        'babel-plugin-transform-object-rest-spread',
+      ],
+    }),
+  ],
 }
-console.log(`node ${inputOutputExternal.output[0].file}`)
-const rollupPluginBabelOptions = {
-  babelrc: false,
-}
-
-const babelOptions = Object.assign({},
-  rollupPluginBabelOptions,
-  {plugins: [
-    'babel-plugin-transform-object-rest-spread',
-  ]},
-)
-
-const object = [Object.assign({},
-  inputOutputExternal,
-  {plugins: [
-    babel(babelOptions),
-  ]},
-)]
-
-console.log('Rollup configuration output for:', __filename)
-console.log('Object:', util.inspect(object, {colors: true, depth: null}))
-console.log('Babel options:', util.inspect(babelOptions, {colors: true, depth: null}))
-export default object
