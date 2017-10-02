@@ -11,7 +11,7 @@
     "build": "rollup --config",
     "clean": "rimraf build",
     "lint": "eslint rollup.config.js",
-    "test": "../../node_modules/.bin/jest"
+    "test": "jest"
   },
   "bin": {
     "nmrun": "build/nmrun"
@@ -25,16 +25,17 @@
   ],
   "private": true,
   "devDependencies": {
-    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
     "eslint": "^4.8.0",
     "fs-extra": "^4.0.2",
     "jest": "^21.2.1",
-    "npm-run": "^4.1.2",
     "rimraf": "^2.6.2",
     "rollup": "^0.50.0",
     "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.1",
     "rollup-plugin-eslint": "^4.0.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-shebang": "^0.1.4"
   }
 }
