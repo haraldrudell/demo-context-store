@@ -6,7 +6,7 @@ import {spawn as cspawn} from 'child_process'
 
 export default async function spawn(o) {
   const {cmd, args = [], options} = o || false
-  if (typeof cmd !== 'string' || !cmd) throw new Error('spawn-async: cmd not non-empty string')
+  if (typeof cmd !== 'string' || !cmd) throw new Error('spawn-async: command not non-empty string')
   if (!Array.isArray(args)) throw new Error('spawn-async: args not array')
   return new Promise((resolve, reject) => {debugger; return cspawn(cmd, args, {stdio: ['ignore', 'inherit', 'inherit'], ...options})
     .once('close', (status, signal) => {
