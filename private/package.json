@@ -6,7 +6,7 @@
     "type": "git",
     "url": "gt:sw"
   },
-  "scripts":{
+  "scripts": {
     "copyrollup": "cp -a packages/rollupconfig/lib/rollup.config.js ."
   },
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
