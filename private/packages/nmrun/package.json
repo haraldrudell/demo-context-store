@@ -1,0 +1,40 @@
+{
+  "name": "nmrun",
+  "version": "0.0.1",
+  "description": "Run commands from parent node_module/.bin directories",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=4.8.1"
+  },
+  "scripts": {
+    "build": "rollup --config",
+    "clean": "rimraf build",
+    "lint": "eslint rollup.config.js",
+    "test": "../../node_modules/.bin/jest"
+  },
+  "bin": {
+    "nmrun": "build/nmrun"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gt:sw"
+  },
+  "keywords": [
+    "app"
+  ],
+  "private": true,
+  "devDependencies": {
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "eslint": "^4.8.0",
+    "fs-extra": "^4.0.2",
+    "jest": "^21.2.1",
+    "npm-run": "^4.1.2",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-eslint": "^4.0.0",
+    "rollup-plugin-shebang": "^0.1.4"
+  }
+}
