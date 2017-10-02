@@ -1,0 +1,45 @@
+{
+  "name": "renewip",
+  "version": "0.0.1",
+  "description": "Service manager and monitoring",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "UNLICENSED",
+  "main": "build/renewip",
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "start": "../../node_modules/.bin/babel-node src",
+    "build": "../../node_modules/.bin/rollup --config node:rollupconfig",
+    "runbuild": "build/renewer",
+    "clean": "./node_modules/.bin/clean build",
+    "test": "../../node_modules/.bin/jest"
+  },
+  "rollup": {
+    "print": true,
+    "node": true,
+    "targets": "current",
+    "input": "src",
+    "main": true,
+    "shebang": true,
+    "clean": "build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haraldrudell"
+  },
+  "keywords": [
+    "Service",
+    "route",
+    "ip",
+    "ping"
+  ],
+  "private": true,
+  "dependencies": {
+    "classrunner": "0.0.1",
+    "syslogtcp": "0.0.1"
+  },
+  "devDependencies": {
+    "rollupconfig": "0.0.1"
+  }
+}
