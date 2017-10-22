@@ -8,5 +8,8 @@ export default class AddressRenewer {
   async run() {
     const ipReady = new RestartDetector().run()
     console.log('AddressRenewer.run')
+    // restart the service
+    // wait for ip
+    // restart all dns
   }
 }
