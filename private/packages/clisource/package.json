@@ -1,0 +1,51 @@
+{
+  "name": "clisource",
+  "version": "0.0.1",
+  "description": "Find what package a command originates from",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "start": "nmrun babel-node src/run",
+    "build": "rollup --config node:rollupconfig",
+    "runbuild": "node build/availer",
+    "clean": "clean build",
+    "test": "nmrun jest"
+  },
+  "rollup": {
+    "print": true,
+    "node": true,
+    "targets": "current",
+    "input": "src/run",
+    "output": {
+      "file": "build/availer",
+      "format": "cjs"
+    },
+    "shebang": true,
+    "clean": "build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haraldrudell"
+  },
+  "keywords": [
+    "Service",
+    "route",
+    "ip",
+    "ping"
+  ],
+  "private": true,
+  "dependencies": {
+    "classrunner": "0.0.1",
+    "fs-extra": "^4.0.1",
+    "getopt2018": "0.0.1",
+    "network-portable": "0.0.1",
+    "syslogtcp": "0.0.1"
+  },
+  "devDependencies": {
+    "nmrun": "0.0.1",
+    "rollupconfig": "0.0.1"
+  }
+}
