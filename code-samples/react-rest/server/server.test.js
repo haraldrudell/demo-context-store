@@ -1,6 +1,5 @@
 import fetch from 'node-fetch'
 import Api from './RESTServer'
-import request from 'supertest'
 
 const api = new Api().server
 

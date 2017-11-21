@@ -7,42 +7,52 @@ const m = 'App'
 class App extends Component {
   constructor(...args) {
     super(...args)
-    this.getError = this.getError.bind(this)
+    this.renderCounter = 0
+    this.state = {}
   }
 
   componentWillMount() {
-    this.fetchData().catch(this.getError)
+    this.fetch()
   }
 
-  async fetchData() {
-    const uri = '/api/v1/users'
+  fetch = aUri => {
+    this.fetchData(aUri).catch(this.getError)
+  }
+
+  async fetchData(aUri) {
+    const uri = aUri || '/api/v1/users'
+    const time = Date.now()
     const res = await fetch(uri)
     if (!res.ok) throw new Error(`${m} fetch: not ok text: '${res.statusText}' code: ${res.status} uri: ${uri}`)
     const contentType = String(res.headers.get('Content-Type'))
     if (!contentType.match(/^application\/json/)) throw new Error(`${m} bad response content type: '${contentType}'`)
     const users = await res.json()
-    this.setState({users})
+    this.setState({users, time})
   }
 
-  getError(e) {
-    this.setState({e})
-  }
+  getError = e => this.setState({e})
+
+  causeError = () => this.fetch('/api/v1/fail')
+  clearError = () => this.state.e && this.getError(null)
+  doFetch = () => this.fetch()
 
   render() {
-    const users = this.state && this.state.users
-    const e = this.state && this.state.e
-    console.log(`${m}: render users:`, users, 'e:', e)
+    const {users, time, e} = this.state
     return (
       <div className="App">
         <header className="App-header">
           {/*<img src={logo} className="App-logo" alt="logo" />*/}
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        {users && <p>users: {JSON.stringify(users)}</p>}
+        <p>Rendered on {`${new Date().toISOString()} #${++this.renderCounter}`}</p>
+        {users
+          ? <p>users: {JSON.stringify(users)} as of {new Date(time).toISOString()}</p>
+          : <p>Loading data…</p>
+        }
         {e && <pre>e: {String(e)}</pre>}
+        <button onClick={this.doFetch}>Refetch</button>
+        <button onClick={this.causeError}>Error</button>
+        <button onClick={this.clearError}>Clear Error</button>
       </div>
     );
   }
