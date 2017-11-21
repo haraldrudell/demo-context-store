@@ -33,10 +33,14 @@ async function getOptions() {
       if (index + 1 === indexMax) throw new Error(`${m} -cover: missing cover filename`)
       o.cover = argv[++index]
       break
+    case '-text':
+      if (index + 1 === indexMax) throw new Error(`${m} -text: missing cover filename`)
+      o.defaultResumeText = argv[++index]
+      break
     case '-h':
     case '-help':
     case '--help':
-      console.error('resume [-company c] [-resume file] [-cover file] [-h -help --help]')
+      console.error('resume [-company c] [-resume file] [-cover file] [-text text] [-h -help --help]')
       process.exit(0)
       break
     default: throw new Error(`${m}: unknown options: ${param}`)
