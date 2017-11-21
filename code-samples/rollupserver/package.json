@@ -7,44 +7,74 @@
     "build": "rollup --config",
     "watch": "rollup --config --watch",
     "server": "node build/runserver build/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "babel": {
-    "babelrc": false,
-    "sourceMaps": true,
-    "presets": [
-      [
-        "env",
-        {
-          "modules": false,
-          "targets": {
-            "node": "current"
-          }
-        }
-      ]
-    ],
-    "plugins": [
-      "external-helpers",
-      "transform-class-properties",
-      "transform-object-rest-spread"
-    ]
+    "env": {
+      "development": {
+        "babelrc": false,
+        "sourceMaps": true,
+        "presets": [
+          [
+            "env",
+            {
+              "modules": false,
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ],
+        "plugins": [
+          "external-helpers",
+          "transform-class-properties",
+          "transform-object-rest-spread"
+        ]
+      },
+      "test": {
+        "babelrc": false,
+        "sourceMaps": true,
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ],
+        "plugins": [
+          "transform-class-properties",
+          "transform-object-rest-spread"
+        ]
+      }
+    }
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-jest": "^21.2.0",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "jest": "^21.2.1",
+    "node-fetch": "^1.7.3",
     "rollup": "^0.51.8",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-json": "^2.3.0",
-    "rollup-plugin-node-resolve": "^3.0.0"
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "supertest": "^3.0.0"
   },
   "dependencies": {
-    "chokidar": "^1.7.0"
+    "body-parser": "^1.18.2",
+    "chokidar": "^1.7.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0"
   }
 }
