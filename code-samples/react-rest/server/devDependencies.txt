@@ -1,0 +1,10 @@
+babel-plugin-external-helpers
+babel-plugin-transform-class-properties
+babel-plugin-transform-function-bind
+babel-plugin-transform-object-rest-spread
+babel-preset-env
+rollup
+rollup-plugin-babel
+rollup-plugin-commonjs
+rollup-plugin-json
+rollup-plugin-node-resolve

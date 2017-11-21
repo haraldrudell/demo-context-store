@@ -1,0 +1,52 @@
+{
+  "scripts": {
+    "server:build": "rollup --config server/rollup.config.js",
+    "server:deps": "npm i --save-dev $(<server/devDependencies.txt)",
+    "server:watch": "rollup --config server/rollup.config.js --watch",
+    "server:start": "node serverbuild/watchserver node serverbuild/server.js"
+  },
+  "babel": {
+    "env": {
+      "development": {
+        "babelrc": false,
+        "sourceMaps": true,
+        "presets": [
+          [
+            "env",
+            {
+              "modules": false,
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ],
+        "plugins": [
+          "external-helpers",
+          "transform-class-properties",
+          "babel-plugin-transform-function-bind",
+          "transform-object-rest-spread"
+        ]
+      },
+      "test": {
+        "babelrc": false,
+        "sourceMaps": true,
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ],
+        "plugins": [
+          "transform-class-properties",
+          "babel-plugin-transform-function-bind",
+          "transform-object-rest-spread"
+        ]
+      }
+    }
+  }
+}

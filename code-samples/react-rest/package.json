@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "chokidar": "^1.7.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-scripts": "1.0.17"
@@ -11,6 +16,66 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "server:build": "rollup --config server/rollup.config.js",
+    "server:deps": "npm i --save-dev $(cat server/devDependencies.txt) && npm i --save $(cat server/dependencies.txt)",
+    "server:watch": "rollup --config server/rollup.config.js --watch",
+    "server:start": "node serverbuild/watchserver serverbuild/server.js node serverbuild/server.js",
     "eject": "react-scripts eject"
+  },
+  "babel": {
+    "env": {
+      "development": {
+        "babelrc": false,
+        "sourceMaps": true,
+        "presets": [
+          [
+            "env",
+            {
+              "modules": false,
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ],
+        "plugins": [
+          "external-helpers",
+          "transform-class-properties",
+          "babel-plugin-transform-function-bind",
+          "transform-object-rest-spread"
+        ]
+      },
+      "test": {
+        "babelrc": false,
+        "sourceMaps": true,
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ],
+        "plugins": [
+          "transform-class-properties",
+          "babel-plugin-transform-function-bind",
+          "transform-object-rest-spread"
+        ]
+      }
+    }
+  },
+  "devDependencies": {
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-function-bind": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "rollup": "^0.51.8",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-node-resolve": "^3.0.0"
   }
 }

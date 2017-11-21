@@ -1,6 +1,7 @@
-# See https://help.github.com/ignore-files/ for more about ignoring files.
+# © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
+# All rights reserved.
 
-# dependencies
+/serverbuild
 /node_modules
 
 # testing
