@@ -1,0 +1,19 @@
+- Ensure modules are installed: npm i
+- Transpile: npm run build
+- Run: npm start
+- browse: http://localhost:3000/regions
+
+- Test: npm test
+
+[
+  {"name":"CA","earthquake_count":3217,"total_magnitude":5.2741378413086775},
+  {"name":"AK","earthquake_count":2538,"total_magnitude":6.698491106868652},
+  {"name":"NV","earthquake_count":797,"total_magnitude":4.249832393904911},
+  {"name":"MT","earthquake_count":293,"total_magnitude":4.671691437862701},
+  {"name":"ID","earthquake_count":276,"total_magnitude":4.709869306248788},
+  {"name":"WA","earthquake_count":221,"total_magnitude":4.083710562611923},
+  {"name":"HI","earthquake_count":170,"total_magnitude":4.585901037397948},
+  {"name":"UT","earthquake_count":58,"total_magnitude":3.348697781483707},
+  {"name":"OK","earthquake_count":43,"total_magnitude":4.417680173153269},
+  {"name":"OR","earthquake_count":39,"total_magnitude":4.608667108001306}
+  ]

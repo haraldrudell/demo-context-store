@@ -13,13 +13,21 @@ beforeAll(async () => {
   url = await listen(service.server)
 })
 
-test('hello', async () => {
+test('timezone regions', async () => {
   const uri = '/regions?count=3&days=20&region_type=timezone'
   const contentTypeJson = /^application\/json/
   const response = await fetch(`${url}${uri}`)
   const contentType = response.headers.get('content-type') // string
   expect(contentType).toMatch(contentTypeJson)
-  if (!contentType.startsWith())
+  console.log('response:', await response.json())
+})
+
+test('state regions', async () => {
+  const uri = '/regions?count=3&days=20&region_type=state'
+  const contentTypeJson = /^application\/json/
+  const response = await fetch(`${url}${uri}`)
+  const contentType = response.headers.get('content-type') // string
+  expect(contentType).toMatch(contentTypeJson)
   console.log('response:', await response.json())
 })
 
