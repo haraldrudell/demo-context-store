@@ -11,7 +11,7 @@ export default class RESTServer {
   constructor() {
     const server = this.server = express()
     this._middleware(server)
-    this._routes(server)
+    this._routes(server, express.Router())
   }
 
   async listen(o = false) {
@@ -27,9 +27,13 @@ export default class RESTServer {
     s.use(cookieParser())
   }
 
-  _routes(s) {
-    s.use((req, res) => {
-      res.json({ message: 'Hello world!' })
-    })
+  _routes(s, r) {
+    s.use('/api/v1', r)
+    r.route('/users')
+      .get((req, res) => {
+        res.setHeader('Content-Type', 'application/json')
+
+        res.json({message: 'Hello world!'})
+      })
   }
 }

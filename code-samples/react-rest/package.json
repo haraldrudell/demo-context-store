@@ -22,6 +22,7 @@
     "server:start": "node serverbuild/watchserver serverbuild/server.js node serverbuild/server.js",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:3099/",
   "babel": {
     "env": {
       "development": {
