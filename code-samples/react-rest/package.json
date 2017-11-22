@@ -13,12 +13,43 @@
   },
   "proxy": "http://localhost:3099",
   "babel": {
-    "presets": [
-      "react-app"
-    ],
-    "plugins": [
-      "transform-function-bind"
-    ]
+    "env": {
+      "development": {
+        "presets": [
+          "react-app"
+        ],
+        "plugins": [
+          "transform-function-bind"
+        ]
+      },
+      "test": {
+        "presets": [
+          "react-app"
+        ],
+        "plugins": [
+          "transform-function-bind"
+        ]
+      },
+      "node": {
+        "presets": [
+          [
+            "babel-preset-env",
+            {
+              "modules": false,
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ],
+        "plugins": [
+          "external-helpers",
+          "transform-class-properties",
+          "transform-function-bind",
+          "transform-object-rest-spread"
+        ]
+      }
+    }
   },
   "dependencies": {
     "autoprefixer": "7.1.6",
@@ -87,6 +118,7 @@
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
+      "<rootDir>/server/**/?(*.)(spec|test).{js,jsx,mjs}",
       "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
     ],
     "testEnvironment": "node",

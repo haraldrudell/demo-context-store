@@ -2,16 +2,23 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
+import * as users from './users'
+
 import express from 'express'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 
 export default class RESTServer {
-  constructor() {
+  constructor(o = false) {
     const server = this.server = express()
     this._middleware(server)
-    this._routes(server, express.Router())
+    const entities = {
+      users: o.users || users,
+    }
+    this._routes(server, express.Router(), entities)
+    const isDevelopment = process.env.NODE_ENV !== 'production'
+    if (isDevelopment) server.disable('etag')
   }
 
   async listen(o = false) {
@@ -22,18 +29,31 @@ export default class RESTServer {
 
   _middleware(s) {
     s.use(morgan('dev'))
-    s.use(bodyParser.json())
-    s.use(bodyParser.urlencoded({extended: false}))
-    s.use(cookieParser())
+      .use(bodyParser.json())
+      .use(bodyParser.urlencoded({extended: false}))
+      .use(cookieParser())
   }
 
-  _routes(s, r) {
+  _routes(s, r, e) {
     s.use('/api/v1', r)
-    r.route('/users')
-      .get((req, res) => {
-        res.setHeader('Content-Type', 'application/json')
+    const usersGet = this._getEntityGetHandler(e.users.get)
+    r.route('/users/:id?')
+      .get(usersGet)
+  }
 
-        res.json({message: 'Hello world!'})
-      })
+  _getEntityGetHandler(entityGet) {
+    return this::_genericGetWrapper
+
+    function _genericGetWrapper(req, res, next) {
+      this._genericGet(entityGet, req, res).catch(e => console.error(e) + next(e))
+    }
+  }
+
+  async _genericGet(entityGet, req, res) {
+    const result = await entityGet(req.params.id, req, res)
+    if (result) {
+      res.setHeader('Content-Type', 'application/json')
+      res.json(result)
+    } else res.status(404).end()
   }
 }

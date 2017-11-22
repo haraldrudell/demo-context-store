@@ -12,6 +12,9 @@ import resolve from 'rollup-plugin-node-resolve'
 
 import path from 'path'
 
+process.env.BABEL_ENV = 'node'
+process.env.NODE_ENV = 'development'
+
 const packageJsonAbsolute = path.resolve('package.json')
 
 const dependencyList = Object.keys(Object(Object(require(packageJsonAbsolute)).dependencies))
