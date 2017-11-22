@@ -7,15 +7,19 @@ const m = 'App'
 class App extends Component {
   constructor(...args) {
     super(...args)
+    this.getError = ::this.getError
+    this.doFetch = ::this.doFetch
+    this.clearError = ::this.clearError
+    this.causeError = ::this.causeError
     this.renderCounter = 0
     this.state = {}
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetch()
   }
 
-  fetch = aUri => {
+  fetch(aUri) {
     this.fetchData(aUri).catch(this.getError)
   }
 
@@ -30,11 +34,23 @@ class App extends Component {
     this.setState({users, time})
   }
 
-  getError = e => this.setState({e})
+  getError(e) {
+    console.error(`${m}.getError:`)
+    console.error(e)
+    this.setState({e})
+  }
 
-  causeError = () => this.fetch('/api/v1/fail')
-  clearError = () => this.state.e && this.getError(null)
-  doFetch = () => this.fetch()
+  causeError() {
+    this.fetch('/api/v1/fail')
+  }
+
+  clearError() {
+    this.state.e && this.getError(null)
+  }
+
+  doFetch() {
+    this.fetch()
+  }
 
   render() {
     const {users, time, e} = this.state
