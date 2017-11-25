@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang=en>
+  <head>
+    <meta charset=utf-8>
+    <title>ECMAScript 2049</title>
+  </head>
+  <body>
+    <h1>The Image #ECMAScript 2049</h1>
+    <h2>Goals</h2>
+    <ul>
+      <li>Image for a tweet about <strong>#ECMAScript 2049</strong></li>
+      <li>Use the Blade Runner font: <a href=https://www.dafont.com/blade-runner.font>https://www.dafont.com/blade-runner.font</a>
+        <ul>
+          <li>Download to blade_runner.zip</li>
+          <li>Expand BLADRMF_.TTF</li>
+          <li>Load the ttf using a style tag, type attribute default is text/css</li>
+          <li>How to load a font: <a href=https://www.webdesignerdepot.com/2013/01/how-to-use-any-font-you-like-with-css3/>https://www.webdesignerdepot.com/2013/01/how-to-use-any-font-you-like-with-css3/</a></li>
+        </ul>
+      </li>
+      <li>Largest possible original fetched from: <a href=http://www.geeksundergrace.com/wp-content/uploads/2017/10/blade-runner-2049-2017-lu.jpg>http://www.geeksundergrace.com/wp-content/uploads/2017/10/blade-runner-2049-2017-lu.jpg</a>
+        <ul>
+          <li>Size is 8392x4721</li>
+          <li>Output image size: 440x220 and 2:1 ratio<br/>
+          <a href=https://sproutsocial.com/insights/social-media-image-sizes-guide/#twitter>https://sproutsocial.com/insights/social-media-image-sizes-guide/#twitter</a></li>
+          <li>But use maximum allowed size of 1024x512</li>
+        </ul>
+      </li>
+      <li>Superimpose text on top of image
+        <ul>
+          <li>Use flex layout<br/>
+          <a href=https://stackoverflow.com/questions/42450098/positioning-text-over-image-html-css>https://stackoverflow.com/questions/42450098/positioning-text-over-image-html-css</a></li>
+          <li>Image is background of parent div</li>
+          <li>Text is in child div with roght float and padding</li>
+
+        </ul>
+      </li>
+    </ul>
+    <h2>Displaying this Web page</h2>
+    <ul>
+      <li>The page is static self-contained html5</li>
+      <li>Get path and paste into a browser address bar:<br/>
+        file:///opt/foxyboy/sw/pri/code-samples/react-rest/ecmascript2049/ecmascript2049.html</li>
+    </ul>
+    <style>
+      @font-face {
+        font-family: 'BladeRunner';
+        src: url(/opt/foxyboy/sw/pri/code-samples/react-rest/ecmascript2049/BLADRMF_.TTF);
+      }
+      .imageBackground {
+        --image-w: 1024px;
+        --image-h: 512px;
+        width: var(--image-w);
+        height: var(--image-h);
+        background-image: url(/opt/foxyboy/sw/pri/code-samples/react-rest/ecmascript2049/blade-runner-2049-2017-lu.jpg);
+        background-size: var(--image-w) var(--image-h);
+      }
+      .bladerunnerFont {
+        font-family: 'BladeRunner';
+      }
+      .imageText {
+        color: red;
+        font-size: 38pt;
+        float: right;
+        padding-right: 100px;
+        padding-top: 100px;
+        /*-webkit-text-stroke: 2px black;*/
+        text-shadow: 0px 1px 4px #23430C;
+      }
+    </style>
+    <div class=imageBackground>
+        <div class="bladerunnerFont imageText">#ECMAScript 2049</div>
+    </div>
+  </body>
+</html>
