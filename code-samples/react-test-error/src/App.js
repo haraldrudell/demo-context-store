@@ -9,7 +9,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.myFetch().catch(e => this.setState({e}))
+    return this.myFetch().catch(e => this.setState({e}))
   }
 
   async myFetch() {
