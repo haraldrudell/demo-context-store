@@ -14,10 +14,12 @@ export default class EntryCreator {
     await fs.ensureDir(o.directory)
     if (o.cover) this.copyFile(o.cover, o.directory)
     if (o.resume) this.copyFile(o.resume, o.directory)
-    else {
-      const dest = path.join(o.directory, o.defaultResumeText)
-      console.log(dest)
-      fs.ensureFile(dest)
+    if (o.text) {
+      for (let t of (Array.isArray(o.text) ? o.text : [o.text])) {
+        const dest = path.join(o.directory, t)
+        console.log(dest)
+        fs.ensureFile(dest)
+      }
     }
   }
 

@@ -34,8 +34,13 @@ async function getOptions() {
       o.cover = argv[++index]
       break
     case '-text':
-      if (index + 1 === indexMax) throw new Error(`${m} -text: missing cover filename`)
-      o.defaultResumeText = argv[++index]
+      if (index + 1 === indexMax) throw new Error(`${m} -text: missing text option`)
+      const text = argv[++index]
+      if (!text) throw new Error(`${m} -text: string cannot be empty`)
+      const current = o.text
+      if (!current) o.text = text
+      else if (!Array.isArray(current)) o.text = [current, text]
+      else current.push(text)
       break
     case '-h':
     case '-help':
