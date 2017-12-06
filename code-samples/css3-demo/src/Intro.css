@@ -1,0 +1,25 @@
+:root {
+  --font-size: 12
+}
+
+:local .fontSize {
+  font-size: calc(1pt * var(--font-size));
+}
+
+:local .term {
+  display: inline;
+  font-weight: bold;
+}
+
+:local .term::after {
+  content: ':';
+}
+
+:local .definition {
+  display: inline;
+  margin: 1em;
+}
+
+:local .red {
+  color: red;
+}

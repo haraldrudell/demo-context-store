@@ -1,0 +1,17 @@
+:local .parent {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+}
+
+:local .parent > div {
+  height: 100px;
+  width: 100px;
+  margin: 5px;
+  border: 1px solid black;
+}
+
+:local .parent > div > div {
+  height: 50px;
+  border: 1px solid green;
+}

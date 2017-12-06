@@ -1,0 +1,17 @@
+:local .background {
+	background-image: repeating-linear-gradient(
+    -45deg,
+    #ffeeb8,
+    #fff5d6 50px,
+    #ffeeb8 100px
+  );
+}
+
+:local .leftRightMargins {
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+:local .verticalMarginStop {
+  height: 1px;
+}
