@@ -6,12 +6,3 @@
     #ffeeb8 100px
   );
 }
-
-:local .leftRightMargins {
-  margin-left: 12px;
-  margin-right: 12px;
-}
-
-:local .verticalMarginStop {
-  height: 1px;
-}

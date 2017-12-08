@@ -7,12 +7,8 @@ export default class Background extends Component {
   render() {
     const {children} = this.props
     return (
-    <div className={styles.background}>
-      <div className={styles.verticalMarginStop} />
-      <div className={styles.leftRightMargins}>
+      <div className={styles.background}>
         {children}
-      </div>
-      <div className={styles.verticalMarginStop} />
-    </div>)
+      </div>)
   }
 }

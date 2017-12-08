@@ -10,8 +10,15 @@ const tabClasses = [Intro, Position]
 const m = 'App'
 
 export default class App extends Component {
-  texts = tabClasses.map((fn, index) => fn.name || `Tab${index}`)
-  state = {activeTab: this.texts[1]}
+  texts = tabClasses.map((fn, index) => fn.label || fn.name || `Tab${index}`)
+  constructor(props) {
+    super(props)
+    const {tab} = Object(props)
+    const textIndex = tab >= 0 ? Number(tab) : 1
+    this.state = {
+      activeTab: this.texts[textIndex]
+    }
+  }
 
   setActiveTab = activeTab => this.setState({activeTab})
 
