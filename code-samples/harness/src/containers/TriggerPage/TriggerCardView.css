@@ -1,0 +1,16 @@
+.main {
+  .more {
+    padding: 10px;
+  }
+}
+
+.webhookPopover {
+  ui-popover-content {
+    width: 600px;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/TriggerPage/TriggerCardView.css

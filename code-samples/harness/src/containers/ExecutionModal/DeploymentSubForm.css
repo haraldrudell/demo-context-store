@@ -1,0 +1,81 @@
+@import '../../styles/vars.css';
+.main {
+  margin-top: -32px;
+  :global {
+    label[for="root_header"] {
+      display: none;
+    }
+    label[for='root_workflowVariables_header'] {
+      display: none;
+    }
+    #root_workflowVariables__title {
+      display: none;
+    }
+    label[for='root_executionCredential'] {
+      display: none;
+    }
+    label[for='root_artifactSelect'] {
+      border-bottom: 1px solid var(--color-grey-dark-50);
+      width: 100%;
+    }
+  }
+  .borderBottom {
+    border-bottom: 1px solid $LIGHT_GRAY;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .workflowVariableHeader {
+    display: flex;
+    padding-left: 10px;
+    color: var(--color-grey-dark);
+    margin-top: 10px;
+  }
+  .varCol {
+    width: 30%;
+    word-break: break-word;
+  }
+  .valueCol {
+    min-width: 30%;
+    max-width: 60%;
+  }
+  .valueField {
+    width: 30%;
+    position: relative;
+    top: -8px;
+    font-weight: normal;
+  }
+  .workflowField {
+    font-weight: 700;
+    label {
+      display: none;
+    }
+  }
+  .workflowVariable {
+    display: flex;
+    padding-left: 10px;
+  }
+  .executionCredential {
+    legend {
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+  .sshUser {
+    margin-right: 20px;
+    width: 45%;
+    float: left;
+  }
+  .sshPassword {
+    width: 45%;
+    float: left;
+  }
+  .hide {
+    display: none;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ExecutionModal/DeploymentSubForm.css

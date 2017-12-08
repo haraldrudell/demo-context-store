@@ -1,0 +1,20 @@
+.main {
+  .enabledCheckbox {
+    > label {
+      display: none;
+    }
+  }
+
+  :global {
+    .field-radio-group {
+      radio:nth-child(2),
+      radio:nth-child(3) {
+      }
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/SetupAsCode/SetupAsCodeGitSyncModal.css

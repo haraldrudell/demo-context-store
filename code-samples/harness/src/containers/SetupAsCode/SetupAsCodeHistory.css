@@ -1,0 +1,14 @@
+@import '../../styles/vars.css';
+
+.main {
+  padding: 10px;
+
+  .selected {
+    background-color: $SETUP_AS_CODE_LIGHT_COLOR;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/SetupAsCode/SetupAsCodeHistory.css

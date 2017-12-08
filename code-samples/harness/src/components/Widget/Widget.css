@@ -1,0 +1,13 @@
+@import '../../styles/vars.css';
+
+.main {
+  padding       : 0 !important;
+  display       : flex;
+  flex-direction: column;
+
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/Widget/Widget.css

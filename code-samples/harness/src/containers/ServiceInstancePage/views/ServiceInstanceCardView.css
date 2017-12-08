@@ -1,0 +1,15 @@
+@import '../../../styles/vars.css';
+
+.main {
+  :global {
+    .__header {
+      font-weight: normal;
+    }
+  }
+}
+
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ServiceInstancePage/views/ServiceInstanceCardView.css

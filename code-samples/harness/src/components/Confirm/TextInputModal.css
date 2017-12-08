@@ -1,0 +1,23 @@
+
+.txt {
+  width: 100%;
+  min-height: 30px;
+  padding: 5px;
+  border: 1px solid #ddd;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 20vh;
+  padding: 5px;
+  border: 1px solid #ddd;
+}
+
+.desc {
+  margin-top: 10px;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/Confirm/TextInputModal.css

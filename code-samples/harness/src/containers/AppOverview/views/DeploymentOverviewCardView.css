@@ -1,0 +1,50 @@
+@import '../../../styles/vars.css';
+.main {
+  padding-right: 0px;
+  :global {
+    div.checkbox {
+      padding-left:5px;
+      color: $TEXT_COLOR;
+
+      .__count {
+        padding-right: 2px;
+      }
+    }
+
+    .box-body {
+      div.__deploymentsList {
+/*        max-height: 90vh;
+        overflow: hidden;
+        &:hover {
+          overflow-y: auto;
+        }*/
+
+        .__table {
+          width: 100%;
+          .__envName {
+            padding-left: 20px;
+          }
+        }
+      }
+    }
+
+
+
+    .__zoomButtons {
+      color: $TEXT_COLOR;
+    }
+
+    ._emptyTimeLine {
+      height: 200px;
+    }
+
+    .dropdown-menu {
+      padding-right:10px;
+    }
+  };
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/AppOverview/views/DeploymentOverviewCardView.css

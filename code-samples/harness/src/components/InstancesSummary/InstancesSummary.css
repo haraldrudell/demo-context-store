@@ -1,0 +1,207 @@
+@import "../../styles/vars.css";
+
+.main {
+  @define-mixin flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  display: flex;
+  width: 100%;
+
+  ui-card {
+    margin-bottom: 0px;
+
+    ui-card-main {
+      padding: 0px !important;
+    }
+  }
+
+  :global {
+    .main-content {
+      display: flex;
+      padding: 14px 0px;
+      height: 134px;
+
+      .total-value-box {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+
+        .total-value {
+          display: flex;
+          align-self: center;
+          font-size: 40px;
+          color: var(--text-color);
+        }
+      }
+
+      .chart-label {
+        display: flex;
+        align-self: center;
+        justify-content: center;
+      }
+
+      .instance-box {
+        align-items: center;
+
+        &:last-child {
+          border-right: 0px solid #e7e8e8;
+        }
+
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-width: 200px;
+        border-right: 1px solid #e7e8e8;
+      }
+
+      .chart-container {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100px;
+
+        opacity: 0.7;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+/* This is very important because it translates the entire popover. */
+.instanceSummaryPopoverPortal {
+  transform: translate(24px, 0px);
+}
+
+:global {
+  /* These need global scope because the popover is placed on the page root. */
+
+  .pt-popover.instance-summary-popover {
+    .pt-popover-content {
+      overflow-x: hidden;
+      overflow-y: auto;
+      background: var(--color-white);
+      max-height: 400px;
+
+      --chart-color-1: #0b4d63;
+      --chart-color-2: #1b88ad;
+      --chart-color-3: #28b6e6;
+      --chart-color-4: #9ad3e7;
+      --chart-color-5: #c4dee7;
+
+      donut-popover {
+        display: flex;
+        flex-direction: column;
+        max-height: 500px;
+        padding: 30px;
+        flex: 1;
+
+        table {
+          display: flex;
+          flex-direction: column;
+          tbody {
+            tr {
+              flex: 0;
+              height: 21px;
+
+              &.small-text {
+                font-size: 12px;
+                color: var(--color-grey-dark-50);
+              }
+              td {
+                vertical-align: top;
+                flex-wrap: nowrap;
+
+                key {
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+
+                  text-sizer {
+                    max-width: 200px;
+                  }
+                }
+
+                circle-div {
+                  display: flex;
+                  align-items: center;
+                  height: 14px;
+                  width: 14px;
+                  border-radius: 7px;
+                  margin-right: 8px;
+                }
+
+                .blue-1 {
+                  border: 1px solid var(--chart-color-1);
+                  background: var(--chart-color-1);
+                }
+
+                .blue-2 {
+                  border: 1px solid var(--chart-color-2);
+                  background: var(--chart-color-2);
+                }
+
+                .blue-3 {
+                  border: 1px solid var(--chart-color-3);
+                  background: var(--chart-color-3);
+                }
+
+                .blue-4 {
+                  border: 1px solid var(--chart-color-4);
+                  background: var(--chart-color-4);
+                }
+
+                .blue-5 {
+                  border: 1px solid var(--chart-color-5);
+                  background: var(--chart-color-5);
+                }
+
+                .grey {
+                  border: 1px solid var(--color-grey-50);
+                  background: var(--color-grey-50);
+                }
+
+                value {
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  white-space: nowrap;
+                  margin-left: 24px;
+                }
+              }
+            }
+          }
+        }
+
+        line-item {
+          @mixin flex-row;
+          line-item-name {
+            @mixin flex-row;
+          }
+
+          line-item-count {
+            @mixin flex-row;
+          }
+        }
+      }
+    }
+
+    .pt-popover-arrow {
+      color: var(--color-white);
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/InstancesSummary/InstancesSummary.css

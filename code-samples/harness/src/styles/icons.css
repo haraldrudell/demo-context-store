@@ -1,0 +1,35 @@
+/*
+ * Harness SVG icons
+ * TODO: Standardize these icons by names (./icons/*.svg), let them update by design and have a script to
+ * compile them into this file. Also make sure contents are escaped properly (# need to be converted to %23).
+ */
+:root {
+  --icon-success: url("/img/deployments/icon-deployments-success.svg");
+  --icon-failed: url("/img/deployments/icon-deployments-failed.svg");
+  --icon-error: url("/img/deployments/icon-deployments-error.svg");
+  --icon-aborted: url("/img/deployments/icon-deployments-aborted.svg");
+  --icon-aborting: url("/img/deployments/icon-deployments-running.svg");
+  --icon-pending: url("/img/deployments/icon-deployments-blank.svg");
+  --icon-waiting: url("/img/deployments/icon-deployments-paused.svg");
+  --icon-paused: url("/img/deployments/icon-deployments-paused.svg");
+  --icon-pausing: url("/img/deployments/icon-deployments-running.svg");
+  --icon-running: url("/img/deployments/icon-deployments-running.svg");
+  --icon-queued: url("/img/deployments/icon-deployments-queued-lighter.svg");
+  --icon-bracket-left: url("/img/deployments/icon-deployments-bracket-l.svg");
+  --icon-bracket-right: url("/img/deployments/icon-deployments-bracket-r.svg");
+  --icon-add: url("/img/deployments/icon-add.svg");
+  --icon-next: url("/img/deployments/icon-pipeline-arrow-r.svg");
+  --icon-next-hover: url("/img/deployments/icon-pipeline-arrow-r-hover.svg");
+  --icon-prev: url("/img/deployments/icon-pipeline-arrow-l.svg");
+  --icon-prev-hover: url("/img/deployments/icon-pipeline-arrow-l-hover.svg");
+  --icon-plus: url("/img/deployments/icon-deployments-plus.svg");
+  --icon-delete: url("/img/deployments/icon-close-delete-red.svg");
+  --icon-approval: url("/img/deployments/icon-deployments-approval.svg");
+  --icon-execute: url("/img/deployments/icon-start.svg");
+  --icon-note: url("/img/deployments/icon-deployment-notes.svg");
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/styles/icons.css

@@ -1,0 +1,61 @@
+@import '../../styles/vars.css';
+
+.main {
+  padding-top: 10px;
+
+  :global {
+    .col-md-12 {
+      margin-bottom: 10px;
+    }
+    .box {
+      background-color: $CARD_BGCOLOR !important;
+    }
+    .__card .box-body {
+      div {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        color: #777;
+      }
+    }
+
+    .__marginBottom20 {
+      margin-bottom: 10px;
+    }
+
+    .__headingRow {
+      font-weight: bold;
+      &:after {
+        border-bottom: 2px solid #999f9f;
+        margin-left: 10px;
+        width: 98%;
+      }
+    }
+
+    .__listRow {
+      color: #989C9D;
+      &:after {
+        border-bottom: 1px solid $BORDER_LIGHT;
+        margin-left: 10px;
+        width: 98%;
+      }
+
+      .__appName {
+        color: #555e61;
+        padding: 10px;
+        i {
+          padding-right: 10px;
+          font-size: 1.5em;
+        }
+        span {
+          font-size: 1em;
+        }
+      }
+
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/InfrastructurePage/InfrastructurePage.css

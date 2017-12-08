@@ -1,0 +1,121 @@
+/* This is the class for the target */
+.historyTableTarget {
+  display: flex;
+  justify-self: flex-end;
+  margin-left: auto;
+  justify-content: flex-end;
+}
+
+.addButtonPopoverTarget {
+  display: flex;
+  /* flex: 1; */
+  width: var(--pill-width);
+}
+
+.main {
+  margin-top: 10px;
+
+  :global {
+    /* this should not be global */
+    artifact-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 0px;
+      flex: 1;
+    }
+
+    .content {
+      min-height: 0;
+      padding: 0 12px 0 12px;
+    }
+
+    .__hide {
+      display: none;
+    }
+
+    .__invisible {
+      visibility: hidden;
+    }
+
+    .__visible {
+      visibility: none;
+    }
+
+    .__dlTop {
+      margin-top: 10px;
+      dt {
+        color: #ccc;
+        font-weight: bold;
+      }
+
+      dd {
+        padding-left: 50px;
+      }
+      .__artifact-list {
+        padding-top: 0px;
+
+        .pt-popover-target {
+          vertical-align: middle;
+        }
+
+        .pt-popover-target:nth-child(3) {
+          float: right; /* Artifact History Link */
+          width: 156px;
+        }
+      }
+      .__artifact-source-items {
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
+    .add-source-button {
+      &,
+      &:hover {
+        display: inline-block;
+        background: var(--pill-add-item-bg-color);
+        color: var(--pill-add-item-color);
+        font-weight: bold;
+        border-radius: 3px;
+        padding: 0 8px;
+        box-shadow: none;
+        border: none;
+        height: var(--pill-height);
+        line-height: var(--pill-height);
+        min-height: var(--pill-height);
+        width: var(--pill-width);
+      }
+
+      &:before {
+        color: #ffffff;
+      }
+    }
+
+    .Select.source-type {
+      display: inline-block;
+      width: 205px;
+      vertical-align: middle;
+      margin-left: 18px;
+    }
+  }
+}
+
+.popover-dropdown-menu {
+  :global
+    .pt-tether-element-attached-top.pt-tether-target-attached-bottom
+    > .pt-popover {
+    margin-top: 3px !important;
+  }
+
+  :global .pt-popover {
+    .pt-popover-arrow {
+      display: none;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ServiceDetailPage/ServiceDetailPage.css

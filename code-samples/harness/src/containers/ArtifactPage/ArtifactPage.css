@@ -1,0 +1,89 @@
+@import '../../styles/vars.css';
+.main {
+  padding-left: 0px;
+  padding-right: 0px;
+
+  :global {
+    .alignHeader {
+      padding-left : 0px;
+      margin-left  : -12px;
+      margin-top   : 0px;
+      margin-bottom: 0px;
+    }
+
+    .wings-card-search {
+      margin-top: 15px;
+      input {
+        padding-left: 30px;
+        padding-bottom: 0px;
+      }
+
+      .__searchIcon {
+        margin-top: -5px;
+        margin-left: auto;
+        &:hover{
+          color: $TEXT_COLOR !important;
+        }
+      }
+
+      .__clear {
+        top: -8px;
+      }
+    }
+
+    .button-bar-box-header {
+      color: #444;
+      padding: 0px;
+      display: flex;
+      position: relative;
+      height: $TOP_NAV_HEIGHT;
+      align-items: center;
+      margin-left: -8px;
+    }
+
+    .widget-box-body {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px;
+      padding: 0px;
+    }
+
+    .row {
+      margin-right: 0px;
+      margin-left: 0px;
+    }
+
+    .wings-card-col {
+      margin-right : 0px;
+      margin-left  : 0px;
+      padding      : 0px;
+      margin-bottom: 24px;
+    }
+
+    .wings-card-row {
+      padding-right: 0px;
+      padding-left: 0px;
+    }
+
+    .col-md-12 {
+      padding-right: 0px;
+      padding-left: 0px;
+    }
+
+    .box-body {
+      padding-right: 0px;
+      padding-left: 0px;
+    }
+
+    .widget-box-body {
+      padding: 0px;
+    }
+
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ArtifactPage/ArtifactPage.css

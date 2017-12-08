@@ -1,0 +1,54 @@
+@import '../../styles/vars.css';
+@import '../../styles/mixins.css';
+.main {
+  :global {
+    .floatRight {
+    padding-right: 30px;
+    padding-top: 10px;
+    float: right;
+    }
+    .wings-text-link {
+      font-weight:bold;
+    }
+    .__leftBorder {
+      border-left: 1px solid $BORDER_LIGHT;
+    }
+    .nav-tabs>li>a {
+      color:inherit;
+      font-size:16px !important;
+      border:none !important;
+      border-radius:0px !important;
+    }
+    .nav>li>a:focus , .nav>li>a:hover, .nav>li>a:active {
+      background-color: inherit;
+    }
+    .nav-tabs {
+        border:none !important;
+    }
+    .nav-tabs>li:first-child a::after {
+        content: '|';
+        margin-left: 20px;
+        margin-right:0px;
+        color:inherit;
+    }
+
+ .nav-tabs>li.active a {
+    @mixin tabsTitle;
+    color:#555 !important;
+    font-weight:bold;
+    font-size:16px !important;
+ }
+    .nav-tabs>li.active a {
+
+    }
+    li:nth-child(2)>a {
+      padding-left:0px !important;
+    }
+
+ }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ServiceTemplatePage/ServiceTemplatePage.css

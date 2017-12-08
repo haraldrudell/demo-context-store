@@ -1,0 +1,67 @@
+@import '../../styles/vars.css';
+
+.main {
+  input[type="password"] {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid $BGCOLOR;
+    border-color: #d2d6de;
+    color: $TEXT_COLOR;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .emailAlreadySent {
+      display: table;
+      /* width: 200px; */
+      margin: auto;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+  }
+
+  :global {
+
+    span.feedback {
+      display: none;
+    }
+
+    .help-block {
+      color: red;
+      text-align: center;
+      .msg {
+        color: #fff;
+      }
+    }
+
+    .password-strength-meter {
+      margin-top: 10px;
+      height: 3px;
+      width: 100%;
+      box-shadow: 0 5px 5px -5px #999 inset;
+      margin-bottom: 0px;
+
+      .progress-bar-warning {
+        background-color: #FFC52B;
+      }
+    }
+
+    p.password-strength-text {
+      float: right;
+      color: #8FE2E6;
+
+      strong {
+        color: #fff;
+      }
+    }
+
+  };
+
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/RegisterPage/RegisterPage.css

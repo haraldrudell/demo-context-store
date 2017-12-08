@@ -1,0 +1,15 @@
+@import '../../styles/vars.css';
+
+.main {
+  :global{
+    .SSHkey_legend fieldset legend{
+        display: none;
+    }
+  }
+
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/AcctSettingPage/AcctSettingModal.css

@@ -1,0 +1,20 @@
+@import '../../styles/vars.css';
+@import '../../styles/icons8-classes.css';
+
+.main {
+}
+
+.warning {
+  color: #ff8c00;
+  align-self: center;
+}
+
+.submitSection {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/SecretsManagementPage/CustomKMSForm.css

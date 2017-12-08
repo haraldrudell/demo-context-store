@@ -1,0 +1,28 @@
+
+.main {
+}
+
+.btnBox {
+  text-align: center;
+
+  i {
+    color: #ccc;
+    &:hover {
+      color: #333;
+    }
+  }
+}
+
+.editBtn {
+  cursor: pointer;
+}
+
+.deleteBtn {
+  padding-left: 2px;
+  cursor: pointer;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/HostPage/views/HostListView.css

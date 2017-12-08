@@ -1,0 +1,28 @@
+@import '../../../styles/vars.css';
+
+.main {
+
+  :global{
+    .__sparkChart {
+      .progress-bar {
+        width: 8px;
+        height: 40px;
+      }
+    }
+
+    .__rightBorder {
+      border-right: 1px solid #EEEEEE;
+      height: 100%;
+    }
+
+    .__chartLabel {
+      text-align: center;
+    }
+  };
+
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/AppOverview/views/AppTrendsCardView.css

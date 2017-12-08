@@ -1,0 +1,65 @@
+@import '../../styles/vars.css';
+
+
+.common {
+  width: 80vw;
+  margin: 0 auto;
+}
+
+.main {
+  position: absolute;
+  top: 90px;
+}
+
+
+.bar {
+
+}
+
+.sticky {
+  position: fixed;
+  top: 90px;
+}
+
+.chiclet {
+    background: none;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-size: 12px;
+    line-height: 14px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 0 0 2px 2px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+    margin: -34px auto 0;
+    padding: 0 10px;
+    display: block;
+    cursor: pointer;
+    background-color: $ACCENT_COLOR;
+    height: 24px;
+    line-height: 24px;
+    -webkit-transition: margin-top 0.2s ease-out;
+    -moz-transition: margin-top 0.2s ease-out;
+    -o-transition: margin-top 0.2s ease-out;
+    transition: margin-top 0.2s ease-out;
+    pointer-events: auto;
+
+    &:hover, &:active, &:focus {
+      color:#fff;
+    }
+}
+
+.display {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/ChicletNotification/ChicletNotification.css

@@ -1,0 +1,370 @@
+@import "../../styles/vars.css";
+@import "../../styles/icons8-classes.css";
+
+.main {
+  .form {
+    margin: 20px;
+    padding-bottom: 20px;
+  }
+
+  .advancedLink {
+    float: right;
+    margin-top: -20px;
+  }
+
+  :global {
+    @define-mixin colorLegend {
+      color: $LIGHT_GRAY;
+      font-size: 12px;
+      padding-top: 15px;
+      text-transform: uppercase;
+    }
+    .modal-header {
+      border: 0px;
+    }
+    .control-label {
+      font-weight: normal;
+    }
+    .panel-heading .panel-title {
+      border: 0px !important;
+      cursor: pointer;
+      a::before {
+        padding-right: 10px;
+        font-family: "icons8";
+        @mixin icons8-forward-content;
+        color: gray;
+      }
+      a:focus,
+      a:hover,
+      a:visited {
+        outline: none !important;
+        text-decoration: none !important;
+        color: inherit !important;
+      }
+    }
+    .panel-heading {
+      background: none !important;
+    }
+    .panel,
+    .panel-default {
+      border: 0px !important;
+    }
+    .panel-body {
+      border: 0px !important;
+    }
+
+    .expanded .panel-heading .panel-title {
+      a::before {
+        font-family: "icons8";
+        @mixin icons8-expand-arrow-content;
+        color: gray;
+      }
+    }
+    .modal-dialog {
+      width: 600px;
+      .modal-body {
+        margin-right: 30px;
+        margin-left: 30px;
+        padding: 0px;
+        .form-group {
+          margin: 0px;
+        }
+      }
+    }
+    .__container {
+      .form-group:not(".__radio-control") {
+        line-height: 10px;
+      }
+      legend {
+        display: none;
+      }
+      .row .col-xs-9 {
+        width: 100%;
+      }
+      .array-item-toolbox {
+        display: none;
+      }
+      .array-item-add {
+        display: none;
+      }
+      .__first-control + fieldset {
+        display: inline-block;
+      }
+      .__memory-control {
+        padding-left: 15px;
+      }
+    }
+    .__child-control {
+      display: inline-block;
+      width: 50%;
+      margin-top: 5px;
+    }
+    .__parent-control,
+    .__array-list-control {
+      legend {
+        display: block;
+        @mixin colorLegend;
+      }
+      .col-xs-3 {
+        width: 10%;
+      }
+      .array-item-toolbox {
+        display: block;
+      }
+      .array-item-add {
+        display: block;
+      }
+      .array-item-move-up,
+      .array-item-move-down {
+        display: none;
+      }
+      .btn-add {
+        text-transform: capitalize;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        background: transparent;
+        font-weight: 400;
+        color: #0275d8;
+        border-radius: 0;
+      }
+      .btn-primary,
+      .btn-info {
+        box-shadow: none;
+      }
+      .btn-add,
+      .btn-add.active,
+      .btn-add:active,
+      .btn-add:disabled {
+        background-color: transparent;
+      }
+    }
+    .__radio-control {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px !important;
+      .field-radio-group {
+        margin-left: 20px;
+      }
+    }
+    .AdvStgsBtn {
+      position: absolute;
+      bottom: 0;
+      color: grey;
+      pointer-events: none;
+      right: -30px;
+    }
+    .btn-link::hover {
+      color: rgb(0, 0, 238) !important;
+    }
+    .__array-list-control {
+      position: relative;
+      .array-item {
+        position: relative;
+      }
+      .col-xs-9 {
+        display: inline-block;
+      }
+      .col-xs-9 .__nested-child-control {
+        width: 50%;
+        display: inline-block;
+      }
+      .__nested-child-control:nth-child(2) {
+        padding-left: 16px;
+      }
+      .array-item-toolbox {
+        top: -37px;
+        float: right;
+      }
+      .array-item-remove {
+        background: none !important;
+        color: black;
+        border: 0px;
+        top: -30px;
+      }
+      .array-item-list + .row {
+        position: absolute;
+        top: 13px;
+        right: 70px;
+      }
+      .btn-add i {
+        font-family: "icons8";
+        &:before {
+          @mixin icons8-plus-math-content;
+        }
+      }
+      legend {
+        font-weight: bolder;
+        font-size: 16px;
+      }
+    }
+
+    .__storage-configs-array {
+      .array-item-list + .row {
+        right: 85px;
+      }
+      .btn-add::after {
+        content: "Add Volume";
+      }
+      .array-item-toolbox {
+        top: -77px;
+      }
+    }
+    .__port-mappings-array {
+      .btn-add::after {
+        content: "Add Port";
+      }
+
+      .array-item-toolbox {
+        top: -75px;
+      }
+    }
+
+    .array-item-remove i,
+    .btn-danger i {
+      font-family: "icons8";
+      &:before {
+        @mixin icons8-delete-content;
+      }
+    }
+
+    .btn-danger::focus {
+      border: 0px;
+    }
+
+    .__first-control {
+      margin-top: 10px !important;
+    }
+    .__log-config {
+      margin-top: 10px !important;
+    }
+    .__image-name {
+      margin-bottom: 20px;
+    }
+    .__options-control {
+      padding-left: 15px;
+    }
+    .__show {
+      display: block;
+      border-radius: 0;
+      width: 350px;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      background-clip: padding-box;
+      font-size: 14px;
+    }
+    .__arrow_box {
+      position: absolute;
+      top: -15px;
+      left: 160px;
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+
+      border-bottom: 15px solid grey;
+    }
+    .__hide {
+      display: none;
+    }
+    .__cancel-btn {
+      margin-left: 10px;
+    }
+    .AddOptionsbtn {
+      display: inline-block;
+      vertical-align: top;
+      margin-left: 5px;
+      margin-top: 5px;
+      font-family: "icons8";
+      background: none;
+      box-shadow: none;
+      border: transparent;
+      color: #0275d8;
+      font-weight: 400;
+      text-transform: capitalize;
+      &:before {
+        @mixin icons8-plus-math-content;
+      }
+      &:after {
+        content: "Add";
+      }
+      vertical-align: text-bottom;
+    }
+    .AddOptionsbtn,
+    .AddOptionsbtn.active,
+    .AddOptionsbtn:active,
+    .AddOptionsbtn:disabled {
+      background-color: transparent;
+    }
+    .__show-errors {
+      display: block;
+      color: red;
+    }
+    .__log-config fieldset div {
+    }
+    .__logdriver-control {
+    }
+    .__options-control {
+      padding: 0;
+      margin-top: 10px !important;
+    }
+    .__options-control label {
+    }
+    .react-tagsinput {
+      display: inline-block;
+      width: 85%;
+      background-color: #eee;
+      opacity: 1;
+      padding: 0;
+    }
+    .react-tagsinput-tag {
+      background: none;
+      border: 1px solid rgba(0, 126, 255, 0.24);
+      display: inline-block;
+      color: #007eff;
+      font-size: 0.9em;
+      line-height: 1.4;
+      margin-left: 5px;
+      margin-top: 5px;
+      vertical-align: top;
+      border-bottom-right-radius: 2px;
+      border-top-right-radius: 2px;
+      cursor: default;
+      padding: 2px 5px;
+    }
+    .tag-content {
+      display: inline-block;
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: top;
+    }
+    .react-tagsinput:focus,
+    .react-tagsinput--focused {
+      border: none !important;
+    }
+    .react-tagsinput input {
+      height: 20px;
+    }
+    .closeLogOptnBtn {
+      font-family: "icons8";
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: none;
+      box-shadow: none;
+      color: gray;
+      border: transparent;
+      &:before {
+        @mixin icons8-delete-content;
+      }
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ServiceDetailPage/ContainerTaskDefinitionModal.css

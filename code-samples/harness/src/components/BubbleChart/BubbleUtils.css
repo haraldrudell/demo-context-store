@@ -1,0 +1,116 @@
+@import "../../styles/vars.css";
+@import "../../styles/icons8-classes.css";
+.inprogress {
+  stroke: $INPROGRESS_LIGHT;
+  fill: transparent;
+  &:hover {
+    stroke: $INPROGRESS;
+  }
+}
+
+.success {
+  stroke: var(--color-green-light);
+  fill: transparent;
+  &:hover {
+    stroke: var(--color-green);
+  }
+}
+
+.failed {
+  stroke: var(--color-red-light);
+  fill: transparent;
+  &:hover {
+    stroke: var(--color-red);
+  }
+}
+
+.queued {
+  stroke: var(--color-blue-light);
+  fill: transparent;
+  &:hover {
+    stroke: var(--color-blue);
+  }
+}
+
+.__svg-contentview {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  margin: auto;
+  position: relative;
+  top: 20px;
+}
+#Rectangle_766_1_ {
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+  fill: var(--color-blue);
+}
+.innerCircle {
+  fill-opacity: 0.6;
+  text-anchor: middle !important;
+}
+
+.bubbleBase {
+  stroke: var(--color-grey-50);
+  fill: transparent;
+}
+
+.bubbleFAILED {
+}
+
+.bubbleSUCCESS {
+}
+svg text {
+}
+
+.innerText {
+  font-family: "icons8" !important;
+  font-size: 15px;
+}
+.FAILED_StatusText {
+  fill: var(--color-red) !important;
+  font-family: "Source Sans Pro" !important;
+  font-size: 20px !important;
+  font-weight: bold;
+}
+
+.SUCCESS_StatusText {
+  stroke: var(--color-green-light) !important;
+  font-size: 16px;
+  font-weight: bold;
+}
+.RUNNING_StatusText {
+  stroke: #099096 !important;
+  font-size: 12px;
+  font-weight: bold;
+}
+.PAUSED_StatusText,
+.PAUSING_StatusText {
+  fill: #f7db78 !important;
+  font-size: 12px;
+  font-weight: bold;
+}
+.ABORTED_StatusText,
+.ABORTING_StatusText {
+  stroke: #9da2a4 !important;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.innerToolTip {
+  color: var(--color-red-light);
+}
+:global {
+  .__bubbleRUNNING circle.__animation {
+    stroke: $INPROGRESS;
+    fill: transparent;
+    transform-origin: center;
+    -webkit-animation: pulse-fx 1s ease-out infinite;
+    animation: pulse-fx 1s ease-out infinite;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/BubbleChart/BubbleUtils.css

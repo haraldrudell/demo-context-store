@@ -1,0 +1,20 @@
+.main {
+  :global{
+    .ag-body-viewport {
+      overflow-y: hidden !important; /* disable vertical scrolling */
+    }
+  }
+}
+
+.btnBox {
+  text-align: center;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ArtifactPage/views/ArtifactListView.css

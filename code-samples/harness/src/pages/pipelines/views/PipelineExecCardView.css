@@ -1,0 +1,301 @@
+@import "../../../styles/vars.css";
+@import "../../../styles/icons8-classes.css";
+
+.main {
+  margin: 0px -8px;
+
+  .row {
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+
+  :global {
+    .row {
+      margin-right: 0px;
+      margin-left: 0px;
+    }
+
+    .__card > .box-body {
+      padding: 0;
+      background-color: #fcfcfc;
+      .__pipes {
+        display: flex;
+      }
+    }
+
+    .__card .__execStatus {
+      position: absolute;
+      right: 30px;
+      top: 12px;
+      color: $TEXT_COLOR;
+      span,
+      time {
+        color: $TEXT_COLOR;
+      }
+    }
+
+    .status-PAUSED span {
+      color: $NODE_STATUS_PAUSED !important;
+    }
+
+    .__envName {
+      border: 2px solid #e2e6e7;
+      border-radius: 5px;
+      margin: 10px;
+      padding: 2px;
+      &:hover {
+        border: 2px solid #5a6466;
+      }
+    }
+
+    .__active {
+      border: 2px solid #5a6466;
+      background-color: #5a6466 !important;
+      color: #fff !important;
+    }
+
+    .__execDetailsCard {
+      margin-top: -15px;
+      padding: 20px;
+      padding-bottom: 5px;
+      .__card {
+        padding-bottom: 0;
+        border: 4px solid #e4e5e7 !important;
+        border-radius: 8px;
+
+        &::before {
+          content: "";
+          position: absolute;
+          z-index: 11;
+          bottom: 9px;
+          top: 24px;
+        }
+
+        .wings-card-col {
+          background-color: #fcfcfc;
+          margin-bottom: 0;
+        }
+
+        .__depCardStatusHeader {
+          .__status {
+            display: none;
+          }
+        }
+      }
+
+      .__container {
+        width: 100%;
+      }
+    }
+
+    .__execDetailsStatus_FAILED {
+      .__card::before {
+        border-left: 6px solid $RED_ERROR !important;
+      }
+    }
+    .__execDetailsStatus_SUCCESS {
+      .__card::before {
+        border-left: 6px solid var(--color-green) !important;
+      }
+    }
+    .__execDetailsStatus_RUNNING {
+      .__card::before {
+        border-left: 6px solid $INPROGRESS !important;
+      }
+    }
+    .__execDetailsStatus_QUEUED {
+      .__card::before {
+        border-left: 6px solid $INPROGRESS !important;
+      }
+    }
+
+    .__col {
+      padding: 0;
+      pipe-failed.png: 200px;
+      background-color: $BGCOLOR_LIGHT_BLUE;
+      border-right: 1px solid #eee;
+      text-align: center;
+      padding-top: 10px;
+      height: 190px;
+      flex: 1;
+      position: relative;
+    }
+
+    .__svg-contentview {
+      width: 40px;
+      height: 40px;
+      display: inline-block;
+      margin: auto;
+      position: relative;
+      top: 20px;
+    }
+    .__svg-overview {
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      margin: auto;
+      position: relative;
+    }
+    .__svg-content {
+      /*	display: inline-block;
+	position: absolute;
+	top: 23px;*/
+    }
+    .__iconBox {
+      margin-top: 20px;
+      margin-bottom: 29px;
+      & > div {
+        width: 42px;
+        height: 42px;
+        border-radius: 21px;
+        border: 5px solid #c3c8ca;
+        margin: 0 auto;
+      }
+      span {
+        /* position: absolute;
+        font-size: 24px;
+        border: 1px solid #858585;
+        width: 44px;
+        height: 44px;
+        border-radius: 22px;
+        padding: 5px;
+        background-color: #fcfcfc;
+        margin-left: -22px;
+        margin-top: -1px;
+        &::before {
+          width: 30px;
+        }*/
+      }
+    }
+    .__statusIcon {
+      margin-top: 15px;
+      position: relative;
+      left: -8px;
+    }
+
+    .__pipeArrow {
+      position: absolute;
+      width: 50%;
+      height: 2px;
+      left: 50%;
+      margin-top: 40px;
+      background-color: #c3c8ca;
+      margin-left: 22px;
+      margin-right: -22px;
+      &:after {
+        font-family: "icons8";
+        @mixin icons8-forward-content;
+        right: 17px;
+        margin-top: -10px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #c3c8ca;
+        position: absolute;
+      }
+    }
+    .__pipeArrowRight {
+      left: -22px;
+    }
+    .__status {
+      display: inline-block;
+      font-size: 14px !important;
+    }
+
+    .__artifactTitle {
+      margin-top: -6px;
+    }
+
+    .__artifactName {
+      max-width: 200px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      margin: 0 auto;
+    }
+
+    .__execPipeStatus {
+      /* position: absolute;
+        top: 120px;
+        width:100%;*/
+      /*right: 171px;*/
+      position: relative;
+      top: 20px;
+      font-size: 16px;
+    }
+
+    .__pipeBox {
+      width: 100%;
+      margin: 25px 0 25px 0;
+      .__pipe {
+        width: 100%;
+        height: 25px;
+        width: 100%;
+        height: 30px;
+        padding-top: 4px;
+        span {
+          margin-right: 5px;
+        }
+      }
+      .__pipeEnd {
+        width: 7px;
+        height: 30px;
+        position: absolute;
+        margin-top: -30px;
+        right: 0;
+        background-color: #fcfcfc;
+      }
+      .__pipeQUEUED {
+        background-image: url(/img/pipelines/pipe-queued.png);
+      }
+      .__pipeSUCCESS {
+        background-image: url(/img/pipelines/pipe-success.png);
+      }
+      .__pipeRUNNING {
+        background-image: url(/img/pipelines/pipe-running.png);
+      }
+      .__pipeFAILED {
+        background-image: url(/img/pipelines/pipe-failed.png);
+      }
+      .__pipePAUSED {
+        background-image: url(/img/pipelines/pipe-paused.png);
+      }
+      .__pipeABORTED {
+        background-image: url(/img/pipelines/pipe-aborted.png);
+      }
+      .__pipeEndQUEUED {
+        background-image: url(/img/pipelines/pipe-end-queued.png);
+      }
+      .__pipeEndSUCCESS {
+        background-image: url(/img/pipelines/pipe-end-success.png);
+      }
+      .__pipeEndRUNNING {
+        background-image: url(/img/pipelines/pipe-end-running.png);
+      }
+      .__pipeEndFAILED {
+        background-image: url(/img/pipelines/pipe-end-failed.png);
+      }
+      .__pipeEndPAUSED {
+        background-image: url(/img/pipelines/pipe-end-paused.png);
+      }
+      .__pipeEndABORTED {
+        background-image: url(/img/pipelines/pipe-end-aborted.png);
+      }
+    }
+  }
+}
+.bubbleRUNNING {
+  :global {
+    circle.__animation {
+      stroke: $INPROGRESS;
+      fill: transparent;
+      transform-origin: center;
+      -webkit-animation: pulse-fx 1s ease-out infinite;
+      animation: pulse-fx 1s ease-out infinite;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/pages/pipelines/views/PipelineExecCardView.css

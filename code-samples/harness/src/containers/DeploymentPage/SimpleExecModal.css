@@ -1,0 +1,68 @@
+@import '../../styles/vars.css';
+
+.main {
+  :global {
+    .panel-danger {
+      display: none; /* error details at the top */
+    }
+    .form-group fieldset + div {
+      display: none; /* error details at the bottom */
+    }
+
+    .__command {
+      width: 50%;
+      float: left;
+      margin-right: 20px;
+    }
+    .__strategy {
+      legend {
+        display: none;
+      }
+      .form-group {
+        margin-bottom: 0;
+      }
+      .field-radio-group {
+        margin-top: 7px;
+      }
+      .radio {
+        display: inline;
+        margin-right: 20px;
+      }
+    }
+    .__artifactSelect {
+      clear: both;
+    }
+
+    .__serviceInstanceSelect {
+      .Select-multi-value-wrapper {
+        min-height: 50px !important;
+        max-height: 100px !important;
+        overflow-y: auto !important;
+      }
+    }
+
+    .__executionCredential {
+      legend {
+        font-size: 1em;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    }
+    .__sshUser, .__sshUser + div,
+    .__appAccount, .__appAccount + div {
+      width: 45%;
+      float: left;
+    }
+    .__sshUser, .__appAccount {
+      margin-right: 20px;
+    }
+    .__hidden {
+      display: none;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/DeploymentPage/SimpleExecModal.css

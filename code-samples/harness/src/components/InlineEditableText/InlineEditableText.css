@@ -1,0 +1,17 @@
+.main {
+  .text {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .editIcon {
+    color: #ccc;
+    margin-left: 5px;
+    font-size: 12px;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/InlineEditableText/InlineEditableText.css

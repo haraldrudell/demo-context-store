@@ -1,0 +1,16 @@
+@import '../../../styles/vars.css';
+
+.main {
+  :global{
+      .__dl {
+        dt {
+          text-align: right;
+        }
+      }
+  };
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/AcctUserRolePage/views/AcctUsersCardView.css

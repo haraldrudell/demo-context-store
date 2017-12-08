@@ -1,0 +1,104 @@
+@import "../../styles/vars.css";
+
+.main {
+  $HIEGHT: 110px;
+
+  :global {
+    .wings-card-col {
+      margin-bottom: 12px;
+    }
+
+    .col-md-2 {
+      width: 110px;
+    }
+
+    .__accountBody {
+      background-color: $BGCOLOR_LIGHT_BLUE;
+      height: $HIEGHT;
+      padding-top: 2px;
+      overflow: hidden;
+    }
+
+    .__accountIcon {
+      text-align: center;
+      font-size: 65px;
+      position: relative;
+      background: #fff;
+
+      @media (min-width: 992px) {
+        div {
+          width: 100%;
+          height: $HIEGHT;
+        }
+      }
+
+      a,
+      .wings-text-link {
+        color: var(--color-blue);
+      }
+    }
+
+    .__accountContent {
+      position: absolute;
+      top: 0;
+      left: 100px;
+      padding-left: 35px;
+    }
+
+    .__normalText {
+      color: var(--text-color);
+    }
+
+    .__more {
+      text-align: center;
+      font-size: 1.5em;
+      cursor: pointer;
+
+      .__moreIcon {
+        color: var(--text-color);
+      }
+
+      .__moreText {
+        color: var(--color-blue);
+      }
+    }
+
+    .__transitionContainer {
+      float: left;
+      width: 100%;
+    }
+
+    .slide-appear {
+      opacity: 0;
+      transition: opacity 0.3s ease-in;
+    }
+
+    .slide-appear.slide-appear-active {
+      opacity: 1;
+    }
+
+    .slide-enter {
+      max-height: 0;
+      overflow-y: hidden;
+    }
+
+    .slide-enter.slide-enter-active {
+      max-height: 1000px;
+      transition: all 0.7s ease-in;
+    }
+
+    .slide-leave {
+      max-height: 1000px;
+      transition: all 0.3s ease-out;
+    }
+
+    .slide-leave.slide-leave-active {
+      max-height: 0;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/AccountPage/AccountPage.css

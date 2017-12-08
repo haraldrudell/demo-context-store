@@ -1,0 +1,66 @@
+@import '../../styles/vars.css';
+.main {
+  :global {
+    input[data-type='toggle'] {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .toggleLabel {
+      display: block;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      font-family: "icons8";
+    }
+    .toggleLabel::before {
+      @mixin icons8-forward-content;
+    }
+    .toggleContent {
+      display: none;
+    }
+    div[data-type='toggleContent'] {
+      padding-left: 10px;
+    }
+
+    input[data-type='toggle']:checked ~ .toggleLabel {
+      border-bottom: 1px solid #e5e5e5;
+    }
+    input[data-type='toggle']:not(:checked) ~ .toggleLabel {
+      border-bottom: 0px;
+    }
+
+    input[data-type='toggle']:checked ~ div[data-type='toggleContent'] {
+      display: block;
+    }
+    input[data-type='toggle']:not(:checked) ~ div[data-type='toggleContent'] {
+      display: none;
+    }
+    input[data-type='toggle']:checked ~ label::before {
+      @mixin icons8-expand-arrow-content;
+      margin-right: 5px;
+    }
+
+    input[data-type='toggle']::not(:checked) ~ label::before {
+      @mixin icons8-forward-content;
+      margin-right: 5px;
+    }
+  }
+}
+
+.booleanFieldTemplate {
+  :global {
+    .checkbox {
+      display: inline;
+    }
+  }
+}
+
+.labelSpan {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/FormFieldTemplate/NestedFormTemplate.css

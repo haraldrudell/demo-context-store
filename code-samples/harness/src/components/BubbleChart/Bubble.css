@@ -1,0 +1,60 @@
+@import '../../styles/vars.css';
+
+.main {
+  :global{
+    text.smallText {
+      font-size: xx-small;
+    }
+
+    circle.inprogress {
+      fill:#e8edf0;
+    }
+
+  }
+
+  display  : flex;
+  flex-wrap: wrap;
+
+  text {
+    font-family: 'Source Sans Pro', sans-serif;
+    cursor     : pointer;
+    text-anchor: middle;
+  }
+
+  &:hover {
+    cursor: pointer;
+    cursor: hand;
+    color: $LINK_COLOR;
+  }
+
+}
+
+.iconsContentView {
+  align-self : center;
+  transform  : scale(0.9);
+  width      : 30px;
+  height     : 30px;
+  margin-left: -55px;
+}
+
+.iconsAppCardView {
+  transform: scale(1.2);
+  width    : 30px;
+  height   : 30px;
+  position : relative;
+  top      : -60px;
+}
+
+.appCardBubble {
+  display       : flex;
+  flex-direction: column;
+}
+
+.appCardBubble * {
+  margin:auto;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/BubbleChart/Bubble.css

@@ -1,0 +1,44 @@
+@import '../../styles/vars.css';
+
+.main {
+  padding-top: 10px;
+
+  :global {
+    .__dl {
+      dt {
+        width: 200px;
+      }
+    }
+    select {
+      border: 1px solid #ccc;
+      border-radius: 0;
+      width: 150px;
+      height: 35px;
+      margin-top: -8px;
+      margin-right: 10px;
+    }
+
+    .col-md-12 {
+      margin-bottom: 10px;
+    }
+    .box {
+      background-color: $CARD_BGCOLOR !important;
+    }
+    .__card .box-body {
+      div {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        color: #777;
+      }
+    }
+
+    .ag-fresh .ag-root {
+      border: none;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/GovernancePage/GovernancePage.css

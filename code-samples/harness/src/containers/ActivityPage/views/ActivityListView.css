@@ -1,0 +1,79 @@
+@import "../../../styles/vars.css";
+@import "../../../styles/icons8-classes.css";
+
+.main {
+  height: 100%;
+  min-height: 90vh;
+
+  :global {
+    .__nodeDetails {
+      width: auto !important; /* stretch <NodeDetailsPanel> to full width */
+    }
+
+    .ag-fresh {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .ag-group-expanded,
+    .ag-group-contracted {
+      float: right;
+      color: grey;
+    }
+
+    .ag-full-width-row {
+      overflow-y: hidden;
+      &:hover {
+        overflow-y: auto;
+      }
+    }
+
+    .__detailsPane {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    .__statusCol {
+      span {
+        margin-left: 5px;
+      }
+
+      .COMPLETED,
+      .SUCCESS {
+        &:before {
+          font-family: "icons8";
+          @mixin icons8-ok-content;
+          color: var(--color-green);
+        }
+      }
+      .RUNNING {
+        &:before {
+          font-family: "icons8";
+          font-weight: bolder;
+          @mixin icons8-circled-dot-content;
+          color: $ACCENT_COLOR;
+          -webkit-animation: pulse-fx 900ms ease-in-out infinite;
+          animation: pulse-fx 900ms ease-in-out infinite;
+        }
+      }
+      .FAILED {
+        &:before {
+          font-family: "icons8";
+          @mixin icons8-high-priority-content;
+          color: $RED_ERROR;
+        }
+      }
+    }
+  }
+}
+
+.btnBox {
+  text-align: center;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ActivityPage/views/ActivityListView.css

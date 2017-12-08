@@ -1,0 +1,20 @@
+@import '../../styles/vars.css';
+
+.main {
+  :global {
+    .wings-spinner {
+      display: flex;
+      margin-left: auto;
+    }
+  }
+}
+
+.buttonBar {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ServicePage/ServiceModal.css

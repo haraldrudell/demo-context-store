@@ -1,0 +1,31 @@
+@import '../../styles/vars.css';
+.main {
+  .heading {
+    display: inline-block;
+    font-weight: bold;
+  }
+  .heading:not(:first-child) {
+    margin-left:90px;
+  }
+dl div *{
+     display:inline-block;
+  }
+  .hostItem {
+    width:100px;
+    word-wrap:break-word
+  }
+  .hostStatus {
+     margin-left:75px;
+  }
+  .hostStatus span {
+      color: orange;
+  }
+  .requestStatus {
+    color:gray
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ServiceTemplatePage/SSHConnectionModal.css

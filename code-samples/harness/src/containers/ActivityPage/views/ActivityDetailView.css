@@ -1,0 +1,40 @@
+@import '../../../styles/vars.css';
+@import '../../../styles/icons8-classes.css';
+
+.main {
+  white-space: normal;
+  height: 100%;
+  width: 100%;
+  padding: 5px 5px 0px 10px;
+  background-color: #fff;
+
+  :global{
+    .__nodeDetails {
+      position: relative;
+      right: auto !important;
+      top: auto !important;
+      overflow-y: auto;
+      min-height: 520px;
+      width: 100%;
+      overflow-x: hidden;
+      border: 0;
+    }
+
+    .__topIcons {
+      position: absolute;
+      right: auto !important;
+      top: auto !important;
+      cursor: pointer;
+    }
+
+    .__expandBox {
+      display: none;
+    }
+  }
+
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ActivityPage/views/ActivityDetailView.css

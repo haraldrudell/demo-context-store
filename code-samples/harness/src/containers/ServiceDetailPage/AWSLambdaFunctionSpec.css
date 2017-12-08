@@ -1,0 +1,156 @@
+@import '../../styles/vars.css';
+@import "../../styles/icons8-classes.css";
+.main {
+  :global {
+    input[data-type='toggle']:checked ~ .toggleLabel {
+      border: 0px;
+    }
+    .modal-dialog {
+      width: 650px;
+    }
+
+    label[for="root_defaults"] {
+      display: none;
+    }
+    label[data-title="Functions"] {
+      display: none;
+    }
+    label [data-title="functionName"] {
+      display: none;
+    }
+    legend {
+      font-size: 16px;
+    }
+    .array-item:first-child {
+      .col-xs-3 {
+        .array-item-remove {
+          background: none !important;
+          color: black;
+          border: 0px;
+          top: 10px;
+        }
+      }
+    }
+    .array-item:not(:first-child) {
+      .col-xs-9 {
+        /* border-top: 1px solid #c3c8ca;
+        width: 100%;
+        padding: 15px;
+        .form-group {
+          width: 75%;
+        }*/
+        &:before {
+          content: '';
+          display: block;
+          border-top: 1px solid #c3c8ca;
+          width: 135%;
+          margin-bottom: 10px;
+        }
+      }
+      .col-xs-3 {
+        .array-item-remove {
+          background: none !important;
+          color: black;
+          border: 0px;
+          top: 30px;
+        }
+      }
+    }
+
+    fieldset {
+      display: table;
+      border-spacing: 3px 5px;
+    }
+    .btn-add {
+      text-transform: capitalize;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      background: transparent;
+      font-weight: 400;
+      color: #0275d8;
+      /*color: #c3c8ca;
+      cursor: none;
+      pointer-events: none;
+      border-radius: 0;*/
+    }
+    .btn-info {
+      box-shadow: none;
+    }
+    .btn-add,
+    .btn-add.active,
+    .btn-add:active,
+    .btn-add:disabled {
+      background-color: transparent;
+    }
+    .array-item-add {
+      display: block;
+    }
+    .array-item-move-up,
+    .array-item-move-down {
+      display: none;
+    }
+
+    .array-item-remove i,
+    .btn-danger i {
+      font-family: "icons8";
+      &:before {
+        @mixin icons8-delete-content;
+      }
+    }
+    .btn-danger::focus {
+      border: 0px;
+    }
+    .__functionspecs-array {
+      .btn-add i {
+        font-family: "icons8";
+        &:before {
+          @mixin icons8-plus-math-content;
+        }
+      }
+      .btn-add::after {
+        content: "Add Function";
+      }
+    }
+    fieldset.field-array {
+      position: relative;
+    }
+    .array-item-list + .row {
+      position: absolute;
+      top: -8px;
+      right: 118px;
+    }
+  }
+  .tableCell {
+    display: table-cell;
+    width: 30%;
+  }
+  .paddingLeft {
+    padding-left: 10px;
+  }
+  .inlineBlock {
+    display: inline-block;
+    width: 35%;
+  }
+  .marginLeft {
+    margin-left: 20px;
+  }
+  .functionMemCell {
+    display: inline-block;
+    width: 40%;
+  }
+  .funcSpecTimeCell {
+    display: inline-block;
+    width: 32%;
+    vertical-align: text-top;
+  }
+  .error {
+    color: red;
+    float: right;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ServiceDetailPage/AWSLambdaFunctionSpec.css

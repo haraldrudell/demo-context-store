@@ -1,0 +1,53 @@
+@import '../../styles/vars.css';
+
+.main {
+  margin-right: 0px;
+  margin-bottom: 10px;
+  min-width: 300px;
+
+  @media (max-width: 767px) {
+    padding-top: 20px;
+  }
+
+  span {
+    text-align: start;
+    text-indent: 0.2em;
+  }
+
+  :global {
+    .__menu {
+      ul {
+        padding: 5px;
+      }
+    }
+    .__menuContent {
+      border-bottom: 1px solid $BORDER_LIGHT;
+      padding: 5px 0px 5px 0px;
+      i {
+        color: red;
+        font-weight: bolder;
+      }
+    }
+    .__date {
+      display: block;
+      float: left;
+      margin-left: 55px;
+      color: #ccc;
+      font-size: small;
+    }
+  }
+}
+
+.date {
+  font-size: small;
+  color: $TEXT_COLOR_LIGHT;
+  padding: 5px 0px 5px 0px;
+}
+
+.infinte {
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/NotificationBar/RecentFailuresView.css

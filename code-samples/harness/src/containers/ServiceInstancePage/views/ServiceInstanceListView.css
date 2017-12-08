@@ -1,0 +1,85 @@
+
+.main {
+  :global {
+    .ag-body-viewport {
+      overflow-y: hidden !important; /* disable vertical scrolling */
+    }
+
+    .__more {
+      font-size: 9px !important;
+      float: none !important;
+      padding: 15px 20px 15px 10px;
+      &:before {
+        transform: rotate(90deg);
+      }
+    }
+    .__moreExpanded:before {
+      /*transition: all 0.2s linear;*/
+      transform: rotate(90deg);
+    }
+    .__lastArtifact {
+      padding: 10px 20px 10px 0px;
+      i {
+        float: left;
+        margin-right: 5px;
+      }
+      .__lastArtifactName {
+        width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        float: left;
+      }
+      &:hover {
+       .__more {
+         display: inline;
+       }
+      }
+    }
+    .__lastActivity {
+      padding: 10px 20px 10px 0px;
+      i {
+        margin-right: 3px;
+      }
+      &:hover {
+       .__more {
+         display: inline;
+       }
+      }
+    }
+    .__command {
+      max-width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: table-cell;
+    }
+    .__artifactDropdown,
+    .__activityDropdown {
+      position: absolute;
+      .dropdown-toggle {
+        display: none;
+      }
+      .dropdown-menu {
+        padding: 0;
+        border: none;
+      }
+    }
+  }
+}
+
+.btnBox {
+  text-align: center;
+}
+
+.editBtn {
+  cursor: pointer;
+}
+
+.deleteBtn {
+  padding-left: 2px;
+  cursor: pointer;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ServiceInstancePage/views/ServiceInstanceListView.css

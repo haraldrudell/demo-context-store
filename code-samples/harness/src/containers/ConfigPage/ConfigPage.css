@@ -1,0 +1,13 @@
+@import "../../styles/vars.css";
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-top: var(--indent-width);
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ConfigPage/ConfigPage.css

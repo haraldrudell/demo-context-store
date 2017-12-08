@@ -1,0 +1,12 @@
+.main {
+  :global {
+    .modal-dialog {
+      width: 75%;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/ChangeHistoryModal/ChangeHistoryModal.css

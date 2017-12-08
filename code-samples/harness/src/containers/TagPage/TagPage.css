@@ -1,0 +1,159 @@
+@import '../../styles/vars.css';
+@import '../../styles/icons8-classes.css';
+
+
+.main {
+  :global {
+    h5 {
+      padding-top: 18px;
+    }
+  }
+}
+
+.tagPanel {
+  padding-left: 0;
+
+  :global{
+
+    th {
+      color: #bac2c5;
+    }
+
+    tbody {
+      border-bottom: none !important;
+      border-top: none !important;
+    }
+
+    .wings-card {
+      height: 80vh;
+    }
+
+    .__label {
+      color: $TEXT_COLOR_LIGHT;
+      font-weight: bolder;
+      border-bottom: 1px solid $BORDER_LIGHT;
+    }
+
+    .__serviceLabel {
+      color: $ACCENT_COLOR;
+      font-weight: bolder;
+      border-bottom: 1px solid $BORDER_LIGHT;
+      background-color: $BGCOLOR_LIGHT_BLUE;
+    }
+
+    .__servicesArea {
+      margin-top: 10px;
+      overflow-y: hidden;
+        &:hover{
+          overflow-y: auto;
+        };
+    }
+
+    .__hostsContainer {
+      margin-top: 10px;
+      overflow-y: hidden;
+        &:hover{
+          overflow-y: auto;
+        };
+    }
+
+    .__hostItem {
+      padding-right: 10px;
+      float: left;
+      width: 100px;
+      color: #000;
+    }
+
+    .__hFilePath {
+      width: 40%;
+    }
+
+  };
+}
+
+.tagTree {
+  padding-right: 0;
+
+  :global{
+    .wings-card {
+      border-right: none;
+      height: 80vh;
+    }
+
+    i {
+      padding-right: 5px;
+    }
+
+    .btn-link {
+      span {
+        font-size: small;
+        font-style: italic;
+      }
+    }
+
+    .rc-tree {
+      position: absolute;
+      height: 85%;
+      width: 90%;
+      overflow-y: hidden;
+      &:hover{
+        overflow-y: auto;
+      };
+
+      li {
+        padding: 10px !important;
+
+        a {
+          height: auto;
+          color: $LINK_COLOR;
+          i {
+            color: #4f585a;
+          }
+        }
+
+        ul.rc-tree-line {
+            background: none;
+            border-left: 1px solid $BORDER_LIGHT;
+            margin-left: 7px;
+        }
+      }
+
+      .rc-tree-title {
+        padding-left: 5px;
+      }
+
+      .rc-tree-node-selected {
+        background-color: #4f585a !important;
+        border: 1px dotted $ACCENT_COLOR;
+        color: #fff;
+          i {
+            color: #fff;
+          }
+      }
+
+      .rc-tree-switcher {
+        background-image: none;
+      }
+
+      .rc-tree-roots_open:before,
+      .rc-tree-center_open:before {
+        font-family: "icons8";
+        @mixin icons8-expand-arrow-content;
+      }
+
+      .rc-tree-roots_close:before,
+      .rc-tree-center_close:before {
+        font-family: "icons8";
+        @mixin icons8-forward-content;
+      }
+
+    }
+  };
+}
+
+
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/TagPage/TagPage.css

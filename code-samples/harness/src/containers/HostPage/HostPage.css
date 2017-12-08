@@ -1,0 +1,13 @@
+
+.main {
+  :global {
+    h5 {
+      padding-top: 18px;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/HostPage/HostPage.css

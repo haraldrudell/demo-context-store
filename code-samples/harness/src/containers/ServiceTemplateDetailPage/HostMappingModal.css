@@ -1,0 +1,47 @@
+
+.main {
+  :global {
+    .wings-card-search {
+      min-width: 260px;
+    }
+  }
+}
+
+.gridContainer {
+  width: 270px;
+  height: 400px;
+}
+
+.selectedHostsPanel {
+  top: 45px;
+  right: 15px;
+  position: absolute;
+  width: 250px;
+  ul {
+    max-height: 360px;
+    overflow-x: hidden;
+  }
+  span {
+    float: right;
+    font-size: 0.7em;
+    padding: 2px 4px 1px 4px;
+    background-color: #eee;
+    border-radius: 3px;
+    color: darkgreen;
+  }
+}
+
+.footer {
+  margin: 15px;
+  margin-top: 40px;
+
+  button {
+    margin-right: 10px;
+  }
+}
+
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ServiceTemplateDetailPage/HostMappingModal.css

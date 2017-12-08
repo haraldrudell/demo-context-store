@@ -1,0 +1,103 @@
+harness-data-grid {
+  display: flex;
+  .react-grid-Main {
+    /* ///////////// Declare constants - start ///////////// */
+    --table-1-row-height: 44px;
+    --table-1-edge-indent: 20px;
+
+    --table-1-header-font-size: 14px;
+    --table-1-header-color: var(--color-grey);
+    --table-1-header-bg: var(--color-white);
+
+    --table-1-body-font-size: 14px;
+    --table-1-body-font-size-sm: 12px;
+    --table-1-body-color: var(--color-grey-dark);
+    --table-1-row-bg-odd: #fdfdfd;
+    --table-1-row-bg-even: var(--color-grey-light-50);
+    /* ///////////// Declare constants - end ///////////// */
+
+    /* ///////////// Override existing styles - start ///////////// */
+    outline: unset;
+
+    .react-grid-Grid {
+      border-top: none;
+      border: unset;
+    }
+
+    .react-grid-Cell {
+      background-color: transparent;
+      &:focus {
+        outline: none !important;
+      }
+    }
+
+    .react-grid-HeaderCell,
+    .react-grid-Cell__value {
+      top: unset !important;
+      transform: unset !important;
+
+      display: flex !important;
+      align-self: center !important;
+      padding: 0px;
+      border-left: none;
+      border-right: none;
+    }
+
+    .react-grid-Cell__value {
+      /* This fixes the cell width so truncation can happen. */
+      > div:first-child {
+        width: 100%;
+      }
+    }
+
+    .react-grid-HeaderCell > div:first-child,
+    .react-grid-Cell {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      padding-left: var(--table-1-edge-indent);
+      padding-right: var(--table-1-edge-indent);
+      border-left: none;
+      border-right: none;
+    }
+
+    .react-grid-HeaderCell > div:first-child {
+      color: var(--table-1-header-color);
+      background: var(--table-1-header-bg);
+    }
+    /* ///////////// Override existing styles - end ///////////// */
+
+    /* ///////////// Set table stripes - start ///////////// */
+    .react-grid-Row--even {
+      background: var(--table-1-row-bg-even) !important;
+    }
+
+    .react-grid-Row--odd {
+      background: var(--table-1-row-bg-odd) !important;
+    }
+    /* ///////////// Set table stripes - end ///////////// */
+
+    .align-center {
+      justify-content: center !important;
+    }
+
+    .align-left {
+      justify-content: flex-start !important;
+    }
+
+    .first-column {
+      justify-content: flex-start !important;
+    }
+  }
+
+  /* @define-mixin flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  } */
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/styles/harness-data-grid.css

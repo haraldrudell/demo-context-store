@@ -1,0 +1,180 @@
+:global {
+  /* popover for little blue instance square */
+  .pt-popover.instance-popover {
+    .pt-popover-content {
+      display: flex;
+      flex: 1;
+
+      table-popover {
+        table {
+          max-width: 250px;
+          td {
+            vertical-align: top;
+            flex-wrap: nowrap;
+            width: 100%;
+
+            /* target for the inner popover */
+            .pt-popover-target {
+              max-width: 250px;
+
+              value {
+                color: var(--text-color);
+                display: flex;
+                margin-left: 6px;
+                white-space: nowrap;
+                max-width: 400px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* popover for truncated text */
+  .pt-popover.truncated-popover {
+    .pt-popover-content {
+      display: flex;
+      flex: 1;
+      padding: 0px 4px;
+    }
+  }
+}
+
+.main {
+  :global {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    header {
+      .header-left {
+        display: flex;
+        justify-self: flex-start;
+        justify-items: flex-start;
+        align-items: baseline;
+
+        .service-name {
+          display: flex;
+        }
+
+        .app-label {
+          display: flex;
+          font-size: 14px;
+          margin-left: 1em;
+        }
+
+        .app-name {
+          display: flex;
+          font-size: 14px;
+          margin-left: 0.3em;
+        }
+      }
+
+      .header-right {
+        display: flex;
+        justify-self: flex-end;
+        justify-items: flex-end;
+        align-self: center;
+        align-items: center;
+        cursor: default;
+      }
+    }
+
+    .environment-container {
+      display: flex;
+      flex-direction: column;
+      margin: var(--indent-width) 0px;
+
+      .environment {
+        display: flex;
+        align-items: center;
+        &:last-child {
+          margin-bottom: 0px;
+        }
+
+        display: flex;
+        margin-bottom: var(--indent-width);
+
+        .env-label-box {
+          display: flex;
+          flex: 1;
+
+          .env-label {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: flex-end;
+            margin-right: 20px;
+            font-size: 16px;
+            text-align: right;
+          }
+
+          .horizontal-bar {
+            display: flex;
+            height: 0px;
+            width: 20px;
+            align-self: center;
+            border-bottom: 1px solid var(--card-border-color);
+          }
+        }
+
+        .build-container {
+          display: flex;
+          flex-direction: column;
+          flex: 6;
+          justify-content: center;
+          align-items: stretch;
+          align-self: center;
+          border: 1px solid var(--card-border-color);
+          border-left: 1px solid var(--card-border-color);
+          background: white;
+
+          .build-row {
+            &:last-child {
+              border-bottom: none;
+            }
+
+            display: flex;
+            align-items: stretch;
+            border-bottom: 1px solid var(--card-border-color);
+            font-size: 16px;
+            padding: 8px 10px 8px var(--indent-width);
+            min-height: 39px;
+
+            .build-label-string {
+              display: flex;
+              padding: 0px;
+              overflow: hidden;
+              align-items: baseline;
+
+              .instances-string {
+                display: flex;
+                align-items: center;
+                margin-left: 8px;
+                white-space: nowrap;
+                font-size: 14px;
+              }
+            }
+
+            .instance-container {
+              flex: 2.3;
+              display: flex;
+              align-items: center;
+              flex-wrap: wrap;
+              align-self: center;
+              margin-left: 14px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ServicesDashboardPage/ServiceSummaryCard.css

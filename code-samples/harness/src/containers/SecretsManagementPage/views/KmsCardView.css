@@ -1,0 +1,115 @@
+@import "../../../styles/vars.css";
+
+.uiCardContent {
+  :global {
+    table {
+      margin-bottom: 0px;
+      tr {
+        border-bottom: 1px solid var(--card-border-color) !important;
+      }
+      th,
+      td {
+        padding: 0px;
+        border: none !important;
+      }
+    }
+    ui-card {
+      padding: 10px;
+    }
+  }
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: center;
+  span:nth-child(2) {
+    margin-left: 20px;
+  }
+}
+
+.main {
+  padding: 0px;
+  border: 0px;
+  :global {
+    main {
+      padding: 0;
+    }
+    ui-card-actions {
+      float: right;
+    }
+  }
+}
+
+.kmsItem {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  header {
+    width: 350px;
+    display: flex;
+  }
+  item-name {
+    width: 50px;
+  }
+}
+
+.item {
+}
+.item:nth-child(odd) {
+  background: var(--table-1-row-bg-odd) !important;
+}
+.item:nth-child(even) {
+  background: var(--table-1-row-bg-even) !important;
+}
+
+.cardContent {
+  display: flex;
+  justify-content: space-between;
+}
+.kmsItem:not(:last-child) {
+  border-bottom: 1px solid var(--card-border-color);
+}
+
+.defaultStatus {
+  margin-left: 50px;
+  display: flex;
+}
+
+.customKms {
+}
+
+.defaultIcon {
+  width: 20px;
+}
+
+.deprecateIcon {
+  width: 15px;
+  margin-right: 10px;
+}
+.kmsName {
+  font-size: 16px;
+  color: $ACCENT_COLOR;
+  cursor: pointer;
+}
+
+.encryptedCount {
+  margin-right: 20px;
+}
+
+.bgWhite {
+  background: white;
+  cursor: auto;
+  .encryptedCount {
+    margin-right: 30px;
+  }
+}
+
+.globalCardName {
+  font-size: 16px;
+  cursor: auto;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/SecretsManagementPage/views/KmsCardView.css

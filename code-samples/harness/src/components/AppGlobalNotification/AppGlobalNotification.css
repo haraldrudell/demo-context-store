@@ -1,0 +1,49 @@
+@import "../../styles/vars.css";
+
+.main {
+  position: fixed;
+  max-width: 70%;
+  max-height: 100px;
+  color: #fff;
+  font-weight: bold;
+  padding: 20px 25px 0 10px;
+  z-index: 1;
+
+  @media (max-width: 767px) {
+    padding-top: 50px;
+  }
+
+  :global {
+    .alert {
+      margin-bottom: 2px;
+      padding: 7px 30px 7px 15px;
+      margin-top: 45px;
+      .close {
+        color: #fff;
+        opacity: 0.8;
+      }
+    }
+
+    .alert-info,
+    .alert-success {
+      background-color: var(--color-green) !important;
+      border-color: var(--color-green) !important;
+    }
+
+    .alert-warning {
+      background-color: $YELLOW_WARNING !important;
+      border-color: $YELLOW_WARNING !important;
+    }
+
+    .alert-danger,
+    .alert-error {
+      background-color: $RED_ERROR !important;
+      border-color: $RED_ERROR !important;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/AppGlobalNotification/AppGlobalNotification.css

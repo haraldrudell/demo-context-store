@@ -1,0 +1,16 @@
+@import '../../styles/vars.css';
+@import '../../styles/icons8-classes.css';
+
+.pageHeader {
+}
+
+.main {
+  .body {
+    margin-top: 10px;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/TestPage/TestPage.css

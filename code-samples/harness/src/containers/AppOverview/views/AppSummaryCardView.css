@@ -1,0 +1,26 @@
+@import '../../../styles/vars.css';
+
+.main {
+
+  :global{
+    .__heading {
+      height: 32px;
+      border-bottom: 1px solid #aaa;
+      font-size: 1.1em;
+      margin-left: 8px;
+    }
+
+
+    .__appStats {
+      .__largeText {
+        font-size: 3.1em;
+      }
+    }
+  };
+
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/AppOverview/views/AppSummaryCardView.css

@@ -1,0 +1,99 @@
+@import "../../styles/vars.css";
+
+.header {
+  padding: 0;
+
+  .appPicker {
+    display: flex;
+    height: $HEADER_HEIGHT;
+  }
+}
+
+.headerClass {
+  margin-top: -10px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid $BORDER_LINE;
+}
+
+.main {
+  :global {
+    display: flex;
+    flex-direction: column;
+  }
+
+  widget-header {
+    display: flex;
+    flex-direction: column;
+
+    header-tools {
+      display: flex;
+      justify-content: space-between;
+      padding: 0px;
+      height: 56px;
+      padding-right: 6px;
+
+      sort-tool {
+        display: flex;
+        flex: 1;
+      }
+
+      filter-items {
+        display: flex;
+        align-self: center;
+
+        filter-icon-group {
+          display: flex;
+          align-self: center;
+          cursor: pointer;
+
+          &:hover {
+            color: black;
+          }
+
+          filter-icon {
+            display: flex;
+            align-self: center;
+            color: $TEXT_COLOR;
+            font-size: 26px;
+            margin-left: 12px;
+          }
+
+          filter-message {
+            display: flex;
+            align-self: center;
+            color: $TEXT_COLOR;
+            margin-left: 6px;
+          }
+        }
+      }
+    }
+  }
+
+  ui-infinite-scrolling-spinner {
+    margin-top: -30px;
+  }
+}
+
+.buttonBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: $TOP_NAV_HEIGHT;
+  padding: 0px;
+
+  .nonProdCheckbox {
+    font-weight: normal;
+    color: $TEXT_COLOR;
+
+    input {
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/DeploymentPage/DeploymentPage.css

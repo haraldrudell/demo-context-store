@@ -1,0 +1,14 @@
+.main {
+  margin-bottom: 20px;
+
+  :global {
+    .progressBar {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/BreakdownProgress/BreakdownProgress.css

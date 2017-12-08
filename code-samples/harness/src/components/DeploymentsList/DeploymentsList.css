@@ -1,0 +1,102 @@
+@import '../../styles/vars.css';
+
+.main {
+  :global {
+    .bubble-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    table {
+      display: flex;
+      flex-flow: column;
+      height: 100%;
+      width: 100%;
+    }
+    table thead {
+      /* head takes the height it requires,
+          and it's not scaled when table is resized */
+      flex: 0 0 auto;
+      width: 100%;
+      height: 43px;
+    }
+    table tbody {
+      /* body takes all the remaining available space */
+      flex: 1 1 auto;
+      display: block;
+      overflow-y: auto;
+      max-height: 430px;
+      overflow: hidden;
+      &:hover {
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+    }
+    table tbody tr {
+      width: 100%;
+    }
+    table thead,
+    table tbody tr {
+      display: table;
+      table-layout: fixed;
+    }
+    /* decorations */
+    table td,
+    table th {
+      padding: 0.3em;
+      padding-left: 20px;
+    }
+
+    .__table {
+      margin-top: -10px;
+      width: 100%;
+      th {
+        color: $TEXT_COLOR_LIGHT;
+        border-top: none;
+      }
+
+      tbody {
+        tr {
+          &:hover {
+            background-color: #f9f9f9;
+            cursor: pointer;
+          }
+        }
+      }
+
+      td {
+        vertical-align: inherit;
+      }
+    }
+    .__center {
+      text-align: center;
+    }
+
+    .__appName {
+      padding-left: 20px;
+    }
+
+    .__artifacts {
+      max-width: 100px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      vertical-align: inherit;
+    }
+
+    .__startTime {
+      width: 120px;
+    }
+
+    .__circle {
+      width: 150px;
+      justify-content: center;
+      margin-left: -21px;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/DeploymentsList/DeploymentsList.css

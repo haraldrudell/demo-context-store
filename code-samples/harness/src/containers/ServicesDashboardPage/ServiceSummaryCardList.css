@@ -1,0 +1,14 @@
+@import '../../styles/vars.css';
+
+.main {
+  :global {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ServicesDashboardPage/ServiceSummaryCardList.css

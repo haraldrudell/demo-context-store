@@ -1,0 +1,90 @@
+@import "../../styles/vars.css";
+
+.main {
+  display: flex;
+  flex-direction: column;
+
+  .__disabled {
+  }
+
+  .panelHeader {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .panelTitle {
+    &::before {
+      margin-right: 6px;
+    }
+  }
+
+  :global {
+    .panel {
+      border: 0;
+      border-bottom: 1px solid #ddd;
+      border-radius: 0;
+      box-shadow: none;
+      margin: 0px 15px;
+      /* background-color: #fffbfb; */
+    }
+    .artifact-Source {
+      margin: 0;
+    }
+    .artifact-Source * {
+      display: inline-block;
+    }
+    .panel-heading {
+      background-color: transparent;
+    }
+
+    .panel-group .panel + .panel {
+      margin-top: 0px;
+    }
+
+    .panel-body {
+      padding: 15px 0px 0px 0px;
+    }
+
+    .panel-group .panel-heading + .panel-collapse > .list-group,
+    .panel-group .panel-heading + .panel-collapse > .panel-body {
+      border-top: 0;
+    }
+
+    .panel-heading .panel-title {
+      cursor: pointer;
+      .checkbox {
+        display: inline-block;
+        margin-left: 5px;
+        margin-bottom: 0;
+      }
+      .checkbox + span::before {
+        font-family: "icons8";
+        @mixin icons8-forward-content;
+        color: gray;
+      }
+    }
+
+    .expanded .panel-heading .panel-title {
+      .checkbox + span::before {
+        font-family: "icons8";
+        @mixin icons8-expand-arrow-content;
+        color: gray;
+      }
+    }
+
+    .__selected {
+      color: $TEXT_COLOR;
+    }
+    .__dep-types-hide {
+      display: none;
+    }
+    .__dep-type-show {
+      display: block;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ServiceDetailPage/ServiceDeploymentTypes.css

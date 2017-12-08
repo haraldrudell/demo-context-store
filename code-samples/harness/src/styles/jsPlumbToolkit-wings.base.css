@@ -1,0 +1,460 @@
+@import './vars.css';
+
+/* ---------------------------------------------------------------------------------------------------- */
+/* --- page structure --------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- */
+
+.jtk-demo-main {
+    background-color: transparent;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    max-width:1500px;
+    position: relative;
+    margin-top:98px;
+}
+
+.jtk-demo-main .description {
+    font-size: 13px;
+    margin-top: 25px;
+    padding: 13px;
+    margin-bottom: 22px;
+    background-color: #f4f5ef;
+}
+
+.jtk-demo-main .description li {
+    list-style-type: disc !important;
+}
+
+.jtk-demo-canvas {
+    margin-left: 160px;
+    height: 550px;
+    max-height: 700px;
+    border: 1px solid #CCC;
+    background-color: white;
+}
+
+.canvas-wide {
+    margin-left:0;
+}
+
+.miniview {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    z-index: 100;
+}
+
+
+.jtk-demo-dataset {
+    text-align: left;
+    max-height: 600px;
+    overflow: auto;
+}
+
+.demo-title {
+    float:left;
+    font-size:18px;
+}
+
+.controls {
+    top: 25px;
+    color: #FFF;
+    margin-right: 10px;
+    position: absolute;
+    left: 25px;
+    z-index: 1;
+}
+
+.controls i {
+    background-color: #3E7E9C;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 0;
+    padding: 4px;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+/* --- jsPlumb setup ---------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- */
+
+._jsPlumb_connector {
+    z-index:9;
+}
+
+._jsPlumb_endpoint {
+    z-index:12;
+    opacity:0.8;
+    cursor:pointer;
+}
+
+._jsPlumb_overlay {
+    background-color: white;
+    color: #434343;
+    font-weight: 400;
+    padding: 4px;
+    z-index:10;
+
+}
+
+._jsPlumb_overlay._jsPlumb_hover {
+    color: #434343;
+}
+
+path {
+    cursor:pointer;
+}
+
+.delete {
+    padding: 2px;
+    cursor: pointer;
+    float: left;
+    font-size: 10px;
+    line-height: 20px;
+}
+
+.add, .edit {
+    cursor: pointer;
+    float:right;
+    font-size: 10px;
+    line-height: 20px;
+    margin-right:2px;
+    padding: 2px;
+}
+
+.edit:hover {
+    color: #ff8000;
+}
+
+.selected-mode {
+    color:#E4F013;
+}
+
+.connect {
+    width:10px;
+    height:10px;
+    background-color:#f76258;
+    position:absolute;
+    bottom: 13px;
+    right: 5px;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+.demo {
+  /* for IE10+ touch devices */
+  touch-action: none;
+}
+
+.flowchart-demo .jsplumb-node {
+  /*border: 1px solid #346789;*/
+  /*box-shadow: 2px 2px 4px #aaa;*/
+  border: 1px solid #dcdede;
+  border-radius: 5px;
+  width: 70px;
+  height: 45px;
+  cursor: pointer;
+  text-align: center;
+  z-index: 20;
+  position: absolute;
+  background-color: #f9f9f9;
+  color: #3a4449;
+  font-size: 0.9em;
+  transition: box-shadow 0.15s ease-in;
+  display: table;
+}
+
+.flowchart-demo .jsplumb-node:hover {
+  /*box-shadow: 1px 1px 4px #aaa;*/
+  /*border: 2px solid #ddd;*/
+}
+
+.flowchart-demo .jsplumb-node:hover .nodeToolbar {
+  display: block;
+  cursor: pointer;
+}
+
+.flowchart-demo .active {
+  border: 1px dotted green;
+}
+
+.flowchart-demo .hover {
+  border: 1px dotted red;
+}
+
+#flowchartWindow1 {
+  top: 34em;
+  left: 5em;
+}
+
+#flowchartWindow2 {
+  top: 7em;
+  left: 36em;
+}
+
+#flowchartWindow3 {
+  top: 27em;
+  left: 48em;
+}
+
+#flowchartWindow4 {
+  top: 23em;
+  left: 22em;
+}
+
+.flowchart-demo .jsplumb-connector {
+  z-index: 4;
+  opacity: 0.5;
+}
+
+.flowchart-demo .jsplumb-endpoint, .endpointTargetLabel, .endpointSourceLabel {
+  z-index: 21;
+  cursor: pointer;
+}
+
+.flowchart-demo .aLabel {
+  background-color: white;
+  padding: 0.4em;
+  font: 12px sans-serif;
+  color: #444;
+  z-index: 21;
+  border: 1px dotted gray;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.flowchart-demo .aLabel.jsplumb-hover {
+  background-color: #5C96BC;
+  color: white;
+  border: 1px solid white;
+}
+
+.jsplumb-node.jsplumb-connected {
+  /*border: 1px solid #3c8dbc;*/
+}
+
+.jsplumb-drag {
+  outline: 4px solid pink !important;
+}
+
+path, .jsplumb-endpoint {
+  cursor: pointer;
+}
+
+.jsplumb-overlay {
+  background-color:transparent;
+}
+
+
+
+
+
+
+
+.dragHover {
+  border: 2px solid darkorange !important;
+}
+.iconEndpoint {
+  width: 20px !important;
+  height: 20px !important;
+  margin-top: 23px !important;
+  margin-left: 22px !important;
+  top: -99999px;
+}
+.iconEndpoint-success, .iconEndpoint-failure {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+
+/** COMMON ELEMENT PROPERTIES **/
+.shape {
+  padding: 0 !important;
+  z-index: 2;
+  opacity: 0.7;
+  position: absolute;
+  cursor: pointer;
+  text-align: center;
+  color: #333;
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+
+/** SHAPES **/
+
+[data-shape=Rectangle] {
+  width: 210px;
+  height: 50px !important;
+  line-height: 50px !important;
+  left: 380px;
+  top: 505px;
+  background-image:url(/img/workflow/rectangle.png);
+}
+
+[data-shape=Ellipse] {
+  width: 210px;
+  height: 50px !important;
+  line-height: 50px !important;
+  left: 250px;
+  top: 300px;
+  background-image: url(/img/workflow/ellipse.png);
+  background-size:     contain;
+  background-repeat:   no-repeat;
+  background-position: center center
+}
+
+[data-shape=Circle] {
+  width:150px;
+  height:150px;
+  left:100px;
+  top:60px;
+  line-height: 150px;
+  background-image:url(/img/workflow/circle.png);
+}
+
+[data-shape=Triangle] {
+  width:150px;
+  height:150px;
+  line-height: 150px;
+  background-image:url(/img/workflow/triangle.png);
+}
+
+._90[data-shape=Triangle] {
+  width:150px;
+  height:150px;
+  line-height: 150px;
+  background-image:url(/img/workflow/triangle_90.png);
+}
+
+[data-shape=Diamond] {
+  width:150px;
+  height:150px;
+  left:550px;
+  top:150px;
+  line-height: 150px;
+  background-image:url(/img/workflow/diamond.png);
+}
+
+
+
+.wings-workflow-editor {
+  min-height: 100vh !important;
+  background-image: url("/img/workflow/grid-pattern.png");
+  margin-right: 180px;
+  overflow: auto !important;
+}
+
+.wings-group-node {
+  width: 1px !important;
+  background-color: #ffefef;
+  z-index: 0 !important;
+  border: 1px dashed #ddd !important;
+}
+
+.wings-mini-node {
+}
+
+.jsplumb-node[data-type="REPEAT"],
+.jsplumb-node[data-type="FORK"] {
+  width: 45px;
+  background-color: inherit !important;
+  border-radius: 23px;
+  border: 1px solid #aaa;
+  .__nodeIcon {
+    font-size: 1.5em;
+  }
+}
+.jsplumb-node[data-type="REPEAT"],
+.jsplumb-node[data-type="FORK"],
+.jsplumb-node[data-type="ELEMENT"] {
+  cursor: default;
+}
+
+.jsplumb-node[data-type="GROUP"] {
+  background-color: $BGCOLOR !important;
+  margin-top: -1px;
+  /*width: 70px !important;*/
+  /*height: 45px !important;*/
+  padding: 10px;
+}
+
+.jsplumb-node[data-type="ELEMENT"] {
+  background-color: inherit;
+  border: none;
+  text-align: left;
+  text-overflow: ellipsis;
+  .icons8-circle-thin {
+    font-size: 0.8em;
+  }
+  .__nodeLabel {
+    margin-left: 16px;
+    margin-top: 9px;
+    text-align: left;
+    width: 100%;
+    padding-right: 10px;
+    span {
+      background-color: $CARD_BGCOLOR !important;
+      white-space: nowrap;
+    }
+  }
+  .__nodeIcon {
+    font-size: 1.5em;
+  }
+}
+
+.jsplumb-node[data-type="PHASE"],
+.jsplumb-node[data-type="PHASE_STEP"] {
+  border: 2px solid #c8cfd0;
+  border-radius: 5px;
+  .__nodeLabel {
+    margin-top: 60px;
+  }
+  .__nodeIcon {
+    background-color: #fff;
+    font-size: 33px;
+  }
+}
+
+
+.nodeToolbar {
+  display: none;
+  list-style: none;
+  /*background-color: #eee;*/
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  left: -41px;
+  width: 40px;
+  top: -3px;
+  i {
+    font-size: 16px;
+  }
+}
+.nodeToolbar li {
+  padding: 0;
+  margin: 0;
+  width: 30px;
+  float: right;
+  background-color: #efefef;
+  opacity: 0.7;
+}
+.nodeToolbar li:hover {
+  background-color: #eee;
+  opacity: 1;
+}
+
+.node-selected {
+  /*box-shadow: 1px 1px 4px #aaa !important;*/
+  /*border: 2px solid #768186 !important;*/
+  background-color: $NAV_COLOR !important;
+  font-weight: bold;
+  .__nodeLabel {
+    text-decoration: underline;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/styles/jsPlumbToolkit-wings.base.css

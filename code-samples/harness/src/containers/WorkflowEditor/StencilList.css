@@ -1,0 +1,81 @@
+@import '../../styles/vars.css';
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 7px 20px 7px 20px;
+    list-style: none;
+    user-select: none;
+
+    i {
+      display: inline-block;
+      width: 30px;
+      font-size: 1.3em;
+      vertical-align: sub;
+    }
+
+    &:hover {
+      background-color: $BGCOLOR_LIGHT_DARK;
+      color: $TEXT_COLOR_OVER_DARK;
+      cursor: move;
+    }
+  }
+
+  :global {
+    .__category {
+      font-weight: bold;
+      color: $TEXT_COLOR_LIGHT;
+      &:hover {
+         background-color: inherit;
+         color: $TEXT_COLOR_LIGHT;
+         cursor: default;
+      }
+    }
+
+    .__group {
+      i {
+        color: #1b8bf1;
+      }
+    }
+    .__category_Controls {
+      color: $STENCIL_CONTROL;
+    }
+    .__li_Controls {
+      i {
+        color: $STENCIL_CONTROL;
+      }
+    }
+    .__category_Commands {
+      color: $STENCIL_COMMAND;
+    }
+    .__li_Commands {
+      i {
+        color: $STENCIL_COMMAND;
+      }
+    }
+    .__category_Verifications {
+      color: $STENCIL_VERIFICATION;
+    }
+    .__li_Verifications {
+      i {
+        color: $STENCIL_VERIFICATION;
+      }
+    }
+    .__category_Others {
+      color: $STENCIL_OTHERS;
+    }
+    .__li_Others {
+      i {
+        color: $STENCIL_OTHERS;
+      }
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/WorkflowEditor/StencilList.css

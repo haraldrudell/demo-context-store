@@ -1,0 +1,142 @@
+:global {
+  button.ui-btn {
+    padding: 0;
+    cursor: pointer;
+    background: none;
+    border: none;
+    vertical-align: middle;
+    color: var(--color-link);
+
+    &[disabled] {
+      color: var(--color-grey-light);
+      cursor: not-allowed;
+    }
+
+    &[type="button"] {
+      height: 35px;
+      min-width: 130px;
+      padding: 0 15px;
+      border-radius: 2px;
+      box-shadow: 0px 0px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-white);
+      outline: 0px;
+      border: 0px;
+      background-color: var(--color-grey);
+      text-transform: uppercase;
+      justify-content: center;
+      &[disabled] {
+        background-color: var(--color-grey-light-50);
+        color: var(--color-grey-light);
+        cursor: not-allowed;
+        &:hover,
+        &:active,
+        &:focus {
+          background-color: var(--color-grey-light-50);
+          color: var(--color-grey-light);
+        }
+      }
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: var(--color-grey-50);
+        color: var(--color-white);
+      }
+    }
+
+    &[type="submit"] {
+      height: 35px;
+      min-width: 130px;
+      border-radius: 2px;
+      box-shadow: 0px 0px;
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      outline: 0px;
+      border: 0px;
+      background-color: var(--color-black);
+      text-transform: uppercase;
+      &[disabled] {
+        background-color: var(--color-grey-dark);
+        color: var(--color-grey);
+        cursor: not-allowed;
+        &:hover,
+        &:active,
+        &:focus {
+          background-color: var(--color-grey-dark);
+          color: var(--color-grey);
+        }
+      }
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: var(--color-grey-50);
+        color: var(--color-white);
+      }
+    }
+
+    svg {
+      height: 14px; /* default to small icon size */
+    }
+    &:hover,
+    &:active,
+    &:focus {
+      color: var(--color-link-hover);
+      &[disabled] {
+        color: var(--color-grey-light);
+        cursor: not-allowed;
+      }
+      svg {
+        #main {
+          fill: var(--color-grey);
+        }
+        #accent {
+          fill: var(--color-link-hover);
+        }
+      }
+    }
+  }
+
+  button.ui-btn.with-icon {
+    /* alignment for icon buttons */
+    display: inline-flex;
+    align-items: center;
+    & > span {
+      margin-left: 5px;
+    }
+  }
+
+  button.ui-btn {
+    &.md-icon {
+      svg {
+        height: 24px;
+      }
+    }
+    &.lg-icon {
+      svg {
+        height: 32px;
+      }
+    }
+  }
+
+  button.ui-accent-btn[type="button"],
+  button.ui-accent-btn[type="submit"] {
+    background-color: var(--accent-color);
+    color: var(--color-white);
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: var(--color-blue-light);
+    }
+    &[disabled] {
+      background-color: var(--color-blue-light);
+      color: var(--color-grey);
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/UIButton/UIButton.css

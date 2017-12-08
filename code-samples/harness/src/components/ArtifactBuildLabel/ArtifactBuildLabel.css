@@ -1,0 +1,46 @@
+@import "../../styles/vars.css";
+
+:global {
+  .pt-popover.artifact-label-popover {
+    .pt-popover-content {
+      display: flex;
+      flex: 1;
+
+      table-popover {
+        table {
+          max-width: 250px;
+          td {
+            vertical-align: top;
+            flex-wrap: nowrap;
+
+            key {
+              display: flex;
+            }
+
+            value {
+              display: flex;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.main {
+  display: flex;
+  align-items: center;
+
+  label-container {
+    display: inline-flex;
+    static-text {
+      display: inline-flex;
+      margin-right: 5px;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/ArtifactBuildLabel/ArtifactBuildLabel.css

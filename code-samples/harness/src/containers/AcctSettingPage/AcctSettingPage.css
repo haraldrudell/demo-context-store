@@ -1,0 +1,16 @@
+@import '../../styles/vars.css';
+
+.main {
+  :global{
+    legend{
+      display:none;
+    }
+  };
+}
+
+
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/AcctSettingPage/AcctSettingPage.css

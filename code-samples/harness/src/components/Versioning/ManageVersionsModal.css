@@ -1,0 +1,104 @@
+@import '../../styles/vars.css';
+
+.main {
+  :global {
+    .dropdown {
+      button {
+        font-size: small;
+        color: $ACCENT_COLOR;
+      }
+    }
+
+    .__targetEnvsLabel {
+      margin: 10px 0;
+    }
+
+    .__defaultVersion {
+      width: 100%;
+    }
+
+    .menu-header {
+      display: inline-flex;
+      flex: 1;
+      align-items: center;
+    }
+
+    .dropdown-menu {
+      min-width: 110px;
+      padding: 0px !important;
+      margin: 0px !important;
+    }
+
+    .menu-item {
+      display: flex;
+      height: $DROPDOWN_ITEM_HEIGHT;
+      padding: 0px 10px;
+      align-items: center;
+      cursor: default;
+      font-weight: normal;
+      border-bottom: 1px solid $DROPDOWN_BORDER;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      > a {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        padding: 0px;
+        white-space: nowrap;
+        cursor: default;
+        color: $TEXT_COLOR_MED_LIGHT;
+
+        &:hover {
+          background: transparent;
+          color: $TEXT_COLOR_MED_LIGHT;
+        }
+      }
+
+      .version-name {
+        display: flex;
+        flex: 1;
+        white-space: nowrap;
+        align-items: baseline;
+      }
+
+      .last-updated {
+        display: flex;
+        white-space: nowrap;
+        font-size: 12px;
+        margin-left: 8px;
+        margin-right: 60px;
+        color: $TEXT_COLOR_LIGHT;
+      }
+
+      .right-content {
+        display: flex;
+        white-space: nowrap;
+        align-items: center;
+        /* margin-left: auto; */
+
+        .action-link {
+          cursor: pointer;
+          display: flex;
+          white-space: nowrap;
+          justify-self: flex-end !important;
+        }
+
+        vertical-separator {
+          display: flex;
+          height: 12px;
+          border-right: 1px solid $TEXT_COLOR_LIGHT;
+          margin: 0px 8px 0px 8px;
+          width: 0px;
+        }
+      }
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/Versioning/ManageVersionsModal.css

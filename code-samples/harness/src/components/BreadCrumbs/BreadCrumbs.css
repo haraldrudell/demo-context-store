@@ -1,0 +1,44 @@
+@import '../../styles/vars.css';
+@import '../../styles/icons8-classes.css';
+
+.main {
+  padding-top: 18px;
+  margin-left: 10px;
+  display: flex;
+  flex: 1;
+
+  :global {
+    .breadcrumb {
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      background-color: inherit;
+
+      .active {
+        color: inherit;
+      }
+
+      li + li:before {
+        position: relative;
+        top: 1px;
+        padding: 0 12px;
+
+        font-family: "icons8";
+        @mixin icons8-forward-content;
+        color: #D1D7D8;
+        font-size: 14px;
+        text-shadow: 0 0 black;
+      }
+    }
+
+  }
+}
+
+.withBorder {
+  border-bottom: 1px solid #e6e8e7;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/BreadCrumbs/BreadCrumbs.css

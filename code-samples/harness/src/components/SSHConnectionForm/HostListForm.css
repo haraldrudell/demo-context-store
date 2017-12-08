@@ -1,0 +1,76 @@
+@import "../../styles/vars.css";
+@import "../../styles/icons8-classes.css";
+
+.main {
+  :global {
+  }
+
+  height: 100%;
+  width: 100%;
+
+  .hostname {
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .hide {
+    visibility: hidden;
+  }
+
+  tr:hover > td:last-child {
+    visibility: visible;
+  }
+
+  th {
+    color: $TEXT_COLOR_LIGHT;
+    border-top: none;
+  }
+
+  .errorMessage {
+    color: red;
+  }
+
+  .errorMessage::before {
+    content: '"';
+  }
+  .errorMessage::after {
+    content: '"';
+  }
+  .error {
+    color: red;
+  }
+  .error::before {
+    font-family: "icons8";
+    @mixin icons8-high-priority-content;
+    color: $RED_ERROR;
+    padding-right: 5px;
+  }
+  .error::after {
+    content: " ";
+  }
+  .success {
+    color: green;
+  }
+  .success::before {
+    font-family: "icons8";
+    @mixin icons8-ok-content;
+    color: var(--color-green);
+    padding-right: 5px;
+  }
+  .inprogress {
+    color: var(--color-blue);
+  }
+  .inprogress::before {
+    font-family: "icons8";
+    @mixin icons8-ok-content;
+    color: $NODE_STATUS_RUNNING;
+    padding-right: 5px;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/SSHConnectionForm/HostListForm.css

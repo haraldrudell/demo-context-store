@@ -1,0 +1,11 @@
+@import '../../../styles/vars.css';
+
+.main {
+  :global {
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/DeploymentPage/views/DeploymentCardView.css

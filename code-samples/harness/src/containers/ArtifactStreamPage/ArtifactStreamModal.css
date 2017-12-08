@@ -1,0 +1,110 @@
+@import '../../styles/vars.css';
+.main {
+
+  :global{
+    .modal-content {
+        width:650px;
+    }
+    .react-autosuggest__suggestions-container {
+      position: absolute;
+      top: 30px;
+      width: 100%;
+    }
+
+    .react-autosuggest__input{
+      width: 100%;
+    }
+
+    .react-autosuggest__suggestion{
+      padding: 10px 10px;
+    }
+
+    div.__selectElement {
+      width: 45%;
+      display: inline-table;
+    }
+
+    .field-boolean {
+      /* FormFieldTemplate is adding an extra label => hide those unnecessary labels */
+      label[for="root_metadataOnly"],
+      label[for="root_autoApproveForProduction"] {
+        display: none;
+      }
+    }
+  }
+}
+
+.artifactPathServices {
+  button {
+    background-color: $LIGHT_GRAY !important;
+    border: 1px dotted $BORDER_COLOR !important;
+    box-shadow: none !important;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    color: $TEXT_COLOR;
+    font-size: smaller;
+    padding: 1px !important;
+    font-weight: normal !important;
+    &:hover, &:active, &:focus {
+      color:$TEXT_COLOR;
+      font-weight: bold;
+    }
+  }
+
+  :global {
+    #root_artifactPaths__title {
+      display: none;
+    }
+
+    button.array-item-move-up,
+    button.array-item-move-down {
+      display: none;
+    }
+
+    .array-item-list {
+      .array-item:first-child {
+        .btn-group {
+          display: none !important;
+        }
+      }
+
+      .form-group.field-object {
+        margin-bottom: 0px;
+      }
+    }
+
+    p.array-item-add {
+      margin-right: 1%;
+      float: right;
+      display: none;
+    }
+
+    div.array-item-remove {
+      float: right;
+      margin-top: -5%;
+      margin-right: 1%;
+    }
+
+    div.form-group {
+      fieldset {
+        background-color: #fff;
+        border: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 135%;
+      }
+    }
+
+    .checkbox {
+      display: inline-block;
+      margin-left: 10px;
+    }
+  }
+}
+
+
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ArtifactStreamPage/ArtifactStreamModal.css

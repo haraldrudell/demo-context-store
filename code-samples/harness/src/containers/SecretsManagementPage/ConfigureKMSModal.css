@@ -1,0 +1,15 @@
+@import '../../styles/vars.css';
+@import '../../styles/icons8-classes.css';
+
+.main {
+  :global {
+    label[for="root_configureType"] {
+      display: none;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/SecretsManagementPage/ConfigureKMSModal.css

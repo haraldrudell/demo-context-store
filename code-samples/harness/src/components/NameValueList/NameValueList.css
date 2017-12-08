@@ -1,0 +1,33 @@
+.main {
+  h3 {
+    margin: 0;
+    padding: 0;
+    font-size: var(--text-size);
+    font-weight: bold;
+    span {
+      display: inline-block;
+      padding: 10px;
+    }
+  }
+  dl {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: var(--text-size);
+
+    dt {
+      padding: 10px;
+      font-weight: normal;
+    }
+    dd {
+      margin-left: auto;
+      padding: 10px;
+      overflow-wrap: break-word;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/NameValueList/NameValueList.css

@@ -1,0 +1,27 @@
+.main {
+  width: 800px;
+  height: 550px;
+
+  split-divider {
+    background-color: #eee;
+    width: 2px !important;
+    margin-right: 5px !important;
+    margin-left: 5px !important;
+  }
+
+  .tree {
+    width: 400px;
+  }
+
+  .editor {
+  }
+}
+
+.popoverMain {
+  width: 600px; /* override main width */
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/SetupAsCode/SetupAsCodePanel.css

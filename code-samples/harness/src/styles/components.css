@@ -1,0 +1,157 @@
+/*
+  This file contains styles for basic, simple, reusable css components.
+*/
+@define-mixin shared-button-styles {
+  display: inline-flex;
+  cursor: pointer;
+  color: var(--text-color);
+  align-items: center;
+  border: none;
+  background: transparent;
+  outline: none; /* TODO need somehow to enable outline when keyboard is used */
+  font-size: 14px;
+}
+
+@define-mixin hero-button {
+  padding-left: 35px;
+  height: 28px;
+}
+
+@define-mixin primary-button {
+  background-color: var(--color-black);
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: 3px;
+  color: var(--color-white);
+  padding: 8px 20px;
+}
+
+@define-mixin secondary-button {
+  @mixin primary-button;
+  background-color: var(--color-grey-dark);
+}
+
+@define-mixin link-button {
+  border: none;
+  background: transparent;
+  color: var(--color-blue);
+  font-size: 14px;
+
+  &:hover {
+    color: var(--color-link-hover)
+  }
+}
+
+button[data-attrs] {
+  &[data-attrs~=icon-execute] {
+    background: var(--icon-execute) center left no-repeat;
+  }
+
+  &[data-attrs~=icon-add] {
+    background: var(--icon-add) center left no-repeat;
+  }
+
+  &[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &:hover {
+    filter: brightness(90%);
+  }
+
+  @mixin shared-button-styles;
+
+  &[data-attrs~=hero] {
+    @mixin hero-button;
+  }
+
+  &[data-attrs~=primary] {
+    @mixin primary-button;
+  }
+
+  &[data-attrs~=secondary] {
+    @mixin secondary-button;
+  }
+
+  &[data-attrs~=link] {
+    @mixin link-button;
+  }
+}
+
+add-button {
+  @mixin shared-button-styles;
+  @mixin hero-button;
+  background: var(--icon-add) center left no-repeat;
+}
+
+/* Custom tags for action icons */
+@define-mixin action-icon {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  cursor: pointer;
+
+  color: var(--text-color);
+  font-size: 18px;
+  padding-right: 10px;
+
+  &:last-child {
+    padding-right: 0px;
+  }
+
+  &::before {
+    font-family: "icons8";
+  }
+
+  &:hover {
+    color: var(--color-grey-dark) !important;
+  }
+}
+
+delete-icon {
+  @mixin action-icon;
+  &::before {
+    @mixin icons8-delete-content;
+  }
+}
+
+edit-icon {
+  @mixin action-icon;
+  &::before {
+    @mixin icons8-pencil-tip-content;
+  }
+}
+
+add-icon {
+  @mixin action-icon;
+  &::before {
+    @mixin icons8-plus-math-content;
+  }
+}
+
+clone-icon {
+  @mixin action-icon;
+  &::before {
+    @mixin icons8-copy-2-content;
+  }
+}
+
+error-icon {
+  @mixin action-icon;
+  &::before {
+    @mixin icons8-error-filled-content;
+  }
+}
+
+expand-icon {
+  @mixin action-icon;
+  &::before {
+    @mixin icons8-expand-arrow-content;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/styles/components.css

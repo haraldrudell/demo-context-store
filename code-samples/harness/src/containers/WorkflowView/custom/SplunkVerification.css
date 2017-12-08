@@ -1,0 +1,415 @@
+@import '../../../styles/vars.css';
+@import 'split-view/split-view.css';
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.main  {
+  animation: fadein .45s ease-in;
+  z-index: 1;
+  overflow: hidden;
+  margin-bottom: -11px;
+  margin-right: -10px;
+
+  :global .events-loading {
+    margin-top: 65px;
+    margin-bottom: 25px;
+    text-align: center;
+
+    .message {
+      font-size: 1.8em;
+    }
+
+    .wings-spinner {
+      width: 30px;
+      margin: 0 auto;
+    }
+  }
+
+  :global .event-summary-title {
+    position: relative;
+    margin-right: 10px;
+    padding: 5px;
+    padding-top: 0;
+    border-bottom: 2px solid #eff0ef;
+    font-size: 1.27em;
+
+    h5,  h6 {
+      padding: 5px 15px;
+      line-height: 1;
+      margin: 0;
+    }
+
+    h5 {
+      font-size: 0.97em;
+      padding-bottom: 2px;
+    }
+
+    h6 {
+      font-size: 0.77em;
+    }
+
+    .risk-high {
+      color: #F72F2F;
+      font-weight: 600;
+    }
+
+    .risk-suspicious {
+      color: #FF9D00;
+    }
+
+    .message {
+      font-size: 1.07em;
+    }
+
+    .btn-group {
+      position: absolute;
+      right: 0;
+      bottom: 10px;
+    }
+
+    .btn {
+      box-shadow: none;
+      color: black;
+      background: transparent;
+      border-color: transparent;
+      vertical-align: top;
+      height: 25px;
+      padding: 2px 9px;
+
+      .glyphicon-filter{
+        margin-top: 3px;
+      }
+    }
+  }
+
+  :global .splunk-scroll-area {
+    max-height: calc(100vh - 185px);
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+
+    padding-right: 10px;
+    padding-bottom: 50px;
+
+    &::-webkit-scrollbar {
+      width: 1px;
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-track
+    {
+      left: 10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(100,100,100,0.1);
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb
+    {
+      position: relative;
+      left:10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(100,100,100,0.1);
+      background-color: #777;
+    }
+  }
+
+  :global .event-filter-container{
+    color: #868789;
+    padding-top: 15px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+
+    h6 {
+      font-size: 1.11em;
+      color: #486367;
+      margin: 0;
+      padding-top: 15px;
+      padding-bottom: 3px;
+    }
+
+    ul {
+      display: inline-block;
+      list-style: none;
+      padding: 0;
+      vertical-align: top;
+    }
+  }
+
+  :global .filter-area {
+    margin-left: 25px;
+    margin-top: -4px;
+    padding: 0;
+  }
+
+  :global .event-type-filters, :global .event-query-filters {
+    display: inline-block;
+    padding: 4px 8px;
+  }
+  :global .filter-area > span {
+    display: inline-block;
+    width: 75px;
+  }
+
+  :global .filter-area button {
+    box-shadow: none;
+    padding: 2px 3px;
+    margin: 0 3px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    font-weight: 600;
+    outline: none !important;
+
+    &.btn-danger {
+      background-color: #f6e8e8;
+      color: #f72f2f;
+      border-color: #f72f2f;
+    }
+
+    &.btn-warning {
+      background-color: #f8e8d6;
+      color: #FF9D00;
+      border-color: #FF9D00;
+    }
+
+    &.btn-info {
+      background-color: #E0F5FF;
+      border-color: #29B2FF;
+      color: #29B2FF;
+    }
+
+    &.btn-default {
+      background-color: #e7e8e8;
+      border-color: #AAA;
+      color: #888;
+    }
+
+    &.filter-deselected {
+      opacity: 0.6;
+    }
+  }
+
+  :global .event-query-filters button {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 70px;
+  }
+
+  :global .toggle-auto-update {
+    font-size: 11px;
+    padding-top: 3px;
+    input {
+      vertical-align: text-bottom;
+    }
+  }
+
+  :global .cluster-graph-caption {
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    margin-top: -20px;
+    margin-bottom: 20px;
+  }
+
+  :global .event-cluster-table {
+    position: relative;
+    width: 100%;
+    border: 2px solid #eff0ef;
+  }
+
+  :global .event-cluster-list{
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  :global .event-cluster-item {
+    margin-top: -1px;
+    border-bottom: 1px solid $BORDER_COLOR;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    button.btn-link {
+      color: $LINK_COLOR !important;
+
+      &:hover {
+        text-decoration: none !important;
+        color: $LINK_COLOR !important;
+      }
+
+      &::before, &:before {
+        border: none;
+      }
+    }
+  }
+
+  :global .event-cluster-type {
+    position: relative;
+    flex: 0 0 25px;
+
+    font-size: 0.85em;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0 10px;
+
+    img {
+      display: block;
+      width: 25px;
+      margin: 8px auto;
+    }
+
+    .event-cluster-type-name {
+      position: absolute;
+      width: 300px;
+      margin-left: 25px;
+      top: 0;
+      text-align: left;
+    }
+  }
+
+  :global .event-cluster-info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #D2D6DE;
+  }
+
+  :global .event-cluster-heading {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    white-space: nowrap;
+    padding: 5px;
+    padding-right: 0;
+    margin: 0;
+    margin-left: -4px;
+
+    strong {
+      flex-grow: 1;
+      margin-right: 4px;
+    }
+
+    button.btn-default {
+      margin-top: 5px;
+      margin-left: 5px;
+      padding: 4px;
+      font-size: 0.68em;
+      background: #F4f4f4;
+      color: #555;
+      box-shadow: none;
+    }
+  }
+
+  :global .event-cluster-details-container {
+    background-color: #FBFBFB;
+    padding: 10px;
+    padding-bottom: 15px;
+  }
+
+  :global .event-cluster-details {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    height: 64px;
+
+    margin: 0;
+    padding: 8px 0;
+
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    background: transparent;
+
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 13px;
+    color: #000;
+
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+
+    white-space: pre-wrap;
+    word-break: break-all;
+    -webkit-hyphens: none;
+    hyphens: none;
+
+    letter-spacing: 0.777px;
+
+  }
+
+  :global .event-cluster-details.expanded {
+    height: auto;
+    -webkit-line-clamp: initial;
+  }
+
+  :global .splunk-chart {
+    position: relative;
+    padding-top: 9px;
+    padding-bottom: 25px;
+  }
+
+  :global .chart-toggle.btn {
+    background: #FFFFFF;
+    width: 100%;
+    margin-top: -5px;
+    box-shadow: none;
+
+    &:active  {
+      outline: none;
+    }
+
+    .chart-toggle-text {
+      margin-top: -4px;
+    }
+  }
+
+  :global .plotly.plot-container {
+    border: 1px solid #EBEBEB;
+    overflow-x: hidden;
+
+    background: #494e53;
+
+    .main-svg{
+      background: transparent !important;
+    }
+  }
+
+  :global .plotly .modebar {
+    margin-top: 12px;
+    left: 50px;
+  }
+
+  :global .btn-primary:active {
+    background-color: #00acd6;
+    outline: none;
+  }
+
+  :global .reset-event-selection {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    margin-top: -35px;
+
+    button {
+      position: absolute;
+      margin-left: 55px;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/WorkflowView/custom/SplunkVerification.css

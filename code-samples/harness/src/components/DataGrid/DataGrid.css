@@ -1,0 +1,12 @@
+.main {
+  :global {
+    .react-grid-Container {
+      width: 800px !important;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/DataGrid/DataGrid.css

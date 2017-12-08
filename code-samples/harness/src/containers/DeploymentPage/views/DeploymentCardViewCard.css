@@ -1,0 +1,161 @@
+@import "../../../styles/vars.css";
+
+.main {
+  .execControlBar {
+    margin-top: -7px;
+  }
+
+  ui-card > header {
+    h5 {
+      font-size: 18px;
+      font-weight: normal;
+      display: flex;
+      align-items: baseline;
+
+      form-buttons {
+        display: inline-flex;
+        margin-right: 10px;
+        align-items: center;
+        margin-top: 1px;
+        margin-left: 10px;
+
+        button {
+          border: none;
+          background: none;
+          padding: 0;
+          margin: 0;
+          outline: none;
+
+          i {
+            height: 10px;
+            width: 18px;
+            color: $LIGHT_GRAY;
+            cursor: pointer;
+          }
+
+          &:hover i {
+            color: $TEXT_COLOR;
+          }
+        }
+      }
+
+      time {
+        font-size: 14px !important;
+        display: inline-flex;
+        align-items: center;
+
+        &:last-of-type {
+          padding-left: 0;
+        }
+      }
+
+      time + span {
+        display: inline-flex;
+        padding: 0 8px;
+        font-size: 14px;
+      }
+    }
+
+    > input {
+      min-width: 500px;
+      padding: 2px 10px;
+      outline: none;
+      display: inline-block;
+      margin-left: -10px;
+
+      &:focus {
+        border: 1px solid $BORDER_INPUT_FOCUS;
+      }
+    }
+
+    section {
+      > i {
+        display: inline-block;
+        padding: 5px;
+        cursor: pointer;
+        opacity: 0.5;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+
+      label {
+        font-size: 14px;
+        font-weight: normal;
+        color: var(--color-dar-grey);
+        display: inline-flex;
+        margin-left: 8px;
+      }
+    }
+  }
+
+  :global {
+    .execution-status {
+      display: flex;
+      flex: 1;
+      margin-left: 5px;
+      align-items: center;
+
+      .execution-time {
+        display: flex;
+        flex: 1;
+        font-size: 14px !important;
+        justify-self: flex-start;
+      }
+
+      .execution-duration {
+        font-size: 14px !important;
+        display: flex;
+        margin-left: auto;
+
+        > span {
+          margin-right: 8px;
+        }
+      }
+
+      section {
+        label {
+          font-size: 14px;
+          font-weight: normal;
+          color: var(--color-grey-dark);
+          display: inline-flex;
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+}
+
+.serviceLabel {
+  margin-right: 10px;
+}
+.headerSideContent {
+  display: flex;
+  :global {
+    ui-card-actions {
+      margin-top: -2px;
+      margin-right: 0px;
+    }
+
+    button[data-key="notes"] {
+      border: none;
+      width: 20px;
+      background: var(--icon-note) center center no-repeat;
+      height: 15px;
+    }
+  }
+}
+
+.sideContent {
+}
+
+.commentsIcon {
+  border: 0px;
+  vertical-align: top;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/DeploymentPage/views/DeploymentCardViewCard.css

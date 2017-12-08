@@ -1,0 +1,47 @@
+@import "../../styles/vars.css";
+
+.icon {
+  color: $ACCENT_COLOR;
+  cursor: pointer;
+}
+.iconText {
+  padding-left: 5px;
+  cursor: pointer;
+}
+.templateIconHolder {
+  margin-left: 25px;
+}
+.hiddenFields {
+  display: none;
+}
+.label {
+  display: flex;
+  justify-content: space-between;
+}
+.templateMessage {
+  color: #ff8c00;
+}
+.hide {
+  display: none;
+}
+:global {
+  .__templatize {
+    width: 14px;
+    height: 20px;
+    position: relative;
+    top: 9px;
+    align-self: flex-end;
+  }
+  .__nonTemplatize {
+    width: 14px;
+    height: 20px;
+    position: relative;
+    top: 9px;
+    align-self: flex-end;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/FormFieldTemplate/CustomFieldTemplate.css

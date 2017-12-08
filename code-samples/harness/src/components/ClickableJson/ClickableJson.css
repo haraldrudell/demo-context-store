@@ -1,0 +1,102 @@
+@import "../../styles/vars.css";
+
+:global {
+  .value-popover .pt-popover-content {
+    display: flex;
+    flex: 1;
+    color: $TEXT_COLOR;
+    max-width: 500px;
+    overflow: scroll;
+    padding: 6px 12px;
+  }
+}
+
+.main {
+  width: 100%;
+  display: flex;
+
+  :global {
+    line-item-key {
+      display: inline-flex;
+      color: $TEXT_COLOR;
+      margin-right: 8px;
+      font-weight: 500;
+    }
+
+    .linked-key {
+      font-weight: 500;
+      color: $LINK_COLOR;
+    }
+
+    line-item-value {
+      display: inline-flex;
+      color: $TEXT_COLOR;
+      font-weight: 500;
+    }
+
+    table-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      width: 100%;
+      padding: 8px 0px;
+      height: 500px;
+      overflow-y: scroll;
+
+      line-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        font-size: 16px;
+        min-height: 18px;
+
+        &:hover {
+          background: $DROPDOWN_HOVER;
+        }
+
+        line-item-key {
+          font-weight: 500;
+          padding: 0px 3px;
+          border-radius: 5px;
+          box-sizing: border-box;
+        }
+      }
+
+      /* If the line-item contains a key with a link, modify row and children accordingly. */
+      div.linked-key {
+        line-item {
+          line-item-key {
+            color: $LINK_COLOR;
+          }
+
+          line-item-value {
+            cursor: pointer;
+          }
+
+          text-truncator {
+            cursor: pointer;
+          }
+
+          &:hover {
+            cursor: pointer;
+            line-item-key {
+              background: #dfe3ea;
+            }
+          }
+        }
+      }
+
+      text-truncator {
+        max-width: 400px;
+        block-required-for-ellipsis {
+          color: $TEXT_COLOR !important;
+        }
+      }
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/ClickableJson/ClickableJson.css

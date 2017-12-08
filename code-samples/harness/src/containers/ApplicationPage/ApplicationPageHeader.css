@@ -1,0 +1,122 @@
+@import '../../styles/vars.css';
+
+.common {
+	display    : flex;
+	align-items: center;
+
+	display            : -ms-flexbox;
+	display            : -webkit-flex;
+	-ms-flex-align     : center;
+	-webkit-align-items: center;
+	-webkit-box-align  : center;
+
+  max-height   : $TOP_NAV_HEIGHT;
+  height       : $TOP_NAV_HEIGHT;
+  width        : 100%;
+  margin-top   : 0px;
+  margin-bottom: 0px;
+
+  h3 {
+    margin: 0;
+    padding: 15px;
+    a {
+      color: $ACCENT_COLOR;
+    }
+  }
+
+  :global{
+    .__buttonRow{
+      display  : flex;
+      width    : 100%;
+      max-width: 1280px;
+      padding  : 0px 0px 0px 0px;
+      margin   : 0px 0px 0px -2px;
+    }
+
+    .wings-card-search {
+      margin-top: 15px;
+      input {
+        padding-left: 30px;
+        padding-bottom: 0px;
+      }
+
+      .__searchIcon {
+        margin-top: -5px;
+        margin-left: auto;
+        &:hover{
+          color: $TEXT_COLOR !important;
+        }
+      }
+
+      .__clear {
+        top: -8px;
+      }
+    }
+
+    .active {
+      color: $TEXT_COLOR !important;
+    }
+
+    .__left {
+      display: flex;
+      flex: 1;
+      align-self: center;
+    }
+
+    .__right {
+      display: flex;
+      flex: 1;
+      margin-left: auto;
+    }
+
+    .__leftBorder {
+      border-left: 1px solid #8F9799;
+      margin-right: 10px;
+    }
+
+    .wings-add-new {
+      /* padding-right: 10px;*/
+    }
+
+    .wings-add-new::after {
+        content : '|';
+        margin-left:20px;
+        margin-right:20px;
+        color:$TEXT_COLOR_LIGHT !important;
+    }
+
+    .__filter {
+      display: inline-block !important;
+      .dropdown {
+        display: inline-block;
+        .dropdown-toggle {
+          color: $TEXT_COLOR;
+        }
+      }
+    }
+
+  }
+}
+
+.main {
+  position: relative;
+}
+
+.sticky {
+  position: fixed;
+  top : 0;
+  transition: opacity .25s ease-in-out;
+  opacity: $NAV_OPACITY;
+}
+
+.emptyDiv {
+  position: relative;
+  margin-bottom: 10px;
+  background-color: $BGCOLOR;
+}
+
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ApplicationPage/ApplicationPageHeader.css

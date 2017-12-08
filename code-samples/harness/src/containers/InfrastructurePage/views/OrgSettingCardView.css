@@ -1,0 +1,14 @@
+@import '../../../styles/vars.css';
+
+.main {
+  :global {
+    .__header {
+      font-weight: normal;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/InfrastructurePage/views/OrgSettingCardView.css

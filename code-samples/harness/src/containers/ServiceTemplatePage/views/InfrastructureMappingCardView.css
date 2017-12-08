@@ -1,0 +1,368 @@
+@import "../../../styles/vars.css";
+.main {
+  margin-bottom: var(--indent-width);
+
+  .wings-card-header {
+    color: var(--text-color);
+  }
+
+  :global {
+    .overrideList {
+      padding-left: 40px !important;
+      padding-bottom: 20px;
+    }
+    /*.__override {
+        display:flex;
+        flex-wrap:wrap;
+     }*/
+    .row > [class="override-columns"] {
+      display: flex;
+      flex-direction: column;
+    }
+    .__override .override-columns {
+      background: white;
+    }
+    .header-columns {
+      padding: 0;
+    }
+    .__config-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 14px !important;
+    }
+    .overrides-width {
+      width: 80%;
+    }
+    .second-column {
+      margin-left: 10px;
+    }
+    .__override-actions i {
+      color: $BGCOLOR_ON_HOVER;
+    }
+    .overrideListBody {
+      display: flex;
+    }
+    .overrideListBody div.col-md-6:last-child {
+      margin-left: 10px;
+    }
+    .__sectionHeader {
+      height: 32px;
+      border-bottom: 1px solid $BORDER_LIGHT;
+      font-size: 1.1em;
+      margin-left: 8px;
+      margin-bottom: 10px;
+
+      div {
+        width: max-content;
+      }
+    }
+
+    .__override {
+      margin: 0;
+    }
+    .col-md-6 {
+    }
+    .__border {
+      border-bottom: 1px solid $BORDER_LIGHT;
+      margin-top: 10px;
+    }
+    .inframappings {
+      background: white;
+      width: 80%;
+      padding: 0px;
+    }
+
+    .__infraMappingDetails {
+      .content {
+        padding: 10px;
+        display: block;
+      }
+      .infra-header {
+        font-size: 14px;
+      }
+      .infra-details {
+        font-size: 12px;
+      }
+    }
+    .infra-list:not(:first-child) {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    .__heading {
+      font-weight: bold;
+    }
+    .__details {
+      margin-top: 10px;
+      padding-left: 10px;
+
+      .box-header {
+        padding-top: 5px;
+        padding-bottom: 0px;
+      }
+    }
+
+    .__Override-List {
+      display: flex;
+      justify-content: space-between;
+    }
+    .__nameHeading {
+      font-weight: bold;
+      font-size: 1.2em;
+
+      span {
+        padding-right: 10px;
+      }
+
+      .small {
+        font-size: small;
+        font-weight: normal;
+      }
+    }
+    .service-name {
+      font-weight: bold;
+      font-size: 18px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-color);
+    }
+    .__serviceNameDiv {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .__artifactType {
+      align-self: center;
+      color: var(--text-color);
+    }
+    .__subHeading {
+      font-weight: bold;
+      font-size: 1em;
+      min-width: 30%;
+      width: 30%;
+      word-wrap: break-word;
+    }
+    .__fileHeading {
+      font-weight: bold;
+      font-size: 1em;
+    }
+    .__fileSize {
+      font-weight: normal;
+    }
+    .__env-type {
+      font-weight: bold;
+    }
+    ol {
+      list-style: none;
+    }
+    .__override-item {
+      display: inline-block;
+    }
+
+    .__varOverride-firstCol {
+      width: 30%;
+      display: inline-block;
+      color: $LIGHT_GRAY;
+      padding-left: 5px;
+    }
+    .__varOverride-secondCol {
+      display: inline-block;
+      /*margin-left: 48px;*/
+
+      color: $LIGHT_GRAY;
+    }
+    .__file-actions {
+    }
+    .__file-actions i,
+    .__override-actions i {
+      padding: 5px;
+      cursor: pointer;
+    }
+    .__fileOverride-secondCol {
+      display: inline-block;
+      padding-left: 20px;
+      /*margin-left: 50px;*/
+      color: $LIGHT_GRAY;
+    }
+    .__config-section {
+      display: flex;
+    }
+    .content {
+      display: flex;
+      padding: 10px;
+    }
+
+    .__list-view {
+      margin-left: -3%;
+    }
+    .__override-info {
+      padding: 10px;
+      display: flex;
+      position: relative;
+    }
+    .__override-info:first-child {
+    }
+    .panel-title {
+      font-weight: 400;
+      font-size: 14px;
+      a:focus,
+      a:hover {
+        color: black !important;
+        text-decoration: none;
+      }
+    }
+    .panel-heading .panel-title {
+      a {
+        text-decoration: none;
+      }
+      a::before {
+        font-family: "icons8";
+        @mixin icons8-forward-content;
+        font-size: 14px;
+        margin-right: 5px;
+        color: gray;
+      }
+    }
+    .expanded .panel-heading .panel-title {
+      font-weight: bold;
+      a {
+        text-decoration: none;
+      }
+      a::before {
+        font-family: "icons8";
+        @mixin icons8-expand-arrow-content;
+        margin-right: 5px;
+        font-size: 14px;
+        color: gray;
+      }
+    }
+    .__config-section {
+      display: flex;
+    }
+    .__section {
+      width: 500px;
+    }
+    .no-data {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 200px;
+      font-size: 20px;
+      a {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    .__section-header {
+      background: #eeeeee;
+
+      padding: 10px;
+    }
+    .__override:not(:first-child) {
+      margin: 0;
+    }
+    .__config-section .__section:nth-child(1) {
+      margin-left: 50px;
+    }
+    .__config-section .__section:nth-child(2) {
+      margin-left: 100px;
+    }
+    .__override-header {
+      position: relative;
+      padding: 10px;
+    }
+    .Override-List {
+    }
+    .override-items {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    .configvar-Overrides + .configFile-Overrides {
+      margin-top: 10px;
+      margin-left: 16.5%;
+    }
+    .__override-content {
+      background: white;
+      margin: 0px;
+    }
+    .__no-configs {
+      margin-left: 10px;
+    }
+    .__no-config-vars {
+      padding-left: 40px;
+    }
+    .__configActions {
+      position: absolute;
+      right: 0;
+      top: 4px;
+    }
+
+    .__override-val {
+      word-break: break-all;
+      display: flex;
+      justify-content: space-between;
+      flex: 1;
+
+      .__override-actions {
+        font-weight: bold;
+        color: black;
+        display: inline-block;
+      }
+    }
+    .__file-info {
+      &:hover {
+        .__file-actions {
+          margin-right: 10px;
+          color: black;
+          font-weight: bold;
+          display: inline-block;
+        }
+      }
+    }
+    .__service-header {
+      font-weight: bold;
+    }
+
+    .__config-file-header {
+      font-weight: bold;
+      font-size: 1em;
+      padding-left: 5px;
+    }
+
+    .with-border {
+      border-bottom: 1px solid $BORDER_LIGHT;
+    }
+
+    .box-body {
+      padding-left: 15px;
+
+      ol {
+        padding-left: 15px;
+      }
+    }
+
+    .__noConfigText {
+      margin-left: 250px;
+    }
+    .__noServiceVariablesText {
+      margin-left: 250px;
+    }
+    .__red {
+      color: $RED_ERROR;
+    }
+    .__serviceName {
+      font-size: 16px;
+    }
+    .__orange {
+      color: #ff8c00;
+      padding-left: 15px;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ServiceTemplatePage/views/InfrastructureMappingCardView.css

@@ -1,0 +1,82 @@
+.nodeIcon {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 1.5em;
+}
+
+.nodeLabel {
+  position: absolute;
+  margin: auto 0;
+  width: 100%;
+  margin-top: 65px;
+  text-align: center;
+  left: 0;
+}
+
+.infoPanel {
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  padding: 10px;
+  right: 15px;
+  bottom: 15px;
+  background-color: #ddd;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px #ddd;
+  opacity: 0.7;
+}
+
+.nodeToolbar {
+  display: none;
+  position: absolute;
+  height: 70px;
+  top: 200px;
+  left: 400px;
+  background-color: #ddd;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px #ddd;
+  z-index: 21;
+}
+
+.nodeToolbarButton {
+}
+.nodeToolbarButton:hover {
+  color: red
+}
+
+.editInput {
+  width: 120px;
+  height: 25px;
+  text-align: center;
+  margin-left: -10px;
+  margin-top: 0;
+}
+
+.linkTypeBox {
+  pointer-events: auto !important;
+  padding: 0 !important;
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      padding: 8px;
+      cursor: pointer;
+      &:hover {
+        background-color: lightblue;
+      }
+      img {
+        width: 16px;
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/WorkflowPage/WorkflowPOCPage.css

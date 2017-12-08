@@ -1,0 +1,69 @@
+@import '../../styles/vars.css';
+
+.common {
+  max-height: 100px;
+  height: $TOP_NAV_HEIGHT;
+  width: 100%;
+  background-color: $NAV_COLOR;
+  h3 {
+    margin: 0;
+    padding: 15px;
+    a {
+      color: $ACCENT_COLOR;
+    }
+  }
+  :global {
+
+    .wings-sidebar-dropdown > a {
+      color: #fff;
+    }
+    .iconHeading {
+      margin-left: 10px;
+    }
+    .__setupHeader {
+      color: #fff;
+    }
+
+    .__menuLabel {
+      a {
+        color: $LIGHT_GRAY;
+        border-bottom: 1px solid $BORDER_LIGHT;
+        &:hover,&:active,&:focus {
+          cursor: default;
+          color: $LIGHT_GRAY;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
+
+.main {
+  position: relative;
+}
+
+.sticky {
+  position: fixed;
+  top : 0;
+  transition: opacity .25s ease-in-out;
+  opacity: $NAV_OPACITY;
+
+    :global {
+      .__pageDropDown .__header {
+          opacity: 0;
+          transition: opacity .25s ease-in-out;
+      }
+    }
+}
+
+.emptyDiv {
+  position: relative;
+  margin-bottom: 10px;
+  background-color: $BGCOLOR;
+}
+
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/AppPageHeader/AppPageHeader.css

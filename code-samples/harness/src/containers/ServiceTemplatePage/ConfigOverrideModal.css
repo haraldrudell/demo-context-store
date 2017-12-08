@@ -1,0 +1,22 @@
+@import '../../styles/vars.css';
+
+.main {
+
+  :global {
+    .__override-type {
+      margin-top:30px;
+    }
+     .__override-type * {
+      display: inline-block;
+    }
+    .__override-type label {
+      margin-right: 30px;
+      vertical-align: text-top;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/ServiceTemplatePage/ConfigOverrideModal.css

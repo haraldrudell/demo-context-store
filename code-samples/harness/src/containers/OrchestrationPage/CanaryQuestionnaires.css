@@ -1,0 +1,243 @@
+@import "../../styles/vars.css";
+@import "../../styles/icons8-classes.css";
+
+.main {
+  margin-top: var(--indent-width);
+  h5 {
+    padding: 25px 0 5px 15px;
+  }
+
+  :global {
+    .box-footer {
+      padding: 0px;
+      background-color: #fcfcfc;
+      height: 40px;
+      border-bottom: 1px solid #e7e7e7;
+    }
+    .__workflowType {
+      padding: 10px 16px;
+      display: inline-block;
+
+      .__workflowTypeLabel {
+        color: #ccc;
+        font-weight: bold;
+      }
+    }
+    .box-body {
+      padding-top: 0;
+    }
+
+    .__viewsLink {
+      position: absolute;
+      right: 30px;
+      top: 20px;
+      color: #ccc;
+      span {
+        margin-left: 10px;
+      }
+      .__default {
+        color: $TEXT_COLOR;
+      }
+      .__link {
+        color: $LINK_COLOR;
+        cursor: pointer;
+      }
+    }
+
+    .content {
+      min-height: 0;
+      padding: 0 12px 0 12px;
+      margin-left: -7px;
+    }
+
+    .__settingCol {
+      border-left: 1px solid #e7e7e7;
+      padding-left: 20px;
+      padding-top: 28px;
+      min-height: 100vh;
+    }
+
+    .__stepMenu {
+      margin-left: 10px;
+      font-size: small;
+    }
+
+    .dropdown-menu {
+      width: 200px;
+      border: 2px solid #e2e6e7;
+      .__rightMenu {
+        padding: 0 10px;
+        width: 100%;
+      }
+    }
+
+    .__section {
+      margin: 0 0 20px 35px;
+      &:first-child {
+        margin-top: 30px;
+      }
+      .wings-threedots {
+        margin-top: -5px;
+      }
+      .__step {
+        margin-left: 20px;
+        margin-top: 20px;
+        font-size: 15px;
+        color: $LINK_COLOR;
+        font-weight: bold;
+        cursor: pointer;
+        .__stepDesc {
+          font-weight: normal;
+          color: #aaa;
+          margin-left: 45px;
+        }
+        .badge {
+          border: 3px solid #e6e8e7;
+          background-color: transparent;
+          border-radius: 4px;
+          padding: 2px 3px;
+          margin-right: 20px;
+          i {
+            &:before {
+              font-weight: bold;
+              font-size: 14px;
+              color: #555;
+            }
+          }
+        }
+        .__stepIcon {
+          display: inline-block;
+          width: 24px;
+          height: 24px;
+          border: 2px solid #c3c8cb;
+          margin-right: 20px;
+          border-radius: 4px;
+          vertical-align: middle;
+          i {
+            margin-left: 2px;
+          }
+        }
+        .__invalidStep {
+          border-color: #febf00;
+        }
+        .__invalidIcon {
+          position: absolute;
+          left: 30px;
+          font-size: 20px;
+          color: #febf00;
+          margin-top: -1px;
+        }
+        .__invalidText {
+          font-weight: normal;
+          color: $TEXT_COLOR;
+          margin-left: 5px;
+        }
+        .__arrowDown {
+          position: absolute;
+          margin-left: -37px;
+          margin-top: 24px;
+        }
+        .__itemActionIcon {
+          margin-left: 5px;
+          color: #bbb;
+          cursor: pointer;
+          display: none;
+        }
+        &:hover {
+          .__itemActionIcon {
+            color: #555;
+            display: inline-block;
+          }
+        }
+      }
+
+      .__deploymentPhases {
+        color: $LINK_COLOR;
+        .badge {
+          border: none;
+          margin-left: 6px;
+          border-radius: 4px;
+          padding: 2px 3px;
+          margin-right: 20px;
+          i {
+            &:before {
+              font-weight: bold;
+              font-size: 11px;
+              color: $LINK_COLOR;
+            }
+          }
+        }
+      }
+
+      .Select {
+        text-align: left;
+        width: 350px;
+        .Select-menu {
+          max-height: 400px !important;
+        }
+        .Select-control {
+          border: none;
+          background-color: inherit;
+          .Select-placeholder {
+            color: $LINK_COLOR;
+            &::before {
+              content: "";
+              display: inline-block;
+              width: 24px;
+              height: 24px;
+              /*background-color: #26c5ce;*/
+              margin-right: 20px;
+              border-radius: 4px;
+              vertical-align: middle;
+            }
+            &::after {
+              font-family: "icons8";
+              @mixin icons8-plus-math-content;
+              font-family: "icons8";
+              content: "\F132";
+              position: absolute;
+              left: 7px;
+              top: 1px;
+              font-weight: bold;
+              font-size: 11px;
+              color: $LINK_COLOR;
+            }
+          }
+          .Select-arrow-zone {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .__workflowType {
+      margin-bottom: 40px;
+      .__workflowTypeTitle {
+        font-size: 18px;
+        width: 120px;
+        display: inline-block;
+      }
+      span {
+        margin-left: 20px;
+        font-size: 14px;
+      }
+    }
+
+    .Select {
+      text-align: left;
+      margin-right: 10px;
+      .Select-control {
+        background-color: inherit;
+        .Select-placeholder {
+          color: #555;
+          padding-left: 0px;
+        }
+      }
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/OrchestrationPage/CanaryQuestionnaires.css

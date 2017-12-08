@@ -1,0 +1,12 @@
+@import '../../styles/vars.css';
+
+.main {
+  textarea {
+    resize: none;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/Versioning/SaveVersionsModal.css

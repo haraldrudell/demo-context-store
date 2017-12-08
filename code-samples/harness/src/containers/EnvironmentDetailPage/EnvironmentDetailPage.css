@@ -1,0 +1,50 @@
+@import "../../styles/vars.css";
+
+.main {
+  margin-top: var(--indent-width);
+  color: #3a4449;
+  h5 {
+    padding: 18px 0 5px 8px;
+  }
+
+  :global {
+    .content {
+      min-height: 0;
+      padding: 0 12px 0 12px;
+    }
+
+    .wings-threedots {
+      margin-left: 10px;
+    }
+
+    .__dropDownMenu {
+      width: max-content;
+      font-size: smaller !important;
+      padding: 10px 20px;
+    }
+
+    .__dl {
+      dt {
+        color: #ccc;
+        font-weight: bold;
+      }
+    }
+
+    .__workflow {
+      padding: 5px;
+
+      .content-header {
+        display: none;
+      }
+
+      .wings-card-search {
+        display: none;
+      }
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/EnvironmentDetailPage/EnvironmentDetailPage.css

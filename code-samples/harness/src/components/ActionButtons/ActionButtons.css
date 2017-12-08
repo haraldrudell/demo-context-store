@@ -1,0 +1,11 @@
+@import "../../styles/vars.css";
+
+.main {
+  display: flex;
+  align-content: center;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/ActionButtons/ActionButtons.css

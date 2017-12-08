@@ -1,0 +1,12 @@
+@import '../../styles/vars.css';
+.main {
+}
+
+.warning {
+  color: #ff8c00;
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/OrchestrationPage/DeploymentPhaseModal.css

@@ -1,0 +1,15 @@
+@import '../../styles/vars.css';
+
+.main {
+  :global {
+    .modal-dialog {
+  }
+  }
+
+}
+
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/WingsCloneModal/WingsCloneModal.css

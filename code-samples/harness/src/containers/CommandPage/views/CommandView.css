@@ -1,0 +1,95 @@
+@import "../../../styles/vars.css";
+
+$ITEM_HEIGHT: 86px;
+
+.main {
+  margin-bottom: 16px;
+
+  :global {
+    .__body {
+      margin: 0px;
+      padding: 0px;
+
+      dl {
+        border-bottom: 1px solid $BORDER_COLOR;
+        padding: 10px;
+        text-align: center;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:first-child {
+          border-top: 1px solid $BORDER_COLOR;
+        }
+
+        dt {
+          line-height: $ITEM_HEIGHT;
+          width: 150px;
+          position: relative;
+        }
+
+        dd {
+          position: relative;
+
+          section {
+            margin: 0;
+          }
+        }
+      }
+
+      .__dl {
+        background-color: $BGCOLOR;
+        padding-left: 16px;
+        padding-right: 16px;
+        dt {
+          color: $LINK_COLOR !important;
+        }
+      }
+
+      .item-actions {
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        z-index: 100;
+        background: #f7f8f7;
+        padding-left: 2px;
+        padding-bottom: 2px;
+
+        i {
+          margin-left: 5px;
+          color: $ICON_TEXT_COLOR;
+        }
+      }
+
+      .jtk-surface {
+        max-height: $ITEM_HEIGHT !important;
+        background-color: inherit;
+        overflow: hidden !important;
+        margin: 0;
+        margin-right: 80px;
+      }
+    }
+
+    .__commandName {
+      line-height: normal;
+      margin-top: 20px;
+    }
+
+    .manageVersion {
+      margin-top: 5px;
+      margin-left: 0px;
+      line-height: 15px;
+    }
+
+    .__viewHistory {
+      color: $TEXT_COLOR_LIGHT;
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/CommandPage/views/CommandView.css

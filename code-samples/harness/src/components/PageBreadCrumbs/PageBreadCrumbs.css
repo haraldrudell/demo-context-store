@@ -1,0 +1,92 @@
+@import "../../styles/vars.css";
+
+.caret {
+  width: 25px;
+  height: 25px;
+  margin-left: 5px;
+  margin-top: 3px;
+  i {
+    margin: 0 auto;
+  }
+  &:hover {
+    border: 1px solid #aaa !important;
+  }
+}
+
+.header {
+  font-size: 12px;
+  font-weight: normal;
+  color: $ICON_TEXT_COLOR;
+}
+
+.labelItem {
+  font-size: 16px;
+  color: inherit;
+}
+
+.breadCrumbItem {
+  color: inherit;
+}
+.breadCrumbs {
+  :global {
+    .pt-popover-target {
+      vertical-align: middle;
+    }
+  }
+  font-size: 20px;
+  vertical-align: baseline;
+  color: $TEXT_COLOR !important;
+  margin-top: -4px;
+  li {
+    a {
+      color: $LINK_COLOR;
+    }
+
+    &:after {
+      padding: 0 10px;
+      color: $LINK_COLOR;
+      font-size: 16px;
+    }
+
+    &:last-child {
+      .breadCrumbItem {
+        font-size: 18px;
+        color: $TEXT_COLOR !important;
+        cursor: inherit !important;
+      }
+    }
+  }
+}
+.breadCrumbsWithHeader {
+  margin-top: 17px;
+}
+.nonHeaderBread {
+  font-weight: 400;
+  color: inherit;
+}
+.textItem {
+  font-size: 20px;
+  font-weight: 400;
+  color: inherit;
+}
+.txtHolder {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: -20px;
+}
+
+.topBreadCrumbs :global {
+  .pt-popover-content {
+    /* margin-top: 10px !important; */
+  }
+  .pt-menu {
+    max-height: 60vh;
+    overflow-y: scroll;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/components/PageBreadCrumbs/PageBreadCrumbs.css

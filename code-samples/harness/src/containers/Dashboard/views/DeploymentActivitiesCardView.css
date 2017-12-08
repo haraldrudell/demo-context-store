@@ -1,0 +1,187 @@
+@import "../../../styles/vars.css";
+
+.main {
+  --progress-row-padding: 36px;
+
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+
+  most-active-services-card ui-card,
+  deployments-card ui-card {
+    ui-card-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      card-title {
+        display: flex;
+        flex: unset;
+      }
+    }
+  }
+
+  deployments-card {
+    display: flex;
+    margin-right: var(--indent-width);
+    min-width: 400px;
+    flex: 605;
+
+    ui-card {
+      ui-card-header {
+        card-title {
+          color: var(--color-blue);
+        }
+      }
+
+      ui-card-main {
+        padding-left: 0px;
+        padding-right: 0px;
+      }
+    }
+
+    deployments-chart-container {
+      display: flex;
+      flex-direction: column;
+
+      chart-row {
+        display: flex;
+        flex-direction: row;
+        padding-right: 40px;
+        height: 98px;
+        border-bottom: 1px solid var(--card-border-color);
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        summary-box {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 206px;
+          align-self: center;
+
+          summary-value {
+            display: flex;
+            font-size: 40px;
+            color: var(--text-color);
+          }
+
+          summary-label {
+            display: flex;
+            margin-top: -10px;
+            font-size: 14px;
+          }
+        }
+
+        deployments-chart {
+          display: flex;
+          flex: 4;
+          flex-direction: column;
+          justify-content: center;
+          min-width: 300px;
+        }
+      }
+    }
+
+    .no-instances-message {
+      display: flex;
+      flex: 1;
+      align-self: center;
+      margin-top: 26%;
+    }
+  }
+
+  most-active-services-card {
+    display: flex;
+    flex: 425;
+
+    ui-card {
+      position: relative;
+      ui-card-main {
+        padding-left: var(--progress-row-padding);
+        padding-right: 0px;
+      }
+
+      fake-bottom-padding-for-tall-scroll-bar {
+        position: absolute;
+        width: calc(100% - var(--progress-row-padding));
+        height: var(--ui-card-padding);
+        background: var(--ui-card-bg-color);
+        position: absolute;
+        bottom: 0px;
+      }
+    }
+  }
+}
+
+.progressBars {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  margin: 0px;
+  font-size: 12px;
+  height: 293px;
+  padding-right: var(--progress-row-padding);
+  padding-bottom: var(--ui-card-padding);
+  overflow-y: scroll;
+  position: relative;
+
+  :global {
+    progress-row {
+      display: flex;
+      flex-direction: column;
+      margin-top: 8px;
+      font-size: 12px;
+      overflow: hidden;
+
+      title-items {
+        @mixin flex-row;
+        flex: 1;
+        align-items: baseline;
+        justify-content: space-between;
+
+        row-title {
+          @mixin flex-row;
+        }
+
+        item-count {
+          color: var(--text-color);
+          font-size: 13px;
+        }
+      }
+
+      progress-bar-items {
+        @mixin flex-row;
+        margin-top: 4px;
+
+        .progress {
+          @mixin flex-row;
+          flex: 1;
+          height: unset;
+
+          background-color: var(--color-grey-light);
+          margin: 0px;
+
+          .progress-bar {
+            height: 9px;
+            line-height: 20px;
+          }
+
+          .progress-bar-success {
+            background-color: var(--color-green-light);
+          }
+
+          .progress-bar-danger {
+            background-color: var(--color-red-light);
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/Dashboard/views/DeploymentActivitiesCardView.css

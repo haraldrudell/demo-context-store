@@ -1,0 +1,160 @@
+@import "../../../styles/vars.css";
+
+.main {
+  position: relative;
+  h3 {
+    font-weight: normal !important;
+  }
+  .anomalous {
+    margin-top: 8px;
+    color: red;
+  }
+
+  .mainTable {
+    width: 100%;
+    font-size: 12px;
+    margin: -10px;
+    margin-top: 10px;
+    margin-top: 30px;
+  }
+  .thead {
+    color: $LIGHT_GRAY;
+    font-weight: bold;
+  }
+  .row {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    td {
+      padding: 5px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+    &:nth-child(even) {
+      background-color: #fdfdfd;
+    }
+    &:nth-child(odd) {
+      background-color: #fff;
+    }
+  }
+  .headerRow {
+    color: $LIGHT_GRAY;
+    font-weight: bold;
+    border: none;
+    font-size: 13px;
+    td {
+      vertical-align: bottom;
+    }
+  }
+  .col1 {
+    width: 15%;
+    padding-left: 10px !important;
+  }
+  .col2 {
+    width: 15%;
+  }
+  .col3 {
+    width: 15%;
+  }
+  .col4 {
+    width: 15%;
+  }
+  .col5 {
+    width: 40%;
+  }
+  .riskCircle {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+  .riskCircleNA {
+    fill: $LIGHT_GRAY;
+  }
+  .riskCircleLOW {
+    fill: var(--color-green);
+  }
+  .riskCircleMEDIUM {
+    fill: $YELLOW_WARNING;
+  }
+  .riskCircleHIGH {
+    fill: $RED_ERROR;
+  }
+
+  .subTable {
+    width: 100%;
+  }
+  .subcol1 {
+    width: 20%;
+    font-weight: bold;
+    text-align: center;
+  }
+  .subcol2 {
+    width: 20%;
+    font-weight: bold;
+  }
+  .callsCol {
+    padding-left: 38px !important;
+  }
+  .subcol3 {
+    width: 15%;
+  }
+  .subcol4 {
+    width: 15%;
+  }
+  .subcol5 {
+    width: 15%;
+  }
+  .subcol6 {
+    width: 15%;
+  }
+  .subcol7 {
+    width: 15%;
+  }
+  .dataLabel {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    text-align: center;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    margin-bottom: 4px;
+    font-weight: normal;
+    margin-right: 10px;
+  }
+  .value {
+    padding: 6px;
+    font-weight: bold;
+  }
+  .separator {
+    right: 0;
+    height: 1px;
+    position: absolute;
+    left: 40%;
+    margin-top: 35px;
+    background-color: #e6e8e7;
+  }
+  .statusHigh {
+    color: $RED_ERROR;
+    font-weight: bold;
+  }
+  .statusMedium {
+    color: $YELLOW_WARNING;
+    font-weight: bold;
+  }
+  .statusLow {
+    font-weight: bold;
+  }
+  .legends {
+    position: absolute;
+    margin-top: -44px;
+    right: 10px;
+    font-size: 11px;
+  }
+  .legendsHeading {
+    color: $LIGHT_GRAY;
+  }
+}
+
+
+
+// WEBPACK FOOTER //
+// webpack:///src/containers/WorkflowView/custom/AppDynamicsVerification3.css
