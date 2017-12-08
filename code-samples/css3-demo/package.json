@@ -10,7 +10,14 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "surge build",
     "test": "react-scripts test --env=jsdom",
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "react-styleguidist": "^6.0.33",
+    "surge": "^0.19.0"
   }
 }
