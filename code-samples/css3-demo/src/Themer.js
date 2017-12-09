@@ -27,19 +27,16 @@ export default class Themer {
     let classes = []
     for (let i = 0; i < classList.length; i++) classes.push(classList.item(i))
     classes = `${classList.length}[${classes.join(', ')}]`
-    console.log('Themer getTheme:', result, classes)
     return result
   }
 
   setTheme(number) {
-    console.log('Themer setTheme:', number)
+    console.log('setTheme', number)
     const {themes, classList} = this
     const newToken = themes[number]
     if (newToken) {
       const oldToken = themes[this.getActiveTheme()]
-      console.log(`classList.replace(${oldToken}, ${newToken})`)
       classList.replace(oldToken, newToken)
-      this.getActiveTheme()
     }
   }
 }
