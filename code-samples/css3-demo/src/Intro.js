@@ -1,3 +1,7 @@
+/*
+© 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
+All rights reserved.
+*/
 import React, {Component, Fragment} from 'react'
 import styles from './Intro.css'
 

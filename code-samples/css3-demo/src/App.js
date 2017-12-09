@@ -1,12 +1,17 @@
+/*
+© 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
+All rights reserved.
+*/
 import React, {Component, Fragment, createElement} from 'react'
 import Background from './Background'
 import Position from './Position'
+import Theme from './Theme'
 
 import Navigation from './Navigation'
 import Intro from './Intro'
 import /*styles from*/ './App.css'
 
-const tabClasses = [Intro, Position]
+const tabClasses = [Intro, Position, Theme]
 const m = 'App'
 
 export default class App extends Component {
