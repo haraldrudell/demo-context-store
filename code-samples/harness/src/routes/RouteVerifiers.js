@@ -1,3 +1,4 @@
+/* eslint no-restricted-globals: 0 */
 export default {
   isDashboard: ({ accountId }) => location.href.includes('/dashboard?') || location.href.endsWith('/dashboard'),
 

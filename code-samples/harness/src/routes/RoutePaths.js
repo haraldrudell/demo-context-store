@@ -15,7 +15,7 @@ Object.keys(RouteDefinitions).forEach(pathName => {
   RoutePaths[pathName] = Url.wrapWithQueryString(pathFunc)
 })
 
-module.exports = RoutePaths
+export default RoutePaths
 
 
 

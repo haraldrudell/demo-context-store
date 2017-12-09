@@ -6,7 +6,7 @@ import AppTrendsCardView from './views/AppTrendsCardView'
 import DeploymentsByDateModal from '../Dashboard/DeploymentsByDateModal'
 import apis from 'apis/apis'
 import css from './AppOverview.css'
-import { Utils as Util } from 'utils'
+import { Utils as Util } from 'components'
 
 const fragmentArr = [{ executions: [] }, { deploymentStats: [] }]
 // ---------------------------------------- //

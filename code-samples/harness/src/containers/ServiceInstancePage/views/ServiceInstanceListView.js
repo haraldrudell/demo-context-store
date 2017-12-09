@@ -10,9 +10,10 @@ import apis from 'apis/apis'
 
 import TimeAgo from 'react-timeago'
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
-const formatter = buildFormatter(TimeAgoShort)
 
 import css from './ServiceInstanceListView.css'
+
+const formatter = buildFormatter(TimeAgoShort)
 
 export default class ServiceInstanceListView extends React.Component {
   state = {

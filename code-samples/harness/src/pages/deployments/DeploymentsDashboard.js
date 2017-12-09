@@ -117,7 +117,7 @@ class DeploymentsDashboard extends React.Component {
       for (const exec of executions) {
         // update "state.executions" with the new Running Exec:
         let index = -1
-        this.state.executions.map((item, i) => {
+        this.state.executions.forEach((item, i) => {
           if (item.uuid === exec.uuid) {
             index = i
             return {}
@@ -567,7 +567,6 @@ class DeploymentsDashboard extends React.Component {
                 path={path}
                 router={router}
                 routeParams={routeParams}
-                key={execution.uuid}
                 execution={execution}
                 pipelines={pipelines}
                 onRerunClick={this.rerunPipeline}

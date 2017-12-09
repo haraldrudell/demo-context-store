@@ -12,7 +12,7 @@ import * as ExecutionUtils from './ExecutionUtils'
 import * as MentionUtils from './MentionUtils'
 import Mocks from './mocks/Mocks'
 
-module.exports = {
+export {
   Wings,
   Events,
   TourStage,

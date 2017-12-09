@@ -114,7 +114,7 @@ import SearchInput from './SearchInput/SearchInput'
  * Usage: we can have one line to import multiple components, e.g.: import { PxPopover, PxUtils } from './components'
  * @type {Object}
  */
-module.exports = {
+export {
   WidgetHeader2,
   AppNavBar,
   AppContextSidebar,

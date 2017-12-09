@@ -4,8 +4,8 @@ import KmsCardView from './views/KmsCardView'
 import ConfigureKMSModal from './ConfigureKMSModal.js'
 import MigrateKMSModal from './MigrateKMSModal.js'
 import { Intent } from '@blueprintjs/core'
-const globalAccountId = '__GLOBAL_ACCOUNT_ID__'
 import { SecretManagementService, HashiCorpService } from 'services'
+const globalAccountId = '__GLOBAL_ACCOUNT_ID__'
 
 class KmsListPage extends React.Component {
   pageName = 'Secrets Management'

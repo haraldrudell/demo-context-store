@@ -7,9 +7,10 @@ const DEBUG = 'DEBUG'
 function log (type) {
   return function (message, obj = {}) {
     // @ts-ignore
-    if (window.Raven) { // Log to Sentry
+    const r = window.Raven
+    if (r) { // Log to Sentry
       // @ts-ignore
-      Raven.captureMessage(message, {
+      r.captureMessage(message, {
         level: type.toLowerCase(),
         extra: obj
       })

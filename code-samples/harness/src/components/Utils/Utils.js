@@ -1,3 +1,4 @@
+/* eslint no-restricted-globals: 0 */
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Transmit from 'react-setup-transmit'
@@ -116,7 +117,9 @@ export default class Utils {
     return fragmentArr.reduce((res, item) => {
       const key = Object.keys(item)[0]
       const fragmentParams = item[key]
-      res[key] = () => (__CLIENT__ ? Promise.resolve() : fragmentParams[0].apply(this, fragmentParams.slice(1)))
+      // eslint-disable-next-line no-undef
+      const c = typeof __CLIENT__ !== 'undefined' && __CLIENT__
+      res[key] = () => (c ? Promise.resolve() : fragmentParams[0].apply(this, fragmentParams.slice(1)))
       return res
     }, {})
   }
@@ -631,7 +634,7 @@ export default class Utils {
           destination[prop] = destination[prop].concat(source[prop])
         } else if (prop in destination && typeof destination[prop] === 'object') {
           // Merge Objects
-          destination[prop] = merge(destination[prop], source[prop])
+          destination[prop] = Object.assign({}, destination[prop], source[prop])
         } else {
           // Set new values
           destination[prop] = source[prop]
@@ -1366,7 +1369,9 @@ export default class Utils {
     for (const key in fragmentObj) {
       const fn = fragmentObj[key][0]
       const fnParams = fragmentObj[key].slice(1)
-      fragments[key] = () => (__CLIENT__ ? Promise.resolve() : fn.apply(this, fnParams))
+      // eslint-disable-next-line no-undef
+      const c = typeof __CLIENT__ !== 'undefined' && __CLIENT__
+      fragments[key] = () => (c ? Promise.resolve() : fn.apply(this, fnParams))
     }
     return fragments
   }
@@ -1400,7 +1405,9 @@ export default class Utils {
     const allData = {}
     const keys = fragmentObj ? Object.keys(fragmentObj) : []
 
-    if (__CLIENT__ && keys.length > 0 && !ctx.props[keys[0]]) {
+      // eslint-disable-next-line no-undef
+      const c = typeof __CLIENT__ !== 'undefined' && __CLIENT__
+      if (c && keys.length > 0 && !ctx.props[keys[0]]) {
       // if client-side & data was not injected in props by server-rendering (Transmit) => fetch data
       for (const key in fragmentObj) {
         const fn = fragmentObj[key][0]

@@ -15,6 +15,7 @@ class NewDataSinceLastTime extends React.Component {
   }
 
   fetchData = () => {
+    // eslint-disable-next-line no-undef
     if (__CLIENT__ && !this.props.data) {
       Utils.fetchFragmentsToState(fragmentArr, this)
     } else {

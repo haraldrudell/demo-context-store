@@ -8,13 +8,17 @@ import responseMessageMiddleWare from './responseMessageMiddleWare'
 import isomorphicFetch from 'isomorphic-fetch' // eslint-disable-line no-unused-vars
 
 const serviceUrl = () => {
-  if (__SERVER__) {
+      // eslint-disable-next-line no-undef
+      const s = typeof __SERVER__ !== 'undefined' && __SERVER__
+      if (s) {
     // return 'http://jsonplaceholder.typicode.com'
     const hostname = process.env.HOSTNAME || 'localhost'
     const port = process.env.PORT || 8000
     return `http://${hostname}:${port}/api`
   }
-  if (__CLIENT__) {
+  // eslint-disable-next-line no-undef
+  const c = typeof __CLIENT__ !== 'undefined' && __CLIENT__
+  if (c) {
     if (window.apiUrl) {
       return window.apiUrl
     }
@@ -86,8 +90,7 @@ endpoint.makeRequest = async function makeRequest (resourceEndpoint, options = {
   }
 }
 
-module.exports = endpoint
-
+export default endpoint
 
 
 // WEBPACK FOOTER //

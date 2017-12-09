@@ -2,14 +2,14 @@ import pubsub from 'pubsub-js'
 import Utils from '../components/Utils/Utils'
 import Tracker from '../utils/Tracker'
 
-module.exports = config => request => {
+export default config => request => {
   function buildMessages (r, type, requestObj) {
     const logObj = {}
     logObj.request = typeof requestObj !== 'undefined' ? JSON.stringify(requestObj) : ''
 
     if (r && r.responseMessages && r.responseMessages.length > 0) {
       const messages = []
-      r.responseMessages.map(item => {
+      r.responseMessages.forEach(item => {
         messages.push(item.message)
         Tracker.log(type.toUpperCase() + ': ' + item.message, logObj)
       })

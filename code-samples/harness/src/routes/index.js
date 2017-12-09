@@ -1,6 +1,6 @@
 import * as RouteDestinations from './RouteDestinations'
 import * as RoutePaths from './RoutePaths'
-module.exports = {
+export default {
   RouteDestinations,
   RoutePaths
 }

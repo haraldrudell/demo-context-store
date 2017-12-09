@@ -1,5 +1,6 @@
 import dataService from '../apis/dataService'
 import * as Service from './Service'
+import xhr from 'xhr-async'
 export const endpoints = Service.endpointPaths({
   addEncryptKey: () => 'secrets/add-secret',
   listVariables: () => 'secrets/list-secrets',
@@ -9,7 +10,6 @@ export const endpoints = Service.endpointPaths({
   deleteFile: () => 'secrets/delete-file',
   updateFile: () => 'secrets/update-file'
 })
-import xhr from 'xhr-async'
 
 export async function saveEncryptKey ({ accountId, body }) {
   const url = endpoints.addEncryptKey({}, { accountId })

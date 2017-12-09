@@ -150,7 +150,7 @@ export default class DeploymentCardViewCard extends React.Component {
     if (execution.serviceExecutionSummaries) {
       execution.serviceExecutionSummaries.map(service => serviceNames.push(service.contextElement))
     }
-
+    const router = null // TODO 171208 no-undef
     return (
       <section className={css.sideContent}>
         {renderedInline === false && (

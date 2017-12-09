@@ -1,3 +1,4 @@
+/* eslint no-restricted-globals: 0 */
 export default class ABTest {
   static get isLocalHost () {
     return location.hostname === 'localhost'

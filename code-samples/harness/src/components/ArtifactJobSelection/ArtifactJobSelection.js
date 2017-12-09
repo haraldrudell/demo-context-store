@@ -269,6 +269,7 @@ class ArtifactJobSelection extends React.Component {
         if (res.resource) {
           this.updateFolderJobList(parentJobName, res.resource)
         } else {
+          // eslint-disable-next-line no-undef
           log('No job names available')
         }
       })

@@ -1,4 +1,4 @@
-
+/* eslint no-undef: 0 */
 export default class Tracker {
 
   static setUser (userEmail) {

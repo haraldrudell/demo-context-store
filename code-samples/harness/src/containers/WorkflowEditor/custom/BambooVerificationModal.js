@@ -166,14 +166,15 @@ export default class BambooVerificationModal extends React.Component {
     const appId = Utils.appIdFromUrl()
     const formData = Utils.clone(this.state.formData)
     return (
-      <ArtifactPlanSelection
+      <div>ArtifactPlanSelection MISSING </div>
+      /*<ArtifactPlanSelection
         planList={result}
         appIdFromUrl={appId}
         settingUuId={settingUuid}
         modifyPlanName={this.modifyPlanName.bind(this)}
         modifyPlanNameEnum={this.modifyPlanNameEnum.bind(this)}
         planName={formData.planName}
-      />
+      />*/
     )
   }
 

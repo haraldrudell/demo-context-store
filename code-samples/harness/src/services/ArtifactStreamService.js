@@ -12,6 +12,7 @@ export async function fetchAppArtifactStreams ({ accountId, appId }) {
 }
 
 export async function fetchArtifactStream ({ accountId, appId, serviceId, streamId }) {
+  const settingId = '' // TODO: error undef 171208
   const endpoint = endpoints.artifactStreams({ streamId }, { accountId, appId, settingId, serviceId })
   const { error, resource } = await dataService.makeRequest(endpoint)
   return { artifactStream: resource, error }

@@ -21,6 +21,7 @@ xhr.before(({ headers }) => {
 
 xhr.after(({ status, statusText, error }) => {
   if (status === 401) {
+    // eslint-disable-next-line no-restricted-globals
     Logger.error({ status, statusText, error, url: location.href })
     Utils.saveActiveUrl()
     window.location = '#/login'

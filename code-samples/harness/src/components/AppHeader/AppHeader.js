@@ -168,7 +168,9 @@ class AppHeader extends React.Component {
         </div>
         <WindowEventHandler handleResize={this.handleResize} />
 
-        {__DEV__ && (
+        {
+          // eslint-disable-next-line no-undef
+          __DEV__ && (
           <Link className="ui-btn left-gap __dev" to={path.toDevWiki(urlParams)}>
             Dev
           </Link>

@@ -14,7 +14,9 @@ Transmit.render(Router, { routes: routes.RouteDestinations, history: appHistory 
 /**
  * Detect whether the server-side render has been discarded due to an invalid checksum.
  */
-if (!__PRODUCTION__) {
+// eslint-disable-next-line no-undef
+const p = typeof __PRODUCTION__ !== 'undefined' && __PRODUCTION__
+if (!p) {
   if (
     !reactRoot.firstChild ||
     !reactRoot.firstChild.attributes ||
