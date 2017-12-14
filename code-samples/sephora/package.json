@@ -1,0 +1,21 @@
+{
+  "name": "sephora",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "config": "eslint config/webpack.config.js config/rollup.config.js config/styleguide.config.js && rollup --config config/rollup.config.js",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "file:../../../forks/create-react-app/packages/react-scripts"
+  }
+}
