@@ -17,7 +17,7 @@ SamplesCallToAction.prototype.shouldComponentUpdate = wrapComponentRenderModule.
 const store = require('Store');
 const watch = require('redux-watch');
 const fetchSamples = require('actions/SampleActions').fetchSamples;
-const showSampleModal = require('Actions').showSampleModal;
+const showSampleModal = require('Actions').showSampleModal;
 const processEvent = require('analytics/processEvent');
 const anaConsts = require('analytics/constants');
 
@@ -26,13 +26,13 @@ SamplesCallToAction.prototype.ctrlr = function () {
 
     store.dispatch(fetchSamples());
 
-    store.subscribe(watchSamples((newSamples) => {
-        this.setState({
+    store.subscribe(watchSamples((newSamples) => {
+        this.setState({
             samplesList: newSamples.samples,
             allowedQtyPerOrder: newSamples.allowedQtyPerOrder,
             samplesMessage: newSamples.samplesPageMessage
-        });
-    }));
+        });
+    }));
 
     store.setAndWatch('basket', null, (value) => {
         this.setState({

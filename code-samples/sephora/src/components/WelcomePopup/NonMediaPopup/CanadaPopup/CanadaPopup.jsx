@@ -133,7 +133,7 @@ CanadaPopup.prototype.render = function () {
                             letterSpacing={1}
                             marginTop={space[5]}
                             marginBottom={space[3]}>
-                            Bienvenue Ã 
+                            Bienvenue Ã 
                             <br />
                             <img
                                 src='/img/ufe/hd-sephora-ca.png'

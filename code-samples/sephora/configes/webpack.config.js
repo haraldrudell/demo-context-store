@@ -20,7 +20,7 @@ const paths = {
 }
 Object.assign(paths, {
   appHtml: path.resolve(path.join('public', 'index.html')),
-  appIndexJs: path.resolve(paths.appSrc, 'client.js'),
+  appIndexJs: path.resolve(paths.appSrc, 'app.js'),
   appNodeModules: path.resolve('node_modules'),
   appPackageJson: path.resolve('package.json'),
 })
@@ -72,11 +72,14 @@ export default { // from react-scripts@1.0.17
   resolve: {
     modules: [
       path.resolve('src'),
+      path.resolve(path.join('src', 'actions')),
+      path.resolve(path.join('src', 'store')),
+      path.resolve(path.join('src', 'utils')),
       path.resolve('module_override'),
       'node_modules',
       paths.appNodeModules,
     ],
-    extensions: ['.js', '.json', '.css'],
+    extensions: ['.jsx', '.js', '.json', '.css'],
     plugins: [
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
     ],
@@ -157,6 +160,9 @@ export default { // from react-scripts@1.0.17
         ],
       },
     ],
+  },
+  externals: {
+    Braintree: 'Braintree',
   },
   plugins: [
     new InterpolateHtmlPlugin(env.raw),

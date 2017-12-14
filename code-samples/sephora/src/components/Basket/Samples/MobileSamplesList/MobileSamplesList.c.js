@@ -17,7 +17,7 @@ MobileSamplesList.prototype.shouldComponentUpdate = wrapComponentRenderModule.sh
 const store = require('store/Store');
 const watch = require('redux-watch');
 const basketUtils = require('utils/Basket');
-const showSampleModal = require('Actions').showSampleModal;
+const showSampleModal = require('Actions').showSampleModal;
 
 MobileSamplesList.prototype.ctrlr = function () {
     store.setAndWatch('basket', null, (value) => {
@@ -29,13 +29,13 @@ MobileSamplesList.prototype.ctrlr = function () {
         });
     });
 
-    store.setAndWatch('samples', null, (value) => {
+    store.setAndWatch('samples', null, (value) => {
         const samplesObj = value.samples;
         this.setState({
             samplesList: samplesObj.samples,
             samplesMessage: samplesObj.samplesPageMessage
-        });
-    });
+        });
+    });
 
 };
 

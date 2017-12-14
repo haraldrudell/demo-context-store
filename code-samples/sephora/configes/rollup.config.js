@@ -4,8 +4,8 @@ All rights reserved.
 */
 import path from 'path'
 
-const inputDirectory = 'config'
-const outputDirectory = 'config5'
+const inputDirectory = 'configes'
+const outputDirectory = 'config'
 const files = ['webpack.config.js', 'styleguide.config.js']
 
 

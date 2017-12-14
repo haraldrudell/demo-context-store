@@ -15,7 +15,7 @@ if (!Sephora.isRootRender) {
         return SampleModalClass;
     }
 }
-const { space } = require('style');
+const { space } = require('style');
 const Modal = require('components/Modal/Modal');
 const ButtonPrimary = require('components/Button/ButtonPrimary');
 const Link = require('components/Link/Link');

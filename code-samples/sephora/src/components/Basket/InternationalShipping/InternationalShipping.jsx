@@ -21,8 +21,8 @@ const Link = require('components/Link/Link');
 const IconGlobe = require('components/Icon/IconGlobe');
 const Locale = require('utils/LanguageLocale.js');
 
-let InternationalShipping = function () {
-    this.state = {
+let InternationalShipping = function () {
+    this.state = {
         countryCode: null
     };
 };
