@@ -10,7 +10,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "surge build",
+    "deploy": "surge build tan.surge.sh",
     "test": "react-scripts test --env=jsdom",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build",
