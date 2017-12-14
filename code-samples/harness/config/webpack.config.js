@@ -76,12 +76,6 @@ export default { // from react-scripts@1.0.17
       'node_modules',
       paths.appNodeModules,
     ],
-    alias: {
-      //'components': path.resolve(path.join('src', 'components')),
-      //'containers': path.resolve(path.join('src', 'containers')),
-      //'services': path.resolve(path.join('src', 'services')),
-      //'styles': path.resolve(path.join('src', 'styles')),
-    },
     extensions: ['.js', '.json', '.css'],
     plugins: [
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),

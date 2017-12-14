@@ -8,7 +8,9 @@ const inputDirectory = 'config'
 const outputDirectory = 'config5'
 const files = ['webpack.config.js', 'styleguide.config.js']
 
-export default files.map(filename => ({
+
+
+export default files.map((filename, index) => ({
     input: path.join(inputDirectory, filename),
     output: {
       file: path.join(outputDirectory, filename),
@@ -26,5 +28,5 @@ export default files.map(filename => ({
 
       // Node.js
       'path',
-    ]
+    ]//.concat(index !== 1 ? [] : ['./webpack.config.js'])
   }))
