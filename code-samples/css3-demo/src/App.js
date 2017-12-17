@@ -9,9 +9,11 @@ import Theme from './Theme'
 
 import Navigation from './Navigation'
 import Intro from './Intro'
+import Tweet from './Tweet'
 import /*styles from*/ './App.css'
 
-const tabClasses = [Intro, Position, Theme]
+const tabClasses = [Intro, Position, Theme, Tweet]
+const startTab = tabClasses.indexOf(Tweet)
 const m = 'App'
 
 export default class App extends Component {
@@ -19,7 +21,7 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     const {tab} = Object(props)
-    const textIndex = tab >= 0 ? Number(tab) : 1
+    const textIndex = tab >= 0 ? Number(tab) : startTab
     this.state = {
       activeTab: this.texts[textIndex]
     }
