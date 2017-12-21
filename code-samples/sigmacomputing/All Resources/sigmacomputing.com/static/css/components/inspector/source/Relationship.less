@@ -1,0 +1,34 @@
+.relationship {
+  height: 2rem;
+  border-top: 1px solid #cbd6dc;
+  padding: 0 1rem;
+  background-color: white;
+}
+.relationship:hover .buttons {
+  opacity: 1;
+}
+.tableName {
+  min-width: 1px;
+  border-radius: 2px;
+  background-color: transparent;
+  padding: 2px;
+  border: solid 2px transparent;
+  -webkit-transition: border 500ms ease-out;
+  -o-transition: border 500ms ease-out;
+  transition: border 500ms ease-out;
+  margin-left: -4px;
+}
+.tableName:hover:not(:disabled) {
+  border: solid 2px #4bb9f4;
+}
+.tableName:focus {
+  border: solid 2px #4bb9f4;
+}
+.buttons {
+  opacity: 0;
+}
+
+
+
+// WEBPACK FOOTER //
+// ./src/components/inspector/source/Relationship.less

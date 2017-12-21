@@ -1,0 +1,122 @@
+.container {
+  outline: none;
+}
+.header {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+  background-color: #f9fafa;
+  border-left: 1px solid transparent;
+  border-right: 1px solid #cbd6dc;
+  border-bottom: 1px solid #cbd6dc;
+  -webkit-box-shadow: inset 1px 1px 0 0 #ffffff;
+          box-shadow: inset 1px 1px 0 0 #ffffff;
+}
+.header:hover .menuToggle {
+  opacity: 1;
+  cursor: pointer;
+}
+.isLevelCollapsed {
+  opacity: 0.5;
+}
+.scrollHeader {
+  background-color: #f9fafa;
+  border-bottom: 1px solid #cbd6dc;
+  opacity: 0;
+}
+.showRightBorder {
+  opacity: 1;
+}
+.isLastInLevel {
+  border-right: 1px solid #90a2a7;
+}
+.isSelected {
+  background-color: #038cd3;
+  border-left: 1px solid #038cd3;
+  border-right: 1px solid #038cd3;
+  border-bottom: 1px solid #038cd3;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  color: white;
+}
+.label {
+  text-align: center;
+}
+.label.isRenaming {
+  text-align: left;
+}
+.labelContainer {
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+.input {
+  margin: 0;
+  text-align: center;
+}
+.input.isRenaming {
+  text-align: left;
+}
+.menuToggle {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  padding: 0 0.25rem;
+  font-size: 10px;
+  opacity: 0;
+  background-color: inherit;
+}
+.collapser {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  padding: 0 0.25rem;
+  cursor: pointer;
+  -webkit-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+          transform: rotate(0deg);
+  -webkit-transition: -webkit-transform 200ms linear;
+  transition: -webkit-transform 200ms linear;
+  -o-transition: transform 200ms linear;
+  transition: transform 200ms linear;
+  transition: transform 200ms linear, -webkit-transform 200ms linear;
+}
+.collapser[data-is-collapsed='true'] {
+  -webkit-transform: rotate(-90deg);
+      -ms-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+}
+.previewColumn {
+  background-color: white;
+  border: 2px solid #90a2a7;
+  -webkit-box-shadow: 1px 1px 1px 1px #cbd6dc;
+          box-shadow: 1px 1px 1px 1px #cbd6dc;
+  border-radius: 4px;
+  opacity: 0.7;
+}
+.previewColumn .keyIcon {
+  opacity: 0;
+}
+
+
+
+// WEBPACK FOOTER //
+// ./src/components/table/Header.less

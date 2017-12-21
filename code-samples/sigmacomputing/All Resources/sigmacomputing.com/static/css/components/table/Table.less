@@ -1,0 +1,30 @@
+.sizer {
+  position: relative;
+  -ms-flex: auto;
+      flex: auto;
+}
+.container {
+  display: inline-block;
+  position: relative;
+}
+.border,
+.rightBorder {
+  position: absolute;
+  background-color: #cbd6dc;
+  z-index: 10;
+}
+.rightBorder {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  opacity: 0;
+}
+.showRightBorder {
+  opacity: 1;
+}
+
+
+
+// WEBPACK FOOTER //
+// ./src/components/table/Table.less

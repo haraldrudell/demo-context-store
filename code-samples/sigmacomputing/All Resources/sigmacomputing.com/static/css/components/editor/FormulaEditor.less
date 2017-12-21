@@ -1,0 +1,63 @@
+.editor {
+  height: 32px;
+  line-height: 32px;
+  overflow: hidden;
+  border: 1px solid #cbd6dc;
+  border-radius: 4px;
+  padding: 0 8px;
+  position: relative;
+  background-color: white;
+  cursor: text;
+}
+.editor.isFocused {
+  border: 1px solid #4bb9f4;
+  -webkit-box-shadow: inset 0 0 1px 0 #4bb9f4;
+          box-shadow: inset 0 0 1px 0 #4bb9f4;
+}
+.editor.isFocused.formulaError {
+  -webkit-box-shadow: inset 0 0 1px 0 #f9a746;
+          box-shadow: inset 0 0 1px 0 #f9a746;
+}
+.editor.isFocused.flash {
+  -webkit-box-shadow: 0 0 5px 0 #90a2a7;
+          box-shadow: 0 0 5px 0 #90a2a7;
+  -webkit-transition: -webkit-box-shadow 1000ms ease-in-out;
+  transition: -webkit-box-shadow 1000ms ease-in-out;
+  -o-transition: box-shadow 1000ms ease-in-out;
+  transition: box-shadow 1000ms ease-in-out;
+  transition: box-shadow 1000ms ease-in-out, -webkit-box-shadow 1000ms ease-in-out;
+}
+.editor.formulaError {
+  border: 1px solid #f9a746;
+  padding: 0 33px 0 8px;
+}
+.editor.disabled {
+  background-color: inherit;
+  cursor: inherit;
+}
+.warning {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  color: #f9a746;
+}
+.completion-container {
+  position: absolute;
+  z-index: 10;
+  margin-top: -2px;
+  margin-left: 4px;
+  width: 490px;
+  background-color: #f9fafa;
+  -webkit-box-shadow: 0 4px 16px 0 #cbd6dc;
+          box-shadow: 0 4px 16px 0 #cbd6dc;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #cbd6dc;
+  border-radius: 0 0 4px 4px;
+  cursor: default;
+}
+
+
+
+// WEBPACK FOOTER //
+// ./src/components/editor/FormulaEditor.less
