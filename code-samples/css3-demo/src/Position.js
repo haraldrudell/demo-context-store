@@ -15,21 +15,25 @@ export default class Position extends Component {
         <div><div style={{position: 'absolute', top: 0}}>3 absolute</div></div>
         <div style={{position: 'relative'}}>relative<div style={{position: 'absolute', bottom: 0}}>4 absolute</div></div>
       </div>
-      <ul>Position can be set to:
-        <li>static (default): in order of the document flow</li>
-        <li>absolute: relative to first non-static ancestor element</li>
-        <li>fixed: relative to window</li>
-        <li>relative: relative to its static position</li>
-        <li>sticky: relative to scroll position, ie. relative or fixed</li>
-        <li>initial: the default value</li>
-        <li>inherit: the calue of the parent element</li>
-      </ul>
-      <ol>
-        <li>static: below or to the right of previous element, or upper left of parent if first child</li>
-        <li>relative with top: 10 and left: 10: top, left, bottom, right are effective</li>
-        <li>absolute with top: 0: at top of page. Note that the absolute div is sized to content</li>
-        <li>absolute with parent position: relative: top, bottom, left, right are calculated relative to the non-static parent: here bottom: 0.</li>
-      </ol>
+      <div className={styles.text}>
+        <p><strong>Position</strong> can be set to:</p>
+        <dl>
+          <dd>static (default)</dd><dt>in order of the document flow</dt>
+          <dd>absolute</dd><dt>relative to first non-static ancestor element</dt>
+          <dd>fixed</dd><dt>relative to window</dt>
+          <dd>relative</dd><dt>relative to its static position</dt>
+          <dd>sticky</dd><dt>relative to scroll position, ie. relative or fixed</dt>
+          <dd>initial</dd><dt>the default value</dt>
+          <dd>inherit</dd><dt>the calue of the parent element</dt>
+        </dl>
+        <p><strong>Box examples</strong> above:</p>
+        <ol>
+          <li>Child element with <strong>position: static</strong><div>The element is positioned below or to the right of previous element, or upper left of its parent if first child</div></li>
+          <li>Child element with <strong>position: relative</strong>, top: 10 and left: 10<div>Top, left, bottom, right are effective</div></li>
+          <li>Child element with <strong>position: absolute</strong>, top: 0<div>Positioned at top of page. Note that the absolute div is sized to content</div></li>
+          <li>Child element with <strong>position: absolute</strong> and parent position: relative<div>Top, bottom, left, right are calculated relative to the non-static parent: here bottom: 0.</div></li>
+        </ol>
+      </div>
     </Fragment>
   }
 }

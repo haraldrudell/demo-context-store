@@ -34,8 +34,8 @@ export default class Theme extends Component {
     const activeTheme = themer.getActiveTheme()
     const activeThemeName = themes[activeTheme]
     return <Fragment>
-      <button onClick={this.reset}>Try Again</button>
-      <div className={styles.p}>
+      <button className={styles.button} onClick={this.reset}>Try Again</button>
+      <div className={styles.textArea}>
         <p>The text here is themed.</p>
         <p>The page starts out with a light theme, black text on white background.</p>
         <p>After 1 second, a cascading style sheets class is replaced on the body element.

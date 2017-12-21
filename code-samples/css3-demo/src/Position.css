@@ -6,6 +6,7 @@ All rights reserved.
   display: flex;
   flex-wrap: wrap;
   padding: 5px;
+  position: relative;
 }
 
 :local .parent > div {
@@ -18,4 +19,49 @@ All rights reserved.
 :local .parent > div > div {
   height: 50px;
   border: 1px solid green;
+}
+
+:local .text {
+  width: 40em;
+  margin: 10px;
+  padding: 14px;
+  background: #f3e0cd;
+  border: 1px #c0c0c0 solid;
+  border-radius: 8px;
+}
+
+:local .text p {
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+:local .text dl {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+:local .text dd {
+  --dd-margin: 16;
+  --dd-width: 72;
+  display: list-item;
+  margin-left: calc(1px * var(--dd-margin));
+  width: calc(1px * var(--dd-width));
+}
+
+:local .text dt {
+  --dd-diff: calc(16 + 72);
+  width: calc(100% - 1px * var(--dd-diff));
+}
+
+:local .text ol {
+  margin-top: 8px;
+}
+
+:local .text li {
+  margin-bottom: 6px;
+}
+
+:local .text div {
+  margin-left: 16px;
 }
