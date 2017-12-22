@@ -10,10 +10,12 @@ import Theme from './Theme'
 import Navigation from './Navigation'
 import Intro from './Intro'
 import Tweet from './Tweet'
+import Form from './Form'
+import Form1 from './Form1'
 import /*styles from*/ './App.css'
 
-const tabClasses = [Intro, Position, Theme, Tweet]
-const startTab = tabClasses.indexOf(Tweet)
+const tabClasses = [Intro, Position, Theme, Tweet, Form, Form1]
+const startTab = tabClasses.indexOf(Form1)
 const m = 'App'
 
 export default class App extends Component {

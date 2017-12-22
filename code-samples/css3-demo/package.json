@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "class-bind": "^0.2.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.0.17"
+    "react-scripts": "file:../react-scripts"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -17,6 +18,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "react-styleguidist": "^6.0.33",
     "surge": "^0.19.0"
   }
