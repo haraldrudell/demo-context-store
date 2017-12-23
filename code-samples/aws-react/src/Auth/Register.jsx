@@ -20,11 +20,11 @@ const m = 'Register'
 export default class Register extends Component {
 
     state = {
-        username: '',
-        password: '',
-        passwordMatch: '',
-        email: '',
-        phone: '',
+        username: 'joe',
+        password: 'A!cd1234',
+        passwordMatch: 'A!cd1234',
+        email: 'reactfa@gmail.com',
+        phone: '+11234567890',
         code: '',
         enterAuth: false,
         authSuccess: false,
@@ -173,7 +173,7 @@ export default class Register extends Component {
         });
     }
 
-    render() {
+    render() {     console.log('joe', this.state.username)
         const { username,
                 password,
                 passwordMatch,
@@ -203,7 +203,7 @@ export default class Register extends Component {
                                 <form>
                                     <Row>
                                         <Form.Field>
-                                            <Input type="text" icon="user plus" iconPosition="left" placeholder="Username" style={{marginRight: 4 + 'em'}}
+                                            <Input type="text" value={username} icon="user plus" iconPosition="left" placeholder="Username" style={{marginRight: 4 + 'em'}}
                                             onChange = {(event) => this.setState({username:event.target.value, invalidUserNameMessage: '', invalidFormDataMessage: ''})}/>
                                             { invalidUserNameMessage && <Label basic color="red" pointing="left" >{ invalidUserNameMessage }</Label> }
                                             { username && !this.checkUsernameMatch(username) && <Label basic color="red" pointing="left">Invalid username, must conatin atleast 1 character</Label> }
@@ -211,20 +211,20 @@ export default class Register extends Component {
                                     </Row>
                                     <Row>
                                         <Form.Field>
-                                            <Input type="password" icon="hashtag" iconPosition="left" placeholder="Password" style={{marginRight: 4 + 'em'}}
+                                            <Input type="password" value={password} icon="hashtag" iconPosition="left" placeholder="Password" style={{marginRight: 4 + 'em'}}
                                             onChange = {(event) => this.setState({password:event.target.value, invalidPasswordMessage: '', invalidFormDataMessage: ''})}/>
                                             { invalidPasswordMessage && <Label basic color="red" pointing="left">{ invalidPasswordMessage }</Label> }
                                         </Form.Field>
                                     </Row>
                                     <Row>
                                         <Form.Field>
-                                            <Input type="password" icon="hashtag" iconPosition="left" placeholder="Re-enter Password" style={{marginRight: 4 + 'em'}} onChange={this.handlePasswordMatchChange}/>
+                                            <Input type="password" value={passwordMatch} icon="hashtag" iconPosition="left" placeholder="Re-enter Password" style={{marginRight: 4 + 'em'}} onChange={this.handlePasswordMatchChange}/>
                                             { invalidPasswordMessage && <Label basic color="red" pointing="left">{ invalidPasswordMessage }</Label> }
                                         </Form.Field>
                                     </Row>
                                     <Row>
                                         <Form.Field>
-                                            <Input type="email" icon="envelope" iconPosition="left" placeholder="Email" style={{marginRight: 4 + 'em'}}
+                                            <Input type="email" value={email} icon="envelope" iconPosition="left" placeholder="Email" style={{marginRight: 4 + 'em'}}
                                             onChange = {(event) => this.setState({email:event.target.value, invalidEmailMessage: '', invalidFormDataMessage: ''})}/>
                                             { invalidEmailMessage && <Label basic color="red" pointing="left">{ invalidEmailMessage }</Label> }
                                             { email && !this.checkEmailPattern(email) && <Label basic color="red" pointing="left">Invalid email format</Label> }
@@ -232,7 +232,7 @@ export default class Register extends Component {
                                     </Row>
                                     <Row>
                                         <Form.Field>
-                                            <Input type="tel" icon="phone" iconPosition="left" placeholder="Phone" style={{marginRight: 4 + 'em'}}
+                                            <Input type="tel" value={phone} icon="phone" iconPosition="left" placeholder="Phone" style={{marginRight: 4 + 'em'}}
                                             onChange = {(event) => this.setState({phone:event.target.value, invalidPhoneMessage: '', invalidFormDataMessage: ''})}/>
                                             { invalidPhoneMessage && <Label basic color="red" pointing="left">{ invalidPhoneMessage }</Label> }
                                             { phone && !this.checkPhonePattern(phone) && <Label basic color="red" pointing="left">Valid format: +11234567890</Label> }
