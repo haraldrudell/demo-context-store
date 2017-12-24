@@ -1,0 +1,24 @@
+{
+  "name": "aws-lambda-nodejs-starter",
+  "version": "1.0.0",
+  "description": "AWS Lambda",
+  "scripts": {
+    "build": "nmrun babel-node configes/runbuild j",
+    "deploy": "nmrun babel-node configes/runbuild c",
+    "create-bucket": "nmrun babel-node configes b",
+    "create-stack": "nmrun babel-node configes",
+    "delete-stack": "nmrun babel-node configes d",
+    "delete-bucket": "nmrun babel-node configes b d"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.175.0",
+    "classrunner": "0.0.1",
+    "fs-extra": "^5.0.0",
+    "nmrun": "0.0.1",
+    "rollupconfig": "0.0.1",
+    "spawn-async": "0.0.1"
+  }
+}

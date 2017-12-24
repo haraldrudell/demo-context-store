@@ -1,0 +1,17 @@
+Description: >
+  AWS Lambda Nodejs Starter project.
+  To add a new function define the function role and the function itself following
+  the template of FooFunction.
+
+Parameters:
+
+  FooFunctionVersion:
+    Description: "Version of the lambda function required to update existing stack"
+    Type: String
+    Default: "latest"
+
+  S3BucketName:
+    Description: "S3BucketName"
+    Type: "String"
+
+Resources:

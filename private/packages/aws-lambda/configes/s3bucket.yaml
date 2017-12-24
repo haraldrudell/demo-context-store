@@ -1,0 +1,15 @@
+Description: >
+  S3 bucket for AWS Lambda Nodejs Starter project.
+
+Parameters:
+
+  S3BucketName:
+    Description: "S3BucketName"
+    Type: "String"
+
+Resources:
+  FooFunctionBucket:
+    Type: "AWS::S3::Bucket"
+    Properties: 
+      AccessControl: Private
+      BucketName: !Ref S3BucketName
