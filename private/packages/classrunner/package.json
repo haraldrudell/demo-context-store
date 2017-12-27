@@ -1,17 +1,17 @@
 {
   "name": "classrunner",
-  "main": "lib/classrunner-cjs",
   "version": "0.0.1",
   "description": "Launch a class optionally with async run method",
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
   "engines": {
-    "node": ">=8"
+    "node": ">=6"
   },
+  "main": "lib/classrunner-cjs",
   "module": "lib/classRunner",
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
-    "clean": "./node_modules/.bin/clean",
+    "build": "nmrun rollup --config node:rollupconfig",
+    "clean": "clean",
     "test": "echo \"170920 classrunner test nimp\""
   },
   "rollup": {
@@ -38,6 +38,7 @@
   "private": true,
   "devDependencies": {
     "rollupconfig": "0.0.1",
-    "clean": "0.0.1"
+    "clean": "0.0.1",
+    "nmrun": "0.0.1"
   }
 }
