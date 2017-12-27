@@ -94,7 +94,7 @@ function getConfig({input, output, external, targets, shebang, clean, print, nod
       */
       commonjs(),
       json(), // required for import of .json files
-      babel(rollupBabelOptions = {
+      babel(rollupBabelOptions = Object.assign({
         // rollup-plugin-babel https://www.npmjs.com/package/rollup-plugin-babel
         babelrc: false, // do not process package.json or .babelrc files, rollup has the canonical Babel configuraiton
         // bundle in Babel external helpers https://github.com/rollup/rollup-plugin-babel#usage
@@ -108,7 +108,7 @@ function getConfig({input, output, external, targets, shebang, clean, print, nod
           'transform-async-generator-functions', // for await… stage-3 170919
         ].concat(!latestNode ? ['transform-runtime'] : [])
           .concat(print ? [printBabelFilenames] : []),
-      }),
+      }, includeExclude)), // only process files from the project
     ].concat(shebang ? [shebangPlugin(), chmod()] : [])
       .concat(clean ? cleanPlugin(clean) : [])
       .concat(print ?
