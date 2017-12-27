@@ -4,11 +4,7 @@ All rights reserved.
 */
 import StackManager from './StackManager'
 
-const m = 'StackCreator'
-
-export default class StackCreator extends StackManager {
-  typicalCreateSeconds = 40
-
+export default class StackDeleter extends StackManager {
   async run() {
     const {stackName: stack} = this
     console.log(`Checking status of stack: ${stack}`)
@@ -16,28 +12,20 @@ export default class StackCreator extends StackManager {
     console.log(`${stack}: ${stackStatus}`)
     switch (stackStatus) {
       case 'ROLLBACK_IN_PROGRESS':
+      case 'CREATE_IN_PROGRESS':
         console.log(`waiting for: ${stack} ${new Date().toISOString()}…`)
-        await this.waitWhile('ROLLBACK_IN_PROGRESS')
+        await this.waitWhile(stackStatus)
       case 'ROLLBACK_COMPLETE':
+      case 'CREATE_COMPLETE':
         console.log(`Initiating delete of ${stack}…`)
         await this.deleteStack()
       case 'DELETE_IN_PROGRESS':
         console.log(`waiting for: ${stack} ${new Date().toISOString()}…`)
         await this.waitWhile('DELETE_IN_PROGRESS')
-      case 'DELETE_COMPLETE':
-      case null: // the tak does not exist at all
-        console.log(`Initiating create of ${stack}…`)
-        const stackId = await this.createStack()
-        console.log(`stack id: ${stackId}`)
-      case 'CREATE_IN_PROGRESS':
-        const t0 = Date.now()
-        console.log(`waiting for: ${stack} [${this.typicalCreateSeconds} s] ${new Date(t0).toISOString()}`)
-        await this.waitWhile('CREATE_IN_PROGRESS')
-        const duration = (Date.now() - t0) / 1e3
-        console.log(`Done in ${duration.toFixed(1)} s! verifying…`)
-        const newState = await this.verifyState('CREATE_COMPLETE')
+        const newState = await this.verifyState('DELETE_COMPLETE')
         console.log(`${stack}: ${newState}`)
-      case 'CREATE_COMPLETE':
+      case 'DELETE_COMPLETE':
+      case null: // the stack does not exist at all
         break
       default:
         throw new Error(`Unknown stack state for ${stack}: ${stackStatus}`)

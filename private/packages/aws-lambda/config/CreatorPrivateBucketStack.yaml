@@ -1,5 +1,5 @@
 Description: >
-  S3 bucket for AWS Lambda Nodejs Starter project.
+  Amazon Cloud Creator Private S3 Bucket
 
 Parameters:
 
@@ -8,8 +8,8 @@ Parameters:
     Type: "String"
 
 Resources:
-  FooFunctionBucket:
+  CreatorPrivateBucket:
     Type: "AWS::S3::Bucket"
-    Properties: 
+    Properties:
       AccessControl: Private
       BucketName: !Ref S3BucketName

@@ -1,14 +1,14 @@
 {
-  "name": "aws-lambda-nodejs-starter",
+  "name": "amazon-cloud-creator",
   "version": "1.0.0",
-  "description": "AWS Lambda",
+  "description": "Amazon Cloud Creator",
   "scripts": {
-    "build": "nmrun babel-node configes/runbuild j",
-    "deploy": "nmrun babel-node configes/runbuild c",
-    "create-bucket": "nmrun babel-node configes b",
-    "create-stack": "nmrun babel-node configes",
-    "delete-stack": "nmrun babel-node configes d",
-    "delete-bucket": "nmrun babel-node configes b d"
+    "build": "nmrun babel-node configes build",
+    "deploy": "nmrun babel-node configes deploy",
+    "create-bucket": "nmrun babel-node configes createBucket",
+    "create-stack": "nmrun babel-node configes createStack",
+    "delete-stack": "nmrun babel-node configes deleteStack",
+    "delete-bucket": "nmrun babel-node configes deleteBucket"
   },
   "keywords": [],
   "author": "",

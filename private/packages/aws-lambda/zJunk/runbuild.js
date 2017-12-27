@@ -11,7 +11,7 @@ async function loadAllOptions() {
   const options = {}
   const lastword = process.argv[process.argv.length - 1]
   const otherword = process.argv[process.argv.length - 2]
-  if (lastword === 'j' || otherword ==='j') options.doBuild = true
-  if (lastword === 'c') options.doDeploy = true
+  if (lastword === 'build' || otherword ==='build') options.doBuild = true
+  if (lastword === 'deploy') options.doDeploy = true
   return options
 }

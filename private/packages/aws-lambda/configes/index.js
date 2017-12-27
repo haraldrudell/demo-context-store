@@ -2,21 +2,40 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import StackCreator from './StackCreator'
+import Executor from './Executor'
+
 import classRunner from 'classrunner'
 
-classRunner({construct: StackCreator, options: loadAllOptions})
+import path from 'path'
 
-async function loadAllOptions() {
-  const options = {}
-  const lastword = process.argv[process.argv.length - 1]
-  const otherword = process.argv[process.argv.length - 2]
-  if (lastword === 'd') options.doDelete = true
-  if (lastword === 'b' || otherword ==='b') {
-    Object.assign(options,  {
-      stackName: 'aws-lambda-starter-bucket',
-      filename: path.join(__dirname, 's3bucket.yaml')
-    })
+const mapCommandToOption = {
+  build: 'build',
+  deploy: 'deploy',
+  createBucket: 'createBucket',
+  deleteBucket: 'deleteBucket',
+  createStack: 'createStack',
+  deleteStack: 'deleteStack',
+}
+const m = 'config/index.js'
+
+classRunner(getOptions)
+
+async function getOptions() {
+  const executorOptions = {}
+  const classOptions = {
+    construct: Executor,
+    options: executorOptions,
+    debug: false,
   }
-  return options
+
+  // package.json scripts build: nmrun babel-node configes/runbuild build
+  // process.argv: node …configes build
+  const args = process.argv.slice(2)
+  for (let arg of args) {
+    const option = mapCommandToOption[arg]
+    if (!option) throw new Error(`${m} unknown command: '${arg}'`)
+    executorOptions[option] = true
+  }
+
+  return classOptions
 }
