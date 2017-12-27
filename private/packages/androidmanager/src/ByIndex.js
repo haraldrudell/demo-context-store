@@ -3,62 +3,51 @@
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
 export default class ByIndex {
-  nextIndex = 0
-  map = {}
-  heldMap = {}
+  indexToOutput = 0
+  submitCount = 0
+  fileMap = {}
+  directoryMap = {}
 
-  constructor({output}) {
-    this.promise = new Promise(resolve => this._resolve = resolve)
-    Object.assign(this, {output})
+  constructor({output, completeCount}) {
+    Object.assign(this, {output, completeCount})
   }
 
-  submit(value, index, hold) {
-    const {map, heldMap, output} = this
+  submit(value, index, isDirectory) {
+    const {fileMap, directoryMap, output, indexToOutput} = this
 
-    if (!hold) {
-      if (output && index === this.nextIndex) {
-        this.invokeOutput(value)
-        this.nextIndex++
+    this.submitCount++
+    if (!isDirectory) {
+      if (output && index === indexToOutput) {
+        output(value)
+        this.indexToOutput++
         this.flush()
-      } else map[index] = value
-    } else heldMap[index] = value
-  }
-
-  setAllSubmitted() {
-    this.done = true
-    this.checkComplete()
-  }
-
-  flush() {
-    const {map, heldMap} = this
-    for (;;) {
-      const i = this.nextIndex
-      const v = map[i]
-      if (v) {
-        delete map[i]
-        this.invokeOutput(v)
-      } else if (!heldMap[i]) break
-      this.nextIndex++
-    }
-    this.checkComplete()
+      } else fileMap[index] = value
+    } else directoryMap[index] = value
+    return this.isDone()
   }
 
   setOutput(fn) {
     this.output = fn
-  }
-
-  async invokeOutput(value) {
-    const {output, useIgnore, ignoreValue} = this
-    if (!useIgnore || value !== ignoreValue) output(value)
-  }
-
-  async checkComplete() {
-    const {done, map, _resolve} = this
-    done && !Object.keys(map).length && _resolve()
+    flush()
   }
 
   getHeld() {
-    const {heldMap} = this
-    return Object.keys(heldMap).sort().map(k => heldMap(k))
+    const {directoryMap} = this
+    return Object.keys(directoryMap).sort().map(key => directoryMap[key])
+  }
+
+  isDone = () => this.output && this.submitCount === this.completeCount
+
+  flush() {
+    const {fileMap, directoryMap, output} = this
+    for (;;) {
+      const i = this.indexToOutput
+      const v = fileMap[i]
+      if (v) {
+        delete fileMap[i]
+        output(v)
+      } else if (!directoryMap[i]) break
+      this.indexToOutput++
+    }
   }
 }

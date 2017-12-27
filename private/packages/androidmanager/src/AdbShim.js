@@ -10,6 +10,7 @@ const m = 'AdbShim'
 
 export default class AdbShim {
   static sharedClient
+  marker = 'yes'
 
   static getClient(shared) {
     let result = shared && AdbShim.sharedClient
@@ -56,7 +57,12 @@ export default class AdbShim {
   }
 
   getLines(text) {
-    const lines = String(text).split('\n')
+    /*
+    The final return and newline have been removed
+    internal return newline remain
+    if text is empty string, an empty array should be returned
+    */
+    const lines = text ? String(text).split('\n') : []
     for (let [ix, line] of lines.entries()) if (line.endsWith('\r')) lines[ix] = line.slice(0, -1)
     return lines
   }
@@ -167,10 +173,19 @@ export default class AdbShim {
   }
 
   async ls(aPath, root) {
-    const marker = 'yes'
-    const ls = this.prependRoot(`ls -1 \\"${aPath}\\"`, root)
-    const cmd = 'A="$(' + ls + ')" && echo "yes$A"'
+    const cmd = this.getLsCmd(aPath, root)
     const text = await this.shell(cmd)
+    return this.getLsResult(text, cmd)
+  }
+
+  getLsCmd(aPath, root) {
+    const {marker} = this
+    const ls = this.prependRoot(`ls -1 \\"${aPath}\\"`, root)
+    return 'A="$(' + ls + ')" && echo "' + marker + '$A"'
+  }
+
+  getLsResult(text, cmd) {
+    const {marker} = this
     if (!text.startsWith(marker)) throw new Error(`${m}: ls failed: command: ${cmd} output: '${text}'`)
     return this.getLines(text.substring(marker.length))
   }
@@ -182,7 +197,27 @@ export default class AdbShim {
   }
 
   async stat(aPath, root, falseIfMissing) {
-    const cmd = this.prependRoot(`stat ${aPath}`, root)
+    const cmds = this.getStatCmds(aPath, root)
+    const ms = cmds.map(cmd => `${m}: stat failed: '${cmd}'`)
+    const texts = await Promise.all(cmds.map(c => this.shell(cmd)))
+    return this.getStatResult(texts, ms, falseIfMissing)
+  }
+
+  getStatCmds(aPath, root) {
+    return [
+      this.prependRoot(`stat "${aPath}"`, root),
+      this.prependRoot(`stat -c %X,%Y,%Z "${aPath}"`, root),
+    ]
+  }
+
+  getStatResult(texts, ms, falseIfMissing) {
+    const {perms, user, group, nsList} = this.stat1Parser(texts[0], falseIfMissing, ms[0])
+    let z
+    const [access, modify, change] = z = this.stat2Parser(texts[1], nsList, ms[1])
+    return {perms, user, group, access, modify, change}
+  }
+
+  stat1Parser(text, falseIfMissing, m) {
     /*
       File: `/'
       Size: 1400     Blocks: 0       IO Blocks: 4096        directory
@@ -193,13 +228,10 @@ export default class AdbShim {
       Change: 2017-06-18 16:40:23.049999999
       - times are in local time zone
     */
-    const mm = `${m}: stat failed: '${cmd}'`
-    const text = await this.shell(cmd)
-
-    if (!text) throw new Error(`${mm} Are you root?`)
+    if (!text) throw new Error(`${m} Are you root?`)
     if (text.endsWith('No such file or directory')) {
       if (falseIfMissing) return false
-      throw new Error(`${m}: stat nonexistent path: '${aPath}'`)
+      throw new Error(`${m}: stat nonexistent path`)
     }
     const lines = this.getLines(text)
     /*
@@ -216,31 +248,21 @@ export default class AdbShim {
     const perms = Object(match)[1]
     const user = Object(match)[2]
     const group = Object(match)[3]
-    if (!perms || !user || !group) throw new Error(`${mm} parse failed: '${text}'`)
-
-    const {access, modify, change} = await this._getUtcNs({
-      cmd: this.prependRoot(`stat -c %X,%Y,%Z ${aPath}`, root),
-      aNs: this._getNs(lines[4], mm),
-      mNs: this._getNs(lines[5], mm),
-      cNs: this._getNs(lines[6], mm),
-      mm
-    })
-
-    return {perms, user, group, access, modify, change}
+    if (!perms || !user || !group) throw new Error(`${m} parse failed: '${text}'`)
+    const nsList = lines.slice(4, 7).map(line => this._getNs(line, m)) // access modify change
+    return {perms, user, group, nsList}
   }
 
-  async _getUtcNs({cmd, aNs, mNs, cNs, mm}) {
-    const text = await this.shell(cmd)
+  stat2Parser(text, nsList, m) {
+    // '1489960267,1502496127,1502496127'
     const match = text.match(/([^,]+),([^,]+),(.*)/)
-    return {
-      access: this._getTime(Object(match)[1], aNs, mm),
-      modify: this._getTime(Object(match)[2], mNs, mm),
-      change: this._getTime(Object(match)[3], cNs, mm),
-    }
+    const epochs = match ? match.slice(1, 4) : []
+    nsList = Object(nsList)
+    return epochs.map((epoch, ix) => this._getTime(epoch, nsList[ix], m))
   }
 
   _getTime(text, ns, m) {
-    const epoch = Number(text)
+    const epoch = Number(text) * 1e3 // convert to timeval
     const d = new Date(epoch)
     if (!(epoch >= 0) || !isFinite(d)) throw new Error(`${m}: bad epoch: '${text}'`)
     // string 24: 1970-01-01T00:00:00.000Z

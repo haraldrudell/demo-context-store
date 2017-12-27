@@ -13,7 +13,6 @@ import fs from 'fs-extra'
 
 export default class AndroidManager {
   async run(o) {
-    return (new require('./SocketTester').default).run()
     const options = {
       directory: '/x/tostorage/devices/generic/apk',
       devicesDirectory: '/x/tostorage/devices',
@@ -26,7 +25,6 @@ export default class AndroidManager {
     asyncModerator.promise.then(this.done).catch(this.errorHandler)
 
     const serials = o.serial ? [o.serial] : await AdbShim.getSerials()
-    console.log('x')
     for (let serial of serials) {
       const adb = Object.assign(new AdbShim({serial}), options)
       await adb.getDeviceName(true)
@@ -34,7 +32,7 @@ export default class AndroidManager {
       //asyncModerator.addAsyncIterator(new ApkCopier(adb))
       //asyncModerator.addAsyncIterator(new StateLogger(adb))
       //asyncModerator.addAsyncIterator(new PartitionLogger(adb))
-      //asyncModerator.addAsyncIterator(new UserDataLogger(adb))
+      asyncModerator.addAsyncIterator(new UserDataLogger(adb))
     }
     asyncModerator.setAllSubmitted()
   }

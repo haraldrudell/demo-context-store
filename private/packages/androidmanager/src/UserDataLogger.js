@@ -16,23 +16,23 @@ export default class UserDataLogger extends Logger {
 
   constructor(adb) {
     super(adb, '')
-    console.log('UserDataLogger')
   }
 
   async next() {
     await (this.initPromise || (this.initPromise = this.init())) // one at a time
-    const {fileSystem} = this
-    if (fileSystem) {
-      const fsEntry = await fileSystem.next()
-      if (!fsEntry.done) return {value: () => this.process(fsEntry.value)}
-      this.fileSystem = null
-      return fsEntry
+    if (false) { // TODO remove
+      const {fileSystem} = this
+      if (fileSystem) {
+        const fsEntry = await fileSystem.next()
+        if (!fsEntry.done) return {value: () => this.process(fsEntry.value)}
+        this.fileSystem = null
+        return fsEntry
+      }
     }
     return UserDataLogger.done
   }
 
   async init() {
-    console.log('UserDataLogger.init')
     const {adb} = this
     if (!await this.hasSu()) return
     await this.getRoot()
