@@ -6,6 +6,8 @@ import adb from 'adbkit'
 import fs from 'fs'
 import crypto from 'crypto'
 
+const m = 'AdbShim'
+
 export default class AdbShim {
   static sharedClient
 
@@ -13,7 +15,11 @@ export default class AdbShim {
     let result = shared && AdbShim.sharedClient
     if (!result) {
       try {
+        const timer = setTimeout(() => {
+          throw new Error(`${m} adb.createClient slower than 1 s`)
+        }, 1e3)
         result = adb.createClient()
+        clearTimeout(timer)
         if (shared) AdbShim.sharedClient = result
       } catch (e) {
         console.error('AdbShim.getClient')
@@ -26,10 +32,14 @@ export default class AdbShim {
   static async getSerials(client) {
     if (!client) client = AdbShim.getClient(true)
     const result = []
+    const timer = setTimeout(() => {
+      throw new Error(`${m} adb.listDevices slower than 1 s`)
+    }, 1e3)
     const objectList = await client.listDevices().catch(e => {
       console.error('AdbShim.getSerials')
       throw e
     })
+    clearTimeout(timer)
     for (let o of objectList) result.push(o.id)
     return result
   }
@@ -43,6 +53,12 @@ export default class AdbShim {
     const output = await this.shell(cmd)
     if (output.includes('\n')) throw new Error(`AdbShim.shellOneLine ${this.name} Expected one-line result: ${cmd} '${output}`)
     return output
+  }
+
+  getLines(text) {
+    const lines = String(text).split('\n')
+    for (let [ix, line] of lines.entries()) if (line.endsWith('\r')) lines[ix] = line.slice(0, -1)
+    return lines
   }
 
   async shell(cmd) {
@@ -75,13 +91,21 @@ export default class AdbShim {
       throw e
     })
 
-  async md5sumFar(remoteFile) {
+  async md5sumFar(remoteFile, root) {
     const md5cmd = this.md5sumCmd || await (this.md5sumPromise || (this.md5sumPromise = this.findMd5sum()))
-    const cmd = `${md5cmd} ${remoteFile}`
+    const cmd = this.prependRoot(`${md5cmd} ${remoteFile}`, root)
     const s = await this.shell(cmd)
     const md5 = s.substring(0, s.indexOf(' '))
     if (md5.length !== 32 || md5.replace(/[0-9a-f]/g, '').length) throw new Error(`AdbShim.md5sumFar failed: ${this.name} command: '${cmd}' output: '${s}' parsed md5: '${md5}'`)
     return md5
+  }
+
+  async sha1sumFar(remoteFile, root) {
+    const cmd = this.prependRoot(`${su0}sha1sum -b ${remoteFile}`, root)
+    const s = await this.shell(cmd)
+    const sha1 = s.substring(0, 40)
+    if (sha1.length !== 40 || sha1.replace(/[0-9a-f]/g, '').length) throw new Error(`AdbShim.sha1sumFar failed: ${this.name} command: '${cmd}' output: '${s}' parsed sha1: '${sha1}'`)
+    return sha1
   }
 
   static md5empty = 'd41d8cd98f00b204e9800998ecf8427e'
@@ -142,6 +166,94 @@ export default class AdbShim {
     })
   }
 
+  async ls(aPath, root) {
+    const marker = 'yes'
+    const ls = this.prependRoot(`ls -1 \\"${aPath}\\"`, root)
+    const cmd = 'A="$(' + ls + ')" && echo "yes$A"'
+    const text = await this.shell(cmd)
+    if (!text.startsWith(marker)) throw new Error(`${m}: ls failed: command: ${cmd} output: '${text}'`)
+    return this.getLines(text.substring(marker.length))
+  }
+
+  prependRoot(cmd, root) {
+    return root
+      ? 'su 0 ' + cmd
+      : cmd
+  }
+
+  async stat(aPath, root, falseIfMissing) {
+    const cmd = this.prependRoot(`stat ${aPath}`, root)
+    /*
+      File: `/'
+      Size: 1400     Blocks: 0       IO Blocks: 4096        directory
+      Device: 2h/2d    Inode: 2        Links: 25
+      Access: (1777/drwxrwxrwt)       Uid: (0/    root)       Gid: (0/    root)
+      Access: 1969-12-31 16:00:00.000000000
+      Modify: 2017-06-18 16:40:23.049999999
+      Change: 2017-06-18 16:40:23.049999999
+      - times are in local time zone
+    */
+    const mm = `${m}: stat failed: '${cmd}'`
+    const text = await this.shell(cmd)
+
+    if (!text) throw new Error(`${mm} Are you root?`)
+    if (text.endsWith('No such file or directory')) {
+      if (falseIfMissing) return false
+      throw new Error(`${m}: stat nonexistent path: '${aPath}'`)
+    }
+    const lines = this.getLines(text)
+    /*
+    Access: (771/drwxrwx--x)\tUid: (1000/  system)\tGid: (1000/  system)
+    [^/]+\/: skip up to and including first slash
+    ([^)]*): 'drwxrwx--x' - [1]
+    [^/]+\/ *: skip up to the next slash and following white space
+    ([^)]+): 'system' - [2]
+    [^/]+\/ *([^)]+): skip up to the next slash and following white space
+    ([^)]+): 'system' - [3]
+    */
+    const m1 = /[^/]+\/([^)]*)[^/]+\/ *([^)]+)[^/]+\/ *([^)]+)/
+    const match = String(lines[3]).match(m1)
+    const perms = Object(match)[1]
+    const user = Object(match)[2]
+    const group = Object(match)[3]
+    if (!perms || !user || !group) throw new Error(`${mm} parse failed: '${text}'`)
+
+    const {access, modify, change} = await this._getUtcNs({
+      cmd: this.prependRoot(`stat -c %X,%Y,%Z ${aPath}`, root),
+      aNs: this._getNs(lines[4], mm),
+      mNs: this._getNs(lines[5], mm),
+      cNs: this._getNs(lines[6], mm),
+      mm
+    })
+
+    return {perms, user, group, access, modify, change}
+  }
+
+  async _getUtcNs({cmd, aNs, mNs, cNs, mm}) {
+    const text = await this.shell(cmd)
+    const match = text.match(/([^,]+),([^,]+),(.*)/)
+    return {
+      access: this._getTime(Object(match)[1], aNs, mm),
+      modify: this._getTime(Object(match)[2], mNs, mm),
+      change: this._getTime(Object(match)[3], cNs, mm),
+    }
+  }
+
+  _getTime(text, ns, m) {
+    const epoch = Number(text)
+    const d = new Date(epoch)
+    if (!(epoch >= 0) || !isFinite(d)) throw new Error(`${m}: bad epoch: '${text}'`)
+    // string 24: 1970-01-01T00:00:00.000Z
+    const dText = d.toISOString() // our date is good, will not throw
+    return `${dText.substring(0, 20)}${ns}Z`
+  }
+
+  _getNs(text, m) {
+    const ns = String(text).slice(-9)
+    if (!ns.match(/^\d{9}$/)) throw new Error(`${m}: Failed to parse ns time: '${text}'`)
+    return ns
+  }
+
   async getPackageVersion(packageName) {
     const output = await this.shell(`dumpsys package ${packageName} | grep -e '^ *versionName='`)
       .catch(e => {
@@ -166,11 +278,15 @@ export default class AdbShim {
     const errorMarker = 'ERROR'
     const cmd = `ls ${pattern} || echo ${errorMarker}`
 
+    const timer = setTimeout(() => {
+      throw new Error(`${m} device ${this.name} adb.shell ls slower than 1 s`)
+    }, 1e3)
     const output = await this.shell(cmd)
       .catch(e => {
         console.error(`AdbShim.getDeviceName ${this.name}`)
         throw e
       })
+    clearTimeout(timer)
     const i = output.indexOf(marker)
     if (output.endsWith(errorMarker) || output.includes('\n') || !~i)
       throw new Error(`AdbShim.getDeviceName device ${this.name} has not been named in ${pattern}`)
