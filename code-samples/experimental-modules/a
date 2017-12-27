@@ -1,0 +1,6 @@
+#!/bin/bash -eu
+node --experimental-modules a.mjs && X=0 || X=$?
+if [ $X -eq 0 ]; then echo "Node.js completed successfully"
+else echo >&2 "Node.js status code: $X"
+  exit $X
+fi
