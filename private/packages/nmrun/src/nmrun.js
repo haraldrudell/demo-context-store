@@ -6,14 +6,16 @@ import Runner from './Runner'
 
 import fs from 'fs-extra'
 
-run({args: process.argv.slice(2), dir: process.cwd()}).catch(errorHandler)
+const m = 'nmrun'
 
-async function run({args, dir}) {
-  const m = 'nmrun'
+run().catch(errorHandler)
 
-  const command = getNonEmpty(args[0], `${m} command`)
-  args.splice(0, 1)
-  const dir = await fs.realpath(dir)
+async function run(o) {
+  const {args: args0 = process.argv.slice(2), dir: dir0 = process.cwd()} = o || false
+
+  const command = getNonEmpty(args0[0], `${m} command`)
+  const args = args0.slice(1)
+  const dir = await fs.realpath(dir0)
   return new Runner().run({dir, command, args})
 }
 

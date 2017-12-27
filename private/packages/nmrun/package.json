@@ -5,7 +5,7 @@
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
   "engines": {
-    "node": ">=4.8.1"
+    "node": ">=6"
   },
   "scripts": {
     "build": "rollup --config",
@@ -21,7 +21,7 @@
     "url": "gt:sw"
   },
   "keywords": [
-    "app"
+    "lerna", "node_modules"
   ],
   "private": true,
   "devDependencies": {

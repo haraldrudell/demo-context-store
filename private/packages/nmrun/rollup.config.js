@@ -29,7 +29,7 @@ export default {
       runtimeHelpers: true,
       include: '**/*.js',
       exclude: 'node_modules/**',
-      presets: [['env', {modules: false, targets: {node: '4.8'}}]],
+      presets: [['env', {modules: false, targets: {node: '6'}}]],
       plugins: ['transform-runtime'],
     }),
     shebangPlugin(),

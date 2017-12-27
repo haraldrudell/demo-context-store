@@ -2,13 +2,21 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
+import fs from 'fs-extra'
+import path from 'path'
 import {spawn} from 'child_process'
 
-test('nmrun should exeute rollup', async () => {
+const nmrun = path.resolve(path.join('build', 'nmrun'))
+
+test('nmrun should have been built by npm run build', async () => {
+  expect(await fs.pathExists(nmrun)).toBeTruthy()
+})
+
+test('nmrun should execute rollup', async () => {
   let stderr = ''
   let stdout = ''
   const [status, signal] = await new Promise((resolve, reject) => {
-    const cp = spawn('build/nmrun', ['rollup', '--version'], {stdio: ['ignore', 'pipe', 'pipe']})
+    const cp = spawn(nmrun, ['rollup', '--version'], {stdio: ['ignore', 'pipe', 'pipe']})
       .once('close', (statusX, signalX) => resolve([statusX, signalX]))
       .on('error', reject)
       cp.stdout.on('data', s => stdout += s).on('error', reject).setEncoding('utf8')
