@@ -32,20 +32,16 @@ export default class SMTPVerifier {
     const {smtp} = this
     let smtpExtended
     const results = await Promise.all([
-      new Promise((resolve, reject) => {
-        debugger; smtpExtended = new SMTPExtended(smtp)
+      new Promise((resolve, reject) => smtpExtended = new SMTPExtended(smtp)
         .on('error', reject)
-        .once('end', resolve)
-      }),
+        .once('end', resolve)),
       this.connect(address, smtpExtended),
     ])
     return results[1]
   }
 
   async connect(address, smtpExtended) {
-    await new Promise((resolve, reject) => {
-      debugger; smtpExtended.connect(resolve)
-    })
+    await new Promise((resolve, reject) => smtpExtended.connect(resolve))
     const {debug} = this
     debug && console.log(`Sending mailbox: ${address}`)
     const result = smtpExtended.result = []
@@ -66,8 +62,8 @@ class SMTPExtended extends SMTPConnection {
     let message,
         err
     let curRecipient = this._recipientQueue.shift();
+
     // Modification: store the result for curRecipient
-    console.log('RESULT', {email: curRecipient, response: str}, this.result)
     this.result.push({email: curRecipient, response: str})
 
       if (Number(str.charAt(0)) !== 2) {

@@ -13,6 +13,7 @@ export default class SshTunnel {
   }
 
   setupSsh() {
+    // like: 'ssh -NL 127.0.0.1:9002:1.2.3.4:25 -o ControlPath=none -o ExitOnForwardFailure=yes sshHost'
     const args = this.cmd.split(' ')
     this.debug && console.log(args.join(' '))
     const cmd = args.shift()
@@ -27,6 +28,8 @@ export default class SshTunnel {
   }
 
   async ready({host, port, timeout, retryTime}) {
+    // if TCP connect to host:port succeeds, the tunnel is up
+    // ie. a listening TCP socket that exists at the other end of the tunnel
     const end = Date.now() + timeout
     for (;;) {
       let s
