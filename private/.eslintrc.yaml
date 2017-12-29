@@ -28,7 +28,7 @@ rules:
   no-restricted-syntax: [error, WithStatement]
   semi: off
   no-shadow: error
-  no-unused-expressions: error
+  no-unused-expressions: [error, {allowShortCircuit: true}]
   no-unused-vars: [error, {args: none}]
   no-useless-concat: off
   quotes: [error, single, {avoidEscape: true, allowTemplateLiterals: true }]
