@@ -3,11 +3,10 @@
 All rights reserved.
 */
 import SshTunnel from './SshTunnel'
-//import SMTPVerifier from './SMTPVerifier'
+import SMTPVerifier from './SMTPVerifier';
 
 import parser from 'email-addresses'
 import dns from 'dns'
-import SMTPVerifier from './SMTPVerifier';
 
 export default class EmailVerifier {
   timeout = 1e3

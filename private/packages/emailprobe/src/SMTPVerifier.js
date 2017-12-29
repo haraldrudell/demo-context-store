@@ -7,25 +7,20 @@ import SMTPConnection from 'smtp-connection'
 import tls from 'tls'
 
 export default class SMTPVerifier {
+  checkServerIdentity = this.checkServerIdentity.bind(this)
+
   constructor(o) {
     const {debug, mxDnsName} = o || false
+    const {checkServerIdentity} = this
     const smtp = Object.assign({
       // ignoreTLS: true,
       requireTLS: true,
       logger: debug,
       debug: debug,
       name: '[8.8.8.8]',
-      tls: {
-        checkServerIdentity: this.checkServerIdentity.bind(this),
-      },
+      tls: {checkServerIdentity},
     }, Object(o).smtp)
     Object.assign(this, {smtp, mxDnsName, debug})
-  }
-
-  checkServerIdentity(host, cert) {
-    const {mxDnsName, debug} = this
-    debug && console.log(`providing TLS server Identity: ${mxDnsName}`)
-    return tls.checkServerIdentity(mxDnsName, cert)
   }
 
   async verify(address) {
@@ -54,6 +49,12 @@ export default class SMTPVerifier {
         message,
         (e, ...args) => !e ? resolve(...args) : reject(e)))
     return result
+  }
+
+  checkServerIdentity(host, cert) {
+    const {mxDnsName, debug} = this
+    debug && console.log(`providing TLS server Identity: ${mxDnsName}`)
+    return tls.checkServerIdentity(mxDnsName, cert)
   }
 }
 

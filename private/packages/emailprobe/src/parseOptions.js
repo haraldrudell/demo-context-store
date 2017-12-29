@@ -30,7 +30,7 @@ export async function parseOptions({argv, name}) {
       process.exit(0)
       // eslint-disable-line no-fallthrough
     case '-ssh':
-      options.ssh = argv
+      options.ssh = arg
       break
     case '-config':
       hadConfig = true
