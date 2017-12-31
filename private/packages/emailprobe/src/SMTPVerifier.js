@@ -8,16 +8,18 @@ import tls from 'tls'
 
 export default class SMTPVerifier {
   checkServerIdentity = this.checkServerIdentity.bind(this)
+  clientHello ='[8.8.8.8]'
+  mailFrom = 'joe@gmail.com' // 'a@a.aa'
 
   constructor(o) {
     const {debug, mxDnsName} = o || false
-    const {checkServerIdentity} = this
+    const {checkServerIdentity, clientHello} = this
     const smtp = Object.assign({
       // ignoreTLS: true,
       requireTLS: true,
       logger: debug,
       debug: debug,
-      name: '[8.8.8.8]',
+      name: clientHello,
       tls: {
         checkServerIdentity,
         rejectUnauthorized: false,
@@ -39,14 +41,14 @@ export default class SMTPVerifier {
   }
 
   async connect(address, smtpExtended) {
-    const {debug} = this
+    const {debug, mailFrom} = this
     await new Promise((resolve, reject) => smtpExtended.connect(resolve))
     const tlsSocket = smtpExtended._socket
     console.log('Certificate trusted:', tlsSocket.authorized)
 
     debug && console.log(`Sending mailbox: ${address}`)
     const result = smtpExtended.result = []
-    const envelope = {from: 'a@a.aa', to: address}
+    const envelope = {from: mailFrom, to: address}
     const message = 'x' // cannot be false
     // before DATA, QUIT is sent, so callback returns undefined
     await new Promise((resolve, reject) => smtpExtended.once('end', resolve) // we send quit, so this will terminate
@@ -98,18 +100,11 @@ class SMTPExtended extends SMTPConnection {
     }
 
     if (!this._envelope.rcptQueue.length && !this._recipientQueue.length) {
-        if (this._envelope.rejected.length < this._envelope.to.length) {
 
-            // Modification: sent QUIT instead of DATA
-            this._responseActions.push(this.close)
-            this._sendCommand('QUIT');
+        // Modification: sent QUIT instead of DATA
+        this._responseActions.push(this.close)
+        this._sendCommand('QUIT');
 
-          } else {
-            err = this._formatError('Can\'t send mail - all recipients were rejected', 'EENVELOPE', str, 'RCPT TO');
-            err.rejected = this._envelope.rejected;
-            err.rejectedErrors = this._envelope.rejectedErrors;
-            return callback(err);
-        }
     } else if (this._envelope.rcptQueue.length) {
         curRecipient = this._envelope.rcptQueue.shift();
         this._recipientQueue.push(curRecipient);
