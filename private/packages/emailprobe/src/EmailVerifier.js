@@ -18,10 +18,12 @@ export default class EmailVerifier {
   }
 
   async verify(mailboxes) { // can only be invoked one at a time
+    const results = this.results = []
     if (!Array.isArray(mailboxes)) mailboxes = Array.from(mailboxes)
     this.emails = mailboxes.map((email, ix) => this.parse(email, ix))
     await this._verifyNext().catch(e => this.ensureShutdown(e))
-    this.debug && console.log('EmailVerifier.verify completed successfully.')
+    console.log(`\nnumber of results: ${results.length}`)
+    this.printResults(results)
   }
 
   async _verifyNext() {
@@ -54,7 +56,7 @@ export default class EmailVerifier {
   }
 
   async _verify({address, domain, mxDnsName, ip}) {
-    const {sshTunnel, timeout, retryTime, debug, port: nearSshPort} = this
+    const {sshTunnel, timeout, retryTime, debug, port: nearSshPort, results} = this
     const port = sshTunnel ? nearSshPort : 25
     const host = sshTunnel ? '127.0.0.1' : domain
     if (sshTunnel) {
@@ -64,8 +66,13 @@ export default class EmailVerifier {
     debug && console.log('Connecting to mail server…')
     const result = await new SMTPVerifier({smtp: {host, port}, mxDnsName, debug}).verify(address)
     if (!Array.isArray(result)) throw new Error(`{this.m} Email verification failed: ${result}`)
-    for (let {email, response} of result) console.log(`Mailbox: ${email} Response: ${response}`)
+    this.printResults(result)
+    Array.prototype.push.apply(results, result)
     return this._verifyNext()
+  }
+
+  printResults(results) {
+    for (let {email, response} of results) console.log(`Mailbox: ${email} Response: ${response}`)
   }
 
   async ensureShutdown(e) {
