@@ -1,0 +1,32 @@
+{
+  "name": "tlsconnect",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bin/tlsconnect",
+  "scripts": {
+    "build": "rollup --config node:rollupconfig",
+    "watch": "rollup --watch --config node:rollupconfig",
+    "tw": "nmrun jest --watch",
+    "clean": "nmrun clean bin",
+    "itest": "nmrun jest --testRegex 'src/.*itest.*'",
+    "test": "nmrun jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "rollup": {
+    "print": true,
+    "node": true,
+    "targets": "current",
+    "shebang": true
+  },
+  "dependencies": {
+    "fs-extra": "^5.0.0",
+    "js-yaml": "^3.10.0",
+    "spawn-async": "0.0.1"
+  },
+  "devDependencies": {
+    "rollupconfig": "0.0.1",
+    "nmrun": "0.0.1"
+  }
+}
