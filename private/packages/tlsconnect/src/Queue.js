@@ -13,23 +13,20 @@ export default class Queue {
     const tt = typeof task
     if (tt !== 'function') throw new Error(`${this.m} submit argument not function: ${tt}`)
 
-    let result = {}
     const {queue} = this
-    const p = this.awaitQueue(task, result, queue)
+    const p = this.awaitQueue(task, queue)
     this.queue = queue.then(() => p)
 
-    await p
-    const {e, v} = result
+    const {e, v} = await p
     if (e) throw e
     return v
   }
 
-  async awaitQueue(task, result, queue) {
+  async awaitQueue(task, queue) {
     await queue
     let e
     const v = await this.execute(task).catch(err => e = err)
-    if (e) result.e = e
-    else result.v = v
+    return {e, v}
   }
 
   async execute(task) {
