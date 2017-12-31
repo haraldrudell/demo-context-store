@@ -23,6 +23,9 @@ import {Hash} from 'crypto'
 
 export default new RollupConfigurator().assembleConfig(getConfig)
 
+//const m = 'rollupconfig-export'
+//const debug = !!process.env.DEBUG
+
 /*
 name: non-empty string
 input: non-empty string
@@ -38,6 +41,7 @@ node: boolean
 mainFlag, moduleFlag: boolean, present for array configuration
 */
 function getConfig({input, output, external, targets, shebang, clean, print, nodelatest}) {
+  print = true
   const latestNode = targets && targets.node === 'current'
   const includeExclude = {
     /*
@@ -86,13 +90,6 @@ function getConfig({input, output, external, targets, shebang, clean, print, nod
           */
           paths: [path.join(fs.realpathSync(process.cwd()), 'js_modules')], // modules in the js_modules directory will override real modules
       }}),
-      /*
-      rollup-plugin-commonjs https://github.com/rollup/rollup-plugin-commonjs
-      converts commonJS modules to ECMAScript 2015
-      Only processes .js files that are of CommonJS format
-      if imported modules are in common js format (using exports) rollup-plugin-commonjs is required
-      */
-      commonjs(),
       json(), // required for import of .json files
       babel(rollupBabelOptions = Object.assign({
         // rollup-plugin-babel https://www.npmjs.com/package/rollup-plugin-babel
@@ -109,6 +106,13 @@ function getConfig({input, output, external, targets, shebang, clean, print, nod
         ].concat(!latestNode ? ['transform-runtime'] : [])
           .concat(print ? [printBabelFilenames] : []),
       }, includeExclude)), // only process files from the project
+      /*
+      rollup-plugin-commonjs https://github.com/rollup/rollup-plugin-commonjs
+      converts commonJS modules to ECMAScript 2015
+      Only processes .js files that are of CommonJS format
+      if imported modules are in common js format (using exports) rollup-plugin-commonjs is required
+      */
+      commonjs(),
     ].concat(shebang ? [shebangPlugin(), chmod()] : [])
       .concat(clean ? cleanPlugin(clean) : [])
       .concat(print ?

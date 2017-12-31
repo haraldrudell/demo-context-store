@@ -11,6 +11,12 @@ export default function logPlugin(withStack) {
   console.log('\n\n\n\n')
 
   /*
+  Rollup plugins
+  in the rollup config object, there is an array of plugins.
+  A rollup plugin is a function that can be imported from another modukle or package
+  In the plugin array, it is typically executed so that the actual value is an object with name and hook keys
+  hooks are listed below
+
   instantiation takes place during import and execution of rollup.config.js
   therefore, instantiate cannot be async
   arguments are defined when invoked in config.rollup.js
