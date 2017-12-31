@@ -18,7 +18,10 @@ export default class SMTPVerifier {
       logger: debug,
       debug: debug,
       name: '[8.8.8.8]',
-      tls: {checkServerIdentity},
+      tls: {
+        checkServerIdentity,
+        rejectUnauthorized: false,
+      },
     }, Object(o).smtp)
     Object.assign(this, {smtp, mxDnsName, debug})
   }
@@ -36,8 +39,11 @@ export default class SMTPVerifier {
   }
 
   async connect(address, smtpExtended) {
-    await new Promise((resolve, reject) => smtpExtended.connect(resolve))
     const {debug} = this
+    await new Promise((resolve, reject) => smtpExtended.connect(resolve))
+    const tlsSocket = smtpExtended._socket
+    console.log('Certificate trusted:', tlsSocket.authorized)
+
     debug && console.log(`Sending mailbox: ${address}`)
     const result = smtpExtended.result = []
     const envelope = {from: 'a@a.aa', to: address}
@@ -53,6 +59,14 @@ export default class SMTPVerifier {
 
   checkServerIdentity(host, cert) {
     const {mxDnsName, debug} = this
+    console.log('Certificate for dns name:', mxDnsName)
+    console.log('Canonical name:', cert.subject.CN)
+    console.log('Valid from:', cert.valid_from)
+    console.log('Valid to:', cert.valid_to)
+    console.log('Issuer Canonical:', cert.issuer.CN)
+    console.log('Serial number:', cert.serialNumber)
+    console.log('Fingerprint:', cert.fingerprint)
+    console.log('Alt names:', cert.subjectaltname)
     debug && console.log(`providing TLS server Identity: ${mxDnsName}`)
     return tls.checkServerIdentity(mxDnsName, cert)
   }

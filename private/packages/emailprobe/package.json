@@ -4,7 +4,7 @@
   "description": "",
   "main": "bin/emailprobe",
   "scripts": {
-    "build": "rollup --config",
+    "build": "rollup --config node:rollupconfig",
     "watch": "rollup --watch --config node:rollupconfig",
     "tw": "nmrun jest --watch",
     "clean": "nmrun clean bin",
