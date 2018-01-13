@@ -1,0 +1,38 @@
+{
+  "name": "es2049scripts-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "rollup": "es2049scripts -debug -rollup envrollup config",
+    "default": "es2049scripts envdefault config",
+    "latest": "es2049scripts -debug -latest envlatest config",
+    "current": "es2049scripts -debug -current envcurrent config"
+  },
+  "babel": {
+    "env": {
+      "test": {
+        "babelrc": false,
+        "sourceMaps": true,
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ],
+          "stage-0"
+        ],
+        "plugins": [
+          "external-helpers",
+          "transform-runtime"
+        ]
+      }
+    }
+  },
+  "devDependencies": {
+    "es2049scripts": "^0.0.8"
+  }
+}
