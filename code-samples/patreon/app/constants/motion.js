@@ -1,0 +1,10 @@
+const DEFAULT_STIFFNESS = 300
+const DEFAULT_DAMPING = 30
+const DEFAULT_SPRING = [DEFAULT_STIFFNESS, DEFAULT_DAMPING]
+
+export default DEFAULT_SPRING
+
+
+
+// WEBPACK FOOTER //
+// ./app/constants/motion.js

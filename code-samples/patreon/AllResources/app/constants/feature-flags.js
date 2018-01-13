@@ -1,0 +1,10 @@
+export const INVITE_CREATOR_PROMPT_HIDE_DISMISS =
+    'INVITE_CREATOR_PROMPT_HIDE_DISMISS'
+export const MESSAGES_V2 = 'MESSAGES_2016_REFRESH'
+export const PPC_EXCLUSIVE_INCENTIVE = 'PPC_EXCLUSIVE_INCENTIVE'
+export const RSS = 'RSS'
+
+
+
+// WEBPACK FOOTER //
+// ./app/constants/feature-flags.js
