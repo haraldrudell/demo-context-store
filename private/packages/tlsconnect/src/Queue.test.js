@@ -4,64 +4,99 @@ All rights reserved.
 */
 import Queue from './Queue'
 
-test('Queue runs successfully', async () => {
+test('Queue.submit works', async () => {
   const expected = 1
-  const e = new Queue()
-  const actual = await e.submit(() => Promise.resolve(expected))
+  function task() {
+    return expected
+  }
+
+  const q = new Queue()
+  const actual = await q.submit(task)
   expect(actual).toEqual(expected)
 })
 
-test('Queue handles errors', async () => {
+test('Queue.submit throws task errors', async () => {
   const expected = 'bad'
+  const errorMessageMatcher = new RegExp(`^${expected}$`)
   function task() {
     throw new Error(expected)
   }
+
   const e = new Queue()
-  let ee
-  const a = await e.submit(task).catch(err => ee = err)
-  if (!ee) throw new Error('Failed to throw')
-  expect(() => {
-    throw ee
-  }).toThrow(expected)
+  await asyncThrowInJest(e.submit(task), errorMessageMatcher)
+
+  async function asyncThrowInJest(p, expectedErrorMessage) {
+    let thrownError
+    const v = await p.catch(e => thrownError = e)
+    expect(() => {
+      if (thrownError) throw thrownError
+    }).toThrow(expectedErrorMessage)
+    return v
+  }
 })
 
 test('Queue queues properly', async () => {
   const waitMs = 100
-  const margin = 5
-  const one = 1
-  const two = 2
-  const add = 10
+  const setTimeoutMarginMs = 5
+  const setTimeoutMs = waitMs + setTimeoutMarginMs
+  const submitDurationMax = waitMs / 2
+  const taskOneName = 'taskOne'
+  const taskTwoName = 'taskTwo'
 
-  let t0
-  async function task(x) {
-    const result = {invocation: Date.now() - t0}
-    await new Promise((resolve, reject) => setTimeout(resolve, waitMs + margin))
-    return {...result, input: x, output: x + add, done: Date.now() - t0}
+  let t0 = 0
+  function getTimeval() {
+    return Date.now() - t0
   }
-  const getTaskThunk = x => () => task(x)
-  const e = new Queue()
-  t0 = Date.now()
-  const p1 = e.submit(getTaskThunk(one))
-  const p2 = e.submit(getTaskThunk(two))
-  const t2Submitted = Date.now() - t0
-  const v1 = await p1
-  const v2 = await p2
+  async function doWork(task) {
+    const invocation = getTimeval()
+    await new Promise((resolve, reject) => setTimeout(resolve, setTimeoutMs))
+    return {done: getTimeval(), invocation, task}
+  }
+  async function task1() {
+    return doWork(taskOneName)
+  }
+  async function task2() {
+    return doWork(taskTwoName)
+  }
 
-  // submission should be quick
-  const submitDuration = t2Submitted - t0
-  expect(submitDuration).toBeLessThan(waitMs)
+  const q = new Queue()
+  t0 = getTimeval()
+  const ps = [q.submit(task1), q.submit(task2)]
+  const submitDuration = getTimeval()
+  const values = await Promise.all(ps)
+  let s, v, a
 
-  // tasks should take long time
-  expect(v1.done - v1.invocation).toBeGreaterThan(waitMs)
-  expect(v2.done - v2.invocation).toBeGreaterThan(waitMs)
+  // Jest cannot print a custom failure message, so:
+  for (let [i, o] of values.entries()) {
+    v = Object(o).task
+    s = `task${i + 1} resolved to incorrect value: ${v}`
+    a = [taskOneName, taskTwoName][i]
+    if (v !== a) expect().toBe(s)
+  }
 
-  // task2 should be held and start after submit complete
-  expect(v2.invocation).toBeGreaterThan(t2Submitted)
+  s = `Queue.submit duration slow: ${submitDurationMax} ms or slower: ${submitDuration} expected < 3 ms`
+  if (submitDuration >= submitDurationMax || isNaN(submitDuration)) expect().toBe(s)
 
-  // task2 should start after task1 completes
-  expect(v2.invocation).toBeGreaterThanOrEqual(v1.done)
+  for (let [i, o] of values.entries()) {
+    v = o.done - o.invocation
+    s = `task${i + 1} resolved too quickly: ${v} ms, expected >= ${waitMs}`
+    if (v < waitMs || isNaN(v)) expect().toBe(s)
+  }
 
-  // tasks should be executed one after the other
-  const taskDuration = v2.done - v1.invocation
-  expect(taskDuration).toBeGreaterThan(2 * waitMs)
+  v = values[1].invocation
+  s = `Expected task2 to be held until after submit complete: ` +
+    `task2.invocation: ${v} submitDuration: ${submitDuration}`
+  if (v <= submitDuration || isNaN(v)) expect().toBe(s)
+
+  v = values[1].invocation
+  a = values[0].done
+  s = `Expected task2 to start after task1 completed: ` +
+    `task2 invocation: ${v} task1 done: ${a}`
+  if (v < a) expect().toBe(s)
+
+  v = values[1].done - values[0].invocation
+  a = 2 * waitMs
+  s = `Expected tasks to be executed in sequence ` +
+    `tasks duration: ${v} expected greater or equal to: ${a}`
+  if (v < a) expect().toBe(s)
 })

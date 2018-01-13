@@ -4,7 +4,7 @@ All rights reserved.
 */
 export default class Queue {
   constructor(o) {
-    const {m = 'Queue'} = o || false
+    const {name: m = 'Queue'} = o || false
     Object.assign(this, {m})
     this.queue = Promise.resolve()
   }
@@ -15,8 +15,7 @@ export default class Queue {
 
     const {queue} = this
     const p = this.awaitQueue(task, queue)
-    this.queue = queue.then(() => p)
-
+    this.queue = queue.then(() => p) // p must not throw
     const {e, v} = await p
     if (e) throw e
     return v
