@@ -14,9 +14,9 @@ export default class Queue {
     if (tt !== 'function') throw new Error(`${this.m} submit argument not function: ${tt}`)
 
     const {queue} = this
-    const p = this.awaitQueue(task, queue)
-    this.queue = queue.then(() => p) // p must not throw
-    const {e, v} = await p
+    const noRejectPromise = this.awaitQueue(task, queue)
+    this.queue = queue.then(() => noRejectPromise) // p must not throw
+    const {e, v} = await noRejectPromise
     if (e) throw e
     return v
   }
