@@ -120,6 +120,7 @@ import _resolve from 'path';
 export { _resolve as resolve };
 
 import { a } from './envrollup3.js';
+import * as b from './envrollup';
 
 var X = function X() {
   _classCallCheck(this, X);

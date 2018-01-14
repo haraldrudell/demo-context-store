@@ -29,3 +29,5 @@ var A = function A() {
 var B = function B() {
   _classCallCheck(this, B);
 };
+
+export default 1;
