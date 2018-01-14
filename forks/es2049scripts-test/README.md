@@ -1,6 +1,6 @@
 <!doctype html>
 <title>ECMAScript 2049 readme</title>
-<h1>ECMAScript 2049</h1>
+<h1>ECMAScript 2049 Test Package</h1>
 <p>This software project tests the ECMAScript 2049 package</p>
 <p>Link to the software this project tests: <a href=https://github.com/haraldrudell/ECMAScript2049>ECMAScript 2049</a></p>
 <img src=https://pbs.twimg.com/media/DRC-drOWsAABHUT.jpg:large alt="ECMAScript 2049" />
