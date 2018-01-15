@@ -3,13 +3,13 @@
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
 import yaml from 'js-yaml'
-import path from 'path'
 import fs from 'fs-extra'
 
-const m = 'Logger'
+import path from 'path'
 
 export default class Logger {
   static done = {done: true}
+  m = 'Logger constructor'
   /*
   adb.directory: '/x/tostorage/devices/generic/apk'
   adb.devicesDirectory: '/x/tostorage/devices'
@@ -18,13 +18,23 @@ export default class Logger {
   adb.deviceName: 's8plus' (it is verified that the device has a name)
   adb.sixDay: '171210' (local time zone)
   */
-  constructor(adb, stateFile) { // AdbShim: .directory .devicesDirectory
-    const {devicesDirectory, deviceName} = adb
+  constructor(o) { // AdbShim: .directory .devicesDirectory
+    const {debug, adb, name} = o || false
+    const deviceName = this.getNonEmptyString(adb, 'deviceName')
+    this.m = `${name || 'Logger'} device ${deviceName}`
+    const devicesDirectory = this.getNonEmptyString(o, 'devicesDirectory')
     const deviceDirectory = path.join(devicesDirectory, deviceName)
-    this.stateFile = path.join(deviceDirectory, stateFile)
+    const stateFile = path.join(deviceDirectory, this.getNonEmptyString(o, 'stateFile'))
     const nowT = Date.now()
     const now = new Date(nowT).toISOString()
-    Object.assign(this, {adb, deviceName, nowT, now})
+    Object.assign(this, {debug, adb, deviceName, nowT, now, stateFile})
+  }
+
+  getNonEmptyString(o, prop) {
+    const value = Object(o)[prop]
+    const tv = typeof value
+    if (!value || tv !== 'string') throw new Error(`${this.m} option '${prop}' not non-emoty string: ${tv}`)
+    return value
   }
 
   async getRoot() {
@@ -34,14 +44,14 @@ export default class Logger {
     const timer = setTimeout(() => console.log(`\nWaiting for root grant on ${this.deviceName}\n`), 1e3)
     const user = await adb.shell('su 0 whoami')
     clearTimeout(timer)
-    if (user !== 'root') throw new Error(`${m}: device ${this.deviceName}: root denied`)
+    if (user !== 'root') throw new Error(`${this.m}: device ${this.deviceName}: root denied`)
   }
 
   async hasSu() {
     const {adb} = this
     const suPath = await adb.shell('which su')
     if (suPath) {
-      if (!suPath.endsWith('/su')) throw new Error(`${m}: bad response from Android which: '${suPath}'`)
+      if (!suPath.endsWith('/su')) throw new Error(`${this.m}: bad response from Android which: '${suPath}'`)
     }
     return !!suPath
   }

@@ -14,9 +14,9 @@ export default class DirectoryTraverser {
   constructor(absolute, t, output) {
     if (!String(absolute).startsWith('/')) throw new Error(`${m} absolute argument not beginning with slash: '${absolute}'`)
     const to = typeof output
-    if (output && to !== 'function') throw new Error(`${mm} output not function: ${to}`)
+    if (output && to !== 'function') throw new Error(`${m} output not function: ${to}`)
     const tstat = typeof t.stat
-    if (tstat !== 'function') throw new Error(`${mm} bad t argument: ${tstat}`)
+    if (tstat !== 'function') throw new Error(`${m} bad t argument: ${tstat}`)
     Object.assign(this, {absolute, t, output})
   }
 
@@ -33,7 +33,7 @@ export default class DirectoryTraverser {
     d. therefore, await-internal logic must handle early otuput
     e. when count stats has been submitted, we can process directories
     */
-    const {absolute, t, files, output} = this
+    const {absolute, t, output} = this
     if (DirectoryTraverser.ignoreDirs.includes(absolute)) return
     const entries = await t.ls(absolute)
     const count = entries.length
@@ -53,11 +53,11 @@ export default class DirectoryTraverser {
     const allSubmitted = files.submit(submitValue, index, isDirectory)
     const p = []
     directory && p.push(directory.p = directory.traverse())
-    allSubmitted && p.push(this.processDirectories())
+    allSubmitted && p.push(this.processDirectories(absolute))
     return Promise.all(p)
   }
 
-  async processDirectories() {
+  async processDirectories(absolute) {
     const {files, output} = this
     const dirs = files.getHeld()
     console.log('DirectoryTraverser.subDirCount', absolute, dirs.length)

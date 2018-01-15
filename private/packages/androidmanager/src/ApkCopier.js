@@ -10,9 +10,13 @@ import fs from 'fs-extra'
 import os from 'os'
 
 export default class ApkCopier extends ApkReader {
-  constructor(adb) {
-    super(adb)
+  constructor(o) {
+    super(Object(o).adb)
+    const {debug, adb, devicesDirectory, directory, sixDay} = o || false
+    Object.assign(this, {debug, adb, devicesDirectory, directory, sixDay})
     this.apkCopierResult = {packageCount: 0, newCount: 0, packages: []}
+    this.m = `ApkCopier device ${Object(adb).deviceName}`
+    debug && console.log(`${this.m} constructor`, {adb, devicesDirectory, directory, sixDay})
   }
 
   async next() {
@@ -29,18 +33,19 @@ export default class ApkCopier extends ApkReader {
 
   async copyApk(apk) { // {apkfile, packageName}
     const {packageName, apkfile} = apk
-    const {adb, apkCopierResult} = this
+    const {adb, apkCopierResult, directory} = this
+    this.debug && console.log(`${this.m} copyApk`, apk, apkCopierResult)
     const tempfile = path.join(os.tmpdir(), `${uuidv4()}.apk`)
     const results = await Promise.all([
       adb.pull(apkfile, tempfile),
       adb.getPackageVersion(packageName),
     ]).catch(e => {
-      console.error(`ApkCopier.copyApk failed for package: '${packageName}' apk file: '${apkfile}'`)
+      console.error(`${this} copyApk failed for package: '${packageName}' apk file: '${apkfile}'`)
       throw e
     })
     const version = results[1]
     const sha256 = await adb.hash(tempfile)
-    const outfile = path.join(adb.directory, `${packageName}${version ? '-' + version : ''}-${sha256}.apk`)
+    const outfile = path.join(directory, `${packageName}${version ? '-' + version : ''}-${sha256}.apk`)
 
     const exists = await fs.pathExists(outfile)
     if (!exists) {
@@ -60,8 +65,8 @@ export default class ApkCopier extends ApkReader {
   }
 
   async savePackageList() {
-    const {adb, apkCopierResult} = this
-    const {devicesDirectory, name, sixDay} = adb
+    const {adb, apkCopierResult, devicesDirectory, sixDay} = this
+    const {name} = adb
     const outfile = path.join(devicesDirectory, name, `${sixDay}-${name}-applist.txt`)
     console.log(`writing ${outfile}`)
     const s = apkCopierResult.packages.map(o =>

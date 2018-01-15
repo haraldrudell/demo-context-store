@@ -2,7 +2,7 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
-import adb from 'adbkit'
+import adb from 'adbkit/lib/adb'
 import fs from 'fs'
 import crypto from 'crypto'
 
@@ -107,7 +107,7 @@ export default class AdbShim {
   }
 
   async sha1sumFar(remoteFile, root) {
-    const cmd = this.prependRoot(`${su0}sha1sum -b ${remoteFile}`, root)
+    const cmd = this.prependRoot(`sha1sum -b ${remoteFile}`, root)
     const s = await this.shell(cmd)
     const sha1 = s.substring(0, 40)
     if (sha1.length !== 40 || sha1.replace(/[0-9a-f]/g, '').length) throw new Error(`AdbShim.sha1sumFar failed: ${this.name} command: '${cmd}' output: '${s}' parsed sha1: '${sha1}'`)
@@ -199,7 +199,7 @@ export default class AdbShim {
   async stat(aPath, root, falseIfMissing) {
     const cmds = this.getStatCmds(aPath, root)
     const ms = cmds.map(cmd => `${m}: stat failed: '${cmd}'`)
-    const texts = await Promise.all(cmds.map(c => this.shell(cmd)))
+    const texts = await Promise.all(cmds.map(c => this.shell(c)))
     return this.getStatResult(texts, ms, falseIfMissing)
   }
 
@@ -212,12 +212,11 @@ export default class AdbShim {
 
   getStatResult(texts, ms, falseIfMissing) {
     const {perms, user, group, nsList} = this.stat1Parser(texts[0], falseIfMissing, ms[0])
-    let z
-    const [access, modify, change] = z = this.stat2Parser(texts[1], nsList, ms[1])
+    const [access, modify, change] = this.stat2Parser(texts[1], nsList, ms[1])
     return {perms, user, group, access, modify, change}
   }
 
-  stat1Parser(text, falseIfMissing, m) {
+  stat1Parser(text, falseIfMissing, msg) {
     /*
       File: `/'
       Size: 1400     Blocks: 0       IO Blocks: 4096        directory
@@ -228,10 +227,10 @@ export default class AdbShim {
       Change: 2017-06-18 16:40:23.049999999
       - times are in local time zone
     */
-    if (!text) throw new Error(`${m} Are you root?`)
+    if (!text) throw new Error(`${msg} Are you root?`)
     if (text.endsWith('No such file or directory')) {
       if (falseIfMissing) return false
-      throw new Error(`${m}: stat nonexistent path`)
+      throw new Error(`${msg}: stat nonexistent path`)
     }
     const lines = this.getLines(text)
     /*
@@ -248,31 +247,31 @@ export default class AdbShim {
     const perms = Object(match)[1]
     const user = Object(match)[2]
     const group = Object(match)[3]
-    if (!perms || !user || !group) throw new Error(`${m} parse failed: '${text}'`)
-    const nsList = lines.slice(4, 7).map(line => this._getNs(line, m)) // access modify change
+    if (!perms || !user || !group) throw new Error(`${msg} parse failed: '${text}'`)
+    const nsList = lines.slice(4, 7).map(line => this._getNs(line, msg)) // access modify change
     return {perms, user, group, nsList}
   }
 
-  stat2Parser(text, nsList, m) {
+  stat2Parser(text, nsList, msg) {
     // '1489960267,1502496127,1502496127'
     const match = text.match(/([^,]+),([^,]+),(.*)/)
     const epochs = match ? match.slice(1, 4) : []
     nsList = Object(nsList)
-    return epochs.map((epoch, ix) => this._getTime(epoch, nsList[ix], m))
+    return epochs.map((epoch, ix) => this._getTime(epoch, nsList[ix], msg))
   }
 
-  _getTime(text, ns, m) {
+  _getTime(text, ns, msg) {
     const epoch = Number(text) * 1e3 // convert to timeval
     const d = new Date(epoch)
-    if (!(epoch >= 0) || !isFinite(d)) throw new Error(`${m}: bad epoch: '${text}'`)
+    if (!(epoch >= 0) || !isFinite(d)) throw new Error(`${msg}: bad epoch: '${text}'`)
     // string 24: 1970-01-01T00:00:00.000Z
     const dText = d.toISOString() // our date is good, will not throw
     return `${dText.substring(0, 20)}${ns}Z`
   }
 
-  _getNs(text, m) {
+  _getNs(text, msg) {
     const ns = String(text).slice(-9)
-    if (!ns.match(/^\d{9}$/)) throw new Error(`${m}: Failed to parse ns time: '${text}'`)
+    if (!ns.match(/^\d{9}$/)) throw new Error(`${msg}: Failed to parse ns time: '${text}'`)
     return ns
   }
 

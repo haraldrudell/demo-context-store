@@ -28,7 +28,7 @@ export default class ByIndex {
 
   setOutput(fn) {
     this.output = fn
-    flush()
+    this.flush()
   }
 
   getHeld() {

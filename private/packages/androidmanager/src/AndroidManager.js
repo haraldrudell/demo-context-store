@@ -12,43 +12,45 @@ import UserDataLogger from './UserDataLogger'
 import fs from 'fs-extra'
 
 export default class AndroidManager {
-  async run(o) {
-    const options = {
-      directory: '/x/tostorage/devices/generic/apk',
-      devicesDirectory: '/x/tostorage/devices',
-      sixDay: this.getSixDay(),
-    }
-    const d = options.directory
-    if (!await fs.pathExists(d)) throw new Error(`Directory does not exist: ${d}`)
+  directory = '/x/tostorage/devices/generic/apk'
+  devicesDirectory = '/x/tostorage/devices'
+  sixDay = this.getSixDay()
+  concurrency = 60
 
-    const asyncModerator = new AsyncModerator(60)
-    asyncModerator.promise.then(this.done).catch(this.errorHandler)
-
-    const serials = o.serial ? [o.serial] : await AdbShim.getSerials()
-    for (let serial of serials) {
-      const adb = Object.assign(new AdbShim({serial}), options)
-      await adb.getDeviceName(true)
-      console.log(`name: ${adb.deviceName} serial: ${serial}`)
-      //asyncModerator.addAsyncIterator(new ApkCopier(adb))
-      //asyncModerator.addAsyncIterator(new StateLogger(adb))
-      //asyncModerator.addAsyncIterator(new PartitionLogger(adb))
-      asyncModerator.addAsyncIterator(new UserDataLogger(adb))
-    }
-    asyncModerator.setAllSubmitted()
+  constructor(options) {
+    const {debug, name, serials, onRejected, doApk, doState, doPartitions, doUserData} = options || false
+    this.m = String(name || 'AndroidManager')
+    const tf = typeof onRejected
+    if (tf !== 'function') throw new Error(`${this.m} options.onRejected not function: ${tf}`)
+    options = {doApk, doState, doPartitions, serials, doUserData}
+    Object.assign(this, {debug, options, onRejected})
+    this.asyncModerator = new AsyncModerator(this.concurrency)
   }
 
-  done = v => console.log(`AndroidManager successful exit`)
+  async run() {
+    const {debug, asyncModerator, directory, devicesDirectory, sixDay, options: {doApk, doState, doPartitions, doUserData, serials}} = this
+    if (!await fs.pathExists(directory)) throw new Error(`${this.m} directory does not exist: ${directory}`)
+
+    const serialsList = serials ? Array.isArray(serials) ? serials : [serials] : await AdbShim.getSerials()
+    for (let serial of serialsList) {
+      const adb = new AdbShim({serial})
+      await adb.getDeviceName(true)
+      console.log(`name: ${adb.deviceName} serial: ${serial}`)
+
+      doApk && asyncModerator.addAsyncIterator(new ApkCopier({debug, adb, devicesDirectory, directory, sixDay}))
+      doState && asyncModerator.addAsyncIterator(new StateLogger({debug, adb, devicesDirectory}))
+      doPartitions && asyncModerator.addAsyncIterator(new PartitionLogger({debug, adb, devicesDirectory}))
+      doUserData && asyncModerator.addAsyncIterator(new UserDataLogger({debug, adb, devicesDirectory}))
+    }
+    debug && console.log(`${this.m} all async iterator submitted`)
+    asyncModerator.setAllSubmitted()
+    await asyncModerator.promise
+    console.log(`${this.m} successful exit`)
+  }
 
   getSixDay() {
     const msDiff = -new Date().getTimezoneOffset() * 60000
     const date = new Date(Date.now() + msDiff).toISOString()
     return `${date.substring(2, 4)}${date.substring(5, 7)}${date.substring(8, 10)}`
-  }
-
-  errorHandler = e => {
-    console.error('\nAndroidManager.errorHandler invoked:')
-    console.error(e)
-    console.error(new Error('errorHandler invocation'))
-    process.exit(1)
   }
 }

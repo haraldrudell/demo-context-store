@@ -53,7 +53,7 @@ export default class FastTraverser {
 
   async stat({absolute, parent, name}) {
     // batcher wraps in root, so no root here
-    const {batcher, adb, root} = this
+    const {batcher, adb} = this
     const cmds = adb.getStatCmds(absolute)
     const ms = cmds.map(cmd => `${m}: stat failed: '${cmd}'`)
     const texts = await batcher.submit(cmds)
@@ -63,19 +63,19 @@ export default class FastTraverser {
     }
   }
 
-  async ls(path) {
+  async ls(aPath) {
     // batcher wraps in root, so no root here
     const {adb, batcher} = this
     const {markers} = FastTraverser
-    const cmd = `ls -1 "${path}" && echo -n ${markers[0]} || echo -n ${markers[1]}`
+    const cmd = `ls -1 "${aPath}" && echo -n ${markers[0]} || echo -n ${markers[1]}`
     const markedText = await batcher.submit(cmd)
 
     // remove marker
     const hasGoodMarker = markedText.endsWith(markers[0])
     const hasBadMarker = markedText.endsWith(markers[1])
     if (hasBadMarker || !hasGoodMarker) {
-      console.error(`FastTraverser.ls '${path}'`, markedText.length, JSON.stringify(markedText))
-      throw new Error(`${m} ls failed for '${path}'`)
+      console.error(`FastTraverser.ls '${aPath}'`, markedText.length, JSON.stringify(markedText))
+      throw new Error(`${m} ls failed for '${aPath}'`)
     }
     const text = hasGoodMarker || hasBadMarker
       ? markedText.slice(0, -markers[0].length - 1) // also delete newline preceeding marker

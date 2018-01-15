@@ -1,0 +1,17 @@
+#!/bin/bash -eu
+# © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
+# All rights reserved
+doCmd () {
+  echo "$*"
+  "$@"
+}
+patch () {
+  DIR="$1"
+  FILE="$2"
+  if [ ! -d "$DIR" ]; then doCmd mkdir "$DIR"; fi
+  if [ ! -f "$DIR/$FILE" ]; then doCmd touch "$DIR/$FILE"; fi
+}
+
+patch node_modules/adbkit/src adb.js
+patch node_modules/adbkit-monkey/src monkey.js
+patch node_modules/adbkit-logcat/src logcat.js

@@ -1,6 +1,6 @@
 {
   "name": "androidmanager",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Node.js based Android device management",
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "ISC",
@@ -8,10 +8,11 @@
     "node": ">=8"
   },
   "scripts": {
-    "start": "./node_modules/.bin/babel-node src/run",
-    "build": "./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/babel-node config/Build",
-    "clean": "./node_modules/.bin/babel-node config/Clean",
-    "sockets": "./node_modules/.bin/babel-node src/SocketTester.js",
+    "start": "babel-node src",
+    "build": "rollup --config node:es2049package",
+    "build:debug": "node --inspect-brk rollup --config node:es2049package",
+    "clean": "clean bin",
+    "sockets": "babel-node src/SocketTester.js",
     "test": "../../node_modules/.bin/jest"
   },
   "repository": {
@@ -24,39 +25,18 @@
     "apk",
     "app"
   ],
-  "singleFile": {
-    "name": "androidmanager",
-    "entry": "run"
-  },
-  "babel": {
-    "presets": [
-      "node8"
-    ]
+  "rollup": {
+    "targets": "mini",
+    "shebang": true,
+    "dependencies": true
   },
   "private": true,
   "dependencies": {
     "adbkit": "^2.11.0",
-    "commander": "^2.12.2",
-    "cross-env": "^5.1.3",
     "fs-extra": "^4.0.3",
-    "install": "^0.10.2",
-    "instant-server": "^2.0.0",
-    "npm": "^5.6.0",
-    "serve": "^6.4.3",
-    "simple-hot-reload-server": "^1.1.12",
-    "uuid": "^3.1.0",
-    "watch-http-server": "^0.7.6",
-    "webpack-dev-server": "^2.9.7"
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^7.2.3",
-    "babel-loader": "^7.1.2",
-    "babel-preset-node8": "^1.2.0",
-    "eslint": "^4.14.0",
-    "eslint-loader": "^1.9.0",
-    "react-dev-utils": "^3.1.1",
-    "webpack": "^3.10.0"
+    "es2049package": "^0.0.11"
   }
 }

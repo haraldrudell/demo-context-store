@@ -4,13 +4,9 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 */
 import Logger from './Logger'
 
-const m = 'StateLogger'
-
-// in AndroidManager, make StateLogger the only invocation
-// npm start -- --serial 988954414744535835
 export default class StateLogger extends Logger {
-  constructor(adb) { // AdbShim: .directory .devicesDirectory
-    super(adb, 'state.yaml')
+  constructor(o) { // {m, debug, adb, deviceName, nowT, now, stateFile}
+    super(Object.assign({stateFile: 'state.yaml', name: 'StateLogger'}, o))
   }
 
   /*
@@ -22,12 +18,14 @@ export default class StateLogger extends Logger {
   if done is true, value is a return value
   */
   async next() {
+    this.debug && console.log(`${this.m} next isDone: ${this.isDone}`)
     if (this.isDone) return StateLogger.done
     this.isDone = true
     return {value: () => this.run()} // only runs once
   }
 
   async run() {
+    this.debug && console.log(`${this.m} run`)
     const {deviceName, now} = this
 
     // last seen
@@ -39,6 +37,7 @@ export default class StateLogger extends Logger {
     // uptime
     const uptime = await this.getUptime() // {utc, local}
     const reboots = Array.isArray(state.reboots) ? state.reboots : [] // ensure array
+    this.debug && console.log(`${this.m} uptime`, uptime, 'reboots', reboots)
     if (!this.utcSame(uptime, reboots[0])) {
       if (!reboots.length) state.reboots = reboots
       uptime.seenOn = now
@@ -57,15 +56,7 @@ export default class StateLogger extends Logger {
       console.log(`\nNew root status for ${deviceName}: ${root}\n`)
     }
 
-    if (!root) return // cannot do partitions without root
-    await this.readPartitions()
-  }
-
-  async readPartitions() {
-    const {adb} = this
-    const partCrc = await adb.shell('su 0 /data/hq/bin/partcrc2')
-    console.log(typeof partCrc, Object(partCrc).length, '[', partCrc, ']')
-
+    this.debug && console.log(`${this.m} run complete`)
   }
 
   utcSame(utcDev, utcStored) { // {utc, local}
@@ -79,7 +70,6 @@ export default class StateLogger extends Logger {
   async getUptime() { // accuracy is 1 min: [ -1…+60 s]
     const sinceMs = await this.getUptimeTimeval()
     const deviceNow = await this.getNowTimeval()
-    const minuteMs = 60e3
     const utcMs = deviceNow - sinceMs
     const utc = new Date(utcMs).toISOString()
     const local = this.getISOTime(utcMs)
@@ -92,7 +82,7 @@ export default class StateLogger extends Logger {
     // string 10 '1514236966'
     const deviceNowEpochString = await adb.shell('date +%s')
     const deviceNow = Number(deviceNowEpochString) * 1e3
-    if (!(deviceNow > T171225ms)) throw new Error(`${m}: bad response from Android date: '${deviceNowEpochString}'`)
+    if (!(deviceNow > T171225ms)) throw new Error(`${this.m}: bad response from Android date: '${deviceNowEpochString}'`)
     return deviceNow
   }
 
@@ -106,18 +96,28 @@ export default class StateLogger extends Logger {
     // string 71
     // ' 13:22:46 up 54 days, 31 min,  0 users,  load average: 7.06, 6.92, 7.01'
     // ' 13:56:26 up 54 days,  1:04,  0 users,  load average: 6.63, 6.89, 7.09'
+    // ' 10:21:33 up 17:39,  0 users,  load average: 6.00, 6.01, 6.05' 180115 n5xd
     const uptime = await adb.shell('uptime')
-    /* [0: matched string, 1: days
-    2: hours or minutes
-    3: colon-space-possible minutes
-    4: undefined or minutes
-    */
-    const match = uptime.match(/[^u]+up ([\d]+) days, *([^: ]+)(:([^, ]+)| ).*/)
-    const hasColon = match && match[4] !== undefined
-    const days = Number(match && match[1])
-    const hours = hasColon ? Number(match[2]) : 0
-    const mins = match && Number(match[hasColon ? 4 : 2])
-    if (!match || !(days >= 0) || !(hours >= 0) || !(mins >= 0)) throw new Error(`${m}: bad response from Android uptime: '${uptime}'`)
+
+    // remove lead-in: '… up '
+    const matchUp = uptime.match(/[^u]*up +/)
+    if (!matchUp) throw new Error(`${this.m}: bad response from Android uptime (up): '${uptime}'`)
+    let s = uptime.substring(matchUp[0].length)
+
+    // try to match '54 days, '
+    const matchDays = s.match(/^(\d+) +days, +/)
+    const days = matchDays ? +matchDays[1] : 0
+    if (matchDays) s = s.substring(matchDays[0].length)
+
+    // match either '31 min' or '17:39,'
+    const matchMin = s.match(/^(\d+) min/)
+    const matchColon = !matchMin && s.match(/^(\d+):(\d+),/)
+    const hours = matchColon ? +matchColon[1] : 0
+    const mins = matchMin ? +matchMin[1] : matchColon ? +matchColon[2] : null
+
+    // mins will only be valid if something matched
+    if (!(days >= 0) || !(hours >= 0) || !(mins >= 0)) throw new Error(`${this.m}: bad response from Android uptime: '${uptime}' found ${days}:${hours}:${mins}`)
+
     return days * dayMs +
       hours * hourMs +
       mins * minuteMs

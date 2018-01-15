@@ -15,7 +15,7 @@ export default class ShellBatcher {
   tLast = 0
   queue = []
 
-  constructor(adb, debug, timing) { timing = true
+  constructor(adb, debug, timing) {
     Object.assign(this, {adb, debug, timing})
   }
 
@@ -56,14 +56,14 @@ export default class ShellBatcher {
   }
 
   async execute(count) {
-    const {queue, adb, debug, tLast, timing} = this
+    const {queue, adb, debug, timing} = this
     const {splitCharacter, insertString} = ShellBatcher
     const batch = queue.splice(0, count)
     const t0 = Date.now()
     const tt = this.tt
     this.tt = t0
 
-    if (debug ||timing) console.log(`ShellBatcher executing: ${batch.length}. ${new Date(t0).toISOString()}${tt ? (' ' + ((t0 - tt) / 1e3).toFixed(3)) : ''}`)
+    if (debug || timing) console.log(`ShellBatcher executing: ${batch.length}. ${new Date(t0).toISOString()}${tt ? (' ' + ((t0 - tt) / 1e3).toFixed(3)) : ''}`)
     const cmd = `echo '${batch.map(entry => this.escape(entry.cmd)).join(insertString)}' | su 0`
     if (debug) {
       console.log('ShellBatcher.execute', cmd)
@@ -73,7 +73,7 @@ export default class ShellBatcher {
     if (debug || timing) {
       const e = (Date.now() - t0) / 1e3
       const s = `ShellBatcher.execute2 ${e.toFixed(3)} cmds: ${count}`
-      debug ? console.log(s, JSON.stringify(text)) : console.log(s)
+      console.log(!debug ? s : s + ' ' + JSON.stringify(text))
     }
     const results = text.split(splitCharacter)
     const rxLength = results.length

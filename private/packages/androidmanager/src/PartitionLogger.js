@@ -4,12 +4,6 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 */
 import Logger from './Logger'
 
-import yaml from 'js-yaml'
-import path from 'path'
-import fs from 'fs-extra'
-
-const m = 'PartitionLogger'
-
 export default class PartitionLogger extends Logger {
   static partitionDir = '/dev/block'
   static skip = [
@@ -21,8 +15,8 @@ export default class PartitionLogger extends Logger {
   writePromise = Promise.resolve()
   pending = {}
 
-  constructor(adb) {
-    super(adb, 'partitions.yaml')
+  constructor(o) {
+    super(Object.assign({stateFile: 'partitions.yaml', name: 'PartitionLogger'}, o))
   }
 
   async next() {
@@ -50,7 +44,7 @@ export default class PartitionLogger extends Logger {
       const {name, file} = alias
       const baseName = file.substring(file.lastIndexOf('/') + 1)
       const partition = map[baseName]
-      if (!partition) throw new Error(`${m} alias for unknown partition: ${name} file ${file}`)
+      if (!partition) throw new Error(`${this.m} alias for unknown partition: ${name} file ${file}`)
       partition.use = name // 'boot'
       partition.file = file // '/dev/block/sda17'
       delete map[baseName]
@@ -122,7 +116,7 @@ export default class PartitionLogger extends Logger {
     const v0 = partitionState[listName]
     const values = Array.isArray(v0) ? v0 : (partitionState[listName] = [])
     if (value !== Object(values[0]).value) {
-      const o = {value, seenOn: this.now}
+      const o = {value, seenOn: now}
       if (data) o.data = data
       values.unshift(o)
       this.doWrite = true
@@ -144,13 +138,13 @@ export default class PartitionLogger extends Logger {
     }
     const symlinks = adb.getLines(text)
     const line = symlinks.shift()
-    if (!line.startsWith('total')) throw new Error(`${m}: bad response from Android: command: '${cmd}' response: '${text}'`)
+    if (!line.startsWith('total')) throw new Error(`${this.m}: bad response from Android: command: '${cmd}' response: '${text}'`)
     const aliasList = []
     for (let [ix, s] of symlinks.entries()) {
       const match = s.match(/ ([^ ]+) -> ([^ ]+)/)
       const name = match && match[1]
       let file = match && match[2]
-      if (!name && !file)  throw new Error(`${m}: failed to parse symlink: #${ix} '${s}'`)
+      if (!name && !file) throw new Error(`${this.m}: failed to parse symlink: #${ix} '${s}'`)
       symlinks[ix] = {name, file}
       aliasList.push(name)
     }
@@ -169,7 +163,7 @@ export default class PartitionLogger extends Logger {
     const partitions = text.split('\n')
     let firstLine = partitions.shift()
     let secondLine = partitions.shift()
-    if (!firstLine.startsWith('major') || secondLine) throw new Error(`${m}: bad response from Android: command: '${cmd}' response: '${text}'`)
+    if (!firstLine.startsWith('major') || secondLine) throw new Error(`${this.m}: bad response from Android: command: '${cmd}' response: '${text}'`)
     const map = {}
     const names = []
     for (let [ix, s] of partitions.entries()) {

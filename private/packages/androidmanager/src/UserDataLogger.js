@@ -5,17 +5,11 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 import Logger from './Logger'
 import FastTraverser from './FastTraverser'
 
-import yaml from 'js-yaml'
-import path from 'path'
-import fs from 'fs-extra'
-
-const m = 'PartitionLogger'
-
 export default class UserDataLogger extends Logger {
   static dataPath = '/data'
 
-  constructor(adb) {
-    super(adb, '')
+  constructor(o) {
+    super(Object.assign({stateFile: 'x', name: 'UserDataLogger'}, o))
   }
 
   async next() {
