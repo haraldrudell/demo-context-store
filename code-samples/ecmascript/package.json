@@ -1,0 +1,17 @@
+{
+  "name": "ecmascript",
+  "version": "0.0.1",
+  "module": "build/ecmascript",
+  "license": "ISC",
+  "scripts": {
+    "start": "node --experimental-modules build/ecmascript",
+    "useFileSystem": "yarn add ../../forks/ecmascript2049/workspace/packages/es2049package --dev",
+    "build": "rollup --config node:es2049package"
+  },
+  "rollup": {
+    "targets": "mini"
+  },
+  "devDependencies": {
+    "es2049package": "../../forks/ecmascript2049/workspace/packages/es2049package"
+  }
+}
