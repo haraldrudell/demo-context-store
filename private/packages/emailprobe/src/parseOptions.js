@@ -6,8 +6,25 @@ import {tryYaml, loadYaml, mergeOptions} from './optionsHelpers'
 
 import path from 'path'
 
-export async function parseOptions({argv, name}) {
-  const oDesc = {
+export async function parseOptions({argv, name, version}) {
+  function exit(message) {
+    const usage = [
+      `${name} -help -debug -config f email@server.com …`,
+      `    version: ${version}`,
+      '  tests email address validity',
+      '    logs certificate information and results',
+      '  -config f  load options from yaml file f resolved to current directory',
+      `    if not provided, ${name}.yaml is scanned for in locations: . ~/apps ..`,
+    ].join('\n')
+
+    const statusCode = message ? 2 : 0
+    const logFn = statusCode ? console.error : console.log
+    message && logFn(`${message}\n`)
+    logFn(usage)
+    process.exit(statusCode)
+  }
+
+  const optionsDescriptions = {
     name,
     options: {
       debug: 'boolean',
@@ -17,40 +34,29 @@ export async function parseOptions({argv, name}) {
   }
   const mailboxes = []
   const options = {name, mailboxes}
-  const help =
-    `${name} -help -debug -config f email@server.com …\n` +
-    '  tests email address validity'
   let hadConfig
 
-  for (let i = 2, arg = argv[i]; i < argv.length; arg = argv[++i]) switch (arg) {
+  for (let i = 0, arg = argv[i]; i < argv.length; arg = argv[++i]) switch (arg) {
     case '-h':
     case '-help':
     case '--help':
-      console.log(help)
-      process.exit(0)
+      exit()
       // eslint-disable-line no-fallthrough
-    case '-ssh':
-      options.ssh = arg
-      break
     case '-config':
       hadConfig = true
       Object.assign(options, await loadYaml(path.resolve(argv[++i])))
       break
-      case '-debug':
+    case '-debug':
       options.debug = true
       break
     default:
-      if (arg.startsWith('-')) {
-        console.error(`Unknown option: '${arg}'\n`)
-        console.error(help)
-        process.exit(2)
-      }
+      if (arg.startsWith('-')) exit(`Unknown option: '${arg}'`)
       mailboxes.push(arg)
       break
   }
   if (!hadConfig) {
     const o = await tryYaml(options)
-    o && mergeOptions(options, o, oDesc)
+    o && mergeOptions(options, o, optionsDescriptions)
   }
   return options
 }

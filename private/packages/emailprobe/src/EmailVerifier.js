@@ -7,6 +7,7 @@ import SMTPVerifier from './SMTPVerifier';
 
 import parser from 'email-addresses'
 import dns from 'dns'
+import Queue from './Queue.mjs'
 
 export default class EmailVerifier {
   timeout = 1e3
@@ -15,70 +16,89 @@ export default class EmailVerifier {
   constructor(o) {
     const {debug, ssh, name: m = 'EmailVerifier', port} = o || false
     Object.assign(this, {debug, m, ssh, port})
+    this.queue = new Queue()
   }
 
-  async verify(mailboxes) { // can only be invoked one at a time
-    const results = this.results = []
-    if (!Array.isArray(mailboxes)) mailboxes = Array.from(mailboxes)
-    this.emails = mailboxes.map((email, ix) => this.parse(email, ix))
-    await this._verifyNext().catch(e => this.ensureShutdown(e))
+  async verify(mailboxes) {
+    const {debug} = this
+    if (!Array.isArray(mailboxes)) mailboxes = [mailboxes]
+    const emails = mailboxes.map((email, ix) => this.parseMailbox(email, ix))
+    debug && console.log(`${this.m} verify`, emails)
+    await Promise.all(emails.map(email => this.addMx(email)))
+    debug && console.log(`${this.m} verify submitting:`, emails)
+    const results = await this.queue.submit(() => this.verifyAll(emails))
+    debug && console.log(`${this.m} verify results:`, results)
     console.log(`\nnumber of results: ${results.length}`)
-    this.printResults(results)
+    this.printResults(results, true)
+    return results
   }
 
-  async _verifyNext() {
-    const {emails, debug} = this
-    let {sshTunnel} = this
-    const email = emails.shift()
+  async verifyAll(emails) {
+    const {debug} = this
+    debug && console.log(`${this.m} verifyAll`, emails)
+    const results = []
+    Object.assign(this, {emails, emailIndex: 0, results})
+    await this.verifyNext()
+    return results
+  }
+
+  async verifyNext() {
+    const {debug, ssh, emails, emailIndex, sshDomain, sshTunnel, results, port: nearSshPort, timeout, retryTime} = this
+    const email = emails[emailIndex]
     if (email) {
-      const {ssh, domain0} = this
-      const {address, domain} = email
-      debug && console.log('Resolving dns…')
-      const {ip, mxDnsName} = await this.getMxIp(domain)
-      debug && console.log(`Mailbox domain: ${domain} MX host: ${mxDnsName} MX ip: ${ip}`)
-      const changeTunnel = ssh && domain !== domain0
-      if (changeTunnel) {
-        sshTunnel && await sshTunnel.disconnect()
-        this.domain0 = domain
-        debug && console.log(`setting up ssh tunnel from locahost to intermediate server…`)
-        sshTunnel = this.sshTunnel = new SshTunnel(ssh.replace(/DOMAIN/g, ip))
-      }
-      const sshPromise = changeTunnel && sshTunnel.setupSsh(true)
+      const {domain, mxDnsName, address, ip} = email
+      const host = ssh ? '127.0.0.1' : domain
+      const port = ssh ? nearSshPort : 25
+      if (ssh) {
+        const changeTunnel = ssh && domain !== sshDomain
+        if (changeTunnel) {
+          sshTunnel && await sshTunnel.disconnect()
 
-      return Promise.all([
-        sshPromise,
-        this._verify({address, domain, mxDnsName, ip}),
-      ])
-    } else if (sshTunnel) {
-      debug && console.log(`terminating ssh forwarding`)
-      sshTunnel.disconnect()
+          debug && console.log(`setting up ssh tunnel from localhost to intermediate server…`)
+          const tunnel = new SshTunnel({cmd: ssh.replace(/DOMAIN/g, ip), debug})
+          Object.assign(this, {sshDomain: domain, sshTunnel: tunnel})
+          return Promise.all([
+            tunnel.setupSsh(),
+            this.verifyNext(),
+          ])
+        }
+
+        debug && console.log(`Waiting for ssh tunnel: ${mxDnsName} ${ip}…`)
+        await sshTunnel.ready({host, port, timeout, retryTime})
+      }
+
+      results.push.apply(results, await this.connect({host, port, mxDnsName, address}))
+      this.emailIndex++
+      return this.verifyNext()
     }
+    return sshTunnel && (this.sshDomain = null) && sshTunnel.disconnect()
   }
 
-  async _verify({address, domain, mxDnsName, ip}) {
-    const {sshTunnel, timeout, retryTime, debug, port: nearSshPort, results} = this
-    const port = sshTunnel ? nearSshPort : 25
-    const host = sshTunnel ? '127.0.0.1' : domain
-    if (sshTunnel) {
-      debug && console.log('Waiting for ssh tunnel…')
-      await sshTunnel.ready({host, port, timeout, retryTime})
-    }
-    debug && console.log('Connecting to mail server…')
+  async connect({host, port, mxDnsName, address}) {
+    const {debug} = this
+    debug && console.log(`Connecting to mail server: ${mxDnsName}…`)
     const result = await new SMTPVerifier({smtp: {host, port}, mxDnsName, debug}).verify(address)
+    debug && console.log('SMTPVerifier:', result)
     if (!Array.isArray(result)) throw new Error(`{this.m} Email verification failed: ${result}`)
     this.printResults(result)
-    Array.prototype.push.apply(results, result)
-    return this._verifyNext()
+    return result // [{email, response}…]
   }
 
-  printResults(results) {
-    for (let {email, response} of results) console.log(`Mailbox: ${email} Response: ${response}`)
+  printResults(results, abbreviate) {
+    for (let {email, response} of results) {
+      const newLine = !abbreviate ? -1 : response.indexOf('\n')
+      const r = !~newLine ? response : response.substring(0, newLine) + '…'
+      console.log(`Mailbox: ${email} Response: ${r}`)
+    }
   }
 
-  async ensureShutdown(e) {
-    const {sshTunnel} = this
-    if (sshTunnel) await sshTunnel.disconnect().catch(e1 => console.error(e1))
-    throw e
+  async addMx(email) {
+    const {debug} = this
+    const {domain} = email
+    debug && console.log(`Resolving dns: ${domain}…`)
+    const {ip, mxDnsName} = await this.getMxIp(domain)
+    debug && console.log(`Mailbox domain: ${domain} MX host: ${mxDnsName} MX ip: ${ip}`)
+    Object.assign(email, {ip, mxDnsName})
   }
 
   async getMxIp(domain) {
@@ -92,7 +112,7 @@ export default class EmailVerifier {
     return {ip, mxDnsName: exchange}
   }
 
-  parse(email, ix) {
+  parseMailbox(email, ix) {
     if (!email || typeof email !== 'string') throw new Error(`${this.m} mailbox argument #${ix + 1} not non-empty string`)
     const {addresses} = parser(email) //{ast, addresses[{parts, type, name, address, local, domain}]}
     const [first] = addresses
