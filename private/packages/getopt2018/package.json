@@ -2,39 +2,34 @@
   "name": "getopt2018",
   "version": "0.0.1",
   "description": "Modern options parsing",
-  "module": "lib/OptionsParser",
-  "main": "lib/OptionsParser-cjs",
-  "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
-    "clean": "./node_modules/.bin/clean",
-    "test": "../../node_modules/.bin/jest"
-  },
-  "rollup": {
-    "input": [
-      {
-      "input": "src/OptionsParser.js",
-      "main": true
-    },
-    {
-      "input": "src/OptionsParser.js",
-      "module": true
-    }
-  ],
-  "node": true,
-    "nodelatest": true,
-    "clean": "lib"
-  },
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
+  "module": "lib/OptionsParser.mjs",
+  "main": "lib/OptionsParser",
+  "scripts": {
+    "build": "rollup --config node:es2049package",
+    "watch": "rollup --watch --config node:es2049package",
+    "clean": "clean lib",
+    "test": "jest"
+  },
+  "rollup": {
+    "targets": "mini"
+  },
   "private": true,
   "engines": {
-    "node": ">=8"
+    "node": ">=9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gt:sw"
   },
   "dependencies": {
     "fs-extra": "^4.0.1",
     "js-yaml": "^3.9.1"
   },
   "devDependencies": {
-    "rollupconfig": "0.0.1"
+    "babel-cli": "^6.26.0",
+    "es2049package": "^0.0.18",
+    "jest": "^22.1.4"
   }
 }

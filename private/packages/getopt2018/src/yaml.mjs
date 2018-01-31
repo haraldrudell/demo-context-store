@@ -14,7 +14,7 @@ export async function findYamlFilename(name) {
   const paths = []
   const hostname = os.hostname().replace(/\..*$/, '')
   for (let basename of [`${name}-${hostname}.yaml`, `${name}.yaml`])
-    paths.push(basename, path.join(os.homedir(), 'apps', basename), path.join(os.homedir(), 'apps', basename), path.join('/etc', basename))
+    paths.push(basename, path.join(os.homedir(), 'apps', basename), path.join('..', basename), path.join('/etc', basename))
 
   for (let aPath of paths) {
     if (await fs.pathExists(aPath)) return aPath
