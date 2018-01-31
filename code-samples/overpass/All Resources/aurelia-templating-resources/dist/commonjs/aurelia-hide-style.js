@@ -1,0 +1,32 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.aureliaHideClassName = undefined;
+exports.injectAureliaHideStyleAtHead = injectAureliaHideStyleAtHead;
+exports.injectAureliaHideStyleAtBoundary = injectAureliaHideStyleAtBoundary;
+
+var _aureliaPal = require('aurelia-pal');
+
+var aureliaHideClassName = exports.aureliaHideClassName = 'aurelia-hide';
+
+var aureliaHideClass = '.' + aureliaHideClassName + ' { display:none !important; }';
+
+function injectAureliaHideStyleAtHead() {
+  _aureliaPal.DOM.injectStyles(aureliaHideClass);
+}
+
+function injectAureliaHideStyleAtBoundary(domBoundary) {
+  if (_aureliaPal.FEATURE.shadowDOM && domBoundary && !domBoundary.hasAureliaHideStyle) {
+    domBoundary.hasAureliaHideStyle = true;
+    _aureliaPal.DOM.injectStyles(aureliaHideClass, domBoundary);
+  }
+}
+
+
+//////////////////
+// WEBPACK FOOTER
+// ./~/aurelia-templating-resources/dist/commonjs/aurelia-hide-style.js
+// module id = 148
+// module chunks = 4
