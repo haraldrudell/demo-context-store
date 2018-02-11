@@ -10,12 +10,15 @@ import dns from 'dns'
 import Queue from './Queue.mjs'
 
 export default class EmailVerifier {
-  timeout = 1e3
-  retryTime = 1e2
+  timeout = 3e3 // 3 s
+  retryTime = 1e2 // 100 ms
+  verifyRejected = this.verifyRejected.bind(this)
 
   constructor(o) {
-    const {debug, ssh, name: m = 'EmailVerifier', port} = o || false
-    Object.assign(this, {debug, m, ssh, port})
+    const {debug, ssh, name, port} = o || false
+    this.m = String(name || 'EmailVerifier')
+    this.ensureListOfNonEmptyString(ssh)
+    Object.assign(this, {debug, ssh, port})
     this.queue = new Queue()
   }
 
@@ -38,8 +41,16 @@ export default class EmailVerifier {
     debug && console.log(`${this.m} verifyAll`, emails)
     const results = []
     Object.assign(this, {emails, emailIndex: 0, results})
-    await this.verifyNext()
+    await this.verifyNext().catch(this.verifyNextOnRejected)
     return results
+  }
+
+  async verifyNextOnRejected(e) {
+    const {sshTunnel} = this
+    let e1
+    sshTunnel && await sshTunnel.disconnect().catch(ee => (e1 = ee))
+    console.error(`${this.m} ssh disconnect error:`, e1)
+    throw e
   }
 
   async verifyNext() {
@@ -55,7 +66,11 @@ export default class EmailVerifier {
           sshTunnel && await sshTunnel.disconnect()
 
           debug && console.log(`setting up ssh tunnel from localhost to intermediate server…`)
-          const tunnel = new SshTunnel({cmd: ssh.replace(/DOMAIN/g, ip), debug})
+          const tunnel = new SshTunnel({cmd: this.patchSsh(ip), debug})
+
+          // now we have an ssh object
+          if (!sshTunnel && await tunnel.isPortOpen({host, port, timeout})) throw new Error(`${this.m} port busy: ${port}`) // we did not have one before
+
           Object.assign(this, {sshDomain: domain, sshTunnel: tunnel})
           return Promise.all([
             tunnel.setupSsh(),
@@ -71,7 +86,7 @@ export default class EmailVerifier {
       this.emailIndex++
       return this.verifyNext()
     }
-    return sshTunnel && (this.sshDomain = null) && sshTunnel.disconnect()
+    return sshTunnel && (this.sshDomain = null) + sshTunnel.disconnect()
   }
 
   async connect({host, port, mxDnsName, address}) {
@@ -119,5 +134,17 @@ export default class EmailVerifier {
     if (addresses.length !== 1 || first.type !== 'mailbox') throw new Error(`${this.m} mailbox argument #${ix + 1} failed parse`)
     const {address, domain} = first
     return {address, domain} // 'president@whitehouse.gov', 'whitehouse.gov'
+  }
+
+  ensureListOfNonEmptyString(ssh) {
+    if (!Array.isArray(ssh)) throw new Error(`${this.m} ssh argument not array`)
+    for (let [index, value] of ssh.entries()) {
+      const vt = typeof value
+      if (!value || vt !== 'string') throw new Error(`${this.m} ssh element at index ${index} not nonempty string: type: ${vt}`)
+    }
+  }
+
+  patchSsh(ip) {
+    return this.ssh.map(str => str.replace(/DOMAIN/g, ip))
   }
 }
