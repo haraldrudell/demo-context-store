@@ -1,0 +1,124 @@
+/*
+© 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
+All rights reserved.
+*/
+import Option from './Option'
+import OptionTypes from './OptionTypes'
+import ParserBase from './ParserBase'
+
+export default class ParserOptions extends ParserBase {
+  optionList = []
+  optionIndex = {}
+  initialOptions = {}
+
+  constructor(o) {
+    super(o)
+    const {optionsData} = o || false
+    const {properties, optionTypes: oTypes} = optionsData || false
+
+    this.optionTypes = new OptionTypes().addOptionTypes(oTypes)
+
+    const ot = typeof properties
+    if (ot !== 'object') throw new Error(`${this.m} optionsData.properties not object: ${ot}`)
+
+    this.addOptions(properties)
+  }
+
+  getOptionByName(name) { // '-debug'
+    return this.optionIndex[name]
+  }
+
+  getOptions() {
+    return this.optionList
+  }
+
+  addOptions(properties) {
+    const {optionList, equalSign, optionTypes} = this
+    const newOptions = []
+    for (let [property, values] of Object.entries(properties)) {
+      const type = optionTypes.getOptionTypeFn(values.type)
+      const option = new Option({property, equalSign, ...values, type})
+      optionList.push(option)
+      newOptions.push(option)
+    }
+    this.addOptionsToIndex(newOptions)
+  }
+
+  addOptionsToIndex(optionList) {
+    const {debug, optionIndex, initialOptions} = this
+    for (let option of optionList) {
+
+      // name index
+      const {names} = option // string or list of string
+      if (names) {
+        const nameList = Array.isArray(names) ? names : [names]
+        for (let name of nameList) {
+          if (optionIndex[name]) throw new Error(`${this.m} duplicate option: ${name}`)
+          optionIndex[name] = option
+        }
+      }
+
+      // initial options object
+      // TODO 180130 hr NIMP no such types yet
+    }
+    debug && console.log(`${this.m} addToIndex`, Object.keys(optionIndex), 'initialObject:', initialOptions)
+  }
+
+  getInitialOptions() {
+    return {...this.initialOptions}
+  }
+
+  checkForMandatoryOptions() {
+    const {optionList} = this
+    const missing = []
+    for (let option of optionList) if (option.isNumeralityMandatory && !option.count) missing.push(option.names[0])
+    if (missing.length) return `Missing mandatory options: ${missing.join(' ')}`
+  }
+
+  ensureValueOk({i, arg, value, option}) {
+    const {isHasValueNever, isHasValueAlways} = option
+    const result = {}
+
+    // -option=value
+    if (value) {
+      if (isHasValueNever) result.text = `${this.m} option ${arg} does not accept a value`
+    } else if (!isHasValueNever) { // may or must have value
+      value = i.argv[i.index + 1]
+      if (isHasValueAlways) { // always: use even if begins with '-'
+        if (value !== undefined) i.index++
+        else result.text = `${this.m} option ${arg} must have a value`
+      } else { // may: only use if not beings with '-'
+        const isValue = !value.startsWith('-')
+        if (isValue) i.index++
+        else value = undefined
+      }
+    }
+
+    if (!result.text && value) result.value = value
+    return result
+  }
+
+  addToArgs({arg, i}) {
+    const {isNumeralityNever, isNumeralityMultiple} = this
+    if (isNumeralityNever) return `args not allowed: ${arg}`
+
+    let {args} = i.options
+    if (args) args.push(arg)
+    else i.options.args = args = [arg]
+    i.index++
+
+    if (args.length > 1 && !isNumeralityMultiple) return `only 1 arg allowed: ${arg}`
+  }
+
+  processEqualSign(arg) {
+    if (this.equalSign) {
+      const eq = arg.indexOf('=')
+      if (~eq) {
+        const value = arg.substring(eq + 1)
+        arg = arg.substring(0, eq)
+        return {arg, value}
+      }
+    }
+    return {arg}
+  }
+}

@@ -18,7 +18,7 @@ test('instantiate OptionsParser', () => {
 
 test('parse single argument', async () => {
   const arg = 'filename'
-  const exit = s => {throw new Error(`exit ${s}`)}
+  const exit = function mockExit(s) {throw new Error(`exit ${s}`)}
   const optionsData = {properties: {}, exit}
   const o = {optionsData, name: 'test:singleArg'}
   const expected = [arg]
@@ -28,9 +28,9 @@ test('parse single argument', async () => {
 })
 
 test('parse boolean option', async () => {
-  const optionName = '-prop'
+  const optionName = '-testBooleanOptionName'
   const prop = optionName.substring(1)
-  const exit = s => {throw new Error(`exit ${s}`)}
+  const exit = function mockExit(s) {throw new Error(`exit ${s}`)}
   const optionsData = {
     properties: {
       [prop]: {
@@ -39,7 +39,7 @@ test('parse boolean option', async () => {
     },
     exit,
   }
-  const o = {optionsData, name: 'test:boolean'/*, debug: true*/}
+  const o = {optionsData, name: 'test:boolean', debug: false}
   const expected = {[prop]: true}
   const args = [optionName]
 
@@ -50,10 +50,33 @@ test('parse boolean option', async () => {
 
 test('parse -help', async () => {
   let i = 0
-  const exit = s => {if (s) throw new Error(`exit ${s}`); else i++}
+  const exit = function mockExit(s) {if (s) throw new Error(`exit ${s}`); else i++}
   const optionsData = {properties: {}, exit}
   const o = {optionsData, name: 'test:help'}
   const argv = ['-help']
   const options = await new OptionsParser(o).parseOptions(argv)
   expect(i).toBe(1)
+})
+
+test('parse integer 1', async () => {
+  const optionName = '-testInteger'
+  const value = 1
+  const prop = optionName.substring(1)
+  const exit = function mockExit(s) {console.error('mockExit', s); /*throw new Error(`exit ${s}`)*/}
+  const optionsData = {
+    properties: {
+      [prop]: {
+        type: 'integer',
+        min: 0,
+        max: 10,
+        hasValue: 'always',
+      }
+    },
+    exit,
+  }
+  const expected = {[prop]: value}
+  const o = {optionsData, name: 'test:integer'}
+  const argv = [optionName, String(value)]
+  const options = await new OptionsParser(o).parseOptions(argv)
+  expect(options).toEqual(expected)
 })

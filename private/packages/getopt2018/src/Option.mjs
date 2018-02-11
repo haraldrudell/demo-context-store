@@ -5,9 +5,12 @@ All rights reserved.
 import ValueFlag from './ValueFlag'
 
 export default class Option extends ValueFlag {
+  static deletedProperties = Object.keys({name: 1, names: 1, type: 1, property: 1, equalSign: 1, help: 1})
+
   constructor(o) {
     super(o)
-    let {name, names, type, property, equalSign, help} = o || false
+    const props = {...o}
+    let {name, names, type, property, equalSign, help} = props
     this.m = String(name || 'Option')
     this.parseProperty(property) // undefined or ne-string
     names = this.parseNames(names || (property ? `-${property}` : undefined))
@@ -15,7 +18,9 @@ export default class Option extends ValueFlag {
     const tt = typeof type
     if (tt !== 'function') throw new Error(`${this.m} type not funtion: ${tt}`)
     equalSign = Boolean(equalSign)
-    Object.assign(this, {names, type, property, equalSign, count: 0, help})
+    const {deletedProperties} = Option
+    for (let p of deletedProperties) delete props[p]
+    Object.assign(this, {names, type, property, equalSign, count: 0, help, props})
   }
 
   anotherInvocationOk() {
@@ -34,5 +39,21 @@ export default class Option extends ValueFlag {
       if (!value || tv !== 'string') throw new Error(`${this.m} action options property name not undefined or non-empty string`)
     }
     return value
+  }
+
+  async getOptionHelp() {
+    const {names, help, type, isNumeralityMandatory, isHasValueAlways, isHasValueNever} = this
+    let s = `  ${names.join(' ')}`
+    if (typeof help === 'function') {
+      s += ` ${await help()}`
+    } else if (help) s += ` ${help}`
+    else {
+      const tName = type.name
+      tName && (s += ` ${tName}`)
+      isNumeralityMandatory && (s += ` mandatory`)
+      if (isHasValueAlways) s += ` value mandatory`
+      else if (!isHasValueNever) s += ` may have value`
+    }
+    return s
   }
 }

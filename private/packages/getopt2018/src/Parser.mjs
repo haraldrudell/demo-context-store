@@ -2,7 +2,9 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import OptionsDefaults from './OptionsDefaults'
+import ParserDefaults from './ParserDefaults'
+
+import util from 'util'
 
 /*
 const optionsData = {
@@ -28,16 +30,24 @@ const optionsData = {
 }
 */
 
-export default class OptionsParser extends OptionsDefaults {
+export default class OptionsParser extends ParserDefaults {
+  constructor(o) {
+    super(o)
+    this.debug && console.log(`${this.m} OptionsParser props: ${util.inspect(this, {color: true, depth: null})}`)
+  }
+
   async parseOptions(argv) {
-    const {debug} = this
-    const i = {
-      options: this.getInitialOptions(),
-      argv,
-      index: 0,
+    const {debug, readYaml} = this
+    const options = this.getInitialOptions()
+    const i = {options, argv, index: 0}
+    if (readYaml) {
+      const optionsFile = await this.getYamlFilename()
+      const optionsFileProp = 'options'
+      Object.assign(options, {optionsFile, optionsFileProp})
     }
+    debug && console.log(`${this.m} parseOptions argv:`, argv, 'initialOptions:', options)
     const maxIndex = argv.length
-    debug && console.log(`${this.m} parseOptions argv:`, argv, 'initialOptions:', i.options)
+    const parser = this
 
     while (i.index < maxIndex) {
 
@@ -51,28 +61,34 @@ export default class OptionsParser extends OptionsDefaults {
       }
 
       // option name
-      const {arg, value: value0} = this.processEqualSign(token)
-      const action = this.actionIndex[arg]
-      if (!action) this.doError(`Unknown option: ${arg}`)
-      if (!action.anotherInvocationOk()) this.doError(`option: ${arg} can only be provided once`)
+      const {arg: name, value: value0} = this.processEqualSign(token)
+      const option = this.getOptionByName(name)
+      if (!option) return this.doError(`Unknown option: ${name}`)
+      if (!option.anotherInvocationOk()) return this.doError(`option: ${name} can only be provided once`)
 
       // option value
-      const {value, text} = this.ensureValueOk({i, arg, value: value0, action})
-      if (text) this.doError(text)
+      const {value, text} = this.ensureValueOk({i, arg: name, value: value0, option})
+      if (text) return this.doError(text)
 
       // execute action
-      const v = await action.type({value, i, action, parser: this})
-      if (typeof v === 'string') this.doError(v)
+      const v = await option.type({name, value, i, option, parser})
+      if (typeof v === 'string') return this.doError(v)
       else if (v === true) continue
 
       i.index++
     }
 
-    const mText = this.checkForMandatoryActions()
-    if (mText) this.doError(mText)
+    const mText = this.checkForMandatoryOptions()
+    if (mText) return this.doError(mText)
 
-    if (this.readYaml) await this.mergeYaml(i)
+    const {optionsFile, optionsFileProp} = options
+    debug && console.log(`${this.m} premerging in yaml options:`, {optionsFile, optionsFileProp}, options)
+    if (optionsFile) {
+      const yamlOptions = await this.getYaml(optionsFile, optionsFileProp)
+      debug && console.log(`${this.m} merging in yaml options:`, yamlOptions)
+      Object.assign(options, yamlOptions)
+    }
 
-    return i.options
+    return options
   }
 }
