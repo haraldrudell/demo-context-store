@@ -2,24 +2,28 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import SshTunnel from './SshTunnel'
-import SMTPVerifier from './SMTPVerifier';
+import SshRecycler from './SshRecycler'
+import SMTPVerifier from './SMTPVerifier'
+import Queue from './Queue'
 
 import parser from 'email-addresses'
 import dns from 'dns'
-import Queue from './Queue.mjs'
 
 export default class EmailVerifier {
-  timeout = 3e3 // 3 s
-  retryTime = 1e2 // 100 ms
-  verifyRejected = this.verifyRejected.bind(this)
+  shutdown = this.shutdown.bind(this)
+  shutdownSafe = this.shutdownSafe.bind(this)
 
   constructor(o) {
     const {debug, ssh, name, port} = o || false
     this.m = String(name || 'EmailVerifier')
-    this.ensureListOfNonEmptyString(ssh)
-    Object.assign(this, {debug, ssh, port})
+    Object.assign(this, {debug, port})
+    if (ssh) this.sshRecycler = new SshRecycler({cmd: ssh, nearPort: port, debug})
     this.queue = new Queue()
+  }
+
+  async start() {
+    const {sshRecycler} = this
+    return sshRecycler && sshRecycler.promise
   }
 
   async verify(mailboxes) {
@@ -28,12 +32,25 @@ export default class EmailVerifier {
     const emails = mailboxes.map((email, ix) => this.parseMailbox(email, ix))
     debug && console.log(`${this.m} verify`, emails)
     await Promise.all(emails.map(email => this.addMx(email)))
+
     debug && console.log(`${this.m} verify submitting:`, emails)
     const results = await this.queue.submit(() => this.verifyAll(emails))
+
     debug && console.log(`${this.m} verify results:`, results)
     console.log(`\nnumber of results: ${results.length}`)
     this.printResults(results, true)
     return results
+  }
+
+  async shutdown(e) {
+    const {sshRecycler, debug} = this
+    debug && console.log(`${this.m} shutdown e:`, e, 'sshRecycler:', sshRecycler && SshRecycler.cmd)
+    if (sshRecycler) {
+      this.sshRecycler = null
+      await sshRecycler.shutdown()
+    }
+    if (e instanceof Error) throw e
+    return e
   }
 
   async verifyAll(emails) {
@@ -41,57 +58,46 @@ export default class EmailVerifier {
     debug && console.log(`${this.m} verifyAll`, emails)
     const results = []
     Object.assign(this, {emails, emailIndex: 0, results})
+
     await this.verifyNext().catch(this.verifyNextOnRejected)
     return results
   }
 
-  async verifyNextOnRejected(e) {
-    const {sshTunnel} = this
-    let e1
-    sshTunnel && await sshTunnel.disconnect().catch(ee => (e1 = ee))
-    console.error(`${this.m} ssh disconnect error:`, e1)
-    throw e
+  shutdownSafe(e) {
+    this.shutdown().catch(console.error)
+    if (e) throw e
   }
 
   async verifyNext() {
-    const {debug, ssh, emails, emailIndex, sshDomain, sshTunnel, results, port: nearSshPort, timeout, retryTime} = this
+    const {print, emails, emailIndex, sshDomain, sshRecycler, results, port: nearSshPort} = this
     const email = emails[emailIndex]
-    if (email) {
-      const {domain, mxDnsName, address, ip} = email
-      const host = ssh ? '127.0.0.1' : domain
-      const port = ssh ? nearSshPort : 25
-      if (ssh) {
-        const changeTunnel = ssh && domain !== sshDomain
-        if (changeTunnel) {
-          sshTunnel && await sshTunnel.disconnect()
+    if (!email) return
+    const {domain, mxDnsName, address, ip} = email
+    const host = sshRecycler ? '127.0.0.1' : ip
+    const port = sshRecycler ? nearSshPort : 25
+    if (sshRecycler) {
+      if (domain !== sshDomain) {
+        if (!sshDomain) {
+          if (await sshRecycler.isPortOpen({host, port})) throw new Error(`${this.m} port busy: ${port}`) // we did not have one before
+        } else await sshRecycler.disconnect()
+        this.sshDomain = domain
 
-          debug && console.log(`setting up ssh tunnel from localhost to intermediate server…`)
-          const tunnel = new SshTunnel({cmd: this.patchSsh(ip), debug})
+        print && console.log(`setting up ssh tunnel from localhost to intermediate server…`)
+        await sshRecycler.connect({host: ip})
 
-          // now we have an ssh object
-          if (!sshTunnel && await tunnel.isPortOpen({host, port, timeout})) throw new Error(`${this.m} port busy: ${port}`) // we did not have one before
-
-          Object.assign(this, {sshDomain: domain, sshTunnel: tunnel})
-          return Promise.all([
-            tunnel.setupSsh(),
-            this.verifyNext(),
-          ])
-        }
-
-        debug && console.log(`Waiting for ssh tunnel: ${mxDnsName} ${ip}…`)
-        await sshTunnel.ready({host, port, timeout, retryTime})
+        print && console.log(`Waiting for ssh tunnel: ${mxDnsName} ${ip}…`)
+        await sshRecycler.waitOnSocket()
       }
-
-      results.push.apply(results, await this.connect({host, port, mxDnsName, address}))
-      this.emailIndex++
-      return this.verifyNext()
     }
-    return sshTunnel && (this.sshDomain = null) + sshTunnel.disconnect()
+
+    results.push.apply(results, await this.connect({host, port, mxDnsName, address}))
+    this.emailIndex++
+    return this.verifyNext()
   }
 
   async connect({host, port, mxDnsName, address}) {
-    const {debug} = this
-    debug && console.log(`Connecting to mail server: ${mxDnsName}…`)
+    const {debug, print} = this
+    print && console.log(`Connecting to mail server: ${mxDnsName}…`)
     const result = await new SMTPVerifier({smtp: {host, port}, mxDnsName, debug}).verify(address)
     debug && console.log('SMTPVerifier:', result)
     if (!Array.isArray(result)) throw new Error(`{this.m} Email verification failed: ${result}`)
@@ -113,7 +119,7 @@ export default class EmailVerifier {
     debug && console.log(`Resolving dns: ${domain}…`)
     const {ip, mxDnsName} = await this.getMxIp(domain)
     debug && console.log(`Mailbox domain: ${domain} MX host: ${mxDnsName} MX ip: ${ip}`)
-    Object.assign(email, {ip, mxDnsName})
+    Object.assign(email, {ip, mxDnsName}) // {ip: '1.2.3.4', mxDnsName: 'mail.gov'}
   }
 
   async getMxIp(domain) {
@@ -134,17 +140,5 @@ export default class EmailVerifier {
     if (addresses.length !== 1 || first.type !== 'mailbox') throw new Error(`${this.m} mailbox argument #${ix + 1} failed parse`)
     const {address, domain} = first
     return {address, domain} // 'president@whitehouse.gov', 'whitehouse.gov'
-  }
-
-  ensureListOfNonEmptyString(ssh) {
-    if (!Array.isArray(ssh)) throw new Error(`${this.m} ssh argument not array`)
-    for (let [index, value] of ssh.entries()) {
-      const vt = typeof value
-      if (!value || vt !== 'string') throw new Error(`${this.m} ssh element at index ${index} not nonempty string: type: ${vt}`)
-    }
-  }
-
-  patchSsh(ip) {
-    return this.ssh.map(str => str.replace(/DOMAIN/g, ip))
   }
 }

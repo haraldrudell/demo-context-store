@@ -3,15 +3,15 @@
 All rights reserved.
 */
 import EmailVerifier from './EmailVerifier'
-import pj0 from '../package.json'
+import pjson from '../package.json'
 
-import {OptionsParser, readPackageJson} from 'getopt2018'
-
-let m = 'src/index'
-let debug
+import {OptionsParser, launchProcess} from 'es2049options'
 
 const optionsData = {
   properties: {
+    print: {
+      type: 'true',
+    },
     port: {
       type: 'integer',
       min: 1,
@@ -28,22 +28,16 @@ const optionsData = {
   },
 }
 
-run().catch(onRejected)
+launchProcess({run, pjson})
 
-async function run() {
-  const pj = readPackageJson({name: 1, version: 1}, pj0)
-  m = pj.name
-  const options = await new OptionsParser({optionsData, ...pj}).parseOptions(process.argv.slice(2))
-  options.debug && (debug = true) && console.log(`${m} options:`, options)
+async function run({name, version, OnRejected}) {
+  const options = await new OptionsParser({optionsData, name, version}).parseOptions(process.argv.slice(2))
+  options.debug && OnRejected.setDebug() && console.log(`${name} options:`, options)
   const {args: mailboxes} = options
   delete options.args
-  return new EmailVerifier(options).verify(mailboxes, true)
-}
-
-function onRejected(e) {
-  debug && console.error(`${m} onRejected:`)
-  if (!(e instanceof Error)) e = new Error(`Error value: ${typeof e}, '${e}'`)
-  console.error(!debug ? e.message : e)
-  debug && console.trace('onRejected invocation:')
-  process.exit(1)
+  const ev = new EmailVerifier(options)
+  return Promise.all([
+    ev.start(),
+    ev.verify(mailboxes, true).then(ev.shutdown),
+  ]).catch(ev.shutdownSafe)
 }
