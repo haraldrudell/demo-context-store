@@ -2,40 +2,34 @@
   "name": "network-portable",
   "version": "0.0.1",
   "description": "Manipulate networking for Linux, macOS and Windows",
-  "module": "lib/Network.js",
-  "main": "lib/Network-cjs",
-  "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
-    "clean": "./node_modules/.bin/clean build",
-    "test": "echo \"170920 network-portable test nimp\""
-  },
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
+  "module": "lib/Network.js",
+  "main": "lib/Network.mjs",
+  "scripts": {
+    "build": "rollup --config node:es2049package",
+    "clean": "clean lib",
+    "test": "jest"
+  },
   "rollup": {
-    "node": true,
-    "nodelatest": true,
-    "input": [
-      {
-        "input": "src/Network.js",
-        "main": true
-      },
-      {
-        "input": "src/Network.js",
-        "module": true
-      }
-    ],
-    "module": true,
-    "clean": "lib"
+    "targets": "mini"
   },
   "private": true,
   "engines": {
-    "node": ">=8"
+    "node": ">=9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gt:sw"
   },
   "dependencies": {
+    "allspawn": "0.1.1",
+    "es2049lib": "0.0.1",
     "fs-extra": "",
     "linesai": "0.0.1"
   },
   "devDependencies": {
-    "rollupconfig": "0.0.1"
+    "es2049package": "^0.0.21",
+    "jest": "^22.3.0"
   }
 }

@@ -3,6 +3,9 @@
 All rights reserved.
 */
 import NetworkBase from './NetworkBase'
+
+import {spawnCapture} from 'allspawn'
+import {patchCommand} from 'es2049lib'
 import LineReader from 'linesai'
 
 import fs from 'fs-extra'
@@ -12,12 +15,24 @@ export default class Linux extends NetworkBase {
   static sysDevicesVirtualNet = '/sys/devices/virtual/net'
   static procNetRoute = '/proc/net/route'
   static defaultRoute = '0.0.0.0'
+  static defaultRouteMask = '0.0.0.0'
+  static vpnOverrideMask = '128.0.0.0'
+  static arpingCmd = ['arping', '-IINTERFACE', '-c1', 'IP']
 
   async getDefaultRoute() {
+    return this.getLowestRoute({dest: Linux.defaultRoute, mask: Linux.defaultRouteMask})
+  }
+
+  async getVpnOverride() {
+    return this.getLowestRoute({dest: Linux.defaultRoute, mask: Linux.vpnOverrideMask})
+  }
+
+  async getLowestRoute({dest: d, mask: m}) {
     let result
-    for (let route of await this.getRoutes())
-      if (route.dest === Linux.defaultRoute)
-        if (!result || route.metric < result.metric) result = route
+    for (let route of await this.getRoutes()) {
+      const {dest, mask, metric} = route
+      if (dest === d && mask === m && (!result || metric < result.metric)) result = route
+    }
     return result
   }
 
@@ -35,6 +50,15 @@ export default class Linux extends NetworkBase {
     }
     if (includeVirtual) await this._addVirtualInterfaces(result)
     return Array.from(result).sort()
+  }
+
+  async arping({iface, ip}) {
+    const {debug} = this
+    const args = patchCommand(Linux.arpingCmd, /INTERFACE/g, iface, /IP/g, ip)
+    const {stdout} = await spawnCapture({args, echo: debug})
+    const match = stdout.match(/(\d+\.\d+)ms/m)
+    if (!match || match.length !== 2) throw new Error(`${this.m}.arping parsing failed: '${stdout}'`)
+    return Number(match[1])
   }
 
   async _addVirtualInterfaces(result) {
@@ -64,9 +88,7 @@ export default class Linux extends NetworkBase {
   }
 
   _routeSort(r1, r2) {
-    return r1.dest < r2.dest || r1.metric < r2.metrics
-      ? -1
-      : 1
+    return r1.dest < r2.dest || r1.metric < r2.metrics ? -1 : 1
   }
 
   _getIpv4(s) { // 8 characters
