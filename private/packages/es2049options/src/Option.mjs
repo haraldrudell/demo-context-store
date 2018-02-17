@@ -47,6 +47,7 @@ export default class Option extends ValueFlag {
     if (typeof help === 'function') {
       s += ` ${await help()}`
     } else if (help) s += ` ${help}`
+    else if (typeof help === 'string') s = undefined
     else {
       const tName = type.name
       tName && (s += ` ${tName}`)

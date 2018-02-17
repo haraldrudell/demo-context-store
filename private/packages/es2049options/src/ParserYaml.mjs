@@ -15,7 +15,7 @@ export default class ParserYaml extends ParserOptions {
 
   async getYamlFilename() {
     const {name} = this
-    return findYamlFilename(name)
+    return findYamlFilename(name, true)
   }
 
   async getYaml(filename, key) {

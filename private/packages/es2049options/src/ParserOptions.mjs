@@ -33,22 +33,22 @@ export default class ParserOptions extends ParserBase {
   }
 
   addOptions(properties) {
-    const {optionList, equalSign, optionTypes} = this
-    const newOptions = []
+    const {optionList, equalSign, optionTypes, initialOptions, optionIndex} = this
     for (let [property, values] of Object.entries(properties)) {
-      const type = optionTypes.getOptionTypeFn(values.type)
-      const option = new Option({property, equalSign, ...values, type})
+      // create option object
+      const {type: optionTypeName} = values
+      const type = optionTypes.getOptionTypeFn(optionTypeName)
+      const modifier = optionTypes.getOptionTypeModifier(optionTypeName)
+      const optionConstructorArguments = {property, equalSign, ...values, type}
+      if (modifier) modifier(optionConstructorArguments)
+      const option = new Option(optionConstructorArguments)
       optionList.push(option)
-      newOptions.push(option)
-    }
-    this.addOptionsToIndex(newOptions)
-  }
 
-  addOptionsToIndex(optionList) {
-    const {debug, optionIndex, initialOptions} = this
-    for (let option of optionList) {
+      // initial value
+      const {props: {value}, property: p} = option
+      if (value !== undefined && p) initialOptions[p] = value
 
-      // name index
+      // index
       const {names} = option // string or list of string
       if (names) {
         const nameList = Array.isArray(names) ? names : [names]
@@ -57,11 +57,7 @@ export default class ParserOptions extends ParserBase {
           optionIndex[name] = option
         }
       }
-
-      // initial options object
-      // TODO 180130 hr NIMP no such types yet
     }
-    debug && console.log(`${this.m} addToIndex`, Object.keys(optionIndex), 'initialObject:', initialOptions)
   }
 
   getInitialOptions() {

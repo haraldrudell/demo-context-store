@@ -8,7 +8,7 @@ import yaml from 'js-yaml'
 import os from 'os'
 import path from 'path'
 
-export async function findYamlFilename(name) {
+export async function findYamlFilename(name, noneIsOk) {
 
   // get path list
   const paths = []
@@ -19,7 +19,7 @@ export async function findYamlFilename(name) {
   for (let aPath of paths) {
     if (await fs.pathExists(aPath)) return aPath
   }
-  throw new Error(`Parameter files not found: ${paths.join(', ')}`)
+  if (!noneIsOk) throw new Error(`Parameter files not found: ${paths.join(', ')}`)
 }
 
 export async function loadYaml(file) {

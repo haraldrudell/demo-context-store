@@ -10,12 +10,13 @@ import util from 'util'
 const optionsData = {
   properties: {
     debug: {
-      numerality: optional string default 'optionalOnce': 'optional' 'optionalOnce' 'mandatory' 'mandatoryMany'
+      numerality: optional string default 'optionalOnce': 'optional' 'optionalOnce' 'mandatory' 'mandatoryMany' 'none'
       names: string/list of string option names like '-debug', default property name
       type: optional string or function({value, i: {argv, index, options}, parser, action}) default 'boolean'
       property: optional string: options object property name, false for none, default is key value
       equalSign: optional boolean: default is the global value
       hasValue: optional string default never: 'never' 'may' 'always'
+      value: default value
     }
   }
   optionTypes: {
@@ -56,7 +57,7 @@ export default class OptionsParser extends ParserDefaults {
       if (!token.startsWith('-')) {
         debug && console.log(`${this.m} non-option: ${token}`)
         const notAllowedMessage = this.addToArgs({arg: token, i})
-        if (notAllowedMessage) this.doError(notAllowedMessage)
+        if (notAllowedMessage) return this.doError(notAllowedMessage)
         continue
       }
 
@@ -87,6 +88,9 @@ export default class OptionsParser extends ParserDefaults {
       const yamlOptions = await this.getYaml(optionsFile, optionsFileProp)
       debug && console.log(`${this.m} merging in yaml options:`, yamlOptions)
       Object.assign(options, yamlOptions)
+    } else {
+      delete options.optionsFile
+      delete options.optionsFileProp
     }
 
     return options

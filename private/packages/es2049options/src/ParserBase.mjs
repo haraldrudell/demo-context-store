@@ -60,7 +60,10 @@ export default class ParserBase extends Numerality {
     const helpDesc = h.description
     helpDesc && usage.push(helpDesc)
 
-    for (let option of this.getOptions()) usage.push(await option.getOptionHelp())
+    for (let option of this.getOptions()) {
+      const optionHelp = await option.getOptionHelp()
+      optionHelp && usage.push(optionHelp)
+    }
 
     return usage.join('\n')
   }

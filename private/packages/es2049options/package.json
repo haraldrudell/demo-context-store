@@ -1,11 +1,11 @@
 {
-  "name": "getopt2018",
+  "name": "es2049options",
   "version": "0.0.1",
-  "description": "Modern options parsing",
+  "description": "ECMAScript options parsing by Harald Rudell",
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
-  "module": "lib/OptionsParser.mjs",
-  "main": "lib/OptionsParser",
+  "module": "lib/es2049options.mjs",
+  "main": "lib/es2049options",
   "scripts": {
     "build": "rollup --config node:es2049package",
     "watch": "rollup --watch --config node:es2049package",
@@ -24,12 +24,11 @@
     "url": "gt:sw"
   },
   "dependencies": {
-    "fs-extra": "^4.0.1",
+    "fs-extra": "^5.0.0",
     "js-yaml": "^3.9.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "es2049package": "^0.0.18",
-    "jest": "^22.1.4"
+    "es2049package": "^0.0.21",
+    "jest": "^22.3.0"
   }
 }

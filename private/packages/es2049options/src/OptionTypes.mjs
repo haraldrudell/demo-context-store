@@ -5,7 +5,8 @@ All rights reserved.
 import path from 'path'
 
 /*
-name: option name like '-debug'
+option type function:
+name: string option name like '-debug'
 value: string: provided value or undefined if no value
 i: iteration instance: {argv: list of string, index: number, options: object}
 option: Option object
@@ -14,7 +15,7 @@ parser: Parser object
 return value:
 non-empty string: usage error message, exit status 2
 falsey: caller increments index
-truish non-string: inde has been adjusted, do nothing
+truish non-string: index has been adjusted, do nothing
 */
 
 export default class OptionTypes {
@@ -25,6 +26,13 @@ export default class OptionTypes {
     filename: OptionTypes.filename,
     integer: OptionTypes.integer,
     nestring: OptionTypes.nestring,
+  }
+  optionModifiers = {
+    nestring: OptionTypes.setValueMandatory,
+  }
+
+  static setValueMandatory(optionConstructorArguments) {
+    optionConstructorArguments.hasValue = 'always'
   }
 
   static boolean({i: {options}, option: {property}}) {
@@ -81,5 +89,9 @@ export default class OptionTypes {
     if (tv !== 'function') throw new Error(`${this.m} action type not function: ${tv} input: ${optionTypeName}`)
 
     return valueFn
+  }
+
+  getOptionTypeModifier(optionTypeName) {
+    return this.optionModifiers[optionTypeName]
   }
 }
