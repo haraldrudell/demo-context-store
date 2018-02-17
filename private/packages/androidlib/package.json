@@ -1,0 +1,40 @@
+{
+  "name": "androidlib",
+  "version": "0.0.1",
+  "description": "Shim layer for Android",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "UNLICENSED",
+  "module": "lib/androidlib.mjs",
+  "main": "lib/androidlib",
+  "scripts": {
+    "build": "npm-run-all build:patch build:build",
+    "build:patch": "es2049scripts -- node config",
+    "build:build": "rollup --config node:es2049package",
+    "watch": "rollup --watch --config node:es2049package",
+    "clean": "clean lib",
+    "test": "jest"
+  },
+  "rollup": {
+    "external": "adbkit/lib/adb",
+    "targets": "mini"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gt:sw"
+  },
+  "devDependencies": {
+    "es2049package": "../forks/ecmascript2049/workspace/packages/es2049package",
+    "es2049scripts": "^0.0.19",
+    "fs-extra": "^5.0.0",
+    "jest": "^22.3.0",
+    "npm-run-all": "^4.1.2",
+    "resolve": "^1.5.0"
+  },
+  "dependencies": {
+    "adbkit": "^2.11.0"
+  }
+}
