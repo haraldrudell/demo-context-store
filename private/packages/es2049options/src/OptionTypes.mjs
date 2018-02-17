@@ -22,6 +22,7 @@ export default class OptionTypes {
   defaultOptionType = 'boolean'
   optionTypes = {
     boolean: OptionTypes.boolean,
+    true: OptionTypes.booleantrue,
     string: OptionTypes.string,
     filename: OptionTypes.filename,
     integer: OptionTypes.integer,
@@ -29,14 +30,23 @@ export default class OptionTypes {
   }
   optionModifiers = {
     nestring: OptionTypes.setValueMandatory,
+    true: OptionTypes.ensureValueTrue,
   }
 
   static setValueMandatory(optionConstructorArguments) {
     optionConstructorArguments.hasValue = 'always'
   }
 
+  static ensureValueTrue(optionConstructorArguments) {
+    optionConstructorArguments.value === undefined && (optionConstructorArguments.value = true)
+  }
+
   static boolean({i: {options}, option: {property}}) {
     property && (options[property] = true)
+  }
+
+  static booleantrue({i: {options}, option: {property}}) {
+    property && (options[property] = false)
   }
 
   static string({value, i: {options}, option: {property}}) {

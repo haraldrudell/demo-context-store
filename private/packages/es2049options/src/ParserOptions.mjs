@@ -39,7 +39,7 @@ export default class ParserOptions extends ParserBase {
       const {type: optionTypeName} = values
       const type = optionTypes.getOptionTypeFn(optionTypeName)
       const modifier = optionTypes.getOptionTypeModifier(optionTypeName)
-      const optionConstructorArguments = {property, equalSign, ...values, type}
+      const optionConstructorArguments = {property, equalSign, ...values, type, optionTypeName}
       if (modifier) modifier(optionConstructorArguments)
       const option = new Option(optionConstructorArguments)
       optionList.push(option)

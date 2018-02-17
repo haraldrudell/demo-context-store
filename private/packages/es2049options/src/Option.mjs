@@ -10,10 +10,10 @@ export default class Option extends ValueFlag {
   constructor(o) {
     super(o)
     const props = {...o}
-    let {name, names, type, property, equalSign, help} = props
+    let {name, names, type, property, equalSign, help, optionTypeName} = props
     this.m = String(name || 'Option')
     this.parseProperty(property) // undefined or ne-string
-    names = this.parseNames(names || (property ? `-${property}` : undefined))
+    names = this.parseNames(names || (property ? optionTypeName !== 'true' ? `-${property}` : `-no-${property}` : undefined))
     this.m += ` ${names[0]}`
     const tt = typeof type
     if (tt !== 'function') throw new Error(`${this.m} type not funtion: ${tt}`)
