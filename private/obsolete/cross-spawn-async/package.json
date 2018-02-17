@@ -14,6 +14,6 @@
   },
   "private": true,
   "dependencies": {
-    "cross-spawn": "^5.1.0"
+    "cross-spawn": "^6.0.4"
   }
 }

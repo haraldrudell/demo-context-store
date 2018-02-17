@@ -42,7 +42,7 @@
   ],
   "private": true,
   "dependencies": {
-    "fs-extra": "^4.0.2"
+    "fs-extra": "^5.0.0"
   },
   "devDependencies": {
     "rollupconfig": "0.0.1"
