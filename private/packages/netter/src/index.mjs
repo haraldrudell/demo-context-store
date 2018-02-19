@@ -7,9 +7,6 @@ import pjson from '../package.json'
 
 import {OptionsParser, launchProcess, numeralities} from 'es2049options'
 
-const netChecker = {
-}
-
 const optionsData = {
   properties: {
     check: {
@@ -21,7 +18,6 @@ const optionsData = {
     checkdns: {help: 'check dns'},
     dns: {help: 'restart dnscrypt'},
     netChecker: {
-      value: netChecker,
       help: '',
     },
     startcaptive: {help: 'start captive portal flow'},

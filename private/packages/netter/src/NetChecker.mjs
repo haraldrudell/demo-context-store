@@ -4,7 +4,11 @@ All rights reserved.
 */
 import Network from 'network-portable'
 
+import fs from 'fs-extra'
+
+import dns from 'dns'
 import util from 'util'
+const {Resolver} = dns
 
 export default class NetChecker {
   static tcpHost = '8.8.8.8'
@@ -43,9 +47,9 @@ export default class NetChecker {
     // does the default gateway connect to the Internet?
     if (!vpnOverride) { // regular tcpOpen
       const ms = await this.getTcpOpenLatency()
-      console.log(`Internet latency: ${ms} ms`)
+      console.log(`Internet latency: ${ms / 1e3} s`)
     } else {
-      console.log(`nping NIMP`)
+      console.log(`root nping with interface override NIMP`)
     }
 
     // does the vpn work?
@@ -55,6 +59,38 @@ export default class NetChecker {
         ? `Vpn latency: ${vpnMs} ms`
         : `Vpn is down`)
     }
+
+    // what is providing dns?
+    const {platform} = process
+    if (platform === 'linux') {
+      let dnsProvider
+      const resolvConf = '/etc/resolv.conf'
+      const systemd = '/run/systemd'
+      if ((await fs.lstat(resolvConf)).isSymbolicLink() && (await fs.realpath(resolvConf)).startsWith(systemd)) dnsProvider = 'systemd'
+      else if (dns.getServers().contains('127.0.2.1')) dnsProvider = 'dnscrypt'
+      else dnsProvider = 'networkmanager'
+      console.log(`dns provider: ${dnsProvider}`)
+    } else console.log(`dns platform ${platform}: NIMP`)
+
+    const {isTimeout, elapsed, e} = await this.doDns()
+    console.log(`dns: ${elapsed.toFixed(3)} s${isTimeout ? ' time out' : ''}${e ? ` error: ${e.message}` : ''}`)
+  }
+
+  async doDns() {
+    const resolver = new Resolver()
+    const domain = `a${Date.now()}${String(Math.random()).substring(2, 5)}.blogspot.com`
+    let timer
+    const t0 = Date.now()
+    const [e] = await new Promise((resolve, reject) => {
+      resolver.resolve(domain, (ex, a) => resolve([ex, a]))
+      timer = setTimeout(() => resolver.cancel(), 3e3)
+    })
+    const isTimeout = e && e.code === 'ECANCELLED'
+    if (!isTimeout) clearTimeout(timer)
+    const elapsed = (Date.now() - t0) / 1e3
+    const result = {elapsed, isTimeout}
+    if (!isTimeout && e) result.e = e
+    return result
   }
 
   async getTcpOpenLatency() {
