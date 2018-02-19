@@ -2,7 +2,7 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import ParserDefaults from './ParserDefaults'
+import ParserYaml from './ParserYaml'
 
 import util from 'util'
 /*
@@ -33,9 +33,7 @@ const optionsData = {
 }
 */
 
-export default class Parser extends ParserDefaults {
-  static defaultYamlKey = 'options'
-
+export default class Parser extends ParserYaml {
   constructor(o) {
     super(o)
     this.debug && console.log(`${this.m} constructor: ${util.inspect(this, {colors: true, depth: null})}`)
@@ -49,10 +47,12 @@ export default class Parser extends ParserDefaults {
     // readYaml
     if (readYaml) {
       const optionsFile = await this.getYamlFilename()
-      const optionsFileProp = typeof readYaml === 'string' ? readYaml : Parser.defaultYamlKey
-      const yamlOptions = await this.getYaml(optionsFile, optionsFileProp)
-      debug && console.log(`${this.m} merging yaml options from ${optionsFile} key: ${optionsFileProp}:`, yamlOptions)
-      Object.assign(options, yamlOptions, {optionsFile, optionsFileProp})
+      if (optionsFile) {
+        const optionsFileProp = typeof readYaml === 'string' ? readYaml : Parser.defaultYamlKey
+        const yamlOptions = await this.getYaml(optionsFile, optionsFileProp)
+        debug && console.log(`${this.m} merging yaml options from ${optionsFile} key: ${optionsFileProp}:`, yamlOptions)
+        Object.assign(options, yamlOptions, {optionsFile, optionsFileProp})
+      }
     }
 
     debug && console.log(`${this.m} parseOptions argv:`, argv, 'initialOptions:', options)

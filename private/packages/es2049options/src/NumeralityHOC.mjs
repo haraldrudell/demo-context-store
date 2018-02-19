@@ -65,7 +65,7 @@ export function NumeralityHOC(BaseClass) {
       const s = []
       if (isNumeralityMandatory) s.push(numeralityMandatory)
       else if (isNumeralityNever) s.push(numeralityNever)
-      if (!isNumeralityMultiple) s.push(numeralityOnce)
+      if (!isNumeralityNever && !isNumeralityMultiple) s.push(numeralityOnce)
       this.numeralityDescription = s.join(' ')
     }
   }

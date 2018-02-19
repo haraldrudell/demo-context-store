@@ -4,7 +4,7 @@ All rights reserved.
 */
 import ParserOptionsData from './ParserOptionsData'
 
-import {getFn, getNonEmptyString, getNonEmptyStringOrUndefined, getNonEmptyStringOrFunctionOrUndefined, Failure} from 'es2049lib'
+import {getFn, getNonEmptyString, getNonEmptyStringOrUndefined, getStringOrFunctionOrUndefined, Failure} from 'es2049lib'
 
 export default class ParserUsage extends ParserOptionsData {
   static statusCodeOk = 0
@@ -19,10 +19,10 @@ export default class ParserUsage extends ParserOptionsData {
     if ((this.usageFn = getFn(Object(o.optionsdata).usage, this.defaultUsage.bind(this))) instanceof Failure) throw new Error(`${this.m} optionsData.usage: ${Failure.text}`)
     if ((this.name = getNonEmptyString(o.name)) instanceof Failure) throw new Error(`${this.m} name property: ${Failure.text}`)
     if ((this.version = getNonEmptyStringOrUndefined(o.version)) instanceof Failure) throw new Error(`${this.m} version property: ${Failure.text}`)
-    const help = getNonEmptyStringOrFunctionOrUndefined(o.help)
+    const help = getStringOrFunctionOrUndefined(o.help)
     if (help instanceof Failure) throw new Error(`${this.m} option ${property}: help property: ${Failure.text}`)
     if (help !== undefined) this.help = help
-    const helpArgs = getNonEmptyStringOrFunctionOrUndefined(o.helpArgs)
+    const helpArgs = getStringOrFunctionOrUndefined(o.helpArgs)
     if (helpArgs instanceof Failure) throw new Error(`${this.m} option ${property}: helpArgs property: ${Failure.text}`)
     if (helpArgs !== undefined) this.helpArgs = helpArgs
   }
@@ -46,18 +46,18 @@ export default class ParserUsage extends ParserOptionsData {
     // 'command [options] args…'
     let s0 = `${name}`
     if (this.getOptionIndexNotEmpty()) s0 += ` [options]`
-    if (!helpArgs) {
+    if (helpArgs == null) {
       if (!isNumeralityNever) {
         const {argsSingle, argsMultiple} = ParserUsage
         let s01 = isNumeralityMultiple ? argsMultiple : argsSingle
         if (isNumeralityMandatory) s01 = `[${s01}]`
         s0 += ` ${s01}`
       }
-    } else s0 += ` ${typeof helpArgs === 'function' ? await this.helpArgs() : helpArgs}`
+    } else if (helpArgs) s0 += ` ${typeof helpArgs === 'function' ? await this.helpArgs() : helpArgs}`
     usage.push(s0)
 
     // 'version: 1.2.3'
-    version && usage.push(this._indent(version, 2))
+    version && usage.push(this._indent(`version: ${version}`, 2))
 
     // 'description'
     if (help) {

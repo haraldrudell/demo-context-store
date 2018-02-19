@@ -19,7 +19,7 @@ export default class ParserOptionsData extends NumeralityHOC(ParserBase) {
   anonymousOptionTypeCounter = 0
 
   constructor(o) {
-    super(Object.assign({numerality: Object(o).args}, o))
+    super(Object.assign({numerality: Object(Object(o).optionsData).args}, o))
     this._addBuiltInOptionTypes(Object.values(Object(builtInOptions)))
     const {properties, optionTypes} = Object(o).optionsData || false
     this._addOptionTypesMap(optionTypes)
@@ -114,7 +114,7 @@ export default class ParserOptionsData extends NumeralityHOC(ParserBase) {
     if (!(option instanceof Option)) throw new Error(`${this.m} addOption: option not instanceof Options`)
 
     // initial value
-    const {props: {value}, property: p} = option
+    const {value, property: p} = option
     if (value !== undefined && p) initialOptions[p] = value
 
     // index

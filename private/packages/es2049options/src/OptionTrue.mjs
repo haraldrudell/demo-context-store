@@ -14,4 +14,9 @@ export default class OptionTrue extends OptionBoolean {
     const {property} = this
     property && (options[property] = value)
   }
+
+  _getOptionNames(names, property) {
+    if (names === undefined && property) names = `-no-${property}`
+    return super._getOptionNames(names, property)
+  }
 }

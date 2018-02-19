@@ -6,7 +6,7 @@ import OptionBase from './OptionBase'
 import {NumeralityHOC, numeralities} from './NumeralityHOC'
 import {ValueFlagHOC, valueFlags} from './ValueFlagHOC'
 
-import {getNonEmptyStringOrUndefined, getNonEmptyStringOrFunctionOrUndefined, Failure} from 'es2049lib'
+import {getNonEmptyStringOrUndefined, getStringOrFunctionOrUndefined, Failure} from 'es2049lib'
 
 export {numeralities, valueFlags}
 
@@ -28,11 +28,11 @@ export class Option extends ValueFlagHOC(NumeralityHOC(OptionBase)) {
     if (property) this.property = property
     const {value} = o
     if (value !== undefined) this.value = value
-    const valueName = getNonEmptyStringOrFunctionOrUndefined(o.valueName)
+    const valueName = getStringOrFunctionOrUndefined(o.valueName)
     if (valueName instanceof Failure) throw new Error(`${this.m}: valueName property: ${Failure.text}`)
     if (valueName !== undefined) this.valueName = valueName
     else if (!this.isHasValueNever && this.valueName === undefined) this.valueName = Option.valueName
-    const help = getNonEmptyStringOrFunctionOrUndefined(o.help)
+    const help = getStringOrFunctionOrUndefined(o.help)
     if (help instanceof Failure) throw new Error(`${this.m}: help property: ${Failure.text}`)
     if (help !== undefined) this.help = help
     const props = {...o}

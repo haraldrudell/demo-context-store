@@ -101,7 +101,7 @@ test('parse single non-option argument', async () => {
   expect(actual).toEqual(expected)
 })
 
-test('parse boolean option', async () => {
+test('parse boolean option and args numerality', async () => {
   const optionName = '-testBooleanOptionName'
   const prop = optionName.substring(1)
   const o = {
@@ -115,12 +115,22 @@ test('parse boolean option', async () => {
     },
     name: 'test:-single-boolean-option',
     debug: false,
+    args: 'none',
+  }
+  const expectedArgs = {
+    isNumeralityNever: true,
+    numeralityDescription: 'prohibited',
   }
   const expected = {
     [prop]: true,
   }
   const argv = [optionName]
-  const actual = await new Parser(o).parseOptions(argv)
+  const parser = new Parser(o)
+  const actualArgs = {}
+  for (let p of Object.keys(expectedArgs)) actualArgs[p] = parser[p]
+  expect(actualArgs).toEqual(expectedArgs)
+
+  const actual = await parser.parseOptions(argv)
   expect(actual).toEqual(expected)
 })
 

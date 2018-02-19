@@ -7,6 +7,8 @@ import {valueFlags, numeralities} from './Option'
 import OptionHelp from './OptionHelp'
 
 export default class ParserDefaults extends ParserUsage {
+  static defaultYamlKey = 'options'
+
   static helpOption = {
     names: ['-help', '-h', '--help'],
     type: OptionHelp,
@@ -40,7 +42,9 @@ export default class ParserDefaults extends ParserUsage {
   }
 
   async profileHelp() {
-    let s = 'key name in yaml file, default name: options'
+    const {readYaml} = this
+    const key = typeof readYaml !== 'string' ? ParserDefaults.defaultYamlKey : readYaml
+    let s = `key name in yaml file, default name: ${key}`
     const filename = await this.getYamlFilename()
     if (filename) {
       const yamlObject = await this.getYaml(filename)

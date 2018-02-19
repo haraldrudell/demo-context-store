@@ -2,7 +2,7 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import ParserOptions from './ParserOptions'
+import ParserDefaults from './ParserDefaults'
 
 import fs from 'fs-extra'
 import yaml from 'js-yaml'
@@ -10,12 +10,12 @@ import yaml from 'js-yaml'
 import os from 'os'
 import path from 'path'
 
-export default class ParserYaml extends ParserOptions {
+export default class ParserYaml extends ParserDefaults {
   constructor(o) {
     super(o)
     const {optionsData} = o || false
     const {readYaml} = optionsData || false
-    Object.assign(this, {readYaml})
+    if (readYaml != null) this.readYaml = readYaml
   }
 
   async getYamlFilename(noneIsOk = true) {
