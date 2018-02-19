@@ -7,12 +7,14 @@ import StackShim from './StackShim'
 export default class StackCreator extends StackShim {
   typicalCreateSeconds = 40
 
+
   async create({templateFile, parameters}) {
     const {stackName: stack} = this
     console.log(`Checking status of stack: ${stack}`)
     const stackStatus = await this.getStackStatus()
     console.log(`${stack}: ${stackStatus || 'does not exist'}`)
-    switch (stackStatus) {
+  /* eslint-disable no-fallthrough */
+  switch (stackStatus) {
       case 'ROLLBACK_IN_PROGRESS':
         console.log(`waiting for: ${stack} ${new Date().toISOString()}…`)
         await this.waitWhile('ROLLBACK_IN_PROGRESS')
@@ -40,5 +42,6 @@ export default class StackCreator extends StackShim {
       default:
         throw new Error(`Unknown stack state for ${stack}: ${stackStatus}`)
     }
-  }
+  /* eslint-enable no-fallthrough */
+}
 }
