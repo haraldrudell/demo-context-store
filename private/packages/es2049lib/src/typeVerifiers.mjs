@@ -16,10 +16,10 @@ export function getNonEmptyStringOrUndefined(value, defaultValue) {
   return new Failure(`not non-empty string or undefined: type: ${vt}`)
 }
 
-export function getNonEmptyStringOrFunctionOrUndefined(value, defaultValue) {
+export function getStringOrFunctionOrUndefined(value, defaultValue) {
   if (value === undefined) if ((value = defaultValue) === undefined) return value
   const vt = typeof value
-  if (!value || (vt !== 'string' && vt !== 'function')) return new Failure(`not non-empty string or function or undefined: type: ${vt}`)
+  if (vt !== 'string' && vt !== 'function') return new Failure(`not non-empty string or function or undefined: type: ${vt}`)
   return value
 }
 
