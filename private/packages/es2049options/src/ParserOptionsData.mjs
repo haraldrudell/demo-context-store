@@ -42,7 +42,7 @@ export default class ParserOptionsData extends NumeralityHOC(ParserBase) {
     const matchingOptions = []
     const nameLength = String(optionName).length
     for (let [name, optionNo] of Object.entries(optionIndex)) {
-      if (name === optionName.substring(0, nameLength)) {
+      if (optionName === name.substring(0, nameLength)) {
         const option = optionList[optionNo]
         matchingOptions.push({name, option})
       }
