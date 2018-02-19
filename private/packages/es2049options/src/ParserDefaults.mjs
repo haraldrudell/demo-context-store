@@ -2,42 +2,41 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import ParserYaml from './ParserYaml'
+import ParserUsage from './ParserUsage'
+import {valueFlags, numeralities} from './Option'
+import OptionHelp from './OptionHelp'
 
-export default class ParserDefaults extends ParserYaml {
+export default class ParserDefaults extends ParserUsage {
   static helpOption = {
     names: ['-help', '-h', '--help'],
+    type: OptionHelp,
+    numerality: numeralities.optionalOnce,
+    hasValue: valueFlags.never,
     help: 'display usage',
   }
   static debugOption = {
-    names: '-debug',
     property: 'debug',
     help: 'diagnostic output',
-    type: 'boolean',
   }
   static profileOption = {
     names: ['-profile'],
     type: 'nestring',
-    hasValue: 'always',
-    property: 'optionsFileProp',
+    property: 'optionsFileProfile',
   }
 
   constructor(o) {
     super(o)
     const {optionsData} = o || false
-    const {defaults} = optionsData || false
+    const {defaults, profiles, readYaml} = optionsData || false
     const doAddDefaults = defaults !== false
+    const {helpOption, debugOption, profileOption} = ParserDefaults
+
+    const optionList = []
     if (doAddDefaults) {
-      const {helpOption: ho, debugOption, profileOption} = ParserDefaults
-      const {readYaml} = this
-      const helpOption = {...ho, type: this.doUsage.bind(this)}
-      const options = [helpOption, debugOption]
-      if (readYaml) {
-        profileOption.help = this.profileHelp.bind(this)
-        options.push(profileOption)
-      }
-      this.addOptions(options)
+      optionList.push({...helpOption, fn: this.doUsage.bind(this)}, debugOption)
     }
+    if (profiles || (profiles === undefined && readYaml)) optionList.push({...profileOption, help: this.profileHelp.bind(this)})
+    for (let option of optionList) this.createOption(option)
   }
 
   async profileHelp() {
@@ -46,7 +45,7 @@ export default class ParserDefaults extends ParserYaml {
     if (filename) {
       const yamlObject = await this.getYaml(filename)
       const keys = Object.keys(yamlObject)
-      if (keys.length) s += `\n    values in ${filename}: ${keys.join(' ')}`
+      if (keys.length) s += `values in ${filename}: ${keys.join(' ')}`
     }
     return s
   }

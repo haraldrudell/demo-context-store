@@ -5,5 +5,5 @@ All rights reserved.
 import OnRejected from './OnRejected'
 export const launchProcess = OnRejected.launchProcess
 export {default as OptionsParser} from './Parser'
-export {default as Option} from './Option'
-export {readPackageJson} from './readPackageJson'
+export * from './Option'
+export * from './OptionBuiltIn'

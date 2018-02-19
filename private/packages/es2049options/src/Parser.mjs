@@ -5,93 +5,97 @@ All rights reserved.
 import ParserDefaults from './ParserDefaults'
 
 import util from 'util'
-
 /*
 const optionsData = {
   properties: {
     debug: {
+      names: optional string of string array option names like '-debug', default properties key name preceded by hyphen '-'
+      property: optional string, default properties key name: false for none. The property in the resulting options object
+      type: optional string or function({value, i: {argv, index, options}, parser, action}) default 'boolean': option type name
       numerality: optional string default 'optionalOnce': 'optional' 'optionalOnce' 'mandatory' 'mandatoryMany' 'none'
-      names: string/list of string option names like '-debug', default property name
-      type: optional string or function({value, i: {argv, index, options}, parser, action}) default 'boolean'
-      property: optional string: options object property name, false for none, default is key value
-      equalSign: optional boolean: default is the global value
-      hasValue: optional string default never: 'never' 'may' 'always'
-      value: default value
+      hasValue: optional string default 'never': 'never' 'may' 'always'
+      valueName: optional string or async function returning string: name describing the value. default defined by option type
+      value: value initially present in resulting options object, default none
+      help: optional string or async function returning string: help text, default defined by option type
     }
   }
   optionTypes: {
-    'float': function floatParser()
+    'float': value: class extends Option or function
   }
   exit: optional function(statusCode): default process.exit
-  usage: optional function({name, version}) generate usage string, default: internally generated
-  equalSign: optional boolean default true: allow equal sign in options: -file=abc
-  args: optional string numerality-value: default 'optional'
-  defaults: bolean default true: add -h/-help/--help/-debug actions
-  readYaml: optional boolean default false: read [app]-[hostname].yaml or [app].yaml from . ~/apps .. /etc
+  usage: optional async function({name, version}) generate usage string, default: internally generated
+  args: optional string numerality-value: allowable non-option string, default 'optional'
+  defaults: bolean default true: add -h/-help/--help/-debug/-profile flags to options
+  profiles: add -profile flag to options. default value is readYaml
+  readYaml: optional boolean default false: read [app]-[hostname].yaml or [app].yaml from . ~/apps .. /etc. true: use 'options' key in yaml. string: use this key name
+  help: optional string or async function returning string: help text, default no description
+  helpArgs: optional string or async function returning string: help text for args, default 'args…'
 }
 */
 
-export default class OptionsParser extends ParserDefaults {
+export default class Parser extends ParserDefaults {
+  static defaultYamlKey = 'options'
+
   constructor(o) {
     super(o)
-    this.debug && console.log(`${this.m} OptionsParser props: ${util.inspect(this, {color: true, depth: null})}`)
+    this.debug && console.log(`${this.m} constructor: ${util.inspect(this, {colors: true, depth: null})}`)
   }
 
   async parseOptions(argv) {
     const {debug, readYaml} = this
     const options = this.getInitialOptions()
     const i = {options, argv, index: 0}
+
+    // readYaml
     if (readYaml) {
       const optionsFile = await this.getYamlFilename()
-      const optionsFileProp = 'options'
-      Object.assign(options, {optionsFile, optionsFileProp})
+      const optionsFileProp = typeof readYaml === 'string' ? readYaml : Parser.defaultYamlKey
+      const yamlOptions = await this.getYaml(optionsFile, optionsFileProp)
+      debug && console.log(`${this.m} merging yaml options from ${optionsFile} key: ${optionsFileProp}:`, yamlOptions)
+      Object.assign(options, yamlOptions, {optionsFile, optionsFileProp})
     }
+
     debug && console.log(`${this.m} parseOptions argv:`, argv, 'initialOptions:', options)
     const maxIndex = argv.length
-    const parser = this
-
     while (i.index < maxIndex) {
 
       // non-options
       const token = argv[i.index]
       if (!token.startsWith('-')) {
         debug && console.log(`${this.m} non-option: ${token}`)
-        const notAllowedMessage = this.addToArgs({arg: token, i})
+        this.addNumeralityOccurrence()
+        const notAllowedMessage = this.isNumeralityBad()
         if (notAllowedMessage) return this.doError(notAllowedMessage)
+        const {args} = options
+        if (!args) options.args = [token]
+        else args.push(token)
+        i.index++
         continue
       }
 
-      // option name
-      const {arg: name, value: value0} = this.processEqualSign(token)
-      const option = this.getOptionByName(name)
-      if (!option) return this.doError(`Unknown option: ${name}`)
-      if (!option.anotherInvocationOk()) return this.doError(`option: ${name} can only be provided once`)
+      // option name and value
+      const {optionName, optionValue} = this.getOptionName(token)
+      const option = this.getOptionByName({optionName, token})
+      if (typeof option === 'string') return this.doError(option)
+      const nextIndex = i.index + 1
+      const nextToken = nextIndex < maxIndex ? argv[nextIndex] : undefined
+      const optionalValue = nextToken && !nextToken.startsWith('-') ? nextToken : undefined
+      const {value, indexIncrement, errorText} = this.getOptionValue({option, optionName, optionValue, optionalValue})
+      if (errorText) return this.doError(errorText)
+      option.addNumeralityOccurrence()
+      const optionError = option.isNumeralityBad()
+      if (optionError) return this.doError(`option ${optionName}: ${optionError}`)
 
-      // option value
-      const {value, text} = this.ensureValueOk({i, arg: name, value: value0, option})
-      if (text) return this.doError(text)
-
-      // execute action
-      const v = await option.type({name, value, i, option, parser})
-      if (typeof v === 'string') return this.doError(v)
-      else if (v === true) continue
-
-      i.index++
+      // execute option
+      debug && console.log(`${this.m} execute option: ${option.constructor.type}`, {name: optionName, value, i, indexIncrement})
+      const optionResult = await option.execute({name: optionName, value, i, indexIncrement})
+      if (typeof optionResult === 'string') return this.doError(optionResult)
+      else if (optionResult === true) continue
+      i.index += indexIncrement
     }
 
     const mText = this.checkForMandatoryOptions()
     if (mText) return this.doError(mText)
-
-    const {optionsFile, optionsFileProp} = options
-    debug && console.log(`${this.m} premerging in yaml options:`, {optionsFile, optionsFileProp}, options)
-    if (optionsFile) {
-      const yamlOptions = await this.getYaml(optionsFile, optionsFileProp)
-      debug && console.log(`${this.m} merging in yaml options:`, yamlOptions)
-      Object.assign(options, yamlOptions)
-    } else {
-      delete options.optionsFile
-      delete options.optionsFileProp
-    }
 
     return options
   }

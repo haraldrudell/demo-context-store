@@ -2,59 +2,64 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import ValueFlag from './ValueFlag'
+import OptionBase from './OptionBase'
+import {NumeralityHOC, numeralities} from './NumeralityHOC'
+import {ValueFlagHOC, valueFlags} from './ValueFlagHOC'
 
-export default class Option extends ValueFlag {
-  static deletedProperties = Object.keys({name: 1, names: 1, type: 1, property: 1, equalSign: 1, help: 1})
+import {getNonEmptyStringOrUndefined, getNonEmptyStringOrFunctionOrUndefined, Failure} from 'es2049lib'
+
+export {numeralities, valueFlags}
+
+export class Option extends ValueFlagHOC(NumeralityHOC(OptionBase)) {
+  static type = ''
+  static valueName = 'value'
+  static deletedProperties = Object.keys({names: 1, property: 1, type: 1, numerality: 1, hasValue: 1, valueName: 1, value: 1, help: 1, debug: 1})
 
   constructor(o) {
     super(o)
+    const {type} = this.constructor
+    if (!type) throw new Error(`${this.m} option type empty: instantiating base Option class?`)
+    !o && (o = false)
+    const names = this._getOptionNames(o.names, o.property)
+    if ((this.names = names) instanceof Failure) throw new Error(`${this.m} option type: ${type}: names property: ${Failure.text}`)
+    this.m = `option: ${names.join('\x20')}`
+    const property = getNonEmptyStringOrUndefined(o.property)
+    if (property instanceof Failure) throw new Error(`${this.m} property: ${Failure.text}`)
+    if (property) this.property = property
+    const {value} = o
+    if (value !== undefined) this.value = value
+    const valueName = getNonEmptyStringOrFunctionOrUndefined(o.valueName)
+    if (valueName instanceof Failure) throw new Error(`${this.m}: valueName property: ${Failure.text}`)
+    if (valueName !== undefined) this.valueName = valueName
+    else if (!this.isHasValueNever && this.valueName === undefined) this.valueName = Option.valueName
+    const help = getNonEmptyStringOrFunctionOrUndefined(o.help)
+    if (help instanceof Failure) throw new Error(`${this.m}: help property: ${Failure.text}`)
+    if (help !== undefined) this.help = help
     const props = {...o}
-    let {name, names, type, property, equalSign, help, optionTypeName} = props
-    this.m = String(name || 'Option')
-    this.parseProperty(property) // undefined or ne-string
-    names = this.parseNames(names || (property ? optionTypeName !== 'true' ? `-${property}` : `-no-${property}` : undefined))
-    this.m += ` ${names[0]}`
-    const tt = typeof type
-    if (tt !== 'function') throw new Error(`${this.m} type not funtion: ${tt}`)
-    equalSign = Boolean(equalSign)
     const {deletedProperties} = Option
     for (let p of deletedProperties) delete props[p]
-    Object.assign(this, {names, type, property, equalSign, count: 0, help, props})
+    Object.assign(this, {count: 0, props})
   }
 
   anotherInvocationOk() {
     return ++this.count < 2 || this.isNumeralityMultiple
   }
 
-  parseNames(value) {
-    const names = Array.isArray(value) ? value : [value]
-    if (!names.every(n => n && typeof n === 'string')) throw new Error(`${this.m} action name not non-empty string or list of non-empty string`)
-    return names
+  async help() {
+    const {numeralityDescription, valueFlagDescription} = this
+    const s = []
+    numeralityDescription && s.push(numeralityDescription) // mandatory/prohibited/once
+    valueFlagDescription && s.push(valueFlagDescription) // mandatory value/may have value
+    return s.join(', ')
   }
 
-  parseProperty(value) {
-    if (value !== undefined) {
-      const tv = typeof value
-      if (!value || tv !== 'string') throw new Error(`${this.m} action options property name not undefined or non-empty string`)
+  _getOptionNames(names, property) {
+    const nameList = names === undefined ? [`-${property}`] : Array.isArray(names) ? names : [names]
+    for (let [index, name] of nameList.entries()) {
+      const nt = typeof name
+      if (!name || typeof nt !== 'string') return new Failure(`index #${index}: not non-empty string: type: ${nt}`)
+      if (!name.startsWith('-')) return new Failure(`index #${index}: option name not starting with hypen: ${name}`)
     }
-    return value
-  }
-
-  async getOptionHelp() {
-    const {names, help, type, isNumeralityMandatory, isHasValueAlways, isHasValueNever} = this
-    let s = `  ${names.join(' ')}`
-    if (typeof help === 'function') {
-      s += ` ${await help()}`
-    } else if (help) s += ` ${help}`
-    else if (typeof help === 'string') s = undefined
-    else {
-      const tName = type.name
-      tName && (s += ` ${tName}`)
-      isNumeralityMandatory && (s += ` mandatory`)
-      if (isHasValueAlways) s += ` value mandatory`
-      else if (!isHasValueNever) s += ` may have value`
-    }
-    return s
+    return nameList
   }
 }
