@@ -5,14 +5,17 @@ All rights reserved.
 import Netter from './Netter'
 import pjson from '../package.json'
 
-import {OptionsParser, launchProcess} from 'es2049options'
+import {OptionsParser, launchProcess, numeralities} from 'es2049options'
 
 const netChecker = {
 }
 
 const optionsData = {
   properties: {
-    check: {help: 'Basic connectivity check'},
+    check: {
+      type: 'true',
+      help: 'Basic connectivity check, executed by default',
+    },
     checkdefault: {help: 'check connecivity using overriding vpn'},
     checkdefaultif: {help: 'check connecivity on underlying default interface'},
     checkdns: {help: 'check dns'},
@@ -26,7 +29,7 @@ const optionsData = {
     vpnroute: {help: 'insert default route for vpn'},
   },
   readYaml: true,
-  args: 'none',
+  args: numeralities.none,
 /*
   help: {
     args: 'email@domain.com …',
@@ -37,7 +40,7 @@ const optionsData = {
 */
 }
 
-launchProcess({run, pjson})
+launchProcess({run, name: pjson && pjson.name, version: pjson && pjson.version})
 
 async function run({name, version, OnRejected}) {
   const options = await new OptionsParser({optionsData, name, version}).parseOptions(process.argv.slice(2))
