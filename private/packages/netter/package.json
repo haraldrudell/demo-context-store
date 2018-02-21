@@ -25,7 +25,7 @@
     "shebang": true
   },
   "dependencies": {
-    "allspawn": "0.1.1",
+    "allspawn": "0.2.0",
     "es2049lib": "0.0.1",
     "es2049options": "0.0.1",
     "network-portable": "0.0.1"
