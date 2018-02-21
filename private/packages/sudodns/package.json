@@ -1,0 +1,38 @@
+{
+  "name": "sudodns",
+  "version": "0.0.1",
+  "description": "nping on overridden interface` by Harald Rudell",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "UNLICENSED",
+  "main": "bin/sudodns",
+  "scripts": {
+    "build": "rollup --config node:es2049package",
+    "clean": "clean bin",
+    "test": "jest"
+  },
+  "keywords": [
+    "nping",
+    "sudo"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "gt:sw"
+  },
+  "rollup": {
+    "dependencies": false,
+    "targets": "current",
+    "shebang": true
+  },
+  "dependencies": {
+    "allspawn": "0.2.0",
+    "es2049lib": "0.0.1",
+    "es2049options": "0.0.1",
+    "fs-extra": "^5.0.0",
+    "linesai": "0.0.1",
+    "network-portable": "0.0.1"
+  },
+  "devDependencies": {
+    "es2049package": "^0.0.23",
+    "jest": "^22.3.0"
+  }
+}
