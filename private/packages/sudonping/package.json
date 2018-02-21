@@ -24,13 +24,13 @@
     "shebang": true
   },
   "dependencies": {
-    "allspawn": "0.1.1",
+    "allspawn": "0.2.3",
     "es2049lib": "0.0.1",
     "es2049options": "0.0.1",
     "network-portable": "0.0.1"
   },
   "devDependencies": {
-    "es2049package": "^0.0.21",
+    "es2049package": "^0.0.23",
     "jest": "^22.3.0"
   }
 }

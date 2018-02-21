@@ -23,7 +23,7 @@
     "url": "gt:sw"
   },
   "dependencies": {
-    "allspawn": "0.2.0",
+    "allspawn": "0.2.3",
     "es2049lib": "0.0.1",
     "fs-extra": "",
     "linesai": "0.0.1"
