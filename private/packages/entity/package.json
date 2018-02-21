@@ -2,31 +2,31 @@
   "name": "entity",
   "version": "0.0.1",
   "description": "Data encapsulation for cloud use",
-  "main": "lib/Entity",
-  "scripts": {
-    "build": "echo \"170920 entity build nimp\" && : ../../node_modules/.bin/rollup --config ../../rollup.config.js",
-    "clean": "./node_modules/.bin/clean lib",
-    "test": "../../node_modules/.bin/jest"
-  },
-  "clean": [
-    "lib"
-  ],
-  "rollup": {
-    "input": "src/Entity.js",
-    "output": true,
-    "clean": true
-  },
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
+  "module": "lib/Entity.mjs",
+  "main": "lib/Entity",
+  "scripts": {
+    "build": "rollup --config node:es2049package",
+    "clean": "clean lib",
+    "test": "jest"
+  },
+  "rollup": {
+    "targets": "mini"
+  },
   "private": true,
   "engines": {
-    "node": ">=8"
+    "node": ">=9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gt:sw"
   },
   "dependencies": {
     "uid-generator": ""
   },
-    "devDependencies": {
-    "rollupconfig": "0.0.1",
-    "clean": "0.0.1"
+  "devDependencies": {
+    "es2049package": "^0.0.23",
+    "jest": "^22.4.0"
   }
 }
