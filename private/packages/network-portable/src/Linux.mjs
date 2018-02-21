@@ -6,7 +6,7 @@ import NetworkBase from './NetworkBase'
 
 import {spawnCapture} from 'allspawn'
 import {patchCommand} from 'es2049lib'
-import LineReader from 'linesai'
+import {LineReader} from 'linesai'
 
 import fs from 'fs-extra'
 
@@ -37,11 +37,19 @@ export default class Linux extends NetworkBase {
   }
 
   async getInterfaces(includeVirtual) { // cat --show-all /proc/net/dev
-    const result = new Set()
     const f = Linux.procNetDev
-    const lr = new LineReader(fs.createReadStream(f))
+    const lineReader = new LineReader(fs.createReadStream(f))
+    const [result] = await Promise.all([
+      this.getInterfaces2(lineReader, f, includeVirtual),
+      lineReader.promise,
+    ])
+    return result
+  }
+
+  async getInterfaces2(lineReader, f, includeVirtual) {
+    const result = new Set()
     for (let i = 0; ; i++) {
-      const line = await lr.readLine()
+      const line = await lineReader.readLine()
       if (line === false) break
       if (i < 2) continue // skip 2 header lines
       const match = line.match(/ *([^:]+)/)
@@ -66,11 +74,21 @@ export default class Linux extends NetworkBase {
   }
 
   async getRoutes() { // cat --show-all /proc/net/route
-    const result = []
     const f = Linux.procNetRoute
-    const lr = new LineReader(fs.createReadStream(f))
+    const lr = new LineReader({readable: fs.createReadStream(f)})
+    const [result] = await Promise.all([
+      this.getRoutes2(lr, f),
+      lr.promise,
+    ])
+    this.debug && console.log(`${this.m} getRoutes: ${result}`)
+    return result
+  }
+
+  async getRoutes2(lr, f) {
+    const result = []
     for (let i = 0; ; i++) {
       const line = await lr.readLine()
+      this.debug && console.log(`${this.m} getRoutes2: ${line}`)
       if (line === false) break
       if (i < 1) continue // skip header line
       const match = line.match(/([^\t]+)\t([^\t]+)\t([^\t]+)\t(([^\t]+)\t){3}([^\t]+)\t([^\t]+)/)
@@ -84,6 +102,7 @@ export default class Linux extends NetworkBase {
         suffix: this._getSuffix(match[7]),
       })
     }
+    this.debug && console.log(`${this.m} getRoutes2result: ${result}`)
     return result.sort(this._routeSort)
   }
 

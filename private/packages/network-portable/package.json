@@ -23,13 +23,13 @@
     "url": "gt:sw"
   },
   "dependencies": {
-    "allspawn": "0.1.1",
+    "allspawn": "0.2.0",
     "es2049lib": "0.0.1",
     "fs-extra": "",
     "linesai": "0.0.1"
   },
   "devDependencies": {
-    "es2049package": "^0.0.21",
+    "es2049package": "^0.0.23",
     "jest": "^22.3.0"
   }
 }
