@@ -29,7 +29,7 @@
     "js-yaml": "^3.9.1"
   },
   "devDependencies": {
-    "es2049package": "^0.0.21",
+    "es2049package": "^0.0.23",
     "jest": "^22.3.0"
   }
 }
