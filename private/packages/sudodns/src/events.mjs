@@ -14,7 +14,7 @@ export default class Events {
     emitter.removeListener('event', listener)
   }
 
-  sendObervable() {
+  sendObservable() {
     let f
     const observable = new Observable(o => (f = x => o.next(x)))
     f('event')

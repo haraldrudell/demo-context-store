@@ -24,7 +24,7 @@
     "shebang": true
   },
   "dependencies": {
-    "allspawn": "0.2.0",
+    "allspawn": "^0.2.2",
     "es2049lib": "0.0.1",
     "es2049options": "0.0.1",
     "fs-extra": "^5.0.0",
