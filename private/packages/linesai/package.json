@@ -2,27 +2,31 @@
   "name": "linesai",
   "version": "0.0.1",
   "description": "Async line iterator for read streams",
-  "main": "lib/LineReader",
-  "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
-    "clean": "./node_modules/.bin/clean",
-    "test": "../../node_modules/.bin/jest"
-  },
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
-  "private": true,
-  "engines": {
-    "node": ">=8"
+  "module": "lib/LineReader.mjs",
+  "main": "lib/LineReader",
+  "scripts": {
+    "build": "rollup --config node:es2049package",
+    "clean": "clean lib",
+    "test": "jest"
   },
   "rollup": {
-    "node": true,
-    "nodelatest": true,
-    "input": "src/LineReader",
-    "clean": [
-      "lib"
-    ]
+    "targets": "current"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gt:sw"
   },
   "devDependencies": {
-    "rollupconfig": "0.0.1"
+    "es2049package": "^0.0.23",
+    "jest": "^22.3.0"
+  },
+  "dependencies": {
+    "es2049lib": "0.0.1"
   }
 }
