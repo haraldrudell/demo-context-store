@@ -2,13 +2,15 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
+import DnsTester from './DnsTester'
+
 import Network from 'network-portable'
+import {doSudo} from 'es2049lib'
 
 import fs from 'fs-extra'
 
 import dns from 'dns'
 import util from 'util'
-const {Resolver} = dns
 
 export default class NetChecker {
   static tcpHost = '8.8.8.8'
@@ -18,21 +20,22 @@ export default class NetChecker {
     this.m = 'NetChecker'
     const {debug} = o || false
     Object.assign(this, {debug})
-    debug && console.log(`${this.m} constructor: ${util.inspect(o, {colors: true, depth: null})}`)
-
     this.network = new Network({debug})
+    debug && console.log(`${this.m} constructor: ${util.inspect(o, {colors: true, depth: null})}`)
   }
 
   async check() {
-    const {network} = this
+    const {network, debug} = this
 
     // is there a default gateway?
     const defaultRoute = await network.getDefaultRoute() // TODO 180213 hr ipv6
-    if (!defaultRoute) return console.log('No default route present')
+    debug && console.log(`${this.m} getDefaultRoute: ${util.inspect(defaultRoute, {colors: true, depth: null})}`)
+    if (!defaultRoute) throw new Error('No default route present')
     console.log(`Default route: ${this.getRouteString(defaultRoute)}`)
 
     // is there a default gateway override?
     const vpnOverride = await network.getVpnOverride()
+    debug && console.log(`${this.m} getVpnOverride: ${util.inspect(vpnOverride, {colors: true, depth: null})}`)
     if (vpnOverride) {
       console.log(`Vpn override: ${this.getRouteString(vpnOverride)}`)
     }
@@ -48,9 +51,7 @@ export default class NetChecker {
     if (!vpnOverride) { // regular tcpOpen
       const ms = await this.getTcpOpenLatency()
       console.log(`Internet latency: ${ms / 1e3} s`)
-    } else {
-      console.log(`root nping with interface override NIMP`)
-    }
+    } else await doSudo({args: 'sudonping'})
 
     // does the vpn work?
     if (vpnOverride) {
@@ -61,36 +62,25 @@ export default class NetChecker {
     }
 
     // what is providing dns?
-    const {platform} = process
-    if (platform === 'linux') {
-      let dnsProvider
-      const resolvConf = '/etc/resolv.conf'
-      const systemd = '/run/systemd'
-      if ((await fs.lstat(resolvConf)).isSymbolicLink() && (await fs.realpath(resolvConf)).startsWith(systemd)) dnsProvider = 'systemd'
-      else if (dns.getServers().contains('127.0.2.1')) dnsProvider = 'dnscrypt'
-      else dnsProvider = 'networkmanager'
-      console.log(`dns provider: ${dnsProvider}`)
-    } else console.log(`dns platform ${platform}: NIMP`)
+    console.log(`dns provider: ${await this.getDnsProvider()}`)
 
-    const {isTimeout, elapsed, e} = await this.doDns()
-    console.log(`dns: ${elapsed.toFixed(3)} s${isTimeout ? ' time out' : ''}${e ? ` error: ${e.message}` : ''}`)
+    const {err, isTimeout, elapsed} = await new DnsTester().test()
+    console.log(`dns: ${elapsed.toFixed(3)} s${isTimeout ? ' time out' : ''}${err ? ` error: ${err.message}` : ''}`)
   }
 
-  async doDns() {
-    const resolver = new Resolver()
-    const domain = `a${Date.now()}${String(Math.random()).substring(2, 5)}.blogspot.com`
-    let timer
-    const t0 = Date.now()
-    const [e] = await new Promise((resolve, reject) => {
-      resolver.resolve(domain, (ex, a) => resolve([ex, a]))
-      timer = setTimeout(() => resolver.cancel(), 3e3)
-    })
-    const isTimeout = e && e.code === 'ECANCELLED'
-    if (!isTimeout) clearTimeout(timer)
-    const elapsed = (Date.now() - t0) / 1e3
-    const result = {elapsed, isTimeout}
-    if (!isTimeout && e) result.e = e
-    return result
+  async getDnsProvider() {
+    const {platform} = process
+    const {debug} = this
+    if (platform !== 'linux') return `platform ${platform}: getDnsProvider: NIMP`
+
+    const resolvConf = '/etc/resolv.conf'
+    const systemd = '/run/systemd'
+    if ((await fs.lstat(resolvConf)).isSymbolicLink() && (await fs.realpath(resolvConf)).startsWith(systemd)) return 'systemd'
+
+    const servers = dns.getServers()
+    debug && console.log(`${this.m} dns.getServers: ${util.inspect(servers, {colors: true, depth: null})}`)
+    if (servers.includes('127.0.2.1')) return 'dnscrypt'
+    return 'networkmanager'
   }
 
   async getTcpOpenLatency() {
