@@ -5,3 +5,5 @@ All rights reserved.
 export * from './patchCommand'
 export * from './typeVerifiers'
 export * from './throwWithMethod'
+export * from './sudo'
+export {default as Queue} from './Queue'

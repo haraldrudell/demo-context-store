@@ -36,6 +36,22 @@ export function getNonEmptyStringOrArrayOfAsArray(value, defaultValue) {
   return value
 }
 
+export function getArrayOfNonEmptyString(value, defaultValue) {
+  if (value === undefined) value = defaultValue
+  if (!Array.isArray(value)) return new Failure(`not array`)
+  for (let [index, aValue] of value.entries()) {
+    const vt = typeof aValue
+    if (!aValue || vt !== 'string') return new Failure(`index #${index}: not non-empty string: type: ${vt}`)
+  }
+  return value
+}
+
+export function getRegExp(value, defaultValue) {
+  if (value === undefined) value = defaultValue
+  if (!(value instanceof RegExp)) return new Failure(`not regular expression`)
+  return value
+}
+
 export function getObject(value, errorFn, defaultValue, undefinedOk) {
   return checkType({value, errorFn, defaultValue, undefinedOk, type: 'object', m: 'object'})
 }

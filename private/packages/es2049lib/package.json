@@ -23,14 +23,15 @@
     "type": "git",
     "url": "gt:sw"
   },
-  "devDependencies": {
-    "es2049package": "^0.0.21",
-    "jest": "^22.3.0"
-  },
   "dependencies": {
     "@jedmao/ini-parser": "^0.2.0",
+    "allspawn": "^0.2.0",
     "aws-sdk": "^2.196.0",
     "es2049lib": "0.0.1",
     "fs-extra": "^5.0.0"
+  },
+  "devDependencies": {
+    "es2049package": "^0.0.23",
+    "jest": "^22.3.0"
   }
 }
