@@ -88,7 +88,6 @@ export default class Linux extends NetworkBase {
     const result = []
     for (let i = 0; ; i++) {
       const line = await lr.readLine()
-      this.debug && console.log(`${this.m} getRoutes2: ${line}`)
       if (line === false) break
       if (i < 1) continue // skip header line
       const match = line.match(/([^\t]+)\t([^\t]+)\t([^\t]+)\t(([^\t]+)\t){3}([^\t]+)\t([^\t]+)/)
@@ -102,7 +101,6 @@ export default class Linux extends NetworkBase {
         suffix: this._getSuffix(match[7]),
       })
     }
-    this.debug && console.log(`${this.m} getRoutes2result: ${result}`)
     return result.sort(this._routeSort)
   }
 
