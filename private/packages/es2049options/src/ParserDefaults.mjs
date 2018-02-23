@@ -10,7 +10,7 @@ export default class ParserDefaults extends ParserUsage {
   static defaultYamlKey = 'options'
 
   static helpOption = {
-    names: ['-help', '-h', '--help'],
+    names: ['-help', '--help'],
     type: OptionHelp,
     numerality: numeralities.optionalOnce,
     hasValue: valueFlags.never,
@@ -18,12 +18,13 @@ export default class ParserDefaults extends ParserUsage {
   }
   static debugOption = {
     property: 'debug',
-    help: 'diagnostic output',
+    help: 'display diagnostic output',
   }
   static profileOption = {
     names: ['-profile'],
     type: 'nestring',
     property: 'optionsFileProfile',
+    valueName: 'key',
   }
 
   constructor(o) {
@@ -44,12 +45,18 @@ export default class ParserDefaults extends ParserUsage {
   async profileHelp() {
     const {readYaml} = this
     const key = typeof readYaml !== 'string' ? ParserDefaults.defaultYamlKey : readYaml
-    let s = `key name in yaml file, default name: ${key}`
+    const basenames = `${this.getYamlBasenames().join('\x20')}`
+    let s = [
+      `key is used to fetch from yaml top-level 'profiles' dictionary`,
+      `yaml filenames searched are: ${basenames}`,
+      `paths searched are ~/apps .. /etc`,
+      `option defaults are fetched from the top-level '${key}' dictionary`,
+    ].join('\n')
     const filename = await this.getYamlFilename()
     if (filename) {
       const yamlObject = await this.getYaml(filename)
-      const keys = Object.keys(yamlObject)
-      if (keys.length) s += `values in ${filename}: ${keys.join(' ')}`
+      const keys = Object.keys(Object(yamlObject).profiles)
+      if (keys.length) s += `\nprofiles in '${filename}': '${keys.join(`'\x20'`)}'`
     }
     return s
   }

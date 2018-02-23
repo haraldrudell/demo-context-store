@@ -6,7 +6,10 @@ import OptionBoolean from './OptionBoolean'
 
 export default class OptionTrue extends OptionBoolean {
   static type = 'true'
-  value = true
+
+  constructor(o) {
+    super(Object.assign({value: true}, o))
+  }
 
   execute({name, value, i: {options}}) {
     if (value === undefined) value = false
@@ -15,8 +18,8 @@ export default class OptionTrue extends OptionBoolean {
     property && (options[property] = value)
   }
 
-  _getOptionNames(names, property) {
-    if (names === undefined && property) names = `-no-${property}`
+  _getOptionNames(names, property, key) {
+    if (names === undefined && (property || key)) names = `-no-${property || key}`
     return super._getOptionNames(names, property)
   }
 }

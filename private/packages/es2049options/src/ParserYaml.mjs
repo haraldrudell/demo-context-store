@@ -18,14 +18,17 @@ export default class ParserYaml extends ParserDefaults {
     if (readYaml != null) this.readYaml = readYaml
   }
 
+  getYamlBasenames() {
+    const {name} = this
+    const hostname = os.hostname().replace(/\..*$/, '') // remove possible file extension
+    return [`${name}-${hostname}.yaml`, `${name}.yaml`]
+  }
+
   async getYamlFilename(noneIsOk = true) {
     // get path list
     const paths = []
-    const {name} = this
-    const hostname = os.hostname().replace(/\..*$/, '') // remove possi ble file extension
-    for (let basename of [`${name}-${hostname}.yaml`, `${name}.yaml`])
+    for (let basename of this.getYamlBasenames())
       paths.push(basename, path.join(os.homedir(), 'apps', basename), path.join('..', basename), path.join('/etc', basename))
-
     for (let aPath of paths) {
       if (await fs.pathExists(aPath)) return aPath
     }

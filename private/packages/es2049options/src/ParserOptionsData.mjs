@@ -42,10 +42,9 @@ export default class ParserOptionsData extends NumeralityHOC(ParserBase) {
     const matchingOptions = []
     const nameLength = String(optionName).length
     for (let [name, optionNo] of Object.entries(optionIndex)) {
-      if (optionName === name.substring(0, nameLength)) {
-        const option = optionList[optionNo]
-        matchingOptions.push({name, option})
-      }
+      const option = optionList[optionNo]
+      if (optionName === name) return option // exact match
+      if (optionName === name.substring(0, nameLength)) matchingOptions.push({name, option})
     }
     if (matchingOptions.length === 1) return matchingOptions[0].option
     if (matchingOptions.length === 0) return `unknown option: ${optionName}: try -help`
@@ -138,14 +137,14 @@ export default class ParserOptionsData extends NumeralityHOC(ParserBase) {
   }
 
   _addPropertiesMap(propertiesMap) {
-    for (let [property, values] of Object.entries(Object(propertiesMap))) {
+    for (let [key, values] of Object.entries(Object(propertiesMap))) {
       const od = {...values}
       const {type} = od
       const optionConstructor = this._getOrRegisterOptionType(type)
-      if (typeof optionConstructor !== 'function') throw new Error(`${this.m} optionsData.properties key: ${property}: ${optionConstructor}`)
+      if (typeof optionConstructor !== 'function') throw new Error(`${this.m} optionsData.properties key: ${key}: ${optionConstructor}`)
       delete od.type
       this.debug && (od.debug = true)
-      this.addOption(new optionConstructor({property, ...od}))
+      this.addOption(new optionConstructor({key, ...od}))
     }
   }
 

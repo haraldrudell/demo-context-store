@@ -43,13 +43,16 @@ export default class Parser extends ParserYaml {
     const {debug, readYaml} = this
     const options = this.getInitialOptions()
     const i = {options, argv, index: 0}
+    let yamlProfiles, s
 
     // readYaml
     if (readYaml) {
       const optionsFile = await this.getYamlFilename()
       if (optionsFile) {
         const optionsFileProp = typeof readYaml === 'string' ? readYaml : Parser.defaultYamlKey
-        const yamlOptions = await this.getYaml(optionsFile, optionsFileProp)
+        const data = Object(await this.getYaml(optionsFile))
+        yamlProfiles = Object(data.profiles)
+        const yamlOptions = Object(data[optionsFileProp])
         debug && console.log(`${this.m} merging yaml options from ${optionsFile} key: ${optionsFileProp}:`, yamlOptions)
         Object.assign(options, yamlOptions, {optionsFile, optionsFileProp})
       }
@@ -64,8 +67,7 @@ export default class Parser extends ParserYaml {
       if (!token.startsWith('-')) {
         debug && console.log(`${this.m} non-option: ${token}`)
         this.addNumeralityOccurrence()
-        const notAllowedMessage = this.isNumeralityBad()
-        if (notAllowedMessage) return this.doError(notAllowedMessage)
+        if ((s = this.isNumeralityBad())) return this.doError(s)
         const {args} = options
         if (!args) options.args = [token]
         else args.push(token)
@@ -83,8 +85,7 @@ export default class Parser extends ParserYaml {
       const {value, indexIncrement, errorText} = this.getOptionValue({option, optionName, optionValue, optionalValue})
       if (errorText) return this.doError(errorText)
       option.addNumeralityOccurrence()
-      const optionError = option.isNumeralityBad()
-      if (optionError) return this.doError(`option ${optionName}: ${optionError}`)
+      if ((s = option.isNumeralityBad())) return this.doError(`option ${optionName}: ${s}`)
 
       // execute option
       debug && console.log(`${this.m} execute option: ${option.constructor.type}`, {name: optionName, value, i, indexIncrement})
@@ -93,9 +94,8 @@ export default class Parser extends ParserYaml {
       else if (optionResult === true) continue
       i.index += indexIncrement
     }
-
-    const mText = this.checkForMandatoryOptions()
-    if (mText) return this.doError(mText)
+    if ((s = this.checkForMandatoryOptions())) return this.doError(s)
+    if (options.optionsFileProfile != null) options.optionsFileProfiles = /*Object(*/yamlProfiles/*)*/ // -profile strings provided
 
     return options
   }
