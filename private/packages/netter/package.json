@@ -28,7 +28,8 @@
     "allspawn": "0.2.3",
     "es2049lib": "0.0.1",
     "es2049options": "0.0.1",
-    "network-portable": "0.0.1"
+    "network-portable": "0.0.1",
+    "uid-generator": "^1.0.0"
   },
   "devDependencies": {
     "es2049package": "^0.0.23",

@@ -26,14 +26,10 @@ const optionsData = {
   },
   readYaml: true,
   args: numeralities.none,
-/*
-  help: {
-    args: 'email@domain.com …',
-    description: [
-      '  Tests whether email addresses are valid',
-    ].join('\n'),
-  },
-*/
+  help: [
+    'with no arguments, netter runs a basic connectivity check',
+    'use -profile for specific tests',
+  ].join('\n'),
 }
 
 launchProcess({run, name: pjson && pjson.name, version: pjson && pjson.version})
