@@ -11,7 +11,7 @@ const {EventEmitter} = events
 import util from 'util'
 
 export default class StatisticsLogger {
-  static wait = 5e3
+  static wait0 = 5e3
   static hourMs = 60 * 60 * 1e3
   static dayMs = 24 * StatisticsLogger.hourMs
   start = Date.now()
@@ -25,12 +25,14 @@ export default class StatisticsLogger {
   writeBs = new WriteBs()
 
   constructor(o) {
-    const {emitter, name, debug} = o || false
+    const {emitter, wait, name, debug} = o || false
     const {handleTimeout, handleResponse, start} = this
     this.m = String(name || 'StatisticsLogger')
+    const {wait0} = StatisticsLogger
     if (!(emitter instanceof EventEmitter)) throw new Error(`${this.m} emitter not EventEmitter`)
     Object.assign(this, {emitter})
     emitter.on('timeout', handleTimeout).on('duration', handleResponse)
+    this.wait = wait >= 0 ? +wait : wait0
     debug && (this.debug = true) && console.log(`${this.m} constructor: ${util.inspect(this, {colors: true, depth: null})}`)
     console.log(`${getISOLocal({timeval: start})} statistics logging started`)
     this.scheduleCycleStats()
@@ -51,7 +53,8 @@ export default class StatisticsLogger {
   cycleStats() {
     const {hourlyStats, wait} = this
     this.hourlyStats = new DnsStats()
-    this.timer = setTimeout(this.logHour, wait, hourlyStats)
+    if (wait) this.timer = setTimeout(this.logHour, wait, hourlyStats)
+    else this.logHour(hourlyStats)
   }
 
   logHour(hourlyStats) {

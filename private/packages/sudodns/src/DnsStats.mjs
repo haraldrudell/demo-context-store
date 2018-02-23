@@ -20,7 +20,7 @@ export default class DnsStats {
   addValue({server, duration, isTimeout}) {
     const {serverMap} = this
     const {serverData0} = DnsStats
-    const serverData = serverMap[server] || (serverMap[server] = serverData0)
+    const serverData = serverMap[server] || (serverMap[server] = {...serverData0})
     if (!isTimeout) {
       serverData.responseCount++
       serverData.seconds += duration
