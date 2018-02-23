@@ -1,0 +1,273 @@
+#!/bin/bash -eu
+# © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
+# All rights reserved.
+
+# the INPUT chain exists in tables filter nat mangle security
+# which is the order of tables?
+# does ACCEPT in one table continue pakct processing in another?
+
+# all 5 chain names:
+ALLCHAINS=(PREROUTING INPUT FORWARD OUTPUT POSTROUTING)
+# all 5 tables: filter nat mangle raw security:
+# table order is: raw mangle nat filter security
+# table nat generally does not LOG and executes DNAT SNAT address changes
+ALLTABLES=(filter nat mangle raw security)
+# all 17 built-in chain-name table combinations (filter table name omitted):
+# function: listTableChainCombinations
+ALLBUILTINS=(
+  ,INPUT ,FORWARD ,OUTPUT
+  nat,PREROUTING nat,INPUT nat,OUTPUT nat,POSTROUTING
+  mangle,PREROUTING mangle,INPUT mangle,FORWARD mangle,OUTPUT mangle,POSTROUTING
+  raw,PREROUTING raw,OUTPUT
+  security,INPUT security,FORWARD security,OUTPUT
+)
+# all chains where the LOG target can be used (17: ie. all):
+# function: tryLogTarget
+ALLLOG=(
+  ,INPUT ,FORWARD ,OUTPUT
+  nat,PREROUTING nat,INPUT nat,OUTPUT nat,POSTROUTING
+  mangle,PREROUTING mangle,INPUT mangle,FORWARD mangle,OUTPUT mangle,POSTROUTING
+  raw,PREROUTING raw,OUTPUT
+  security,INPUT security,FORWARD security,OUTPUT
+)
+ALLINPUT=(,INPUT nat,INPUT mangle,INPUT security,INPUT)
+
+# target ACCEPT
+# only avoids DROP policy or subsequent rules in that table and chain-name combination
+# subsequent tables having the same chain-name will still execute
+
+LOGFILTER_PREPEND="ipt-dbg-"
+
+# bad table and chain combination error:
+# command status code: 1
+# iptables --wait 5 --check PREROUTING --protocol udp --source-port 2928 --match limit --limit 6/min --jump LOG --log-prefix ipt-dbg-input-filter:
+# output:
+# iptables: Bad rule (does a matching rule exist in that chain?).
+
+run() {
+  # testRuleInsertion
+  # testLogRuleInsertion
+  # exit
+
+  startLog "$LOGFILTER_PREPEND"
+  # testLogOutput
+  # exit
+
+  # in which chain name and table combinations does the rule work?
+  # LOGRULE=(OUTPUT --protocol udp --source-port 2928 --match limit --limit 6/min --jump LOG --log-prefix)
+  # chain name INPUT only works for filter
+  # chain name PREROUTING does not work at all
+  # chain name OUTPUT only works for filter
+
+  useINPUT
+  # usePREROUTING
+
+  if [ ${#COMBS[@]} -ne ${#FILTS[@]} ]; then echo >2 "array mismatch" && exit 1; fi
+  I=0 && for B in "${COMBS[@]}"; do
+    FILT=${FILTS[$I]}
+    ((I+=1))
+    RULE=(--protocol udp --match udp --source-port 2928 --match limit --limit 6/min --jump LOG --log-prefix "$LOGFILTER_PREPEND$FILT: ")
+    ensureRule $B "${RULE[@]}"
+  done
+  # iptables --table mangle --insert INPUT --jump ACCEPT
+
+  displayInputRules
+
+  echo -e "\nBEFORE NPING"
+  nping --udp --count 1 --source-port 2928 --dest-port 2928 127.0.0.1
+  echo -e "AFTER NPING\n\n"
+
+  I=0 && for B in "${COMBS[@]}"; do
+    FILT=${FILTS[$I]}
+    ((I+=1))
+    RULE=(--protocol udp --source-port 2928 --match limit --limit 6/min --jump LOG --log-prefix "$LOGFILTER_PREPEND$FILT: ")
+    removeRule $B "${RULE[@]}"
+  done
+
+  # iptables --table mangle --delete INPUT --jump ACCEPT
+
+  echo "Completed successfully"
+}
+
+useINPUT() {
+  COMBS=(,INPUT nat,INPUT mangle,INPUT security,INPUT)
+  FILTS=(input-filter input-nat input-mangle input-security)
+}
+
+usePREROUTING() {
+  COMBS=(nat,PREROUTING mangle,PREROUTING raw,PREROUTING)
+  FILTS=(pre-nat pre-mangle pre-raw)
+}
+
+ensureRule() {
+  executeRule --insert "$@"
+}
+
+removeRule() {
+  executeRule --delete "$@"
+}
+
+executeRule() { # option table-or-empty-for-filter chain-name rule…
+  # first is table,chain or table chain
+  # table may be empty for filter
+  local OPTION TABLE CHAIN TABLEOPTION CMD RULE X Y
+  local ERROR_NO_SUCH_RULE="iptables: No chain/target/match by that name."
+
+  OPTION="$1" && shift
+  if [ "$OPTION" != --insert -a "$OPTION" != --delete ]; then echo >&2 "bad option: $OPTION" "$2" && exit 1; fi
+
+  TABLE="$1" && shift
+  CHAIN="${TABLE##*,}"
+  TABLE="${TABLE%%,*}"
+  if [ "$TABLE" = filter ]; then TABLE=; fi
+
+  if [ ! "$CHAIN" ]; then CHAIN="$1" && shift; fi
+
+  if [ "$TABLE" ]; then TABLEOPTION=(--table $TABLE)
+  else TABLEOPTION=()
+  fi
+
+  RULE=($CHAIN "$@")
+
+  CMD=(iptables --wait 5 "${TABLEOPTION[@]}" --check "${RULE[@]}")
+
+  Y="$("${CMD[@]}" 2>&1)" && X=0 || X=$?
+
+  if [ $OPTION = --insert ]; then
+    if [ $X -eq 1 -a "$Y" = "$ERROR_NO_SUCH_RULE" ]; then
+      X=0 # the rule to insert does not exist yet
+      CMD=(iptables --wait 5 "${TABLEOPTION[@]}" --insert "${RULE[@]}")
+      echo "${CMD[*]}"
+      Y="$("${CMD[@]}" 2>&1)" && X=0 || X=$?
+    fi
+  else
+    if [ $X -eq 0 ]; then
+      CMD=(iptables --wait 5 "${TABLEOPTION[@]}" --delete "${RULE[@]}")
+      echo "${CMD[*]}"
+      Y="$("${CMD[@]}" 2>&1)" && X=0 || X=$?
+    elif [ $X -eq 1 -a "$Y" = "$ERROR_NO_SUCH_RULE" ]; then
+      X=0 # the rule to delete did not exist
+    fi
+  fi
+
+  if [ $X -ne 0 ]; then
+    echo "command status code: $X"
+    echo "${CMD[*]}"
+    echo "output:"
+    echo >&2 "$Y"
+    exit $X
+  fi
+}
+
+testLogOutput() {
+  logger "here it is: $LOGFILTER_PREPEND"
+}
+
+displayInputRules() {
+  local TABLE CHAIN=INPUT
+
+  for TABLE in filter nat mangle security; do
+    if [ "$TABLE" -a "$TABLE" != filter ]; then TABLEOPTION=(--table $TABLE)
+    else TABLEOPTION=()
+    fi
+
+    echo "Rules in table $TABLE chain $CHAIN:"
+    iptables "${TABLEOPTION[@]}" --list-rules $CHAIN
+  done
+}
+
+testRuleInsertion() {
+  ensureRule ,INPUT --jump LOG
+  removeRule ,INPUT --jump LOG
+}
+
+testLogRuleInsertion() {
+  ensureRule ,INPUT --protocol udp  --match udp --source-port 2928 --match limit --limit 6/min --jump LOG --log-prefix "ipt-dbg-: "
+  removeRule ,INPUT --protocol udp  --match udp --source-port 2928 --match limit --limit 6/min --jump LOG --log-prefix "ipt-dbg-: "
+}
+
+tryLogTarget() {
+  local B CHAIN TABLE TABLEOPTION CMD Y X
+  local LOGRULE=(--jump LOG)
+  local ERROR_NO_SUCH_RULE="iptables: No chain/target/match by that name."
+  local COUNT=0
+
+  for B in "${ALLBUILTINS[@]}"; do
+    CHAIN="${B##*,}"
+    TABLE="${B%%,*}"
+
+    if [ "$TABLE" -a "$TABLE" != filter ]; then TABLEOPTION=(--table $TABLE)
+    else TABLEOPTION=()
+    fi
+
+    CMD=(iptables --wait 5 "${TABLEOPTION[@]}" --insert "$CHAIN" "${LOGRULE[@]}")
+
+    Y="$("${CMD[@]}" 2>&1)" && X=0 || X=$?
+
+    if [ $X -eq 0 ]; then
+      ((COUNT+=1))
+      CMD=(iptables --wait 5 "${TABLEOPTION[@]}" --delete "$CHAIN" "${LOGRULE[@]}")
+      Y="$("${CMD[@]}" 2>&1)" && X=0 || X=$?
+      if [ $X -eq 0 ]; then
+        echo $B
+        continue
+      fi
+    else echo insertfailed
+    fi
+
+    if [ $X -ne 0 ]; then
+      echo "command status code: $X"
+      echo "${CMD[*]}"
+      echo "output:"
+      echo >&2 "$Y"
+      exit $X
+    fi
+  done
+  echo $COUNT
+}
+
+listTableChainCombinations() {
+  local TABLE CHAIN CMD X Y
+  local ERROR="iptables: No chain/target/match by that name."
+  # what are the allowed chain name and table combinations?
+  for TABLE in filter nat mangle raw security; do
+    for CHAIN in PREROUTING INPUT FORWARD OUTPUT POSTROUTING; do
+      if [ $TABLE != filter ]; then CMD=(--table $TABLE)
+      else CMD=()
+      fi
+      CMD=(iptables --wait 5 "${CMD[@]}" --list-rules $CHAIN)
+
+      Y="$("${CMD[@]}" 2>&1)" && X=0 || X=$?
+
+      if [ $X -eq 0 ]; then
+        echo $TABLE,$CHAIN
+      elif [ $X -eq 1 -a "$Y" = "$ERROR" ]; then
+        : # echo not: $TABLE,$CHAIN
+      else
+        echo status code: $X
+        echo "command: ${CMD[*]}"
+        echo "output:"
+        echo >&2 "$Y"
+        exit $X
+      fi
+    done
+  done
+}
+
+startLog() {
+  echo -n starting child process for logging…
+  tail --follow=name --retry /var/log/syslog | grep "$1" &
+  CPID=$!
+  if [ ! "$CPID" ]; then echo >&2 "child process failed"; exit 1; fi
+  echo " $CPID"
+  trap stopLog EXIT
+}
+
+stopLog () {
+  if [ "$CPID" ]; then
+    echo "killing child process…"
+    kill $CPID
+  fi
+}
+
+run
