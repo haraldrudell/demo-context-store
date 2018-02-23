@@ -31,7 +31,7 @@
     "es2049options": "0.0.1"
   },
   "devDependencies": {
-    "es2049package": "file:/opt/foxyboy/sw/pri/forks/ecmascript2049/workspace/packages/es2049package",
+    "es2049package": "^0.0.23",
     "jest": "^22.3.0"
   }
 }

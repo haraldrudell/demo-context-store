@@ -5,6 +5,7 @@ Parameters:
 
   AvailabilityZone:
     Type: String
+    Default: us-west-2a #AVZO
 
   InstanceType:
     Type: String

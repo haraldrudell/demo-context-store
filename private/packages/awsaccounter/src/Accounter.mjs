@@ -3,67 +3,73 @@
 All rights reserved.
 */
 import EC2Template from './EC2Template'
-import Deployer from './Deployer'
-import {Stacks} from 'es2049lib'
+import {StackManager, ImageManager} from 'awslib'
 
-//import {/*AwsSdk, */StackManager} from 'es2049lib'
-//const sdk = new AwsSdk()
-
-//import path from 'path'
+import util from 'util'
 
 export default class Accounter {
-  canonicalEc2Owner = '099720109477'
+  static codename0 = 'artful'
+  static imageId0 = 'ami-70873908'
+  static searchS = 7
+  static opts = Object.keys({deploy: 1, list: 1, render: 1, listdeployable: 1, debug: 1, cachedid: 1, codename: 1, id: 1, del: 1, up: 1})
 
   constructor(o) {
-    !o && (o = false)
-    this.m = String(o.name || 'Accounter')
-    for (let p of Object.keys({deploy: 1, list: 1, render: 1, listdeployable: 1, debug: 1}))
-      if (o.hasOwnProperty(p)) this[p] = o[p]
-    this.debug && console.log(`${this.m} constructor:`, this, o)
-  }
+    const {name, debug} = o || false
+    this.m = String(name || 'Accounter')
+    const {opts} = Accounter
+    for (let p of opts) if (o.hasOwnProperty(p)) this[p] = o[p]
+    debug && this.constructor === Accounter && console.log(`${this.m} constructor: ${util.inspect(this, {colors: true, depth: null})}`)
+    }
 
   async run() {
-    const {render, listdeployable, deploy, list} = this
+    const {codename0, imageId0, searchS} = Accounter
+    const {render, listdeployable, deploy, list, codename = codename0, cachedid, debug, del, id, up} = this
+
     if (render) {
-      const id = 'ami-70873908'
-      console.log(`Fake id: ${id}`)
-      /*
-      console.log('Finding image id (7 s)…')
-      const {canonicalEc2Owner: owner} = this
-      const {id, desc} = await this.getDeployer().getImageId({owner})
-      if (!id) throw new Error(`${this.m} failed to find an image`)
-      console.log(`image id: ${id} ${desc}`)
-      */
-     await this.getRenderer().renderTemplate({name: render, imageId: id})
+      const stackName = render
+      let o
+      if (cachedid) o = {imageId: imageId0}
+      else {
+        console.log(`Finding image id (${searchS} s)…`)
+        o = await new ImageManager({debug}).getUbuntuImageId({codename})
+      }
+      const {imageId, desc} = o
+      if (imageId) console.log(`image id: ${imageId}${desc ? ` ${desc}` : ''}`)
+      else throw new Error(`${this.m} failed to find an image`)
+      await new EC2Template({debug}).renderTemplate({stackName, imageId})
     }
+
     if (listdeployable) {
-      const templates = await this.getRenderer().getRenderedTemplates()
+      const templates = await new EC2Template({debug}).getRenderedTemplates()
       if (templates.length) for (let {name, fspath} of templates) console.log(`${name} ${fspath}`)
       else console.log('no templates has been rendered. Render using -render option')
     }
-    if (deploy) {
-      await this.getDeployer().deployStack()
+
+    if (deploy != null) {
+      const stackName = deploy
+      const stackId = id
+      const templateBody = await new EC2Template({debug}).getTemplateBody(stackName)
+      await new StackManager({stackName, stackId, debug}).create({templateBody})
     }
+
+    if (up != null) {
+      const stackName = up
+      const stackId = id
+      const templateBody = await new EC2Template({debug}).getTemplateBody(stackName)
+      await new StackManager({stackName, stackId, debug}).update({templateBody})
+    }
+
     if (list) {
-      const stackNames = await this.getStacks().getStackNames()
-      console.log(stackNames.length
-        ? stackNames.join(' ')
+      const stacks = await new StackManager({debug}).getStackNames()
+      console.log(stacks.length
+        ? stacks.map(({stackName, stackId, stackStatus}) => `${stackName} ${stackId} ${stackStatus}`).join('\n')
         : 'No stacks have been deployed. Deploy using -deploy')
     }
-    //const s3 = sdk.getService('S3')
-    //const buckets = await s3.listBuckets().promise()
-    //console.log('Accounter buckets:', buckets)
-  }
 
-  getDeployer() {
-    return this.deployer || (this.deployer = new Deployer())
-  }
-
-  getStacks() {
-    return this.stacks || (this.stacks = new Stacks())
-  }
-
-  getRenderer() {
-    return this.renderer || (this.renderer = new EC2Template())
+    if (del != null) {
+      const stackName = del
+      const stackId = id
+      await new StackManager({stackName, stackId, debug}).delete()
+    }
   }
 }
