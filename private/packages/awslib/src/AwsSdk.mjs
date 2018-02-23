@@ -12,6 +12,7 @@ import fs from 'fs-extra'
 
 import os from 'os'
 import path from 'path'
+import util from 'util'
 
 export default class AwsSdk {
   static awsCredentialsPath = path.join(os.homedir(), '.aws', 'credentials')
@@ -19,7 +20,9 @@ export default class AwsSdk {
   _serviceInterfaceObjects = {}
 
   constructor(o) {
-    this.m = String(Object(o).name || 'AwsSdk')
+    const {name, debug} = o || false
+    this.m = String(name || 'AwsSdk')
+    debug && (this.debug = true) && this.constructor === AwsSdk && console.log(`${this.m} constructor: ${util.inspect(this, {colors: true, depth: null})}`)
   }
 
   getService(serviceName) {
