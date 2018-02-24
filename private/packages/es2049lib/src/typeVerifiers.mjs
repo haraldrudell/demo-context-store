@@ -2,117 +2,115 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-export function getNonEmptyString(value, defaultValue) {
-  if (value === undefined) value = defaultValue
-  const vt = typeof value
-  if (value && vt === 'string') return value
-  return new Failure(`not non-empty string: type: ${vt}`)
+const m = 'typeVerifiers'
+
+export function setMDebug(o, instance, name) {
+  o = Object(o)
+  const ti = typeof instance
+  if (ti !== 'object') throw new Error(`${m} setMDebug: instance not object: type: ${ti}`)
+  name = o.name || name
+  const tn = typeof name
+  if (!name || tn !== 'string') throw new Error(`${m} setMDebug: name not non-empty string: type: ${tn}`)
+
+  instance.m = name
+  o.debug && (instance.debug = true)
+
+  return o
 }
 
-export function getNonEmptyStringOrUndefined(value, defaultValue) {
-  if (value === undefined) if ((value = defaultValue) === undefined) return value
+export function getNonEmptyString(firstArgument, defaultValue) {
+  const {name, value = defaultValue, s} = getSNameValue(firstArgument)
   const vt = typeof value
-  if (value && vt === 'string') return value
-  return new Failure(`not non-empty string or undefined: type: ${vt}`)
+  if (!value && vt !== 'string') return s.text = `not non-empty string: type: ${vt}`
+  s.properties[name] = value
 }
 
-export function getStringOrFunctionOrUndefined(value, defaultValue) {
-  if (value === undefined) if ((value = defaultValue) === undefined) return value
+export function getNonEmptyStringOrUndefined(firstArgument, defaultValue) {
+  const {name, value = defaultValue, s} = getSNameValue(firstArgument)
+  if (value === undefined) return
   const vt = typeof value
-  if (vt !== 'string' && vt !== 'function') return new Failure(`not non-empty string or function or undefined: type: ${vt}`)
-  return value
+  if (!value && vt !== 'string') return s.text = `not non-empty string or undefined: type: ${vt}`
+  s.properties[name] = value
 }
 
-export function getNonEmptyStringOrArrayOfAsArray(value, defaultValue) {
-  if (value === undefined) value = defaultValue
+export function getStringOrFunctionOrUndefined(firstArgument, defaultValue) {
+  const {name, value = defaultValue, s} = getSNameValue(firstArgument)
+  if (value === undefined) return
+  const vt = typeof value
+  if (vt !== 'string' && vt !== 'function') return s.text = `not non-empty string or function or undefined: type: ${vt}`
+  s.properties[name] = value
+}
+
+export function getNonEmptyStringOrArrayOfAsArray(firstArgument, defaultValue) {
+  const {name, value = defaultValue, s} = getSNameValue(firstArgument)
   if (!Array.isArray(value)) {
     const vt = typeof value
-    if (value && vt === 'string') return [value]
-    return new Failure(`not non-empty string or list of non-empty string: type: ${vt}`)
-  } else for (let [index, aValue] of value.entries()) {
-    const vt = typeof aValue
-    if (!value || vt !== 'string') return new Failure(`index #${index}: not non-empty string: type: ${vt}`)
+    if (!value && vt !== 'string') s.text = `not non-empty string or list of non-empty string: type: ${vt}`
+    s.properties[name] = [value]
+  } else {
+    for (let [index, aValue] of value.entries()) {
+      const vt = typeof aValue
+      if (!aValue || vt !== 'string') return s.text = `index #${index}: not non-empty string: type: ${vt}`
+    }
+    s.properties[name] = value
   }
-  return value
 }
 
-export function getArrayOfNonEmptyString(value, defaultValue) {
-  if (value === undefined) value = defaultValue
-  if (!Array.isArray(value)) return new Failure(`not array`)
+export function getArrayOfNonEmptyString(firstArgument, defaultValue) {
+  const {name, value = defaultValue, s} = getSNameValue(firstArgument)
+  if (!Array.isArray(value)) return s.text = `not array`
   for (let [index, aValue] of value.entries()) {
     const vt = typeof aValue
-    if (!aValue || vt !== 'string') return new Failure(`index #${index}: not non-empty string: type: ${vt}`)
+    if (!aValue || vt !== 'string') s.text = `index #${index}: not non-empty string: type: ${vt}`
   }
-  return value
+  s.properties[name] = value
 }
 
-export function getRegExp(value, defaultValue) {
-  if (value === undefined) value = defaultValue
-  if (!(value instanceof RegExp)) return new Failure(`not regular expression`)
-  return value
+export function getRegExp(firstArgument, defaultValue) {
+  const {name, value = defaultValue, s} = getSNameValue(firstArgument)
+  if (!(value instanceof RegExp)) return s.text = 'not regular expression'
+  s.properties[name] = value
 }
 
-export function getObject(value, errorFn, defaultValue, undefinedOk) {
-  return checkType({value, errorFn, defaultValue, undefinedOk, type: 'object', m: 'object'})
-}
-
-function checkType({value, errorFn, defaultValue, undefinedOk, type, m}) {
-  getFunction(errorFn)
-  if (value === undefined) value = defaultValue
-  if (!(value === undefined && undefinedOk)) {
-    const vt = typeof value
-    if (!value || vt !== type) throw new Error(errorFn(`not ${m}: type: ${vt}`))
+export function getArrayOfString(firstArgument, defaultValue) {
+  const {name, value = defaultValue, s} = getSNameValue(firstArgument)
+  if (!Array.isArray(value)) return s.text = 'not array'
+  for (let [index, aValue] of value.entries()) {
+    const vt = typeof aValue
+    if (vt !== 'string') return s.text = `index#${index} not string: type: ${vt}`
   }
-  return value
+  s.properties[name] = value
 }
 
-function getFunction(fn, m) {
-  const ft = typeof fn
-  if (ft !== 'function') throw new Error(`${m} not function: ${ft}`)
-  return ft
+export function getPortNumber(firstArgument, defaultValue) {
+  const {name, value = defaultValue, s} = getSNameValue(firstArgument)
+  const port = +value
+  if (!(port > 0) || !(port <= 65535)) return s.text = `not number 1 -  65535`
+  s.properties[name] = port
 }
 
-export function ensureListOfNonEmptyString(ssh, m) {
-  if (!Array.isArray(ssh)) throw new Error(`${m}: not array`)
-  for (let [index, value] of ssh.entries()) {
-    const vt = typeof value
-    if (!value || vt !== 'string') throw new Error(`${m}: element at index ${index} not non-empty string: type: ${vt}`)
-  }
-  return ssh
+export function getTimeval(firstArgument, defaultValue) {
+  const {name, value = defaultValue, s} = getSNameValue(firstArgument)
+  const timeval = +value
+  if (!(timeval > 0)) return s.text = `bad timeval: type: ${typeof timeval}`
+  s.properties[name] = timeval
 }
 
-export function ensureListOfString(ssh, m) {
-  if (!Array.isArray(ssh)) throw new Error(`${m}: not array`)
-  for (let [index, value] of ssh.entries()) {
-    const vt = typeof value
-    if (vt !== 'string') throw new Error(`${m}: element at index ${index} not string: type: ${vt}`)
-  }
-  return ssh
+export function getFn(firstArgument, defaultValue) {
+  const {name, value = defaultValue, s} = getSNameValue(firstArgument)
+  const ft = typeof value
+  if (ft !== 'function') return s.text = `not function: type: ${ft}`
+  s.properties[name] = value
 }
 
-export function ensurePortNumber(port, m) {
-  const value = +port
-  if (!(value > 0) || !(value <= 65535)) throw new Error(`${m} not >0 <= 65535`)
-  return value
-}
-
-export function checkTimeval(timeval, msg, defaultValue) {
-  const number = +(timeval !== undefined ? timeval : defaultValue)
-  if (!(number > 0)) throw new Error(`${msg} bad timeval: type: ${typeof timeval}`)
-  return number
-}
-
-export function getFn(fn, defaultValue) {
-  if (fn === undefined) fn = defaultValue
-  const ft = typeof fn
-  return ft === 'function' ? fn : new Failure(`not function: type: ${ft}`)
-}
-
-export class Failure {
-  constructor(o) {
-    if (!o) (o = false)
-    else if (typeof o === 'string') o = {text: o}
-    o.text = String(o.text || 'Undefined Type Failure')
-    Object.assign(this, o)
-  }
+function getSNameValue(firstArgument) {
+  if (!firstArgument) throw new Error(`${m}: first argument not object`)
+  const {s} = firstArgument
+  if (!s) throw new Error(`${m}: first argument s property null`)
+  const properties = Object.keys(Object(firstArgument)).filter(property => property !== 's')
+  if (properties.length !== 1) throw new Error(`${m} first argument has more than 1 property other than s`)
+  const name = properties[0]
+  const value = firstArgument[name]
+  if (!s.properties) s.properties = {}
+  return {name, value, s}
 }

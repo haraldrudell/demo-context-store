@@ -5,6 +5,8 @@ All rights reserved.
 import Netter from './Netter'
 import pjson from '../package.json'
 
+import util from 'util'
+
 import {OptionsParser, launchProcess, numeralities} from 'es2049options'
 
 const optionsData = {
@@ -13,16 +15,10 @@ const optionsData = {
       type: 'true',
       help: 'Basic connectivity check, executed by default',
     },
-    checkdefault: {help: 'check connecivity using overriding vpn'},
-    checkdefaultif: {help: 'check connecivity on underlying default interface'},
-    checkdns: {help: 'check dns'},
-    dns: {help: 'restart dnscrypt'},
-    netChecker: {
-      help: '',
-    },
-    startcaptive: {help: 'start captive portal flow'},
-    stopcaptive: {help: 'end captive portal flow'},
-    vpnroute: {help: 'insert default route for vpn'},
+    dns: {help: 'NIMP restart dnscrypt'}, // TODO 180223 hr NIMP
+    startcaptive: {help: 'NIMP start captive portal flow'}, // TODO 180223 hr NIMP
+    stopcaptive: {help: 'NIMP end captive portal flow'}, // TODO 180223 hr NIMP
+    vpnroute: {help: 'NIMP insert default route for vpn'}, // TODO 180223 hr NIMP
   },
   readYaml: true,
   args: numeralities.none,
@@ -36,6 +32,6 @@ launchProcess({run, name: pjson && pjson.name, version: pjson && pjson.version})
 
 async function run({name, version, OnRejected}) {
   const options = await new OptionsParser({optionsData, name, version}).parseOptions(process.argv.slice(2))
-  options.debug && OnRejected.setDebug() && console.log(`${name} options:`, options)
+  options.debug && OnRejected.setDebug() && console.log(`${name} options: ${util.inspect(options, {colors: true, depth: null})}`)
   return new Netter(options).run()
 }

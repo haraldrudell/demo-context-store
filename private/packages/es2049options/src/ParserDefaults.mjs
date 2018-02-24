@@ -8,6 +8,7 @@ import OptionHelp from './OptionHelp'
 
 export default class ParserDefaults extends ParserUsage {
   static defaultYamlKey = 'options'
+  static yamlDisableOption = '-no-yaml'
 
   static helpOption = {
     names: ['-help', '--help'],
@@ -26,19 +27,24 @@ export default class ParserDefaults extends ParserUsage {
     property: 'optionsFileProfile',
     valueName: 'key',
   }
+  static noYamlOption = {
+    names: [ParserDefaults.yamlDisableOption],
+    type: 'true',
+    help: 'ignore yaml files',
+  }
 
   constructor(o) {
     super(o)
     const {optionsData} = o || false
     const {defaults, profiles, readYaml} = optionsData || false
     const doAddDefaults = defaults !== false
-    const {helpOption, debugOption, profileOption} = ParserDefaults
+    const {helpOption, debugOption, profileOption, noYamlOption} = ParserDefaults
 
     const optionList = []
     if (doAddDefaults) {
       optionList.push({...helpOption, fn: this.doUsage.bind(this)}, debugOption)
     }
-    if (profiles || (profiles === undefined && readYaml)) optionList.push({...profileOption, help: this.profileHelp.bind(this)})
+    if (profiles || (profiles === undefined && readYaml)) optionList.push({...profileOption, help: this.profileHelp.bind(this)}, noYamlOption)
     for (let option of optionList) this.createOption(option)
   }
 

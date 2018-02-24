@@ -68,7 +68,7 @@ test('-debug option and numeralityDescription', () => {
     valueFlagDescription: '',
     names: [ '-debug' ],
     property: 'debug',
-    help: 'diagnostic output',
+    help: 'display diagnostic output',
     count: 0,
     props: {}
   }
@@ -112,10 +112,10 @@ test('parse boolean option and args numerality', async () => {
       exit: function mockExit(s) {
         throw new Error(`exit ${s}`)
       },
+      args: 'none',
     },
     name: 'test:-single-boolean-option',
     debug: false,
-    args: 'none',
   }
   const expectedArgs = {
     isNumeralityNever: true,

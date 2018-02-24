@@ -2,7 +2,7 @@
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
-import {getFn, getArrayOfNonEmptyString, getRegExp, Failure} from 'es2049lib'
+import {getFn, getArrayOfNonEmptyString, getRegExp} from 'es2049lib'
 
 export default class StringSplitter {
   static split0 = ['\n', '\r\n', '\r']
@@ -10,15 +10,16 @@ export default class StringSplitter {
 
   constructor(o) {
     if (typeof o === 'function') o = {fetcher: o} // fetcher: (async) function returning string or false on end-of-file
-    const {fetcher, splitterList, regExp, name, debug} = o || false
+    const {fetcher, splitterList, regExp, name, debug} = Object(o)
     this.m = String(name || 'StringSplitter')
     const {split0, regExp0} = StringSplitter
-    let s
-    if ((this.fetcherFn = s = getFn(fetcher, (this.fetcher || this._fetcher).bind(this))) instanceof Failure) throw new Error(`${this.m} fetcher: ${s.text}`)
-    if ((this.splitterList = s = getArrayOfNonEmptyString(splitterList, split0)) instanceof Failure) throw new Error(`${this.m} splitterList: ${s.text}`)
-    this.maxPatternLength = s.reduce((accumulation, sx) => Math.max(accumulation, sx.length), 0)
-    if ((this.regExp = s = getRegExp(regExp, regExp0)) instanceof Failure) throw new Error(`${this.m} regExp: ${s.text}`)
+    let s = {}
+    if (getFn({fetcherFn: fetcher, s}, (this.fetcher || this._fetcher).bind(this))) throw new Error(`${this.m} fetcher: ${s.text}`)
+    if (getArrayOfNonEmptyString({splitterList, s}, split0)) throw new Error(`${this.m} splitterList: ${s.text}`)
+    this.maxPatternLength = s.properties.splitterList.reduce((accumulation, sx) => Math.max(accumulation, sx.length), 0)
+    if (getRegExp({regExp, s}, regExp0)) throw new Error(`${this.m} regExp: ${s.text}`)
     debug && (this.debug = true)
+    Object.assign(this, s.properties)
   }
 
   async readLine() { // return value: string or false on EOF

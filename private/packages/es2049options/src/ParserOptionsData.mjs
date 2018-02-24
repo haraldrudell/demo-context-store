@@ -8,7 +8,7 @@ import {Option} from './Option'
 import OptionHOC from './OptionHOC'
 import * as builtInOptions from './OptionBuiltIn'
 
-import {getNonEmptyString, Failure} from 'es2049lib'
+import {getNonEmptyString, getFn} from 'es2049lib'
 
 export default class ParserOptionsData extends NumeralityHOC(ParserBase) {
   optionList = []
@@ -19,7 +19,7 @@ export default class ParserOptionsData extends NumeralityHOC(ParserBase) {
   anonymousOptionTypeCounter = 0
 
   constructor(o) {
-    super(Object.assign({numerality: Object(Object(o).optionsData).args}, o))
+    super({numerality: Object(Object(o).optionsData).args, ...o})
     this._addBuiltInOptionTypes(Object.values(Object(builtInOptions)))
     const {properties, optionTypes} = Object(o).optionsData || false
     this._addOptionTypesMap(optionTypes)
@@ -85,11 +85,10 @@ export default class ParserOptionsData extends NumeralityHOC(ParserBase) {
 
   addOptionType(optionConstructor) {
     const {optionTypeList, optionTypeIndex} = this
-    const ot = typeof optionConstructor
-    if (ot !== 'function') throw new Error(`${this.m} addOptionType option-type constructor not function: type: ${ot}`)
-    const {type} = optionConstructor
-    const s = getNonEmptyString(type)
-    if (s instanceof Failure) throw new Error(`${this.m} addOptionType option-type constructor type name: ${s}`)
+    const {type} = Object(optionConstructor)
+    let s = {}
+    if (getFn({optionConstructor, s})) throw new Error(`${this.m} addOptionType option-type constructor: ${s.text}`)
+    if (getNonEmptyString({type, s})) throw new Error(`${this.m} addOptionType option-type constructor type name: ${s.text}`)
     const currentIndex = optionTypeIndex[type]
     if (currentIndex == null) {
       optionTypeIndex[type] = optionTypeList.length
@@ -150,14 +149,14 @@ export default class ParserOptionsData extends NumeralityHOC(ParserBase) {
 
   _addBuiltInOptionTypes(builtInList) {
     if (!Array.isArray(builtInList)) throw new Error(`${this.m} built-in option types list not array`)
+    let s = {}
     for (let [index, builtInConstructor] of builtInList.entries()) {
       let indexStr = `index#${index}`
       const bt = typeof builtInConstructor
       if (bt !== 'function') throw new Error(`${this.m} built-in option type constructor not function: ${indexStr} type: ${bt}`)
       indexStr = `class name: ${bt.name} ${indexStr}`
       const {type} = builtInConstructor
-      const s = getNonEmptyString(type)
-      if (s instanceof Failure) throw new Error(`${this.m} built-in option type does not have static type name: ${indexStr} constructor name: ${name}`)
+      if (getNonEmptyString({type, s})) throw new Error(`${this.m} built-in option type does not have static type name: ${indexStr} constructor name: ${name}`)
       this.addOptionType(builtInConstructor)
     }
   }

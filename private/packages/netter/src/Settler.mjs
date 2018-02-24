@@ -4,15 +4,16 @@ All rights reserved.
 */
 import ResolverHOC from './ResolverHOC'
 
+import {setMDebug, getNonEmptyString} from 'es2049lib'
+
 import util from 'util'
 
 export default class Settler {
   constructor(o) {
-    const {name, runners, emitter, debug} = o || false
-    this.m = `Settler ${name}`
-    debug && (this.debug = true)
-    const st = typeof name
-    if (!(this.name = name) || st !== 'string') throw new Error(`${this.m} name not non-empty string: type: ${st}`)
+    const {runners, emitter, name, debug} = setMDebug(o, this, '')
+    this.name = `Settler ${Object(o).name}`
+    let s = {}
+    if (getNonEmptyString({name, s})) throw new Error(`${this.m} name: ${s.text}`)
     if (!Array.isArray(runners)) throw new Error(`${this.m}: runners is not a list`)
     typeof emitter === 'function' && (this.emitter = emitter)
     this.roots = this._processRunners(runners)

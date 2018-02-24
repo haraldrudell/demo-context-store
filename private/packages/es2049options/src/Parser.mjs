@@ -45,16 +45,18 @@ export default class Parser extends ParserYaml {
     const i = {options, argv, index: 0}
     let yamlProfiles, s
 
-    // readYaml
     if (readYaml) {
-      const optionsFile = await this.getYamlFilename()
-      if (optionsFile) {
-        const optionsFileProp = typeof readYaml === 'string' ? readYaml : Parser.defaultYamlKey
-        const data = Object(await this.getYaml(optionsFile))
-        yamlProfiles = Object(data.profiles)
-        const yamlOptions = Object(data[optionsFileProp])
-        debug && console.log(`${this.m} merging yaml options from ${optionsFile} key: ${optionsFileProp}:`, yamlOptions)
-        Object.assign(options, yamlOptions, {optionsFile, optionsFileProp})
+      const {yamlDisableOption} = Parser
+      if (!argv.includes(yamlDisableOption)) {
+        const optionsFile = await this.getYamlFilename()
+        if (optionsFile) {
+          const optionsFileProp = typeof readYaml === 'string' ? readYaml : Parser.defaultYamlKey
+          const data = Object(await this.getYaml(optionsFile))
+          yamlProfiles = Object(data.profiles)
+          const yamlOptions = Object(data[optionsFileProp])
+          debug && console.log(`${this.m} merging yaml options from ${optionsFile} key: ${optionsFileProp}:`, yamlOptions)
+          Object.assign(options, yamlOptions, {optionsFile, optionsFileProp})
+        }
       }
     }
 

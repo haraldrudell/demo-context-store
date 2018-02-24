@@ -2,15 +2,15 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import {getFn, Failure} from 'es2049lib'
+import {setMDebug, getFn} from 'es2049lib'
 
 export default class ParserBase {
   constructor(o) {
-    const {debug, optionsData, name} = o || false
-    this.m = String(name || 'ParserBase')
-    debug && (this.debug = true)
-    const {exit} = optionsData || false
-    if ((this.exitFn = getFn(exit, this.defaultExit.bind(this))) instanceof Failure) throw new Error(`${this.m} optionsData.exit: ${Failure.text}`)
+    const {optionsData} = setMDebug(o, this, 'ParserBase')
+    const {exit} = Object(optionsData)
+    let s = {}
+    if (getFn({exitFn: exit, s}, this.defaultExit.bind(this))) throw new Error(`${this.m} optionsData.exit: ${s.text}`)
+    Object.assign(this, s.properties)
   }
 
   defaultExit(code) {

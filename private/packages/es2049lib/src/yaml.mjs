@@ -8,3 +8,7 @@ import yaml from 'js-yaml'
 export async function loadYaml(file) {
   return yaml.safeLoad(await fs.readFile(file, 'utf-8'))
 }
+
+export async function writeYaml(file, data) {
+  return fs.writeFile(file, yaml.safeDump(data))
+}

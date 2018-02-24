@@ -4,7 +4,7 @@ All rights reserved.
 */
 import ParserOptionsData from './ParserOptionsData'
 
-import {getFn, getNonEmptyString, getNonEmptyStringOrUndefined, getStringOrFunctionOrUndefined, Failure} from 'es2049lib'
+import {getFn, getNonEmptyString, getNonEmptyStringOrUndefined, getStringOrFunctionOrUndefined} from 'es2049lib'
 
 export default class ParserUsage extends ParserOptionsData {
   static statusCodeOk = 0
@@ -14,17 +14,15 @@ export default class ParserUsage extends ParserOptionsData {
 
   constructor(o) {
     super(o)
-    !o && (o = false)
-    const {property} = this
-    if ((this.usageFn = getFn(Object(o.optionsdata).usage, this.defaultUsage.bind(this))) instanceof Failure) throw new Error(`${this.m} optionsData.usage: ${Failure.text}`)
-    if ((this.name = getNonEmptyString(o.name)) instanceof Failure) throw new Error(`${this.m} name property: ${Failure.text}`)
-    if ((this.version = getNonEmptyStringOrUndefined(o.version)) instanceof Failure) throw new Error(`${this.m} version property: ${Failure.text}`)
-    const help = getStringOrFunctionOrUndefined(o.help)
-    if (help instanceof Failure) throw new Error(`${this.m} option ${property}: help property: ${Failure.text}`)
-    if (help !== undefined) this.help = help
-    const helpArgs = getStringOrFunctionOrUndefined(o.helpArgs)
-    if (helpArgs instanceof Failure) throw new Error(`${this.m} option ${property}: helpArgs property: ${Failure.text}`)
-    if (helpArgs !== undefined) this.helpArgs = helpArgs
+    const {optionsData, name, version} = Object(o)
+    const {help, helpArgs, usage} = Object(optionsData)
+    let s = {}
+    if (getFn({usageFn: usage, s}, this.defaultUsage.bind(this))) throw new Error(`${this.m} optionsData.usage: ${s.text}`)
+    if (getNonEmptyString({name, s})) throw new Error(`${this.m} name property: ${s.text}`)
+    if (getNonEmptyStringOrUndefined({version, s})) throw new Error(`${this.m} version property: ${s.text}`)
+    if (getStringOrFunctionOrUndefined({help, s})) throw new Error(`${this.m} optionsData.help: ${s.text}`)
+    if (getStringOrFunctionOrUndefined({helpArgs, s})) throw new Error(`${this.m} optionsData.helpArgs: ${s.text}`)
+    Object.assign(this, s.properties)
   }
 
   async doUsage() {

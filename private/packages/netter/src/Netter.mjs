@@ -8,6 +8,8 @@ import NetworkChecker from './NetworkChecker'
 import InternetChecker from './InternetChecker'
 import OvpnChecker from './OvpnChecker'
 
+import {setMDebug} from 'es2049lib'
+
 import util from 'util'
 
 export default class Netter {
@@ -20,15 +22,13 @@ export default class Netter {
     ],
   }
   static mapTypeToConstructor = {
-    NetworkChecker,
+    NetworkChecker, InternetChecker, OvpnChecker, DnsChecker, // basic-check entries
   }
 
   constructor(options) {
-    const {name, debug, optionsFileProfile, optionsFileProfiles} = (options = Object(options))
-    this.m = String(name || 'Netter')
-    debug && (this.debug = true)
+    const {optionsFileProfile, optionsFileProfiles, debug} = (options = setMDebug(options, this, 'Netter'))
     const receiver = this.receiver.bind(this)
-    this.settlers = this._getOptionsSettlers(options, receiver).concat(this._getYamlSettlers(optionsFileProfiles, optionsFileProfile, receiver))
+    this.settlers = optionsFileProfiles == null ? this._getOptionsSettlers(options, receiver) : this._getYamlSettlers(optionsFileProfile, optionsFileProfiles, receiver)
     debug && this.constructor === Netter && console.log(`${this.m} constructor: ${util.inspect(this, {colors: true, depth: null})}`)
   }
 
@@ -71,56 +71,100 @@ export default class Netter {
   _getYamlSettlers(profileNames, profiles, emitter) {
     const {debug} = this
     const settlers = []
-    if (profileNames === undefined) return settlers
-    if (!Array.isArray(profileNames)) profileNames = [profileNames]
     if (profiles == null) throw new Error(`${this.m} profile data not present`)
+    if (!Array.isArray(profileNames)) profileNames = [profileNames]
     for (let [index, name] of profileNames.entries()) {
       const tp = typeof name
       if (!name || tp !== 'string') throw new Error(`${this.m} profile name #${index}: not non-empty string: type: ${tp}`)
-      settlers.push({name, emitter, runners: this._getRunnerDescriptions(profiles[name], `${this.m} profile ${name}`), debug})
+      settlers.push(new Settler({name, emitter, runners: this._getRunnerDescriptions(profiles[name], `${this.m} profile ${name}`), debug}))
     }
     return settlers
   }
 
   /*
-  string: constructor-key
-  {name: {type: string constructor-key-default-name, options: any, depends: list of nestring}}
-  {some-string: function-value, options: any, depends: list of string}
-  function: constructor
+  values elements:
+  checkNamne:string: constructorKey:string
+  {checkName:string: {type: constructorKey:string, [options: any, depends: list-of-nestring]}}
+  {checkName:function, [options: any, depends: list-of-nestring]}
+  checkConstructor:function
   */
-  _getRunnerDescriptions(values, m) {
-    const {mapTypeToConstructor} = Netter
+  _getRunnerDescriptions(values, mm) {
     const descs = []
     if (!Array.isArray(values)) values = [values]
-    for (let value of values) {
+    for (let [index, value] of values.entries()) {
+      const m = `${mm} index#${index}`
       const vt = typeof value
       if (vt === 'string') {
-        const type = mapTypeToConstructor[value]
-        if (!type) throw new Error(`${m} function name not implemented: ${value}`)
-        descs.push({name: value, type})
+
+        // checkNamne:string: constructorKey:string
+        descs.push({name: value, type: this._mapType(value, m)})
       } else if (vt === 'function') {
+
+        // checkConstructor:function
         const name = value.name || 'function'
         descs.push({name, type: value})
       } else if (vt === 'object') {
-        const props = Object.keys(value)
-        const props1 = props[0]
-        const val1 = value[props1]
-        if (props.length === 1 && typeof val1 === 'object') descs.push({name: String(props1), type: val1})
-        else {
-          const desc = {}
-          for (let [prop, val] of Object.entries(value)) {
-            if (prop === 'options') desc.options = val
-            else if (prop === 'depends') desc.depends = Array.isArray(val) ? val : [val]
-            else if (typeof val === 'function') {
-              desc.name = prop
-              desc.type = val
+        const valueProperties = Object.keys(value)
+        const firstProperty = valueProperties[0]
+        const firstValue = value[firstProperty]
+
+        // {checkName:string: {type: constructorKey:string, [options: any, depends: list-of-nestring]}}
+        if (valueProperties.length === 1 && typeof firstValue === 'object') {
+          const {type0, depends, options} = firstValue
+          const type = type0 || this._mapType(firstProperty, m)
+          const tt = typeof type
+          if (tt !== 'function') throw new Error(`${m} type property missing or not function: type: ${tt}`)
+          const desc = {name: String(firstProperty), type, options}
+          if (this._getDepends(desc, depends)) throw new Error(`${m} depends:  ${desc.depends}`)
+          descs.push(desc)
+        } else {
+
+          // {checkName:function, [options: any, depends: list-of-nestring]}
+          const {options, depends} = value
+          const desc = {options}
+          if (this._getDepends(desc, depends)) throw new Error(`${m} depends: ${desc.depends}`)
+          for (let property of Object.keys(value).filter(p => p !== 'options' && p !== 'depends')) {
+            const type = value[property]
+            if (typeof type === 'function') {
+              desc.name = property
+              desc.type = type
             }
           }
+          if (!desc.type) throw new Error(`${m} property with function value missing`)
           descs.push(desc)
         }
       }
     }
     return descs
+  }
+
+  _mapType(value, m) {
+    const {mapTypeToConstructor} = Netter
+    const type = mapTypeToConstructor[value]
+    if (!type) throw new Error(`${m} function name not implemented: ${value}`)
+    return type
+  }
+
+  _getDepends(o, depends) {
+    if (depends === undefined) return
+    let message
+    if (!Array.isArray(depends)) {
+      message = this._badNeString(depends)
+      depends = [depends]
+    } else for (let [index, value] of depends.entries()) {
+      if (message = this._badNeString(value)) {
+        message = `#${index}: ${message}`
+        break
+      }
+    }
+    if (message) return o ? (o.depends = message) : message
+    o && depends && (o.depends = depends)
+  }
+
+  _badNeString(s) {
+    if (s === undefined) return `value: undefined`
+    const ts = typeof s
+    if (ts !== 'string') return `type: ${ts}`
   }
 
   /*
