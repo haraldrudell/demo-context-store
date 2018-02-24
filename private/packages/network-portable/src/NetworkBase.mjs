@@ -17,20 +17,24 @@ export default class NetworkBase {
   async tcpOpen({host, port, timeout: timeout0}) {
     const timeout = Number(timeout0 >= 0 ? timeout0 : NetworkBase.tcpOpenTimeout)
     const t0 = Date.now()
-    let timer
-    const result = await new Promise((resolve, reject) => new net.Socket()
-      .on('error', e => this.isConnectionRefused(e) ? resolve(false) : reject(e))
-      .once('connect', function isPortOpenDisconnect() {
-        this.end()
-      })
-      .once('finish', () => resolve(true))
-      .connect(port, host) +
-      (timer = setTimeout(() => reject(Object.assign(new Error(`${this.m} tcpOpen timeout: ${host}:${port}`), {host, port, timeout})), timeout))
-    )
+
+    let timer, socket
+    const outcome = await Promise.race([
+      new Promise((resolve, reject) => timer = setTimeout(resolve, timeout)), // resolve: undefined
+      new Promise((resolve, reject) => socket = new net.Socket()
+        .on('error', resolve) // resolve: instanceof Error
+        .once('connect', function isPortOpenDisconnect() {
+          this.end()
+        }).once('finish', () => resolve(true)) // resolve: true
+        .connect(port, host)),
+    ])
     clearTimeout(timer)
-    if (result === false) return // undefined: port is not open
-    const elapsedMs = Date.now() - t0
-    return elapsedMs
+    socket.destroy()
+
+    const result = {elapsedMs: Date.now() - t0}
+    outcome instanceof Error && (result.err = outcome)
+    outcome === true && (result.isOpen = true)
+    return result
   }
 
   getNearIp(iface) {

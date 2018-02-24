@@ -7,6 +7,9 @@ import DnsChecker from './DnsChecker'
 import NetworkChecker from './NetworkChecker'
 import InternetChecker from './InternetChecker'
 import OvpnChecker from './OvpnChecker'
+import Result from './Result'
+import RemoteChecker from './RemoteChecker'
+import VpnChecker from './VpnChecker'
 
 import {setMDebug} from 'es2049lib'
 
@@ -23,6 +26,8 @@ export default class Netter {
   }
   static mapTypeToConstructor = {
     NetworkChecker, InternetChecker, OvpnChecker, DnsChecker, // basic-check entries
+    RemoteChecker,
+    VpnChecker,
   }
 
   constructor(options) {
@@ -42,10 +47,14 @@ export default class Netter {
   }
 
   async receiver(result) {
-    const {isFailure, message, quiet} = result
-    if (!isFailure) {
-      !quiet && console.log(message)
-    } else console.log(`${this.m} result: ${util.inspect(result, {colors: true, depth: null})}`)
+    if (typeof result === 'string') console.log(result) // progress message
+    else if (!(result instanceof Result)) throw new Error(`${this.m} receiver: value not Result`)
+    else {
+      const {isFailure, message, quiet} = result
+      if (!isFailure) {
+        !quiet && console.log(message)
+      } else console.log(`${this.m} result: ${util.inspect(result, {colors: true, depth: null})}`)
+    }
   }
 
   _getOptionsSettlers(options, emitter) {
@@ -109,9 +118,9 @@ export default class Netter {
         const firstValue = value[firstProperty]
 
         // {checkName:string: {type: constructorKey:string, [options: any, depends: list-of-nestring]}}
-        if (valueProperties.length === 1 && typeof firstValue === 'object') {
-          const {type0, depends, options} = firstValue
-          const type = type0 || this._mapType(firstProperty, m)
+        if (valueProperties.length === 1 && firstValue) {
+          const {type: type0, depends, options} = firstValue
+          const type = typeof type0 === 'function' ? type0 : this._mapType(type0 !== undefined ? type0 : firstProperty, m)
           const tt = typeof type
           if (tt !== 'function') throw new Error(`${m} type property missing or not function: type: ${tt}`)
           const desc = {name: String(firstProperty), type, options}

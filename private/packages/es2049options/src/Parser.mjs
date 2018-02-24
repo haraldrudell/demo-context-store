@@ -97,7 +97,9 @@ export default class Parser extends ParserYaml {
       i.index += indexIncrement
     }
     if ((s = this.checkForMandatoryOptions())) return this.doError(s)
-    if (options.optionsFileProfile != null) options.optionsFileProfiles = /*Object(*/yamlProfiles/*)*/ // -profile strings provided
+    const {optionsFileDefault, optionsFileProfile} = options
+    if (optionsFileProfile == null && optionsFileDefault) options.optionsFileProfile = optionsFileDefault
+    if (optionsFileDefault || optionsFileProfile) options.optionsFileProfiles = Object(yamlProfiles) // -profile strings provided
 
     return options
   }

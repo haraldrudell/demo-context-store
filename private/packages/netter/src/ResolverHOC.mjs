@@ -4,6 +4,8 @@ All rights reserved.
 */
 import Result from './Result'
 
+import {getNonEmptyString} from 'es2049lib'
+
 import util from 'util'
 
 export default function ResolverHOC(BaseClass) {
@@ -14,8 +16,9 @@ export default function ResolverHOC(BaseClass) {
 
     resolverAddOptions(o) {
       const {name, emitter, debug} = Object(o)
-      if (!(this.resolverName = name) || typeof name !== 'string') throw new Error('Resolver: name not set')
-      this.resolverM = `Resolver: ${name}`
+      const s = {}
+      if (getNonEmptyString({resolverName: name, s})) throw new Error('Resolver: name: ${s.text}')
+      Object.assign(this, s.properties, {resolverM: `Resolver: ${name}`})
       typeof emitter === 'function' && (this.resolverEmitter = emitter)
       debug && (this.debug = true) && this.constructor === Resolver && console.log(`${this.resolverM} constructor: ${util.inspect(this, {colors: true, depth: null})}`)
     }
@@ -47,11 +50,11 @@ export default function ResolverHOC(BaseClass) {
 
       this.resolverInputs = this.resolverDependants = this.resolverEmitter = this.resolverDependencies = null
       const isOk = resolverInputs.every(d => !d.isFailure)
-      const result = await super.run(isOk, resolverInputs)
+      const result = await super.run(isOk, resolverInputs, resolverEmitter)
       if (!(result instanceof Result)) throw new Error(`${this.resolverM} result not a Result instance`)
       const name = result.name = resolverName
 
-      debug && console.log(`${this.resolverM} dispatch:`, {name, result})
+      debug && console.log(`${this.resolverM} dispatch: ${util.inspect({name, result}, {colors: true, depth: null})}`)
       return Promise.all((resolverEmitter ? [resolverEmitter(result)] : [])
         .concat(resolverDependants.map(r => r.addInputResult({name, result}))))
     }

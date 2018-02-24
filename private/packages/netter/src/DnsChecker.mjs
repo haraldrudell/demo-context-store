@@ -2,24 +2,22 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import Result from './Result'
 import DnsTester from './DnsTester'
-import InternetChecker from './InternetChecker'
+import CheckerBase from './CheckerBase'
 
-export default class DnsChecker extends InternetChecker {
+export default class DnsChecker extends CheckerBase {
   constructor(o) {
-    super(o)
-    this.m = 'DnsChecker'
+    super({name: 'DnsChecker', ...o})
   }
 
   async run(isOk, results) {
-    const {debug, m: name} = this
+    const {debug} = this
     debug && console.log(`${this.m} isOk: ${isOk}`, results)
-    if (!isOk) return this.failure(results)
+    if (!isOk) return this.getDependencyFailure(results)
 
     const {err, isTimeout, elapsed} = await new DnsTester().test()
-    const message = `dns: ${elapsed.toFixed(3)} s${isTimeout ? ' time out' : ''}${err ? ` error: ${err.message}` : ''}`
-
-    return new Result({name, isFailure: false, message})
+    if (err) return this.getFailure({message: err.message, data:err})
+    if (isTimeout) return this.getFailure({message: `dns timeout: ${elapsed.toFixed(3)} s`, data: {elapsed}})
+    return this.getSuccess({message: `dns: ${elapsed.toFixed(3)} s`})
   }
 }
