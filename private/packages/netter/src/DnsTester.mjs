@@ -33,8 +33,10 @@ export default class DnsTester {
     const resolver = new Resolver()
     if (!servers) servers = this.servers
     else if (!Array.isArray(servers)) servers = [servers]
-    if (servers) resolver.setServers()
-    else servers = dns.getServers()
+    if (servers) {
+      resolver.setServers(servers)
+      servers = resolver.getServers()
+    } else servers = dns.getServers()
     if (!domain) domain = this.domain || this.getDomain()
     timeout = timeout >= 0 ? +timeout : this.timeout >= 0 ? this.timeout : DnsTester.timeout
 
