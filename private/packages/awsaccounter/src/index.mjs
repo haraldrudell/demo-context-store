@@ -41,14 +41,6 @@ const optionsData = {
   },
   readYaml: true,
   args: 'none',
-/*
-  help: {
-    args: 'email@domain.com …',
-    description: [
-      '  Tests whether email addresses are valid',
-    ].join('\n'),
-  },
-*/
 }
 
 launchProcess({run, name: pjson && pjson.name, version: pjson && pjson.version})

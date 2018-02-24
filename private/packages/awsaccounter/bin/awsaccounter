@@ -8290,70 +8290,66 @@ var jsYaml = {
 
 var jsYaml$2 = jsYaml;
 
-var _extends$2 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 /*
 © 2017-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-function getNonEmptyString(value, defaultValue) {
-  if (value === undefined) value = defaultValue;
-  const vt = typeof value;
-  if (value && vt === 'string') return value;
-  return new Failure(`not non-empty string: type: ${vt}`);
+const m = 'typeVerifiers';
+
+function setMDebug(o, instance, name) {
+  o = Object(o);
+  const ti = typeof instance;
+  if (ti !== 'object') throw new Error(`${m} setMDebug: instance not object: type: ${ti}`);
+  name = o.name || name;
+  const tn = typeof name;
+  if (!name || tn !== 'string') throw new Error(`${m} setMDebug: name not non-empty string: type: ${tn}`);
+
+  instance.m = name;
+  o.debug && (instance.debug = true);
+
+  return o;
 }
 
-function getNonEmptyStringOrUndefined(value, defaultValue) {
-  if (isProp(value)) return newNesou(value, defaultValue);
-  if (value === undefined) if ((value = defaultValue) === undefined) return value;
+function getNonEmptyString(firstArgument, defaultValue) {
+  const { name, value = defaultValue, s } = getSNameValue(firstArgument);
   const vt = typeof value;
-  if (value && vt === 'string') return value;
-  return new Failure(`not non-empty string or undefined: type: ${vt}`);
+  if (!value && vt !== 'string') return s.text = `not non-empty string: type: ${vt}`;
+  s.properties[name] = value;
 }
 
-function newNesou(prop, defaultValue) {
-  const { s, name, value = defaultValue } = getSNameValue(prop);
+function getNonEmptyStringOrUndefined(firstArgument, defaultValue) {
+  const { name, value = defaultValue, s } = getSNameValue(firstArgument);
   if (value === undefined) return;
   const vt = typeof value;
   if (!value && vt !== 'string') return s.text = `not non-empty string or undefined: type: ${vt}`;
-  s.o[name] = value;
+  s.properties[name] = value;
 }
 
-function getSNameValue(prop) {
-  const s = prop.s;
-  const propCopy = _extends$2({}, prop);
-  delete propCopy.s;
-  const props = Object.keys(propCopy);
-  if (props.length !== 1) throw new Error('es2049lib bad prop object');
-  const name = props[0];
-  const value = prop[name];
-  if (!s.o) s.o = {};
-  return { s, name, value };
-}
-
-function isProp(value) {
-  return Object.keys(Object(value)).includes('s');
-}
-
-function getStringOrFunctionOrUndefined(value, defaultValue) {
-  if (value === undefined) if ((value = defaultValue) === undefined) return value;
+function getStringOrFunctionOrUndefined(firstArgument, defaultValue) {
+  const { name, value = defaultValue, s } = getSNameValue(firstArgument);
+  if (value === undefined) return;
   const vt = typeof value;
-  if (vt !== 'string' && vt !== 'function') return new Failure(`not non-empty string or function or undefined: type: ${vt}`);
-  return value;
+  if (vt !== 'string' && vt !== 'function') return s.text = `not non-empty string or function or undefined: type: ${vt}`;
+  s.properties[name] = value;
 }
 
-function getFn(fn, defaultValue) {
-  if (fn === undefined) fn = defaultValue;
-  const ft = typeof fn;
-  return ft === 'function' ? fn : new Failure(`not function: type: ${ft}`);
+function getFn(firstArgument, defaultValue) {
+  const { name, value = defaultValue, s } = getSNameValue(firstArgument);
+  const ft = typeof value;
+  if (ft !== 'function') return s.text = `not function: type: ${ft}`;
+  s.properties[name] = value;
 }
 
-class Failure {
-  constructor(o) {
-    if (!o) o = false;else if (typeof o === 'string') o = { text: o };
-    o.text = String(o.text || 'Undefined Type Failure');
-    Object.assign(this, o);
-  }
+function getSNameValue(firstArgument) {
+  if (!firstArgument) throw new Error(`${m}: first argument not object`);
+  const { s } = firstArgument;
+  if (!s) throw new Error(`${m}: first argument s property null`);
+  const properties = Object.keys(Object(firstArgument)).filter(property => property !== 's');
+  if (properties.length !== 1) throw new Error(`${m} first argument has more than 1 property other than s`);
+  const name = properties[0];
+  const value = firstArgument[name];
+  if (!s.properties) s.properties = {};
+  return { name, value, s };
 }
 
 /*
@@ -8378,15 +8374,14 @@ class TemplateManager {
     this.fileTemplate = 'NAME.yaml';
     this.fileTemplateRegexp = /NAME/g;
 
-    const { name, debug } = o || false;
-    this.m = String(name || 'TemplateManager');
-    debug && (this.debug = true) && this.constructor === TemplateManager && console.log(`${this.m} constructor: ${util.inspect(this, { colors: true, depth: null })}`);
+    const { debug } = setMDebug(o, this, 'TemplateManager');
+    debug && this.constructor === TemplateManager && console.log(`${this.m} constructor: ${util.inspect(this, { colors: true, depth: null })}`);
   }
 
   async renderTemplate(o) {
     const { filename, stackName, patches } = o || false;
-    let s;
-    if (s = getNonEmptyString(filename) instanceof Failure) throw new Error(`${this.m}.renderTemplate: filename: ${s.text}`);
+    let s = {};
+    if (getNonEmptyString({ filename, s })) throw new Error(`${this.m}.renderTemplate: filename: ${s.text}`);
     if (!(await lib.pathExists(filename))) throw new Error(`${this.m} template file does not exist: ${filename}`);
     let yamlText = await lib.readFile(filename, 'utf8');
     if (Array.isArray(patches)) for (let i = 0; i < patches.length; i += 2) {
@@ -8428,12 +8423,12 @@ class TemplateManager {
   }
 }
 
-var _extends$3 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _extends$2 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 class EC2Template extends TemplateManager {
 
   constructor(o) {
-    super(_extends$3({ name: 'EC2Template' }, o));
+    super(_extends$2({ name: 'EC2Template' }, o));
     this.debug && this.constructor === EC2Template && console.log(`${this.m} constructor: ${util.inspect(this, { colors: true, depth: null })}`);
   }
 
@@ -9129,23 +9124,23 @@ class AwsSdk {
 AwsSdk.awsCredentialsPath = path.join(os.homedir(), '.aws', 'credentials');
 AwsSdk.awsConfigPath = path.join(os.homedir(), '.aws', 'config');
 
-var _extends$4 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _extends$3 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 class StackBase extends AwsSdk {
   constructor(o) {
-    super(_extends$4({ name: 'StackBase' }, o));
+    super(_extends$3({ name: 'StackBase' }, o));
 
     this.throwE = (e, m) => {
       console.error(`${this.m} ${m}:`);
       throw e;
     };
 
-    const { stackName, stackId, region } = o || false;
+    const { stackName, stackId, region } = Object(o);
     let s = {};
     if (getNonEmptyStringOrUndefined({ stackName, s })) throw new Error(`${this.m} stackName: ${s.text}`);
     if (getNonEmptyStringOrUndefined({ stackId, s })) throw new Error(`${this.m} stackId: ${s.text}`);
     if (getNonEmptyStringOrUndefined({ region, s })) throw new Error(`${this.m} stackName: ${s.text}`);
-    Object.assign(this, s.o);
+    Object.assign(this, s.properties);
     this.cfo = this.getService('CloudFormation');
     this.debug && this.constructor === StackBase && console.log(`${this.m} constructor: ${util.inspect(this, { colors: true, depth: null })}`);
   }
@@ -9192,8 +9187,8 @@ class StackBase extends AwsSdk {
   async createStack(o) {
     const { templateBody, availabilityZone } = o || false;
     const { stackName, cfo } = this;
-    let s;
-    if ((s = getNonEmptyString(templateBody)) instanceof Failure) throw new Error(`${this.m} templateBody: ${s.text}`);
+    let s = {};
+    if (getNonEmptyString({ templateBody, s })) throw new Error(`${this.m} templateBody: ${s.text}`);
     const args = {
       StackName: stackName,
       Capabilities: ['CAPABILITY_IAM'],
@@ -9213,16 +9208,16 @@ class StackBase extends AwsSdk {
       await this.getEvents().catch(console.error);
       this.throwE(e, 'createStack');
     }
-    const stackId = getNonEmptyString(Object(response).StackId);
-    if (stackId instanceof Failure) throw new Error(`${this.m}: aws response stackId: ${stackId.text}`);
+    const stackId = Object(response).StackId;
+    if (getNonEmptyString({ stackId, s })) throw new Error(`${this.m}: aws response stackId: ${s.text}`);
     return stackId;
   }
 
   async updateStack(o) {
-    const { templateBody, availabilityZone } = o || false;
+    const { templateBody, availabilityZone } = Object(o);
     const { stackName, cfo } = this;
-    let s;
-    if ((s = getNonEmptyString(templateBody)) instanceof Failure) throw new Error(`${this.m} templateBody: ${s.text}`);
+    let s = {};
+    if (getNonEmptyString({ templateBody, s })) throw new Error(`${this.m} templateBody: ${s.text}`);
     const args = {
       StackName: stackName,
       Capabilities: ['CAPABILITY_IAM'],
@@ -9242,8 +9237,9 @@ class StackBase extends AwsSdk {
       await this.getEvents().catch(console.error);
       this.throwE(e, 'createStack');
     }
-    const stackId = getNonEmptyString(Object(response).StackId);
-    if (stackId instanceof Failure) throw new Error(`${this.m}: aws response stackId: ${stackId.text}`);
+
+    const stackId = Object(response).StackId;
+    if (getNonEmptyString({ stackId, s })) throw new Error(`${this.m}: aws response stackId: ${s.text}`);
     return stackId;
   }
 
@@ -9305,8 +9301,9 @@ class StackBase extends AwsSdk {
     const m = `${this.m} AWS listStack`;
     return (await this.getStacks()).map(summary => {
       const { StackName, StackId, StackStatus } = summary || false;
-      if ((summary = getNonEmptyString(StackName)) instanceof Failure) throw new Error(`${m}: bad stack name: ${summary.text}`);
-      if ((summary = getNonEmptyString(StackId)) instanceof Failure) throw new Error(`${m}: bad stack id: ${summary.text}`);
+      let s = {};
+      if (getNonEmptyString({ StackName, s })) throw new Error(`${m}: bad stack name: ${s.text}`);
+      if (getNonEmptyString({ StackId, s })) throw new Error(`${m}: bad stack id: ${s.text}`);
       return { stackName: StackName, stackId: StackId, stackStatus: StackStatus };
     });
   }
@@ -9570,8 +9567,7 @@ All rights reserved.
 class Accounter {
 
   constructor(o) {
-    const { name, debug } = o || false;
-    this.m = String(name || 'Accounter');
+    const { debug } = setMDebug(o, this, 'Accounter');
     const { opts } = Accounter;
     for (let p of opts) if (o.hasOwnProperty(p)) this[p] = o[p];
     debug && this.constructor === Accounter && console.log(`${this.m} constructor: ${util.inspect(this, { colors: true, depth: null })}`);
@@ -9643,7 +9639,7 @@ var keywords = ["email"];
 var repository = {"type":"git","url":"gt:sw"};
 var rollup = {"dependencies":false,"external":"aws-sdk","targets":"mini","shebang":true};
 var dependencies = {"@jedmao/ini-parser":"^0.2.0","es2049lib":"0.0.1","es2049options":"0.0.1"};
-var devDependencies = {"es2049package":"^0.0.23","jest":"^22.3.0"};
+var devDependencies = {"es2049package":"^0.0.23","jest":"^22.4.2"};
 var pjson = {
 	name: name$1,
 	version: version,
@@ -9739,11 +9735,11 @@ All rights reserved.
 
 class ParserBase {
   constructor(o) {
-    const { debug, optionsData, name } = o || false;
-    this.m = String(name || 'ParserBase');
-    debug && (this.debug = true);
-    const { exit } = optionsData || false;
-    if ((this.exitFn = getFn(exit, this.defaultExit.bind(this))) instanceof Failure) throw new Error(`${this.m} optionsData.exit: ${Failure.text}`);
+    const { optionsData } = setMDebug(o, this, 'ParserBase');
+    const { exit } = Object(optionsData);
+    let s = {};
+    if (getFn({ exitFn: exit, s }, this.defaultExit.bind(this))) throw new Error(`${this.m} optionsData.exit: ${s.text}`);
+    Object.assign(this, s.properties);
   }
 
   defaultExit(code) {
@@ -9881,29 +9877,27 @@ function ValueFlagHOC(BaseClass) {
   }, _class.valueFlagProperties = Object.keys({ isHasValueNever: 1, isHasValueAlways: 1 }), _class.defaultHasValue = Object.keys(valueFlagsMap).filter(valueFlag => valueFlagsMap[valueFlag] & ISDEFAULT$1)[0], _class.valueFlagString = Object.keys(valueFlags).join(', '), _class.valueFlagMust = 'mandatory value', _class.valueFlagMay = 'may have value', _temp;
 }
 
-var _extends$5 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _extends$4 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 class Option extends ValueFlagHOC(NumeralityHOC(OptionBase)) {
 
   constructor(o) {
     super(o);
-    const { type } = this.constructor; // fetch static from derived class
-    if (!type) throw new Error(`${this.m} option type empty: instantiating base Option class?`);
-    const { names, property, value, valueName, help, debug, key } = o || false;
+    const { names, property, value, valueName, help, debug, key } = Object(o);
     const { deletedProperties } = Option;
-    let s;
-    if ((this.names = s = this._getOptionNames(names, property, key)) instanceof Failure) throw new Error(`${this.m} option type: ${type}: names property: ${s.text}`);
-    this.m = `option: ${s.join('\x20')}`;
-    if ((s = getNonEmptyStringOrUndefined(property, key)) instanceof Failure) throw new Error(`${this.m} property: ${s.text}`);
-    if (s) this.property = s;
-    if (value !== undefined) this.value = value;
-    if ((s = getStringOrFunctionOrUndefined(valueName)) instanceof Failure) throw new Error(`${this.m} valueName property: ${s.text}`);
-    if (s !== undefined) this.valueName = s;else if (!this.isHasValueNever && valueName === undefined) this.valueName = Option.valueName;
-    if ((s = getStringOrFunctionOrUndefined(help)) instanceof Failure) throw new Error(`${this.m}: help property: ${s.text}`);
-    if (s !== undefined) this.help = s;
-    const props = _extends$5({}, o);
+    let s = {};
+    const { type } = this.constructor; // fetch static type member from derived class
+    if (getNonEmptyString({ type, s })) throw new Error(`${this.m} option class static type member: ${s.text}: instantiating base Option class?`);
+    delete s.properties.type;
+    if (typeof (this.names = s.text = this._getOptionNames(names, property, key)) === 'string') throw new Error(`${this.m} option type: ${type}: names property: ${s.text}`);
+    if (getNonEmptyStringOrUndefined({ property, s }, key)) throw new Error(`${this.m} property: ${s.text}`);
+    if (value !== undefined) this.value = value; // any type
+    if (getStringOrFunctionOrUndefined({ valueName, s })) throw new Error(`${this.m} valueName property: ${s.text}`);
+    if (valueName === undefined && !this.isHasValueNever) this.valueName = Option.valueName;
+    if (getStringOrFunctionOrUndefined({ help, s })) throw new Error(`${this.m}: help property: ${s.text}`);
+    const props = _extends$4({}, o);
     for (let p of deletedProperties) delete props[p];
-    Object.assign(this, { count: 0, props });
+    Object.assign(this, s.properties, { count: 0, props });
     debug && this.constructor === Option && console.log(`${this.m} constructor: ${util.inspect(this, { colors: true, depth: null })}`);
   }
 
@@ -9920,11 +9914,13 @@ class Option extends ValueFlagHOC(NumeralityHOC(OptionBase)) {
   }
 
   _getOptionNames(names, property, key) {
+    // names must be a non-empty array of non-empty strings starting with a hyphen
+    // defult value is hyphenated: key from optionsData.properties or property
     const nameList = names === undefined ? [`-${key || property}`] : Array.isArray(names) ? names : [names];
     for (let [index, name] of nameList.entries()) {
       const nt = typeof name;
-      if (!name || typeof nt !== 'string') return new Failure(`index #${index}: not non-empty string: type: ${nt}`);
-      if (!name.startsWith('-')) return new Failure(`index #${index}: option name not starting with hypen: ${name}`);
+      if (!name || typeof nt !== 'string') return `index #${index}: not non-empty string: type: ${nt}`;
+      if (!name.startsWith('-')) return `index #${index}: option name not starting with hypen: ${name}`;
     }
     return nameList;
   }
@@ -9938,14 +9934,16 @@ Option.deletedProperties = Object.keys({ names: 1, property: 1, type: 1, numeral
 All rights reserved.
 */
 
-const m = 'OptionHOC';
+const m$1 = 'OptionHOC';
 
 function OptionHOC(fn, name) {
   var _class, _temp2;
 
-  let s;
-  if ((s = getFn(fn)) instanceof Failure) throw new Error(`${m} fn: ${s.text}`);
-  if ((s = getNonEmptyString(name)) instanceof Failure) throw new Error(`${m} name: ${s.text}`);
+  {
+    let s = {};
+    if (getFn({ fn, s })) throw new Error(`${m$1} fn: ${s.text}`);
+    if (getNonEmptyString({ name, s })) throw new Error(`${m$1} name: ${s.text}`);
+  }
   return _temp2 = _class = class OptionCustom extends Option {
     constructor(...args) {
       var _temp;
@@ -9985,10 +9983,9 @@ All rights reserved.
 */
 
 class OptionTrue extends OptionBoolean {
-  constructor(...args) {
-    var _temp;
 
-    return _temp = super(...args), this.value = true, _temp;
+  constructor(o) {
+    super(Object.assign({ value: true }, o));
   }
 
   execute({ name, value, i: { options } }) {
@@ -9997,8 +9994,8 @@ class OptionTrue extends OptionBoolean {
     property && (options[property] = value);
   }
 
-  _getOptionNames(names, property) {
-    if (names === undefined && property) names = `-no-${property}`;
+  _getOptionNames(names, property, key) {
+    if (names === undefined && (property || key)) names = `-no-${property || key}`;
     return super._getOptionNames(names, property);
   }
 }
@@ -10018,7 +10015,10 @@ class OptionString extends Option {
   execute({ value, i: { options } }) {
     if (value === undefined) value = '';
     const { property } = this;
-    property && (options[property] = value);
+    if (property) {
+      const optionsValue = options[property];
+      if (optionsValue === undefined) options[property] = value;else if (!Array.isArray(optionsValue)) options[property] = [optionsValue, value];else optionsValue.puah(value);
+    }
   }
 }
 OptionString.type = 'string';
@@ -10130,7 +10130,7 @@ var _extends$1$2 = Object.assign || function (target) { for (var i = 1; i < argu
 class ParserOptionsData extends NumeralityHOC(ParserBase) {
 
   constructor(o) {
-    super(Object.assign({ numerality: Object(Object(o).optionsData).args }, o));
+    super(_extends$1$2({ numerality: Object(Object(o).optionsData).args }, o));
     this.optionList = [];
     this.optionIndex = {};
     this.initialOptions = {};
@@ -10202,11 +10202,10 @@ class ParserOptionsData extends NumeralityHOC(ParserBase) {
 
   addOptionType(optionConstructor) {
     const { optionTypeList, optionTypeIndex } = this;
-    const ot = typeof optionConstructor;
-    if (ot !== 'function') throw new Error(`${this.m} addOptionType option-type constructor not function: type: ${ot}`);
-    const { type } = optionConstructor;
-    const s = getNonEmptyString(type);
-    if (s instanceof Failure) throw new Error(`${this.m} addOptionType option-type constructor type name: ${s}`);
+    const { type } = Object(optionConstructor);
+    let s = {};
+    if (getFn({ optionConstructor, s })) throw new Error(`${this.m} addOptionType option-type constructor: ${s.text}`);
+    if (getNonEmptyString({ type, s })) throw new Error(`${this.m} addOptionType option-type constructor type name: ${s.text}`);
     const currentIndex = optionTypeIndex[type];
     if (currentIndex == null) {
       optionTypeIndex[type] = optionTypeList.length;
@@ -10267,14 +10266,14 @@ class ParserOptionsData extends NumeralityHOC(ParserBase) {
 
   _addBuiltInOptionTypes(builtInList) {
     if (!Array.isArray(builtInList)) throw new Error(`${this.m} built-in option types list not array`);
+    let s = {};
     for (let [index, builtInConstructor] of builtInList.entries()) {
       let indexStr = `index#${index}`;
       const bt = typeof builtInConstructor;
       if (bt !== 'function') throw new Error(`${this.m} built-in option type constructor not function: ${indexStr} type: ${bt}`);
       indexStr = `class name: ${bt.name} ${indexStr}`;
       const { type } = builtInConstructor;
-      const s = getNonEmptyString(type);
-      if (s instanceof Failure) throw new Error(`${this.m} built-in option type does not have static type name: ${indexStr} constructor name: ${name}`);
+      if (getNonEmptyString({ type, s })) throw new Error(`${this.m} built-in option type does not have static type name: ${indexStr} constructor name: ${name}`);
       this.addOptionType(builtInConstructor);
     }
   }
@@ -10319,17 +10318,15 @@ class ParserUsage extends ParserOptionsData {
 
   constructor(o) {
     super(o);
-    !o && (o = false);
-    const { property } = this;
-    if ((this.usageFn = getFn(Object(o.optionsdata).usage, this.defaultUsage.bind(this))) instanceof Failure) throw new Error(`${this.m} optionsData.usage: ${Failure.text}`);
-    if ((this.name = getNonEmptyString(o.name)) instanceof Failure) throw new Error(`${this.m} name property: ${Failure.text}`);
-    if ((this.version = getNonEmptyStringOrUndefined(o.version)) instanceof Failure) throw new Error(`${this.m} version property: ${Failure.text}`);
-    const help = getStringOrFunctionOrUndefined(o.help);
-    if (help instanceof Failure) throw new Error(`${this.m} option ${property}: help property: ${Failure.text}`);
-    if (help !== undefined) this.help = help;
-    const helpArgs = getStringOrFunctionOrUndefined(o.helpArgs);
-    if (helpArgs instanceof Failure) throw new Error(`${this.m} option ${property}: helpArgs property: ${Failure.text}`);
-    if (helpArgs !== undefined) this.helpArgs = helpArgs;
+    const { optionsData, name, version } = Object(o);
+    const { help, helpArgs, usage } = Object(optionsData);
+    let s = {};
+    if (getFn({ usageFn: usage, s }, this.defaultUsage.bind(this))) throw new Error(`${this.m} optionsData.usage: ${s.text}`);
+    if (getNonEmptyString({ name, s })) throw new Error(`${this.m} name property: ${s.text}`);
+    if (getNonEmptyStringOrUndefined({ version, s })) throw new Error(`${this.m} version property: ${s.text}`);
+    if (getStringOrFunctionOrUndefined({ help, s })) throw new Error(`${this.m} optionsData.help: ${s.text}`);
+    if (getStringOrFunctionOrUndefined({ helpArgs, s })) throw new Error(`${this.m} optionsData.helpArgs: ${s.text}`);
+    Object.assign(this, s.properties);
   }
 
   async doUsage() {
@@ -10450,31 +10447,32 @@ class ParserDefaults extends ParserUsage {
     const { optionsData } = o || false;
     const { defaults, profiles, readYaml } = optionsData || false;
     const doAddDefaults = defaults !== false;
-    const { helpOption, debugOption, profileOption } = ParserDefaults;
+    const { helpOption, debugOption, profileOption, noYamlOption } = ParserDefaults;
 
     const optionList = [];
     if (doAddDefaults) {
       optionList.push(_extends$2$2({}, helpOption, { fn: this.doUsage.bind(this) }), debugOption);
     }
-    if (profiles || profiles === undefined && readYaml) optionList.push(_extends$2$2({}, profileOption, { help: this.profileHelp.bind(this) }));
+    if (profiles || profiles === undefined && readYaml) optionList.push(_extends$2$2({}, profileOption, { help: this.profileHelp.bind(this) }), noYamlOption);
     for (let option of optionList) this.createOption(option);
   }
 
   async profileHelp() {
     const { readYaml } = this;
     const key = typeof readYaml !== 'string' ? ParserDefaults.defaultYamlKey : readYaml;
-    const basenames = `'${this.getYamlBasenames().join(`'\x20'`)}'`;
-    let s = [`if provided, key is fetched from yaml in the top profile dictionary`, `yaml filenames are: ${basenames}`, `paths searched are ~/apps .. /etc`, `if a yaml file exists, the top level dictionary ${key} is read`].join('\n');
+    const basenames = `${this.getYamlBasenames().join('\x20')}`;
+    let s = [`key is used to fetch from yaml top-level 'profiles' dictionary`, `yaml filenames searched are: ${basenames}`, `paths searched are ~/apps .. /etc`, `option defaults are fetched from the top-level '${key}' dictionary`].join('\n');
     const filename = await this.getYamlFilename();
     if (filename) {
       const yamlObject = await this.getYaml(filename);
-      const keys = Object.keys(yamlObject);
-      if (keys.length) s += `values in ${filename}: ${keys.join(' ')}`;
+      const keys = Object.keys(Object(yamlObject).profiles);
+      if (keys.length) s += `\nprofiles in '${filename}': '${keys.join(`'\x20'`)}'`;
     }
     return s;
   }
 }
 ParserDefaults.defaultYamlKey = 'options';
+ParserDefaults.yamlDisableOption = '-no-yaml';
 ParserDefaults.helpOption = {
   names: ['-help', '--help'],
   type: OptionHelp,
@@ -10491,6 +10489,11 @@ ParserDefaults.profileOption = {
   type: 'nestring',
   property: 'optionsFileProfile',
   valueName: 'key'
+};
+ParserDefaults.noYamlOption = {
+  names: [ParserDefaults.yamlDisableOption],
+  type: 'true',
+  help: 'ignore yaml files'
 };
 
 /*
@@ -10570,16 +10573,21 @@ class Parser extends ParserYaml {
   async parseOptions(argv) {
     const { debug, readYaml } = this;
     const options = this.getInitialOptions();
-    const i = { options, argv, index: 0
+    const i = { options, argv, index: 0 };
+    let yamlProfiles, s;
 
-      // readYaml
-    };if (readYaml) {
-      const optionsFile = await this.getYamlFilename();
-      if (optionsFile) {
-        const optionsFileProp = typeof readYaml === 'string' ? readYaml : Parser.defaultYamlKey;
-        const yamlOptions = await this.getYaml(optionsFile, optionsFileProp);
-        debug && console.log(`${this.m} merging yaml options from ${optionsFile} key: ${optionsFileProp}:`, yamlOptions);
-        Object.assign(options, yamlOptions, { optionsFile, optionsFileProp });
+    if (readYaml) {
+      const { yamlDisableOption } = Parser;
+      if (!argv.includes(yamlDisableOption)) {
+        const optionsFile = await this.getYamlFilename();
+        if (optionsFile) {
+          const optionsFileProp = typeof readYaml === 'string' ? readYaml : Parser.defaultYamlKey;
+          const data = Object((await this.getYaml(optionsFile)));
+          yamlProfiles = Object(data.profiles);
+          const yamlOptions = Object(data[optionsFileProp]);
+          debug && console.log(`${this.m} merging yaml options from ${optionsFile} key: ${optionsFileProp}:`, yamlOptions);
+          Object.assign(options, yamlOptions, { optionsFile, optionsFileProp });
+        }
       }
     }
 
@@ -10592,8 +10600,7 @@ class Parser extends ParserYaml {
       if (!token.startsWith('-')) {
         debug && console.log(`${this.m} non-option: ${token}`);
         this.addNumeralityOccurrence();
-        const notAllowedMessage = this.isNumeralityBad();
-        if (notAllowedMessage) return this.doError(notAllowedMessage);
+        if (s = this.isNumeralityBad()) return this.doError(s);
         const { args } = options;
         if (!args) options.args = [token];else args.push(token);
         i.index++;
@@ -10610,8 +10617,7 @@ class Parser extends ParserYaml {
       const { value, indexIncrement, errorText } = this.getOptionValue({ option, optionName, optionValue, optionalValue });
       if (errorText) return this.doError(errorText);
       option.addNumeralityOccurrence();
-      const optionError = option.isNumeralityBad();
-      if (optionError) return this.doError(`option ${optionName}: ${optionError}`);
+      if (s = option.isNumeralityBad()) return this.doError(`option ${optionName}: ${s}`);
 
       // execute option
       debug && console.log(`${this.m} execute option: ${option.constructor.type}`, { name: optionName, value, i, indexIncrement });
@@ -10619,9 +10625,10 @@ class Parser extends ParserYaml {
       if (typeof optionResult === 'string') return this.doError(optionResult);else if (optionResult === true) continue;
       i.index += indexIncrement;
     }
-
-    const mText = this.checkForMandatoryOptions();
-    if (mText) return this.doError(mText);
+    if (s = this.checkForMandatoryOptions()) return this.doError(s);
+    const { optionsFileDefault, optionsFileProfile } = options;
+    if (optionsFileProfile == null && optionsFileDefault) options.optionsFileProfile = optionsFileDefault;
+    if (optionsFileDefault || optionsFileProfile) options.optionsFileProfiles = Object(yamlProfiles); // -profile strings provided
 
     return options;
   }
@@ -10672,14 +10679,6 @@ const optionsData = {
   },
   readYaml: true,
   args: 'none'
-  /*
-    help: {
-      args: 'email@domain.com …',
-      description: [
-        '  Tests whether email addresses are valid',
-      ].join('\n'),
-    },
-  */
 };
 
 launchProcess({ run: run$1, name: pjson && pjson.name, version: pjson && pjson.version });

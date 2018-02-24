@@ -4,6 +4,7 @@ All rights reserved.
 */
 import EC2Template from './EC2Template'
 import {StackManager, ImageManager} from 'awslib'
+import {setMDebug} from 'es2049lib'
 
 import util from 'util'
 
@@ -14,8 +15,7 @@ export default class Accounter {
   static opts = Object.keys({deploy: 1, list: 1, render: 1, listdeployable: 1, debug: 1, cachedid: 1, codename: 1, id: 1, del: 1, up: 1})
 
   constructor(o) {
-    const {name, debug} = o || false
-    this.m = String(name || 'Accounter')
+    const {debug} = setMDebug(o, this, 'Accounter')
     const {opts} = Accounter
     for (let p of opts) if (o.hasOwnProperty(p)) this[p] = o[p]
     debug && this.constructor === Accounter && console.log(`${this.m} constructor: ${util.inspect(this, {colors: true, depth: null})}`)

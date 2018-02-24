@@ -4,19 +4,19 @@ All rights reserved.
 */
 import AwsSdk from './AwsSdk'
 
-import {throwWithMethod, getNonEmptyString, getNonEmptyStringOrUndefined, Failure} from 'es2049lib'
+import {throwWithMethod, getNonEmptyString, getNonEmptyStringOrUndefined} from 'es2049lib'
 
 import util from 'util'
 
 export default class StackBase extends AwsSdk {
   constructor(o) {
     super({name: 'StackBase', ...o})
-    const {stackName, stackId, region} = o || false
+    const {stackName, stackId, region} = Object(o)
     let s = {}
     if (getNonEmptyStringOrUndefined({stackName, s})) throw new Error(`${this.m} stackName: ${s.text}`)
     if (getNonEmptyStringOrUndefined({stackId, s})) throw new Error(`${this.m} stackId: ${s.text}`)
     if (getNonEmptyStringOrUndefined({region, s})) throw new Error(`${this.m} stackName: ${s.text}`)
-    Object.assign(this, s.o)
+    Object.assign(this, s.properties)
     this.cfo = this.getService('CloudFormation')
     this.debug && this.constructor === StackBase && console.log(`${this.m} constructor: ${util.inspect(this, {colors: true, depth: null})}`)
   }
@@ -60,8 +60,8 @@ export default class StackBase extends AwsSdk {
   async createStack(o) {
     const {templateBody, availabilityZone} = o || false
     const {stackName, cfo} = this
-    let s
-    if ((s = getNonEmptyString(templateBody)) instanceof Failure) throw new Error(`${this.m} templateBody: ${s.text}`)
+    let s = {}
+    if (getNonEmptyString({templateBody, s})) throw new Error(`${this.m} templateBody: ${s.text}`)
     const args = {
       StackName: stackName,
       Capabilities: ['CAPABILITY_IAM'],
@@ -81,8 +81,8 @@ export default class StackBase extends AwsSdk {
       await this.getEvents().catch(console.error)
       this.throwE(e, 'createStack')
     }
-    const stackId = getNonEmptyString(Object(response).StackId)
-    if (stackId instanceof Failure) throw new Error(`${this.m}: aws response stackId: ${stackId.text}`)
+    const stackId = Object(response).StackId
+    if (getNonEmptyString({stackId, s})) throw new Error(`${this.m}: aws response stackId: ${s.text}`)
     return stackId
   }
 
@@ -92,10 +92,10 @@ export default class StackBase extends AwsSdk {
   }
 
   async updateStack(o) {
-    const {templateBody, availabilityZone} = o || false
+    const {templateBody, availabilityZone} = Object(o)
     const {stackName, cfo} = this
-    let s
-    if ((s = getNonEmptyString(templateBody)) instanceof Failure) throw new Error(`${this.m} templateBody: ${s.text}`)
+    let s = {}
+    if (getNonEmptyString({templateBody, s})) throw new Error(`${this.m} templateBody: ${s.text}`)
     const args = {
       StackName: stackName,
       Capabilities: ['CAPABILITY_IAM'],
@@ -115,8 +115,9 @@ export default class StackBase extends AwsSdk {
       await this.getEvents().catch(console.error)
       this.throwE(e, 'createStack')
     }
-    const stackId = getNonEmptyString(Object(response).StackId)
-    if (stackId instanceof Failure) throw new Error(`${this.m}: aws response stackId: ${stackId.text}`)
+
+    const stackId = Object(response).StackId
+    if (getNonEmptyString({stackId, s})) throw new Error(`${this.m}: aws response stackId: ${s.text}`)
     return stackId
   }
 
@@ -176,8 +177,9 @@ export default class StackBase extends AwsSdk {
     const m = `${this.m} AWS listStack`
     return (await this.getStacks()).map(summary => {
       const {StackName, StackId, StackStatus} = summary || false
-      if ((summary = getNonEmptyString(StackName)) instanceof Failure) throw new Error(`${m}: bad stack name: ${summary.text}`)
-      if ((summary = getNonEmptyString(StackId)) instanceof Failure) throw new Error(`${m}: bad stack id: ${summary.text}`)
+      let s = {}
+      if (getNonEmptyString({StackName, s})) throw new Error(`${m}: bad stack name: ${s.text}`)
+      if (getNonEmptyString({StackId, s})) throw new Error(`${m}: bad stack id: ${s.text}`)
       return {stackName: StackName, stackId: StackId, stackStatus: StackStatus}
     })
   }
