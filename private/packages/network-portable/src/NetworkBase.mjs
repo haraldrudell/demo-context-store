@@ -14,7 +14,8 @@ export default class NetworkBase {
     Object.assign(this, {debug})
   }
 
-  async tcpOpen({host, port, timeout: timeout0}) {
+  async tcpOpen({host, port, timeout: timeout0, doThrow}) { //  {elapsedMs, isOpen, err, isConnectionRefused}
+    // closed port throws ECONNREFUSED -> result.isConnectionRefused
     const timeout = Number(timeout0 >= 0 ? timeout0 : NetworkBase.tcpOpenTimeout)
     const t0 = Date.now()
 
@@ -32,8 +33,10 @@ export default class NetworkBase {
     socket.destroy()
 
     const result = {elapsedMs: Date.now() - t0}
-    outcome instanceof Error && (result.err = outcome)
-    outcome === true && (result.isOpen = true)
+    if (outcome instanceof Error) {
+      result.isConnectionRefused = this.isConnectionRefused(outcome)
+      result.err = outcome
+    } else outcome === true && (result.isOpen = true)
     return result
   }
 

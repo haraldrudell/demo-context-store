@@ -4,7 +4,8 @@ All rights reserved.
 */
 import SshRecycler from './SshRecycler'
 import SMTPVerifier from './SMTPVerifier'
-import Queue from './Queue'
+
+import {Queue, setMDebug} from 'es2049lib'
 
 import parser from 'email-addresses'
 import dns from 'dns'
@@ -14,10 +15,9 @@ export default class EmailVerifier {
   shutdownSafe = this.shutdownSafe.bind(this)
 
   constructor(o) {
-    const {debug, ssh, name, port} = o || false
-    this.m = String(name || 'EmailVerifier')
-    Object.assign(this, {debug, port})
-    if (ssh) this.sshRecycler = new SshRecycler({cmd: ssh, nearPort: port, debug})
+    const {print, ssh: args} = o = setMDebug(o, this, 'EmailVerifier')
+    print && (this.print = true)
+    args && (this.sshRecycler = new SshRecycler({...o, args}))
     this.queue = new Queue()
   }
 
@@ -29,13 +29,18 @@ export default class EmailVerifier {
   async verify(mailboxes) {
     const {debug} = this
     if (!Array.isArray(mailboxes)) mailboxes = [mailboxes]
-    const emails = mailboxes.map((email, ix) => this.parseMailbox(email, ix))
+
+    // parse: 'a@b.com' -> {address: 'a@b.com', domain: 'b.com'}
+    const emails = mailboxes.map((email, ix) => this.parseMailbox(email, ix)) //
+
+    // dns resolve: {address, domain, ip: '1.2.3.4', mxDnsName: 'mail.gov'}
     debug && console.log(`${this.m} verify`, emails)
-    await Promise.all(emails.map(email => this.addMx(email)))
+    await Promise.all(emails.map(email => this.addMx(email))) // uses network dns
 
+    // serialize using queue so that ssh tunnel can be used
     debug && console.log(`${this.m} verify submitting:`, emails)
-    const results = await this.queue.submit(() => this.verifyAll(emails))
-
+    const results = await Promise.all(emails.map(o => this.queue.submit(() => this.verifyMailbox(o))))
+console.log('RESRERS', results)
     debug && console.log(`${this.m} verify results:`, results)
     console.log(`\nnumber of results: ${results.length}`)
     this.printResults(results, true)
@@ -53,32 +58,20 @@ export default class EmailVerifier {
     return e
   }
 
-  async verifyAll(emails) {
-    const {debug} = this
-    debug && console.log(`${this.m} verifyAll`, emails)
-    const results = []
-    Object.assign(this, {emails, emailIndex: 0, results})
-
-    await this.verifyNext().catch(this.verifyNextOnRejected)
-    return results
-  }
-
-  shutdownSafe(e) {
+  shutdownSafe(e) { // does not reject
     this.shutdown().catch(console.error)
     if (e) throw e
   }
 
-  async verifyNext() {
-    const {print, emails, emailIndex, sshDomain, sshRecycler, results, port: nearSshPort} = this
-    const email = emails[emailIndex]
-    if (!email) return
+  async verifyMailbox(email) {
+    const {print, sshDomain, sshRecycler} = this
     const {domain, mxDnsName, address, ip} = email
-    const host = sshRecycler ? '127.0.0.1' : ip
-    const port = sshRecycler ? nearSshPort : 25
+    const {host, port} = sshRecycler ? sshRecycler.getHostPort() : {host: ip, port: 25}
     if (sshRecycler) {
       if (domain !== sshDomain) {
         if (!sshDomain) {
-          if (await sshRecycler.isPortOpen({host, port})) throw new Error(`${this.m} port busy: ${port}`) // we did not have one before
+          print && console.log(`checking that ports are available…`)
+          if (!await sshRecycler.arePortsAvailable()) throw new Error(`${this.m} ports busy`) // we did not have one before
         } else await sshRecycler.disconnect()
         this.sshDomain = domain
 
@@ -86,29 +79,27 @@ export default class EmailVerifier {
         await sshRecycler.connect({host: ip})
 
         print && console.log(`Waiting for ssh tunnel: ${mxDnsName} ${ip}…`)
-        await sshRecycler.waitOnSocket()
+        await sshRecycler.waitOnCheckPort()
       }
     }
 
-    results.push.apply(results, await this.connect({host, port, mxDnsName, address}))
-    this.emailIndex++
-    return this.verifyNext()
+    return this.connect({host, port, mxDnsName, address})
   }
 
   async connect({host, port, mxDnsName, address}) {
     const {debug, print} = this
     print && console.log(`Connecting to mail server: ${mxDnsName}…`)
-    const result = await new SMTPVerifier({smtp: {host, port}, mxDnsName, debug}).verify(address)
+    const result = await new SMTPVerifier({smtp: {host, port}, mxDnsName, debug: debug || print}).verify(address)
     debug && console.log('SMTPVerifier:', result)
     if (!Array.isArray(result)) throw new Error(`{this.m} Email verification failed: ${result}`)
     this.printResults(result)
-    return result // [{email, response}…]
+    return result[0] // [{email, response}…] => {email, respomse}
   }
 
   printResults(results, abbreviate) {
     for (let {email, response} of results) {
       const newLine = !abbreviate ? -1 : response.indexOf('\n')
-      const r = !~newLine ? response : response.substring(0, newLine) + '…'
+      const r = !~newLine ? response : `${response.substring(0, newLine)}…`
       console.log(`Mailbox: ${email} Response: ${r}`)
     }
   }

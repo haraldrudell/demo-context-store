@@ -13,6 +13,6 @@ export default class OptionPort extends OptionInteger {
     super(Object.assign({hasValue: valueFlags.always}, o))
     const {props} = this
     if (props.min == null) props.min = 1
-    if (props.max == null) props.min = 65535
+    if (props.max == null) props.max = 65535
   }
 }

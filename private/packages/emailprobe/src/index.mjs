@@ -7,32 +7,31 @@ import pjson from '../package.json'
 
 import {OptionsParser, launchProcess} from 'es2049options'
 
+import util from 'util'
+
 const optionsData = {
   properties: {
     print: {
+      help: 'suppress smtp communications',
       type: 'true',
     },
     port: {
-      type: 'integer',
-      min: 1,
-      max: 65535,
-      hasValue: 'always',
+      help: 'near port for ssh tunnel',
+      type: 'port',
     },
   },
   readYaml: true,
-  help: {
-    args: 'email@domain.com …',
-    description: [
-      '  Tests whether email addresses are valid',
-    ].join('\n'),
-  },
+  helpArgs: 'email@domain.com …',
+  help: [
+    'Tests whether email addresses are valid',
+  ].join('\n'),
 }
 
-launchProcess({run, pjson})
+launchProcess({run, name: pjson && pjson.name, version: pjson && pjson.version})
 
 async function run({name, version, OnRejected}) {
   const options = await new OptionsParser({optionsData, name, version}).parseOptions(process.argv.slice(2))
-  options.debug && OnRejected.setDebug() && console.log(`${name} options:`, options)
+  options.debug && OnRejected.setDebug() && console.log(`${name} options: ${util.inspect(options, {colors: true, depth: null})}`)
   const {args: mailboxes} = options
   delete options.args
   const ev = new EmailVerifier(options)

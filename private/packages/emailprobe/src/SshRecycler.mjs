@@ -4,54 +4,97 @@ All rights reserved.
 */
 import SshProcess from './SshProcess'
 
-import {ensureListOfString, ensurePortNumber} from 'es2049lib'
+import {setMDebug, getArrayOfString, getPortNumber} from 'es2049lib'
 import Network from 'network-portable'
 
-export default class SshRecycler {
-  onRejected = this.onRejected.bind(this)
+import util from 'util'
+import net from 'net'
+const {Server} = net
 
+export default class SshRecycler {
   constructor(o) {
-    this.m = 'SshRecycler'
-    const {cmd, nearPort: nearPort0, debug} = o || false
-    ensureListOfString(cmd, `${this.m} cmd`)
-    const nearPort = ensurePortNumber(nearPort0, `${this.m} nearPort`)
-    const promise = new Promise((resolve, reject) => (this._resolve = resolve) && (this._reject = reject))
-    Object.assign(this, {cmd, debug, promise, nearPort})
+    const {args, port, checkPort, debug} = setMDebug(o, this, 'SshRecycler')
+    const s = {}
+    if (getArrayOfString({args, s})) throw new Error(`${this.m} args ${s.text}`)
+    if (getPortNumber({port, s})) throw new Error(`${this.m} port: ${s.text}`)
+    if (getPortNumber({checkPort, s})) throw new Error(`${this.m} port: ${s.text}`)
+    this.promise = new Promise((resolve, reject) => (this._resolve = resolve) && (this._reject = reject))
+    Object.assign(this, s.properties)
     this.network = new Network({debug})
-    debug && console.log(`${this.m} constructor:`, this)
+    debug && this.constructor === SshRecycler && console.log(`${this.m} constructor: ${util.inspect(this, {colors: true, depth: null})}`)
   }
 
   async connect({host}) {
     while (this.sshProcess) await this.disconnect()
-    const {debug, nearPort, onRejected} = this
-    const cmd = this.patchSsh(host)
-    this.sshProcess = new SshProcess({cmd, host, port: nearPort, debug, onRejected}).launchSsh()
+    const {checkPort, debug} = this
+    const args = this._patchSsh(host)
+    const sshProcess = new SshProcess({args, checkPort, debug})
+    const {promise, isError} = sshProcess.launchSsh()
+    promise.catch(e => this._reject(e))
+    console.log('SSHREC', isError)
+    isError && await promise // this will reject
+    this.sshProcess = sshProcess
   }
 
-  async isPortOpen({host, port}) {
-    const {network, debug} = this
-    const msOrUndefined = await network.tcpOpen({host, port})
-    const result = msOrUndefined != null
-    debug && console.log(`${this.m} isPortOpen: ${host}:${port} result: ${result} response: ${msOrUndefined}`)
-    return result
+  async arePortsAvailable() {
+    if (!await this.isCheckPortAvailable()) return false
+    const {port, debug} = this
+
+    const [e, inListen] = await new Promise((resolve, reject) => {
+      const server = new Server()
+        .on('error', er => resolve([er, false]))
+        .listen(port, er => !er
+          ? server.close(() => resolve([]))
+          : resolve([er, true]))
+    })
+    const isBadError = (e && !inListen) || this.errorOtherThanPortAccess(e)
+
+    debug && console.log(`${this.m} isCheckPortAvailable result: ${!isBadError} data port: ${port}${isBadError ? ` ${e}` : ''}`)
+    if (isBadError) throw e
+    return true
   }
 
-  async waitOnSocket() {
+  async isCheckPortAvailable() {
+    const {checkPort, network, debug} = this
+    const {host} = SshProcess
+    const {isOpen, err, isConnectionRefused} = await network.tcpOpen({host, port: checkPort})
+    debug && console.log(`${this.m} isCheckPortAvailable result: ${!isOpen} ${host}:${checkPort}${err && !isConnectionRefused ? ` err: ${err}` : ''}`)
+    if (err && !isConnectionRefused) throw err
+    return !isOpen
+  }
+
+  waitOnCheckPort() {
+    const {checkPort} = this
+    return this.waitOnSocket(checkPort)
+  }
+
+  waitOnDataPort() {
+    const {port} = this
+    return this.waitOnSocket(port)
+  }
+
+  async waitOnSocket(port) {
     const {sshProcess} = this
     if (!sshProcess) throw new Error(`${this.m} waitForPort: connect not invoked`)
-    sshProcess.waitOnSocket()
+    return sshProcess.waitOnSocket(port)
+  }
+
+  getHostPort() {
+    const {host} = SshProcess
+    const {port} = this
+    return {host, port}
   }
 
   async disconnect() {
     const {sshProcess} = this
     if (sshProcess) {
       this.sshProcess = null
-      await sshProcess.disconnect()
+      return sshProcess.disconnect()
     }
   }
 
-  patchSsh(ip) {
-    return this.cmd.map(str => str.replace(/DOMAIN/g, ip))
+  _patchSsh(ip) {
+    return this.args.map(str => str.replace(/DOMAIN/g, ip))
   }
 
   async shutdown() {
@@ -59,7 +102,5 @@ export default class SshRecycler {
     this._resolve()
   }
 
-  onRejected(e) {
-    this._reject(e)
-  }
+  errorOtherThanPortAccess = e => e instanceof Error && e.code !== 'EACCESS'
 }

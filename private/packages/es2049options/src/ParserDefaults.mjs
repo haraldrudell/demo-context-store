@@ -61,7 +61,7 @@ export default class ParserDefaults extends ParserUsage {
     const filename = await this.getYamlFilename()
     if (filename) {
       const yamlObject = await this.getYaml(filename)
-      const keys = Object.keys(Object(yamlObject).profiles)
+      const keys = Object.keys(Object(Object(yamlObject).profiles))
       if (keys.length) s += `\nprofiles in '${filename}': '${keys.join(`'\x20'`)}'`
     }
     return s
