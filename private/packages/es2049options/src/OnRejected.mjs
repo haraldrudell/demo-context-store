@@ -2,8 +2,11 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
+
+import util from 'util'
 export default class OnRejected {
   static exitCode = 1
+  static exit = process.exit
   onRejected = this.onRejected.bind(this)
   m = 'launchProcess'
 
@@ -21,16 +24,26 @@ export default class OnRejected {
   }
 
   static getDefaults(o) {
-    let {m, debug, exit} = o || false
-    if (typeof exit !== 'function') exit = process.exit
+    const {exit: exit0} = OnRejected
+    let {m, debug, exit} = Object(o)
+    if (typeof exit !== 'function') exit = exit0
     if (!m || typeof m !== 'string') m = 'OnRejected'
     return {m, debug, exit}
   }
 
   async invokeRun(o) {
     const {onRejected} = this
-    const {run, name, version} = this.getArguments(o)
-    return run({onRejected, name, version, OnRejected: this})
+    const {run, name, version, exit} = this.getArguments(o)
+    const status = await run({onRejected, name, version, OnRejected: this})
+    let exitCode = 0
+    if (status !== undefined) {
+      exitCode = +status
+      if (isNaN(exitCode)) {
+        console.error(util.inspect(status, {colors: true, depth: null}))
+        throw new Error(`Non-numeric result from application run: type: ${typeof status} value: ${status}`)
+      }
+    }
+    exitCode !== 0 && exit(exitCode)
   }
 
   setDebug() {
@@ -42,7 +55,7 @@ export default class OnRejected {
   }
 
   getArguments(o) {
-    let {run, name, version, debug, exit} = o || false
+    let {run, name, version, debug, exit} = Object(o)
     let s
     if ((s = this.verifyNonEmptyString(name))) throw new Error(`${this.m}: package.json key name: ${s}`)
     this.m = name
@@ -52,8 +65,8 @@ export default class OnRejected {
     if (exit !== undefined) {
       if ((s = this.verifyFn(exit))) throw new Error(`${this.m} launchProcess exit argument: ${s}`)
       this.exit = exit
-    }
-    return {run, name, version}
+    } else exit = OnRejected.exit
+    return {run, name, version, exit}
   }
 
   verifyNonEmptyString(value) {
