@@ -29,6 +29,7 @@ export default class RemoteChecker extends CheckerBase {
       this.pipe(cp.stderr, `${resolverName} ERR`, emitter)
     }
     let e
+    await new Promise((resolve, reject) => setTimeout(resolve, 1e3))
     const status = await p.catch(ee => (e = ee))
     if (status || e) {
       const m = [`Remote command failed`]

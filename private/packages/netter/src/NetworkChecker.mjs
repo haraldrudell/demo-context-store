@@ -52,6 +52,7 @@ export default class NetworkChecker extends CheckerBase {
     const {resolvConf, systemd} = NetworkChecker
     if (platform !== 'linux') return `platform ${platform}: getDnsProvider: NIMP`
 
+    if (!await fs.pathExists(resolvConf)) return 'unknown'
     if ((await fs.lstat(resolvConf)).isSymbolicLink() && (await fs.realpath(resolvConf)).startsWith(systemd)) return 'systemd'
 
     const servers = dns.getServers()
