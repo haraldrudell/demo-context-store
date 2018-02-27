@@ -4,6 +4,8 @@ All rights reserved.
 */
 const m = 'typeVerifiers'
 
+import util from 'util'
+
 export function setMDebug(o, instance, name) {
   o = Object(o)
   const ti = typeof instance
@@ -114,3 +116,9 @@ function getSNameValue(firstArgument) {
   if (!s.properties) s.properties = {}
   return {name, value, s}
 }
+
+export function classLogger(thisValue, constr) {
+  const {debug, constructor, m: thisM} = thisValue
+  debug && constructor === constr && console.log(`${thisM} constructor: ${util.inspect(thisValue, {colors: true, depth: null})}`)
+}
+
