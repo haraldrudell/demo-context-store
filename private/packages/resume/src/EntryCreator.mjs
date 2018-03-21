@@ -12,8 +12,7 @@ import path from 'path'
 
 export default class EntryCreator {
   constructor(options) {
-    const {name, company, resume, cover, text, directory} = setMDebug(options, this, 'EntryCreator')
-    this.m = String(name || 'EntryCreator')
+    const {company, resume, cover, text, directory} = setMDebug(options, this, 'EntryCreator')
     let s = {}
     if (getNonEmptyString({company, s})) throw new Error(`${this.m} company: ${s.text}`)
     this.throwIfSep(company, 'company name')
