@@ -4,6 +4,7 @@ All rights reserved.
 */
 
 import util from 'util'
+
 export default class OnRejected {
   static exitCode = 1
   static exit = process.exit
@@ -48,6 +49,12 @@ export default class OnRejected {
 
   setDebug() {
     return this.debug = true
+  }
+
+  logDebug(o) {
+    const {options, name} = Object(o)
+    Object(options).debug && this.setDebug() &&
+      console.log(`${name} options: ${util.inspect(options, {colors: true, depth: null})}`)
   }
 
   onRejected(e) {

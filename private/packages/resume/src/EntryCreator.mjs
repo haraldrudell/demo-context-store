@@ -12,7 +12,7 @@ import path from 'path'
 
 export default class EntryCreator {
   constructor(options) {
-    const {name, company, resume, cover, text, directory} = (options = setMDebug(options, this, 'EntryCreator'))
+    const {name, company, resume, cover, text, directory} = setMDebug(options, this, 'EntryCreator')
     this.m = String(name || 'EntryCreator')
     let s = {}
     if (getNonEmptyString({company, s})) throw new Error(`${this.m} company: ${s.text}`)
@@ -63,55 +63,3 @@ export default class EntryCreator {
     return t
   }
 }
-
-
-/* junk below here
-
-const defaultOptions = {
-  resumeDirectory: '/opt/foxyboy/ownCloud/Resume',
-  defaultResumeText: 'reddit',
-}
-const m = 'resume'
-
-async function getOptions() {
-  const o = {...defaultOptions}
-  const {argv} = process
-  for (let index = 2, indexMax = argv.length, param; index < indexMax; index++) switch (param = argv[index]) {
-    case '-company':
-      if (index + 1 === indexMax) throw new Error(`${m} -company: missing company name`)
-      o.company = argv[++index]
-      break
-    case '-resume':
-      if (index + 1 === indexMax) throw new Error(`${m} -resume: missing resume filename`)
-      o.resume = argv[++index]
-      break
-    case '-cover':
-      if (index + 1 === indexMax) throw new Error(`${m} -cover: missing cover filename`)
-      o.cover = argv[++index]
-      break
-    case '-text':
-      if (index + 1 === indexMax) throw new Error(`${m} -text: missing text option`)
-      const text = argv[++index]
-      if (!text) throw new Error(`${m} -text: string cannot be empty`)
-      const current = o.text
-      if (!current) o.text = text
-      else if (!Array.isArray(current)) o.text = [current, text]
-      else current.push(text)
-      break
-    case '-h':
-    case '-help':
-    case '--help':
-      console.error('resume [-company c] [-resume file] [-cover file] [-text text] [-h -help --help]')
-      process.exit(0)
-      break
-    default: throw new Error(`${m}: unknown options: ${param}`)
-  }
-  o.directory = getDirectoryName(o)
-  return o
-}
-
-function getDirectoryName({resumeDirectory, company = 'generic'}) {
-  const dateStrings = getDateStrings()
-  return path.join(resumeDirectory, dateStrings.month6, `${dateStrings.day6} ${company}`)
-}
-*/

@@ -5,8 +5,6 @@ All rights reserved.
 import EntryCreator from './EntryCreator'
 import pjson from '../package.json'
 
-import util from 'util'
-
 import {OptionsParser, launchProcess, numeralities} from 'es2049options'
 
 const optionsData = {
@@ -25,6 +23,6 @@ launchProcess({run, name: pjson && pjson.name, version: pjson && pjson.version})
 
 async function run({name, version, OnRejected}) {
   const options = await new OptionsParser({optionsData, name, version}).parseOptions(process.argv.slice(2))
-  options.debug && OnRejected.setDebug() && console.log(`${name} options: ${util.inspect(options, {colors: true, depth: null})}`)
+  OnRejected.logDebug({options, name})
   return new EntryCreator(options).run()
 }
