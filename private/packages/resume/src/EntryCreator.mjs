@@ -17,7 +17,7 @@ export default class EntryCreator {
     let s = {}
     if (getNonEmptyString({company, s})) throw new Error(`${this.m} company: ${s.text}`)
     this.throwIfSep(company, 'company name')
-    if (getNonEmptyString({directory, s})) throw new Error(`${this.m} company: ${s.text}`)
+    if (getNonEmptyString({directory, s})) throw new Error(`${this.m} directory: ${s.text}`)
     resume && (this.resume = String(resume))
     cover && (this.cover = String(cover))
     text && (this.text = this.throwIfSepTextOrArray(text, 'text option'))
