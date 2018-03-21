@@ -4,7 +4,7 @@ All rights reserved.
 */
 const m = 'getDateStrings'
 
-// dateArg: year 0 to 9999 inclusive
+// dateArg: year 0 to 9999 inclusive, return value: {month6: '201710', day6: '171019'}
 export default function getDateStrings(dateArg = new Date()) {
   if (!(dateArg instanceof Date)) throw new Error('${m}: argument not Date')
   const fullYear = dateArg.getFullYear()
