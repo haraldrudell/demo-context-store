@@ -14,11 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.175.0",
-    "classrunner": "0.0.1",
-    "fs-extra": "^5.0.0",
-    "nmrun": "0.0.1",
-    "rollupconfig": "0.0.1",
-    "spawn-async": "0.0.1"
+    "aws-sdk": "^2.202.0",
+    "fs-extra": "^5.0.0"
   }
 }

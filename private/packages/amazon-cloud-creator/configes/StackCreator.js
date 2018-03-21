@@ -25,7 +25,7 @@ export default class StackCreator extends StackManager {
         console.log(`waiting for: ${stack} ${new Date().toISOString()}…`)
         await this.waitWhile('DELETE_IN_PROGRESS')
       case 'DELETE_COMPLETE':
-      case null: // the tak does not exist at all
+      case null: // the task does not exist at all
         console.log(`Initiating create of ${stack}…`)
         const stackId = await this.createStack()
         console.log(`stack id: ${stackId}`)
