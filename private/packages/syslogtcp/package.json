@@ -33,8 +33,5 @@
   },
   "dependencies": {
     "syslog-client": "^1.1.1"
-  },
-  "devDependencies": {
-    "rollupconfig": "0.0.1"
   }
 }

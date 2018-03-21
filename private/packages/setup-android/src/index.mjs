@@ -3,8 +3,9 @@
 All rights reserved.
 */
 import AndroidConfigurator from './AndroidConfigurator'
-import {OptionsParser, readPackageJson} from 'getopt2018'
 import pj0 from '../package.json'
+
+import {OptionsParser, readPackageJson} from 'getopt2018'
 
 let m = 'src/index'
 let debug

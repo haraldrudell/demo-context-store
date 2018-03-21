@@ -48,6 +48,6 @@ export default class PublicIpChecker extends CheckerBase {
     const resp = await fetch(url)
     const o = await resp.json()
     const {country_code, region_code, ip, reverse} = o
-    return `${ip} location: ${country_code === 'US' ? region_code : country_code}${reverse ? ` reverse: ${reverse}` : ''}`
+    return `${ip} location: ${country_code}${country_code === 'US' ? `-${region_code}` : ''}${reverse ? ` reverse: ${reverse}` : ''}`
   }
 }

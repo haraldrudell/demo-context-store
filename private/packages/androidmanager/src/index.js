@@ -22,7 +22,8 @@ async function run() {
 
 function onRejected(e) {
   debug && console.error(`${m} onRejected:`)
-  if (!(e instanceof Error)) e = new Error(`Error value: ${typeof e} ${e}`)
+  if (!(e instanceof Error)) e = new Error(`Error value: ${typeof e}, '${e}'`)
   console.error(!debug ? e.message : e)
+  debug && console.trace('onRejected invocation:')
   process.exit(1)
 }

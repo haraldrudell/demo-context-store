@@ -36,10 +36,6 @@
   ],
   "private": true,
   "dependencies": {
-    "classrunner": "0.0.1",
     "syslogtcp": "0.0.1"
-  },
-  "devDependencies": {
-    "rollupconfig": "0.0.1"
   }
 }

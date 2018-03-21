@@ -66,8 +66,7 @@
     "babel-preset-env": "^1.6.0"
   },
   "devDependencies": {
-    "eslint": "^4.8.0",
-    "nmrun": "0.0.1",
-    "rollup": "^0.50.0"
+    "eslint": "^4.17.0",
+    "rollup": "^0.56.0"
   }
 }
