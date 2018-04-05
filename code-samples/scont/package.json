@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "compile": "truffle compile",
+    "migrate": "truffle migrate --network development",
+    "ganache": "ganache-cli -p 7545",
+    "test": "truffle test"
+  },
+  "devDependencies": {
+    "ganache-cli": "^6.1.0",
+    "truffle": "^4.1.5"
+  }
+}
