@@ -8,7 +8,7 @@ import {setMDebug} from 'es2049lib'
 
 export default class CheckerBase {
   constructor(o) {
-    setMDebug(o, this, '')
+    setMDebug(o, this, 'CheckerBase')
   }
 
   getDependencyFailure(results) {
@@ -18,11 +18,11 @@ export default class CheckerBase {
     return this.getFailure({message})
   }
 
-  getFailure(o) {
-    return new Result({name: this.m, isFailure: true, ...o})
+  getFailure(resultProperties) {
+    return new Result({name: this.m, isFailure: true, ...resultProperties})
   }
 
-  getSuccess(o) {
-    return new Result({name: this.m, isFailure: false, ...o})
+  getSuccess(resultProperties) {
+    return new Result({name: this.m, isFailure: false, ...resultProperties})
   }
 }

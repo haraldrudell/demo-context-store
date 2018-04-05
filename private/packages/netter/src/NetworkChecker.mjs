@@ -11,7 +11,7 @@ import fs from 'fs-extra'
 import dns from 'dns'
 import util from 'util'
 
-export default class NetworkChecker extends CheckerBase {
+export default class NetworkChecker extends CheckerBase { // passively check network configuration
   static resolvConf = '/etc/resolv.conf'
   static systemd = '/run/systemd'
 
@@ -32,8 +32,9 @@ export default class NetworkChecker extends CheckerBase {
     // is there a default gateway override?
     if (vpnOverride) m.push(`Vpn override: ${this.getRouteString(vpnOverride)}`)
 
+    // Linux has multiple services for dns: systemd dnscrypt-proxy NetworkManager
     // dns provider: systemd
-    m.push(`dns provider: ${await this.getDnsProvider()}`)
+    if (process.platform === 'linux') m.push(`dns provider: ${await this.getDnsProvider()}`)
 
     return this.getSuccess({message: m.join('\n'), data: {defaultRoute, vpnOverride}})
   }
@@ -50,7 +51,7 @@ export default class NetworkChecker extends CheckerBase {
     const {platform} = process
     const {debug} = this
     const {resolvConf, systemd} = NetworkChecker
-    if (platform !== 'linux') return `platform ${platform}: getDnsProvider: NIMP`
+    if (platform !== 'linux') return `${this.m}.getDnsProvider: no implementation for platform: ${platform}`
 
     if (!await fs.pathExists(resolvConf)) return 'unknown'
     if ((await fs.lstat(resolvConf)).isSymbolicLink() && (await fs.realpath(resolvConf)).startsWith(systemd)) return 'systemd'

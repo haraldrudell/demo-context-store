@@ -9,7 +9,6 @@ import {spawnCapture} from 'allspawn'
 
 import util from 'util'
 
-
 export default class InternetChecker extends NetworkChecker {
   static tcpHost0 = '8.8.8.8'
   static tcpPort0 = 443
@@ -43,9 +42,10 @@ export default class InternetChecker extends NetworkChecker {
   */
 
     // Gateway latency: 0.806 ms
-    const arpMs = await this.getArpLatency(defaultRoute)
-    if (!arpMs) return this.getFailure({message: 'Default gateway unavailable'})
-    m.push(`Gateway latency: ${arpMs} ms`)
+    const arpResult = await this.getArpNode(defaultRoute)
+    if (typeof arpResult === 'number') m.push(`Gateway latency: ${arpResult} ms`)
+    else if (arpResult !== true) return this.getFailure({message: 'Default gateway unavailable', data: arpResult})
+
 
     // does the default gateway connect to the Internet?
     if (!vpnOverride) { // regular tcpOpen
@@ -75,7 +75,17 @@ export default class InternetChecker extends NetworkChecker {
     const {nping, npingPORT, npingIP} = InternetChecker
     const {tcpHost, tcpPort} = this
     const args = patchCommand(nping, npingIP, tcpHost, npingPORT, tcpPort)
-    const {stdout} = await spawnCapture({args})
+    /*
+    trouble macOS High Sierra 10.13.3 nping 0.7.70 from brew: echo libnsock to stderr
+    node --eval "require('child_process').spawn('nping', ['--tcp-connect', '--count=1', '--dest-port=443', '8.8.8.8'], {stdio: [null, 1, 2]}).once('exit', (...args) => console.log(...args))"
+    Starting Nping 0.7.70 ( https://nmap.org/nping ) at 2018-04-04 17:49 PDT
+    libnsock mksock_bind_addr(): Bind to 0.0.0.0:0 failed (IOD #1): Invalid argument (22)
+    SENT (0.0018s) Starting TCP Handshake > 8.8.8.8:443
+    RCVD (0.0178s) Handshake with 8.8.8.8:443 completed
+    */
+    let {stdout, stderr} = await spawnCapture({args, stderrFails: false})
+    if (process.platform === 'darwin' && stderr.startsWith('libnsock mksock_bind_addr') && !stderr.includes('\n')) stderr = ''
+    if (stderr) throw new Error(`${this.m} echo to stderr: command: '${args.join('\x20')}' stderr: '${stderr}'`)
     return this.parseNpingResponse({stdout, args})
   }
 
@@ -123,9 +133,9 @@ export default class InternetChecker extends NetworkChecker {
     return {...o, host, port}
   }
 
-  async getArpLatency(route) {
+  async getArpNode(route) {
     const {iface, gw} = route
     const {network} = this
-    return network.arping({iface, ip: gw})
+    return network.findNetworkSegmentNode({iface, ip: gw})
   }
 }

@@ -3,7 +3,7 @@
 All rights reserved.
 */
 import Linux from './Linux'
-//import MacOS from './MacOS'
+import MacOS from './MacOS'
 //import Windows from './Windows'
 
 export default class Network {
@@ -11,7 +11,7 @@ export default class Network {
     const p = process.platform
     switch (p) {
       case 'linux': return new Linux(...args)
-      //case 'darwin': return new MacOS(...args)
+      case 'darwin': return new MacOS(...args)
       //case 'win32': return new Windows(...args)
     }
     throw new Error(`network-portable has no implementation for platform: ${p}`)
