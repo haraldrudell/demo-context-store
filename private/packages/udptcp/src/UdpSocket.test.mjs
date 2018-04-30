@@ -11,9 +11,10 @@ test('UdpSocket can instantiate udp4', () => {
   const udpSocket = new UdpSocket()
 })
 
-let listeningSocket
+let listeningSocket, boundSocket
 async function shutdownSocket() {
-  if (listeningSocket) return listeningSocket.shutdown()
+  listeningSocket && await listeningSocket.shutdown()
+  boundSocket && await new Promise((resolve, reject) => socket.close(resolve))
 }
 afterAll(shutdownSocket)
 
@@ -63,3 +64,45 @@ test('UdpSocket can receive udp4 packet', async () => {
   }
 })
 
+test('UdpSocket can send udp4 packet', async () => {
+  const messageFixture = 'abc'
+  const type = 'udp4'
+  const bindArg = {port: 0, address: '127.0.0.1'}
+
+  // set up package reception and timer
+  const socket = new Socket(type)
+  let e, timer, messageListener
+  const racePromise = Promise.race([
+    new Promise((resolve, reject) => {
+      const messageListener = (msg, rinfo) => resolve({msg, rinfo})
+      socket.once('message', messageListener)
+    }),
+    new Promise((resolve, reject) => timer = setTimeout(resolve, 1e3)),
+  ]).catch(ee => e = ee)
+
+  // start socket server
+  await new Promise((resolve, reject) => socket.bind(bindArg, resolve)) // socket may emit 'error', bind() returns this
+  boundSocket = socket
+
+  // send packet
+  const {port, address} = socket.address()
+  const message = messageFixture
+  const udpSocket = new UdpSocket({type})
+  /*const sendAddress =*/ await udpSocket.sendMessage({address, port, message})
+  await udpSocket.shutdown()
+
+  // wait for packet
+  const result = await racePromise
+  clearTimeout(timer)
+  messageListener && socket.removeListener(messageListener)
+  if (e) throw e
+
+  // stop socket server
+  await new Promise((resolve, reject) => socket.close(resolve))
+
+  // check result
+  expect(result).toBeTruthy()
+  const {msg} = result
+  const text = String(msg)
+  expect(text).toBe(messageFixture)
+})
