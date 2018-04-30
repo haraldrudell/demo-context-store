@@ -28,6 +28,7 @@
     "allspawn": "0.2.3",
     "es2049lib": "0.0.1",
     "es2049options": "0.0.1",
+    "grpc": "^1.10.1",
     "network-portable": "0.0.1",
     "node-fetch": "^2.0.0",
     "uid-generator": "^1.0.0"
