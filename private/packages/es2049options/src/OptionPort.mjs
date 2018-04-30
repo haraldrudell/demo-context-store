@@ -11,6 +11,7 @@ export default class OptionPort extends OptionInteger {
 
   constructor(o) {
     super(Object.assign({hasValue: valueFlags.always}, o))
+    console.log('es2049optionsOptionPort', {hasValue: valueFlags.always}, o)
     const {props} = this
     if (props.min == null) props.min = 1
     if (props.max == null) props.max = 65535

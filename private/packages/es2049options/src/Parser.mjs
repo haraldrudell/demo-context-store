@@ -69,7 +69,7 @@ export default class Parser extends ParserYaml {
       if (!token.startsWith('-')) {
         debug && console.log(`${this.m} non-option: ${token}`)
         this.addNumeralityOccurrence()
-        if ((s = this.isNumeralityBad())) return this.doError(s)
+        if ((s = this.isNumeralityBad())) return this.doError(`non-option value: ${s}: '${token}'`)
         const {args} = options
         if (!args) options.args = [token]
         else args.push(token)
