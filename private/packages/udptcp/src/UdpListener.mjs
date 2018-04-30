@@ -9,9 +9,10 @@ import grpc from 'grpc'
 export default class UdpListener extends UdpSocket {
   constructor(o) {
     super(o)
+    throw new Error('UdpListener NIMP')
     const {port} = Object(o)
-    const {host} = UdpListener
-    const server = createSocket()
+    //const {host} = UdpListener
+    //const server = createSocket()
     Object.assign(this, {port})
 
     var booksProto = grpc.load('books.proto')

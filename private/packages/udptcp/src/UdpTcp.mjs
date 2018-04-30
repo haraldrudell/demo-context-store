@@ -7,8 +7,6 @@ import UdpListener from './UdpListener'
 
 import {setMDebug, classLogger} from 'es2049lib'
 
-import util from 'util'
-
 export default class UdpTcp {
   static host = '127.0.0.1'
   listeners = []
@@ -39,7 +37,8 @@ export default class UdpTcp {
     const {host} = UdpTcp
     const portMap = {}
     if (!Array.isArray(ports)) ports = [ports]
-    for (let ix = 0, port0 of ports) {
+    let ix = 0
+    for (let port0 of ports) {
       const port = this._isPortNumber(port0)
       if (!port) throw new Error(`${this.m} port type ${name} index #${ix}: not port number: '${port}'`)
       ix++

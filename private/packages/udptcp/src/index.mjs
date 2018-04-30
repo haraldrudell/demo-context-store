@@ -2,7 +2,7 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import Netter from './UdpTcp'
+import UdpTcp from './UdpTcp'
 import pjson from '../package.json'
 
 import {OptionsParser, launchProcess, numeralities} from 'es2049options'
