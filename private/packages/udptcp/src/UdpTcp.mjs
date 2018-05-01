@@ -8,7 +8,7 @@ import UdpListener from './UdpListener'
 import {setMDebug, classLogger} from 'es2049lib'
 
 export default class UdpTcp {
-  static host = '127.0.0.1'
+  static address = '127.0.0.1'
   listeners = []
 
   constructor(options) {
@@ -22,7 +22,10 @@ export default class UdpTcp {
     const {listeners} = this
     if (this.isRun) throw new Error(`${this.m}.run: run or shutdown already invoked`)
     this.isRun = true
-    return Promise.all(listeners.map(l => l.run()))
+    const ps = listeners.map(l => l.promise)
+    listeners.forEach(l => ps.push(l.run()))
+    console.log(`${this.m} listening on ports: ${listeners.length}`)
+    return Promise.all(ps)
   }
 
   shutdown() {
@@ -34,9 +37,10 @@ export default class UdpTcp {
 
   _createListeners(ports, construct, name) {
     const {listeners} = this
-    const {host} = UdpTcp
-    const portMap = {}
+    const {address} = UdpTcp
+    if (ports == null) return
     if (!Array.isArray(ports)) ports = [ports]
+    const portMap = {}
     let ix = 0
     for (let port0 of ports) {
       const port = this._isPortNumber(port0)
@@ -44,7 +48,7 @@ export default class UdpTcp {
       ix++
       if (portMap[port]) continue
       portMap[port] = true
-      listeners.push(new construct({host, port}))
+      listeners.push(new construct({address, port}))
     }
   }
 

@@ -24,9 +24,9 @@ export default class UdpSocket extends Socket {
 
   constructor(o) {
     super(Object(o).type || UdpSocket.udp4)
-    const {port: port0, address: address0, type: type0} = Object(o)
+    const {port: port0, address: address0, type: type0, name} = Object(o)
     const {udp4, family, lo_ipv4, lo_ipv6, anyPort} = UdpSocket
-    this.m = 'UdpSocket'
+    this.m = String(name || 'UdpSocket')
     const type = type0 || family
     const port = port0 != null ? port0 : anyPort
     const address = address0 || (type === udp4 ? lo_ipv4 : lo_ipv6)

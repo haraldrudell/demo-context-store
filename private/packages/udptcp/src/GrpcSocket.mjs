@@ -2,17 +2,26 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
+import {parseUrl, isValidPort, isAnyPort, getSocketAddress} from './socketAddress'
+
+// protobufjs 6.8.6 could do named import, but then downgraded
+// protobufjs 6.8.6 has no default export, use named exports
 import {Root} from 'protobufjs'
+// protobufjs 6.8.6: Root is a function with properties className, fromJSON, _configure
+const {fromJSON} = Root
+// 5.0.2 exports {default: 25, __moduleExports}: use default export
+//import protobufjs from 'protobufjs'
+//const {loadJson} = protobufjs
 import {loadObject, Server, ServerCredentials, credentials} from 'grpc'
 
-import url from 'url'
-import util from 'util'
+//import util from 'util'
 
 export default class GrpcSocket {
   constructor(o) {
     this.m = 'GrpcSocket'
     const {socketAddress, proto} = Object(o)
-    const services = loadObject(Root.fromJSON(proto))
+    const services = loadObject(fromJSON(proto))
+    //console.log(typeof Object(services).PacketSink) // function
     Object.assign(this, {socketAddress, services})
   }
 
@@ -31,12 +40,12 @@ export default class GrpcSocket {
     if (text) throw new Error(`${this.m}.startServer: ${text}`)
 
     // ensure we have a port
-    const {urlObject} = this._parseUrl(socketAddress)
+    const {urlObject} = parseUrl(socketAddress)
     const {port: p0} = urlObject
-    const updateSocketAddress = !this._isValidPort(p0)
-    const updateBindArgument = updateSocketAddress && !this._isAnyPort(p0)
+    const updateSocketAddress = !isValidPort(p0)
+    const updateBindArgument = updateSocketAddress && !isAnyPort(p0)
     updateBindArgument && (urlObject.port = 0)
-    const saUse = !updateBindArgument ? socketAddress : this._getSocketAddress(urlObject)
+    const saUse = !updateBindArgument ? socketAddress : getSocketAddress(urlObject)
 
     // start socket server
     const server = this.server = new Server()
@@ -47,7 +56,7 @@ export default class GrpcSocket {
     // update socketAddress
     if (updateSocketAddress) {
       urlObject.port = port
-      this.socketAddress = this._getSocketAddress(urlObject)
+      this.socketAddress = getSocketAddress(urlObject)
     }
 
     return {server, port}
@@ -55,32 +64,7 @@ export default class GrpcSocket {
 
   async shutdown() {
     const {server} = this
-    return new Promise((resolve, reject) => server.tryShutdown((e, v) => {debugger; !e ? resolve(v) : reject(e)}))
-  }
-
-  _parseUrl(textUrl) {
-    const urlObject = url.parse(textUrl)
-    const hasProtocol = urlObject.protocol && !String(urlObject.protocol).slice(0, -1).replace(/[a-z0-9]/, '')
-    if (hasProtocol) return {hasProtocol, urlObject}
-    const url1 = url.parse(`http://${textUrl}`)
-    url1.protocol = null
-    url1.slashes = false
-    return {hasProtocol, urlObject: url1}
-  }
-
-  _isAnyPort(p) {
-    p = +p
-    return !isNaN(p) && p === 0
-  }
-
-  _isValidPort(p) {
-    p = +p
-    return p >= 1 && p <= 65535 && Number.isInteger(p) && p || false
-  }
-
-  _getSocketAddress(urlObject) {
-    const {hostname, port} = urlObject
-    return `${hostname}:${port}`
+    return new Promise((resolve, reject) => server.tryShutdown((e, v) => !e ? resolve(v) : reject(e)))
   }
 
   _getService({serviceName, isClient}) {

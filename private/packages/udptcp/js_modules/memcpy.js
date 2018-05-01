@@ -15,6 +15,9 @@ grpc imports protobufjs imports bytebuffer
 bytebuffer/dist/bytebuffer-node.js probes for the memcpy package
 Rollup therefore searches for the memcpy package
 if memcpy is declared as external, an error is thrown on executable launch since memcpy will not be available
+less ../../node_modules/bytebuffer/dist/bytebuffer-node.js
+memcpy = null; try { memcpy = require("memcpy"); } catch (e) {}
+the default export from memcpy should be falsy
 
 symptom:
 yarn build
@@ -25,7 +28,6 @@ yarn build
   url: 'https://github.com/rollup/rollup/wiki/Troubleshooting#treating-module-as-external-dependency',
   toString: [Function] }
 */
-// have a default export for Rollup
-export default 1
-// throw an error on the bytebuffer require
-throw new Error('This error blocks bytebuffer-node.js from using memcpy')
+// because bytebuffer uses the default export, Rollup requires it to exist
+// bytebuffer ignores memcy if thge defaulot export is a falsy value
+export default false

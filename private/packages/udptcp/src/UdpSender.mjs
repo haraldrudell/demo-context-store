@@ -2,32 +2,43 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
+// listen grpc-tcp, send udp
+import {composeAddressPort} from './socketAddress'
 import UdpSocket from './UdpSocket'
-
-import grpc from 'grpc'
+import GrpcSocket from './GrpcSocket'
+import bufferService from './bufferService'
 
 export default class UdpSender extends UdpSocket {
+  SendPacket = this.SendPacket.bind(this)
+
   constructor(o) {
-    super(o)
-    throw new Error('UdpSender NIMP')
-    const {port/*, host*/} = Object(o)
-    //const server = createSocket()
-    Object.assign(this, {port})
-
-    var booksProto = grpc.load('books.proto')
-
-    var client = new booksProto.books.BookService('127.0.0.1:50051',
-    grpc.credentials.createInsecure())
-
-    client.list({}, function(error, books) {
-      if (error) console.log('Error: ', error)
-      else console.log(books);
-    })
+    super(Object.assign({name: 'UdpSender'}, o))
+    const {address, port} = Object(o)
+    Object.assign(this, {address, port})
+    const socketAddress = composeAddressPort({address, port})
+    this.grpcSocket = new GrpcSocket({socketAddress, proto: bufferService})
   }
 
   async run() {
+    const {grpcSocket, SendPacket} = this
+    // proto data
+    const serviceName = 'PacketSink'
+    const implementationMap = {SendPacket}
+    /*const server =*/ return grpcSocket.startServer({serviceName, implementationMap})
+  }
+
+  SendPacket(call, callback) {
+    this.sendUdp(call, callback).catch(callback)
+  }
+
+  async sendUdp(call, callback) {
+    const {address, port} = this
+    const message = call.request.data
+    await this.sendMessage({address, port, message})
+    callback(null, {bool: true}) // err, value[, trailer[, flags]] name: sendUnaryData
   }
 
   async shutdown() {
+    // TODO 180430 hr
   }
 }

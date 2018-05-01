@@ -2,6 +2,7 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
+// bin/udptcp -d -tcp 1024
 import UdpTcp from './UdpTcp'
 import pjson from '../package.json'
 
@@ -22,7 +23,7 @@ const optionsData = {
 launchProcess({run, name: pjson && pjson.name, version: pjson && pjson.version})
 
 async function run({name, version, OnRejected}) {
-  const options = await new OptionsParser({optionsData, name, version, debug: true}).parseOptions(process.argv.slice(2))
+  const options = await new OptionsParser({optionsData, name, version}).parseOptions(process.argv.slice(2))
   OnRejected.logDebug({options, name})
   return new UdpTcp(options).run()
 }

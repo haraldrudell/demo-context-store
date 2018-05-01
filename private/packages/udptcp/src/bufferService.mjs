@@ -13,7 +13,7 @@ export default { // Type: Root, required property: nested
         SendPacket: {
           requestType: 'Packet',
           responseType: 'Ok',
-        }
+        },
       },
     },
     Packet: { // child property is fields, so this is a message
@@ -21,16 +21,16 @@ export default { // Type: Root, required property: nested
         data: { // Type: Field, type and id properties required
           type: 'bytes', // types" https://github.com/dcodeIO/protobuf.js#valid-message
           id: 1, // id begins at 1, must be non-negative integer
-        }
-      }
+        },
+      },
     },
     Ok: { // child property is fields, so this is a message
       fields: {
         bool: {
           type: 'bool',
           id: 1,
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 }
