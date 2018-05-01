@@ -59,6 +59,8 @@ test('fromProto', () => {
             decodeJSON: [Function] },
          RouteGuide: { [Function: ServiceClient] super_: [Function: Client], service: [Object] } } }
   */
+
+  const json = Root.
   const routeguide = service.routeguide
   const client = new routeguide.RouteGuide(socketAddress, credentials.createInsecure())
   //console.log(client)
