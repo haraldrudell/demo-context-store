@@ -2,8 +2,8 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import * as rxjs from 'rxjs'
-const {fromEvent} = rxjs
+import {setMDebug, classLogger} from 'es2049lib'
+
 import dgram from 'dgram'
 const {Socket} = dgram
 
@@ -24,18 +24,15 @@ export default class UdpSocket extends Socket {
 
   constructor(o) {
     super(Object(o).type || UdpSocket.udp4)
-    const {port: port0, address: address0, type: type0, name} = Object(o)
+    const {port: port0, address: address0, type: type0} = setMDebug(o, this, 'UdpSocket')
     const {udp4, family, lo_ipv4, lo_ipv6, anyPort} = UdpSocket
-    this.m = String(name || 'UdpSocket')
     const type = type0 || family
     const port = port0 != null ? port0 : anyPort
     const address = address0 || (type === udp4 ? lo_ipv4 : lo_ipv6)
     let _reject, _resolve
     this.promise = new Promise((resolve, reject) => (_resolve = resolve) + (_reject = reject))
-    const stream = fromEvent(this, 'message')
-    this._udpSocket = {port, address, type, _resolve, _reject, stream}
-    //const messageListener = this.messageListener = (msg, rinfo) => this.receivePacket(msg, rinfo).catch(_reject)
-    //this.on('message', messageListener)
+    this._udpSocket = {port, address, type, _resolve, _reject}
+    classLogger(this, UdpSocket)
   }
 
   async sendMessage(o) { // {bytes, address: '127.0.0.1', family: 'IPv4', port: 50752}
@@ -59,15 +56,6 @@ export default class UdpSocket extends Socket {
     })
     this.listenProhibited = true
     return this.address()
-  }
-
-  subscribe(fnOrObserver) {
-    /* {
-      msg: <Buffer 61 62 63>,
-      rinfo: { address: '127.0.0.1', family: 'IPv4', port: 60457, size: 3 } }
-    */
-    const {stream} = this._udpSocket
-    return stream.subscribe(fnOrObserver)
   }
 
   async shutdown() {

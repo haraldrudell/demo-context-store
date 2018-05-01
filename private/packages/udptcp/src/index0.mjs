@@ -4,9 +4,7 @@ All rights reserved.
 */
 // bin/udptcp -d -tcp 1024
 import UdpTcp from './UdpTcp'
-import TcpPusher from './TcpPusher'
-import HttpPusher from './HttpPusher'
-import UdpPusher from './UdpPusher'
+import
 import pjson from '../package.json'
 
 import {OptionsParser, launchProcess, numeralities} from 'es2049options'
@@ -23,17 +21,10 @@ const optionsData = {
   ].join('\n'),
 }
 
-const constrs = {
-  tcp: TcpPusher,
-  udp: UdpPusher,
-  http: HttpPusher,
-}
-
 launchProcess({run, name: pjson && pjson.name, version: pjson && pjson.version})
 
 async function run({name, version, OnRejected}) {
   const options = await new OptionsParser({optionsData, name, version}).parseOptions(process.argv.slice(2))
-  Object.assign(options, {constrs})
   OnRejected.logDebug({options, name})
-  return new UdpTcp({name, debug: options.debug}).run(options)
+  return new UdpTcp(options).run()
 }
