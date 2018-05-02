@@ -25,22 +25,27 @@ export default class UdpTcp {
       const pair = Object(pairs)
       const is = {}
       for (let key of serverClient) {
-        const {proto, port, address} = Object(pair[key])
+        const isClient = key === serverClient[1]
+        const {id, proto, port, address} = Object(pair[key])
         const c = cs[proto]
         if (typeof c !== 'function') throw new Error(`${this.m} no constructor for proto: ${proto}`)
-        const i = is[key] = new c({address, port, debug})
+        const i = is[key] = new c({name: key + id, address, port, debug, isClient})
         ps.push(i.promise)
         pushList.push(i)
       }
-      is.server.subscribe(is.client)
+
+      // establish two-way cross-transport
+      is.server.subscribe(is.client) // client want packets from server
+      is.client.subscribe(is.server)
     }
     return Promise.all(ps)
   }
 
-  shutdown() {
+  async shutdown() {
     this.runBlocked = true
-    const {pushers} = this
-    this.pushers.length = 0
-    return Promise.all(pushers.map(l => l.shutdown()))
+    const {pushers, debug} = this
+    debug && console.log(`${this.m} shutdown pushers: ${pushers.length}`)
+    await Promise.all(pushers.map(l => l.shutdown()))
+    pushers.length = 0
   }
 }

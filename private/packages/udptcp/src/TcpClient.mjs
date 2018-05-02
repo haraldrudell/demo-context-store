@@ -2,14 +2,18 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
+import {setMDebug, classLogger} from 'es2049lib'
+
 import net from 'net'
 const {Socket} = net
 
-export default class TcpSender extends Socket {
+export default class TcpClient extends Socket {
   constructor(o) {
     super()
+    setMDebug(o, this, 'TcpClient')
     this._onRejecteds = []
     this._onResolves = []
+    classLogger(this, TcpClient, {class: 'TcpClient'})
   }
 
   async send(o) {
@@ -30,13 +34,19 @@ export default class TcpSender extends Socket {
   }
 
   async tcpSend(o) {
-    const {message} = Object(o)
-    return new Promise((resolve, reject) => this.write(message, resolve))
+    const {msg} = Object(o)
+    return new Promise((resolve, reject) => this.write(msg, resolve)).catch(e => {
+      throw this._addProps(e, {method: 'tcpSend', api: 'net.Socket.write'})
+    })
   }
 
   async tcpEnd(o) {
-    const {message} = Object(o)
-    this.end(message)
+    const {msg} = Object(o)
+    this.end(msg)
+  }
+
+  tcpDestroy() {
+    this.destroy()
   }
 
   async tcpWatch() {
@@ -48,15 +58,25 @@ export default class TcpSender extends Socket {
     ])
   }
 
-  _tcpEnsureErrorListener() {
-    const {_hasErrorListener, _onRejecteds, _onResolves} = this
-    if (_hasErrorListener) return
+  async _ensureErrorListener() {
+    if (this._hasErrorListener) return
     this._hasErrorListener = true
-    const e = new Promise((resolve, reject) => this.once('close', () => resolve()).on('error', resolve(e)))
+    const e = await new Promise((resolve, reject) => this.once('close', () => resolve()).on('error', resolve))
     this._isResolved = true
+    const {_onRejecteds, _onResolves, m, debug} = this
     if (!e) for (let resolve of _onResolves) resolve()
-    else for (let reject of _onRejecteds) reject(e)
+    else {
+      Object.assign(e, {TcpClient: {api: 'Socket.emit', name: m}})
+      debug && console.log(`${this.m}._ensureErrorListener`, e)
+      for (let reject of _onRejecteds) reject(e)
+    }
     this._onRejecteds.length = 0
     this._onResolves.length = 0
+  }
+
+  _addProps(e, props) {
+    Object.assign(e, {TcpClient: {props, name: this.m}})
+    this.debug && console.log(`${this.m}._addProps`, e)
+    return e
   }
 }

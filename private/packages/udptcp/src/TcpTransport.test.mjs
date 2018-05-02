@@ -4,14 +4,19 @@ All rights reserved.
 */
 // yarn test src/TcpTransport.test.mjs
 import UdpTcp from './UdpTcp'
-import TcpPusher from './TcpPusher'
+import PusherTcp from './PusherTcp'
+import PusherTcpClient from './PusherTcpClient'
+import PusherTcp1 from './PusherTcp1'
+import PusherTcpClient1 from './PusherTcpClient1'
 
 import net from 'net'
 const {Socket, Server} = net
 
-let udpTcp
+const debug = true
+
+let udpTcp0
 async function shutdown() {
-  udpTcp && await udpTcp.shutdown()
+  udpTcp0 && await udpTcp0.shutdown()
 }
 afterAll(shutdown)
 
@@ -21,34 +26,53 @@ test('Tcp should transfer succesfully', async () => {
   const inPort = 1101
   const middlePort = 1102
   const outPort = 1103
-  const proto = 'tcp'
+  const protoTcp = 'tcp'
+  const protoTcpc = 'tcpc'
+  const protoTcp1 = 'tcp1'
+  const protoTcpc1 = 'tcpc1'
   const address = '127.0.0.1'
+  const c87 = 'c87'
+  const c87b = 'c87b'
+  const cam = 'cam'
+  const camb = 'camb'
   const pushers = [{
-    server: {proto, address, port: inPort},
-    client: {proto, address, port: middlePort},
+    server: {id: c87, proto: protoTcp, address, port: inPort}, // server listening for c87 to initiate rtsp
+    client: {id: c87b, proto: protoTcpc1, address, port: middlePort}, // client sending requests from c87
   }, {
-    server: {proto, address, port: middlePort},
-    client: {proto, address, port: outPort},
+    server: {id: camb, proto: protoTcp1, address, port: middlePort}, // server listening for requests from c87b
+    client: {id: cam, proto: protoTcpc, address, port: outPort}, // client sending requests to cam
   }]
   const constrs = {
-    tcp: TcpPusher
+    [protoTcp]: PusherTcp,
+    [protoTcpc]: PusherTcpClient,
+    [protoTcp1]: PusherTcp1,
+    [protoTcpc1]: PusherTcpClient1,
   }
 
-  // instantiate pushers
-  udpTcp = new UdpTcp().run({pushers, constrs})
+  const udpTcp = udpTcp0 = new UdpTcp({debug})
+  await Promise.all([
+    udpTcp.run({pushers, constrs}), // does not finish until .shutdown invoked
+    testSend().then(() => shutdownUdpTcp()),
+  ])
 
-  const timer = new Timer(1e3)
-  const tcpTransport = new TcpTransport({server: {address, port:outPort}, client: {address, port: inPort}, message: messageFixture})
-  await Promise.race([timer.promise, tcpTransport.promise])
-  timer.shutdown()
-  tcpTransport.shutdown()
+  async function shutdownUdpTcp() {
+    await udpTcp.shutdown()
+    //console.log('handles:', process._getActiveHandles(), 'requests:', process._getActiveRequests())
+  }
 
-  // check if packet received
-  const {result} = tcpTransport
-  const receivedDataNullOnTimeout = result
-  expect(receivedDataNullOnTimeout).toBeTruthy()
-  const {msg} = result
-  expect(msg).toBe(messageFixture)
+  async function testSend() {
+    const timer = new Timer(1e3)
+    const tcpTransport = new TcpTransport({server: {address, port:outPort}, client: {address, port: inPort}, message: messageFixture})
+    await Promise.race([timer.promise, tcpTransport.promise])
+    timer.shutdown()
+    tcpTransport.shutdown()
+
+    // check if packet received
+    const {result} = tcpTransport
+    const receivedDataNullOnTimeout = result
+    expect(receivedDataNullOnTimeout).toBeTruthy()
+    expect(result).toBe(messageFixture)
+  }
 })
 
 class Timer {
@@ -56,6 +80,7 @@ class Timer {
     this.promise = new Promise((resolve, reject) => this.timer = setTimeout(resolve, t)).then(this.timeout)
       .then(v => console.log('Timer: expired'))
   }
+
   shutdown() {
     clearTimeout(this.timer)
   }
@@ -67,6 +92,7 @@ class TcpTransport {
     this.promise = new Promise((resolve, reject) => Object.assign(this, {resolve, reject}))
     process.nextTick(() => this.start().catch(this.onRejected).catch(this.reject))
   }
+
   async start() {
     // start listening server
     const server = this.server = new Server()
@@ -74,30 +100,53 @@ class TcpTransport {
     await new Promise((resolve, reject) => server.listen(port, address, e => !e ? resolve() : reject(e)))
     if (this.isShutdown) return
 
-    // send packet and get incoming connection
+    // send packet and wait for incoming connection
     const [socket] = await Promise.all([
-      new Promise((resolve, reject) => server.on('connect', resolve)),
+      new Promise((resolve, reject) => server.on('connection', resolve)),
       sendTcpPacket({address: this.ca, port: this.cp, message: this.message}),
     ])
+    console.log('rxconnecting')
     if (this.isShutdown) return
 
-    // receive packet
-    let s = ''
-    await new Promise((resolve, reject) => socket.on('data', d => s += d).once('end', resolve).setEncoding(utf8))
-    this.result = s
-    socket.end()
+    // receive packet and close socket
+    this.result = await new Promise((resolve, reject) => {
+      let s = ''
+      const dataListener = d => s += d
+      const endListener = () => socket.end()
+      const closeListener = () => cleanup()
+      socket.setEncoding('utf8')
+        .on('data', dataListener)
+        .once('end', endListener)
+        .once('close', closeListener)
+        .once('error', cleanup)
 
-    await this.shutdown()
+      function cleanup(e) {
+        socket.removeListener('data', dataListener).removeListener('end', endListener).removeListener('close', closeListener).removeListener('error', cleanup)
+          .destroy()
+        !e ? resolve(s) : reject(e)
+      }
+    })
+
+    await this.close()
+    console.log('rxendofdata resolve')
     this.resolve()
   }
+
   async shutdown() {
+    console.log('rxShutdown')
     this.isShutdown = true
+    return this.close()
+  }
+
+  async close() {
     this.server && await new Promise((resolve, reject) => this.server.close(resolve))
   }
+
   onRejected = async (e) => {
     await this.shutdown().catch(this.extraError)
     throw e
   }
+
   extraError = e => console.error(e)
 }
 
@@ -105,12 +154,15 @@ async function sendTcpPacket({port, address, message}) {
   const socket = new Socket()
   await new Promise((resolve, reject) => socket.connect(port, address, resolve))
   await new Promise((resolve, reject) => {
-    socket.once('close', () => cleanup()).once('error', cleanup)
+    const closeListener = () => cleanup()
+    socket.once('close', closeListener).once('error', cleanup)
     socket.end(new Buffer(message))
 
     function cleanup(e) {
-      console.log(`sendTcpPacket: sent to: ${address}:${port}`)
-      socket.removeListener('close', cleanup).removeListener('error', cleanup)
+      !e && console.log(`sendTcpPacket: sent to: ${address}:${port}`)
+      socket.removeListener('close', closeListener).removeListener('error', cleanup)
+      console.log('sendTcpPacket.destroy DEBUG')
+      socket.destroy()
       !e ? resolve() : reject(e)
     }
   })
