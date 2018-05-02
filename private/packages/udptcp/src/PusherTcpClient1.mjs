@@ -11,7 +11,7 @@ import {classLogger} from 'es2049lib'
 export default class PusherTcpClient1 extends PusherTcpClient {
   constructor(o) {
     super(o)
-    classLogger(this, PusherTcpClient1, {_tcpPusher: this._tcpPusher, _tcpServer: this._tcpServer})
+    classLogger(this, PusherTcpClient1)
   }
 
   async _handleConnect(socket) {

@@ -105,7 +105,6 @@ class TcpTransport {
       new Promise((resolve, reject) => server.on('connection', resolve)),
       sendTcpPacket({address: this.ca, port: this.cp, message: this.message}),
     ])
-    console.log('rxconnecting')
     if (this.isShutdown) return
 
     // receive packet and close socket
@@ -128,12 +127,10 @@ class TcpTransport {
     })
 
     await this.close()
-    console.log('rxendofdata resolve')
     this.resolve()
   }
 
   async shutdown() {
-    console.log('rxShutdown')
     this.isShutdown = true
     return this.close()
   }
@@ -161,7 +158,6 @@ async function sendTcpPacket({port, address, message}) {
     function cleanup(e) {
       !e && console.log(`sendTcpPacket: sent to: ${address}:${port}`)
       socket.removeListener('close', closeListener).removeListener('error', cleanup)
-      console.log('sendTcpPacket.destroy DEBUG')
       socket.destroy()
       !e ? resolve() : reject(e)
     }

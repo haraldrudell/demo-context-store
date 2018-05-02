@@ -117,8 +117,9 @@ function getSNameValue(firstArgument) {
   return {name, value, s}
 }
 
-export function classLogger(thisValue, constr) {
+export function classLogger(thisValue, constr, dataValue) {
   const {debug, constructor, m: thisM} = thisValue
-  debug && constructor === constr && console.log(`${thisM} constructor: ${util.inspect(thisValue, {colors: true, depth: null})}`)
+  dataValue === undefined && (dataValue = thisValue)
+  debug && constructor === constr && console.log(`${thisM} constructor: ${util.inspect(dataValue, {colors: true, depth: null})}`)
 }
 

@@ -30,7 +30,6 @@ export default class PusherTcpClient {
 
   async _fromServer({msg, id, status}) {
     const {subject, reject, address, port, conns, debug, m} = this
-    console.log(`${this.m} fromServerDEBUG msg: ${msg && msg.length} idexist: ${!!conns[id]}`, {id, status})
     let c
     if (status === TcpStatus.OPEN) c = conns[id] = new ConnectionClient({id, subject, onRejected: reject, address, port, deleter: this._deleter, debug, name: m})
     else if (!(c = conns[id])) throw new Error(`${this.m} unknown connection id: ${id} status: ${status} msg: ${msg && msg.length}`)

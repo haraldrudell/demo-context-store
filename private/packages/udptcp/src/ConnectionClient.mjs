@@ -41,9 +41,6 @@ export default class ConnectionClient {
   async shutdown() {
     const {tcpClient, id, connections, endListener, dataListener, debug, isClose, deleter} = this
     debug && !isClose && console.log(`${this.m} shutdown while OPEN ${id} ${!!tcpClient}`)
-    console.log('BEFORETCOPEND', !!tcpClient, id)
-    tcpClient && console.log('DESTRIOY') + tcpClient.tcpDestroy()
-    console.log('AFTERETCOPEND', !!tcpClient, id)
     deleter(id)
   }
 }

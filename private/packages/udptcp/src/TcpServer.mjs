@@ -87,6 +87,5 @@ export default class TcpServer extends Server {
     this.setConnectOnRejected(null, true)
     this.unref()
     _resolve()
-    debug && console.log(`${this.m} tcp server shutdown DEBUG`)
   }
 }

@@ -51,11 +51,9 @@ export default class ConnectionServer {
       debug && console.log(`${this.m} shutdown while OPEN ${id}`)
       this._closeTransport()
     }
-    console.log(`${this.m} socket.destroy ${this.id} DEBUG`)
     socket.removeListener('data', dataListener).removeListener('end', endListener).removeListener('close', shutdownListener).removeListener('error', shutdownListener)
       .destroy()
     deleter(id)
-    debug && console.log(`${this.m} destroyed: ${id}`)
   }
 
   async _forwardDataFromClient(msg) { // 'data' to downstream transports
@@ -78,7 +76,6 @@ export default class ConnectionServer {
 
   _endSocket() {
     this.endedSocket = true
-    console.log(`${this.m} socket.end ${this.id} DEBUG`)
     this.socket.end()
   }
 }
