@@ -4,23 +4,22 @@ All rights reserved.
 */
 import UdpSocket from './UdpSocket'
 
-import {classLogger, Queue} from 'es2049lib'
+import {classLogger} from 'es2049lib'
 
 import * as rxjs from 'rxjs'
 const {Subject} = rxjs
 
-export default class PusherUdp extends UdpSocket {
+export default class PusherUdpClient extends UdpSocket {
   _udpPusher = {
     messageListener: o => this._forwardPacket(o).catch(this._udpSocket._reject),
     subject: new Subject(),
   }
-  next = m => this.handleResponse(m).catch(this._udpSocket._reject)
+  next = buffer => this.sendMessage({message: buffer}).catch(this._udpSocket._reject)
 
   constructor(o) {
     super(o)
     this.on('message', this._udpPusher.messageListener)
-    this.queue = new Queue()
-    classLogger(this, PusherUdp, this._udpPusher)
+    classLogger(this, PusherUdpClient, this._udpPusher)
   }
 
   async subscribe(observer) { // a client requests packets from this server
@@ -30,16 +29,8 @@ export default class PusherUdp extends UdpSocket {
     debug && console.log(`${this.m} listening udp-${a.address}:${a.port}`)
   }
 
-  async handleResponse(o) { // from downstream transports
-    return this.queue.submit(() => this._handleResponse(o))
-  }
-
-  async _handleResponse({msg, rinfo}) { // from downstream transports
-    if (msg) this.sendMessage({message: msg})
-  }
-
-  async _forwardPacket({msg, rinfo}) { // 'message' to subscribing transports
-    this._udpPusher.subject.next({msg, port: rinfo.port})
+  async _forwardPacket({msg, rinfo}) {
+    this._udpPusher.subject.next(msg)
   }
 
   error(e) {} // observable server had error
