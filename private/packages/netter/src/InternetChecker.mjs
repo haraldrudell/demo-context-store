@@ -56,7 +56,7 @@ export default class InternetChecker extends NetworkChecker {
       const data = await this.doNping()
       const {iface: i0, ms, conns, stdout} = data
       if (stdout) return this.getFailure({message: `Parse of nping response failed`, data})
-      if (!conns) return this.getFailure({message: `Connection failed on interface: ${iface}`, data})
+      if (!conns) return this.getFailure({message: `Connection failed on interface: ${i0}`, data})
       const iface = i0 || defaultRoute.iface
       m.push(`Interface: ${iface}: ${ms} ms`)
     }
