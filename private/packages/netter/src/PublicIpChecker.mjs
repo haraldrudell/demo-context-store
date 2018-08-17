@@ -11,6 +11,7 @@ import dns from 'dns'
 export default class PublicIpChecker extends CheckerBase {
   static service = 'https://ipleak.net/json/'
   static dnsService = 'resolver.dnscrypt.org'
+  static fetchTimeout = 3e3 // 3 s
 
   constructor(o) {
     super({name: 'PublicIpChecker', ...o})
@@ -42,10 +43,21 @@ export default class PublicIpChecker extends CheckerBase {
 
   async getIpInfo(ip0) {
     const {debug} = this
-    const {service} = PublicIpChecker
+    const {service, fetchTimeout} = PublicIpChecker
     debug && console.log(`${this.m} getIpInfo: '${ip0 | ''}'`)
     const url = ip0 && service + ip0 || service
-    const resp = await fetch(url)
+    const resp = await new Promise((resolve, reject) => {
+      const start = Date.now()
+      const timer = setTimeout(timeout, fetchTimeout)
+      const r = fetch(url) // TODO abort fetch on timeout
+      clearTimeout(timer)
+      resolve(r)
+
+      function timeout() {
+        const elapsed = (Date.now() - start) / 1e3
+        reject(new Error(`fetch timeout: ${elapsed} s: ${url}`))
+      }
+    })
     const o = await resp.json()
     const {country_code, region_code, ip, reverse} = o
     return `${ip} location: ${country_code}${country_code === 'US' ? `-${region_code}` : ''}${reverse ? ` reverse: ${reverse}` : ''}`
