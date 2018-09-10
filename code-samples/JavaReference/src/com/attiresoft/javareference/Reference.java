@@ -15,6 +15,7 @@ public class Reference {
   }
 
   protected void arrays() {
+    // arrays are created using new or brace initializer
     int[] a; // array variable is the type with brackets
     int [] b = {1, 2, 3}; // array initializer is braces
     a = b.clone(); // clone array
@@ -28,7 +29,7 @@ public class Reference {
     // List: ArrayList, LinkedList
     // Stack: Vector
     // Queue: LinkedList ArrayDequeue PriorityQueue
-    //  Set: HashSet LinkedHashSet TreeSet
+    // Set: HashSet LinkedHashSet TreeSet
     // Map: HashMap LinkedHashMap TreeMap
     // SortedMap: TreeMap
     // NavigableMap: SortedMap
