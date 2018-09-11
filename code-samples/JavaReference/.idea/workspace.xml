@@ -17,38 +17,152 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="Collections.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/Collections.java">
+          <file leaf-file-name="SelfBalancingTree.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/SelfBalancingTree.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="375">
-                  <caret line="25" column="46" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="46" />
+                <state relative-caret-position="133">
+                  <caret line="153" lean-forward="true" selection-start-line="153" selection-end-line="153" />
+                  <folding>
+                    <element signature="e#278#279#0" expanded="true" />
+                    <element signature="e#320#321#0" expanded="true" />
+                    <element signature="e#6702#6703#0" expanded="true" />
+                    <element signature="e#6780#6781#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ArrayStructure.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/ArrayStructure.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="345">
+                  <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="OddNumbers.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/amazon/OddNumbers.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="90">
+                  <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
                   <folding>
                     <element signature="imports" expanded="true" />
-                    <element signature="e#719#720#0" expanded="true" />
-                    <element signature="e#758#759#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ReverseLinkedList.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/ReverseLinkedList.java">
+          <file leaf-file-name="Amazon.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/amazon/amazon180911/Amazon.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="510">
-                  <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
+                <state relative-caret-position="1500">
+                  <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
                   <folding>
-                    <element signature="e#154#155#0" expanded="true" />
-                    <element signature="e#193#194#0" expanded="true" />
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#1831#1832#0" expanded="true" />
+                    <element signature="e#1892#1893#0" expanded="true" />
+                    <element signature="e#2106#2107#0" expanded="true" />
+                    <element signature="e#2196#2197#0" expanded="true" />
+                    <element signature="e#2858#2859#0" expanded="true" />
+                    <element signature="e#2967#2968#0" expanded="true" />
+                    <element signature="e#3876#3877#0" expanded="true" />
+                    <element signature="e#3941#3942#0" expanded="true" />
+                    <element signature="e#4993#4994#0" expanded="true" />
+                    <element signature="e#5102#5103#0" expanded="true" />
+                    <element signature="e#5186#5187#0" expanded="true" />
+                    <element signature="e#5259#5260#0" expanded="true" />
+                    <element signature="e#5481#5482#0" expanded="true" />
+                    <element signature="e#5554#5555#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Reference.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/Reference.java">
+          <file leaf-file-name="Amazon.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/amazon/Amazon.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="45">
-                  <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+                <state relative-caret-position="120">
+                  <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#3808#3809#0" expanded="true" />
+                    <element signature="e#3882#3883#0" expanded="true" />
+                    <element signature="e#4879#4880#0" expanded="true" />
+                    <element signature="e#4988#4989#0" expanded="true" />
+                    <element signature="e#5072#5073#0" expanded="true" />
+                    <element signature="e#5145#5146#0" expanded="true" />
+                    <element signature="e#5545#5546#0" expanded="true" />
+                    <element signature="e#5618#5619#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ConstructorAccess.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/ConstructorAccess.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="135">
+                  <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="BitMask.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/amazon/BitMask.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="30">
+                  <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="CardGame.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/amazon/CardGame.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="90">
+                  <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="AmazonUser.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/anotherpackage/AmazonUser.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="465">
+                  <caret line="31" column="14" selection-start-line="31" selection-start-column="14" selection-end-line="31" selection-end-column="14" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Amazon.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/amazon/amazon180910/Amazon.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-1487">
+                  <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#1876#1877#0" expanded="true" />
+                    <element signature="e#1937#1938#0" expanded="true" />
+                    <element signature="e#1965#1966#0" expanded="true" />
+                    <element signature="e#2047#2048#0" expanded="true" />
+                    <element signature="e#2863#2864#0" expanded="true" />
+                    <element signature="e#2972#2973#0" expanded="true" />
+                    <element signature="e#3876#3877#0" expanded="true" />
+                    <element signature="e#3941#3942#0" expanded="true" />
+                    <element signature="e#4993#4994#0" expanded="true" />
+                    <element signature="e#5102#5103#0" expanded="true" />
+                    <element signature="e#5186#5187#0" expanded="true" />
+                    <element signature="e#5259#5260#0" expanded="true" />
+                    <element signature="e#5481#5482#0" expanded="true" />
+                    <element signature="e#5554#5555#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -57,14 +171,61 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="Reference.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="Reference.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/Reference.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="300">
-                  <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+                <state relative-caret-position="585">
+                  <caret line="39" column="3" lean-forward="true" selection-start-line="39" selection-start-column="3" selection-end-line="39" selection-end-column="3" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ReverseLinkedList.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/ReverseLinkedList.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="480">
+                  <caret line="34" selection-start-line="33" selection-end-line="34" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ListInterface.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/ListInterface.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="60">
+                  <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+                  <folding>
+                    <element signature="e#665#666#0" expanded="true" />
+                    <element signature="e#742#743#0" expanded="true" />
+                    <element signature="e#796#797#0" expanded="true" />
+                    <element signature="e#855#856#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Amazon.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/amazon/Amazon.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="900">
+                  <caret line="96" selection-start-line="43" selection-end-line="96" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#5545#5546#0" expanded="true" />
+                    <element signature="e#5618#5619#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="OddNumbers.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/com/attiresoft/amazon/OddNumbers.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="30">
+                  <caret line="2" column="24" lean-forward="true" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
                 </state>
               </provider>
             </entry>
@@ -80,6 +241,16 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>CardGame.</find>
+      <find>-&gt;</find>
+      <find />
+      <find>height</find>
+      <find>addNode</find>
+      <find>com.attiresoft.amazon.CardGame.</find>
+    </findStrings>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -87,12 +258,33 @@
         <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/Reference.java" />
         <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/Collections.java" />
         <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/ReverseLinkedList.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/Lists.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/BuildBinaryTree.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/BitMask.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/Card.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/CardGame.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/AmazonSent.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/AmazonUser.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/SelfBalancingTree.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/ListInterface.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/Sorting.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/OddNumbers.java" />
+        <option value="$PROJECT_DIR$/src/AnotherPackage/AmazonUser.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/Amazon.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/AmazonSent2.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/com/attiresoft/amazon180911/Amazon.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/amazon180911/Amazon.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/amazon180910/Amazon.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/ConstructorAccess.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/Arrays.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/ArrayInfo.java" />
+        <option value="$PROJECT_DIR$/src/com/attiresoft/javareference/ArrayStructure.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="207" />
-    <option name="y" value="-1566" />
+    <option name="x" value="-137" />
+    <option name="y" value="-1885" />
     <option name="width" value="2193" />
     <option name="height" value="1306" />
   </component>
@@ -120,6 +312,43 @@
               <item name="JavaReference" type="b2602c69:ProjectViewProjectNode" />
               <item name="JavaReference" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="attiresoft" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JavaReference" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JavaReference" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="attiresoft" type="462c0819:PsiDirectoryNode" />
+              <item name="amazon" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JavaReference" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JavaReference" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="attiresoft" type="462c0819:PsiDirectoryNode" />
+              <item name="amazon" type="462c0819:PsiDirectoryNode" />
+              <item name="amazon180910" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JavaReference" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JavaReference" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="attiresoft" type="462c0819:PsiDirectoryNode" />
+              <item name="amazon" type="462c0819:PsiDirectoryNode" />
+              <item name="amazon180911" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JavaReference" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JavaReference" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="attiresoft" type="462c0819:PsiDirectoryNode" />
+              <item name="anotherpackage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JavaReference" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JavaReference" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="attiresoft" type="462c0819:PsiDirectoryNode" />
               <item name="javareference" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -146,39 +375,61 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ReverseLinkedList">
+  <component name="RunManager" selected="Application.Amazon">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
     </configuration>
-    <configuration name="Collections" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.attiresoft.javareference.Collections" />
+    <configuration name="Amazon" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.attiresoft.amazon.Amazon" />
       <module name="JavaReference" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.attiresoft.javareference.*" />
+          <option name="PATTERN" value="AnotherPackage.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
     </configuration>
-    <configuration name="Reference" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.attiresoft.javareference.Reference" />
+    <configuration name="AmazonUser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="AnotherPackage.AmazonUser" />
       <module name="JavaReference" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.attiresoft.javareference.*" />
+          <option name="PATTERN" value="AnotherPackage.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
     </configuration>
-    <configuration name="ReverseLinkedList" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.attiresoft.javareference.ReverseLinkedList" />
+    <configuration name="CardGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.attiresoft.amazon.CardGame" />
       <module name="JavaReference" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.attiresoft.javareference.*" />
+          <option name="PATTERN" value="AnotherPackage.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
+    <configuration name="OddNumbers" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.attiresoft.amazon.OddNumbers" />
+      <module name="JavaReference" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="AnotherPackage.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
+    <configuration name="SelfBalancingTree" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.attiresoft.javareference.SelfBalancingTree" />
+      <module name="JavaReference" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.attiresoft.amazon.amazon180910.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -283,15 +534,19 @@
       <method />
     </configuration>
     <list>
-      <item itemvalue="Application.Reference" />
-      <item itemvalue="Application.Collections" />
-      <item itemvalue="Application.ReverseLinkedList" />
+      <item itemvalue="Application.OddNumbers" />
+      <item itemvalue="Application.CardGame" />
+      <item itemvalue="Application.Amazon" />
+      <item itemvalue="Application.AmazonUser" />
+      <item itemvalue="Application.SelfBalancingTree" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ReverseLinkedList" />
-        <item itemvalue="Application.Collections" />
-        <item itemvalue="Application.Reference" />
+        <item itemvalue="Application.Amazon" />
+        <item itemvalue="Application.AmazonUser" />
+        <item itemvalue="Application.OddNumbers" />
+        <item itemvalue="Application.SelfBalancingTree" />
+        <item itemvalue="Application.CardGame" />
       </list>
     </recent_temporary>
   </component>
@@ -309,28 +564,29 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="207" y="-1566" width="2193" height="1306" extended-state="0" />
+    <frame x="-137" y="-1885" width="2193" height="1306" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32792208" />
+      <window_info anchor="bottom" id="Messages" order="7" visible="true" weight="0.32792208" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5022075" side_tool="true" weight="0.32874617" />
       <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49779248" visible="true" weight="0.20698053" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49779248" weight="0.20698053" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11673506" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11673506" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32954547" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39935064" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -339,7 +595,6 @@
       <window_info anchor="right" id="Properties" order="3" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -354,13 +609,33 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="24" column="3" lean-forward="true" selection-start-line="24" selection-start-column="3" selection-end-line="24" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/Reference.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="39" column="3" lean-forward="true" selection-start-line="39" selection-start-column="3" selection-end-line="39" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-10.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/util/ImmutableCollections.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="70" selection-start-line="70" selection-end-line="70" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/Collections.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="46" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="46" />
+        <state relative-caret-position="285">
+          <caret line="19" column="27" lean-forward="true" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#719#720#0" expanded="true" />
@@ -369,20 +644,177 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/Reference.java">
+    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/BuildBinaryTree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+        <state relative-caret-position="135">
+          <caret line="9" column="9" lean-forward="true" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+          <folding>
+            <element signature="e#179#180#0" expanded="true" />
+            <element signature="e#221#222#0" expanded="true" />
+            <element signature="e#624#625#0" expanded="true" />
+            <element signature="e#738#739#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/ReverseLinkedList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
+        <state relative-caret-position="480">
+          <caret line="34" selection-start-line="33" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/ListInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
           <folding>
-            <element signature="e#154#155#0" expanded="true" />
-            <element signature="e#193#194#0" expanded="true" />
+            <element signature="e#665#666#0" expanded="true" />
+            <element signature="e#742#743#0" expanded="true" />
+            <element signature="e#796#797#0" expanded="true" />
+            <element signature="e#855#856#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/Sorting.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#687#688#0" expanded="true" />
+            <element signature="e#779#780#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/amazon/BitMask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/amazon/CardGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/amazon/OddNumbers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/anotherpackage/AmazonUser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="31" column="14" selection-start-line="31" selection-start-column="14" selection-end-line="31" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/ConstructorAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/SelfBalancingTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="153" lean-forward="true" selection-start-line="153" selection-end-line="153" />
+          <folding>
+            <element signature="e#278#279#0" expanded="true" />
+            <element signature="e#320#321#0" expanded="true" />
+            <element signature="e#6702#6703#0" expanded="true" />
+            <element signature="e#6780#6781#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/javareference/ArrayStructure.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/amazon/amazon180910/Amazon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1487">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1876#1877#0" expanded="true" />
+            <element signature="e#1937#1938#0" expanded="true" />
+            <element signature="e#1965#1966#0" expanded="true" />
+            <element signature="e#2047#2048#0" expanded="true" />
+            <element signature="e#2863#2864#0" expanded="true" />
+            <element signature="e#2972#2973#0" expanded="true" />
+            <element signature="e#3876#3877#0" expanded="true" />
+            <element signature="e#3941#3942#0" expanded="true" />
+            <element signature="e#4993#4994#0" expanded="true" />
+            <element signature="e#5102#5103#0" expanded="true" />
+            <element signature="e#5186#5187#0" expanded="true" />
+            <element signature="e#5259#5260#0" expanded="true" />
+            <element signature="e#5481#5482#0" expanded="true" />
+            <element signature="e#5554#5555#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/amazon/amazon180911/Amazon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1500">
+          <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1831#1832#0" expanded="true" />
+            <element signature="e#1892#1893#0" expanded="true" />
+            <element signature="e#2106#2107#0" expanded="true" />
+            <element signature="e#2196#2197#0" expanded="true" />
+            <element signature="e#2858#2859#0" expanded="true" />
+            <element signature="e#2967#2968#0" expanded="true" />
+            <element signature="e#3876#3877#0" expanded="true" />
+            <element signature="e#3941#3942#0" expanded="true" />
+            <element signature="e#4993#4994#0" expanded="true" />
+            <element signature="e#5102#5103#0" expanded="true" />
+            <element signature="e#5186#5187#0" expanded="true" />
+            <element signature="e#5259#5260#0" expanded="true" />
+            <element signature="e#5481#5482#0" expanded="true" />
+            <element signature="e#5554#5555#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/attiresoft/amazon/Amazon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3808#3809#0" expanded="true" />
+            <element signature="e#3882#3883#0" expanded="true" />
+            <element signature="e#4879#4880#0" expanded="true" />
+            <element signature="e#4988#4989#0" expanded="true" />
+            <element signature="e#5072#5073#0" expanded="true" />
+            <element signature="e#5145#5146#0" expanded="true" />
+            <element signature="e#5545#5546#0" expanded="true" />
+            <element signature="e#5618#5619#0" expanded="true" />
           </folding>
         </state>
       </provider>

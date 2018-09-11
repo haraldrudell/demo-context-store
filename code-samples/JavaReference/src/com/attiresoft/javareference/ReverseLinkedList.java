@@ -12,13 +12,12 @@ public class ReverseLinkedList {
            if (values == null || values.length == 0) throw new Exception("Empty Node list not allowed");
            Node tail = null;
            for (int value : values) {
-               if (tail == null) { // first cvalue goes into this
+               if (tail == null) { // first value goes into this
                    this.value = value;
                    tail = this;
                } else { // subsequent values are appended to the list
                    Node node = new Node(value);
-                   tail.next = node;
-                   tail = node;
+                   tail = tail.next = node;
                }
            }
        }
@@ -33,39 +32,42 @@ public class ReverseLinkedList {
        }
     }
     protected void run() {
+        Node input;
         try {
-            System.out.printf("Reverse: %s\n", this.reverse(new Node(new int[]{85, 15, 4, 20})));
+            input = new Node(new int[]{85, 15, 4, 20});
         } catch (Exception e) {
             System.out.println(e.toString());
+            return;
         }
+        String s = input.toString();
+        System.out.printf("Reverse: input: %s output: %s\n", s, this.reverse(input));
     }
 
-    protected String reverse(Node nodes) {
-        System.out.printf("reverseStart: %s\n", nodes);
+    protected Node reverse(Node nodes) {
 
-        // build another linked list head from the tail list, by putting each element at the front
-        Node headofNewList = null;
-        Node tail = nodes;
-        while (tail != null) {
+        // nodes is a list of elements each with a next link
+        // nodes can be null
 
-            // get the subsequent node
-            Node next = tail.next;
+        // build a reversed list by putting each element in front of the previous one
+        Node reversedList = null;
 
-            // prepend this node to new list
-            if (headofNewList == null) {
-                headofNewList = tail;
-                headofNewList.next = null;
-            } else {
-                Node secondNode = headofNewList;
-                headofNewList = tail;
-                headofNewList.next = secondNode;
-            }
+        // iterate over each input element
+        Node currentNode = nodes;
+        Node temp = null;
+        while (currentNode != null) {
 
-            // get next input list element
-            tail = next;
+            // remember the subsequent node
+            temp = currentNode.next;
+
+            // put currentNode at front of reversedList
+            currentNode.next = reversedList;
+            reversedList = currentNode;
+
+            // advance to next input element
+            currentNode = temp;
         }
 
-        return headofNewList.toString();
+        return reversedList;
     }
     public static void main(String [] args) { new ReverseLinkedList().run(); }
 }
