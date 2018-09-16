@@ -1,4 +1,4 @@
-package com.attiresoft.javareference;
+package com.attiresoft.javacs;
 
 public class BuildBinaryTree {
     protected class Node {

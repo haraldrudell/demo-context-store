@@ -1,8 +1,7 @@
-package com.attiresoft.javareference;
+package com.attiresoft.zobsolete;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Created by foxyboy on 1/22/18.
@@ -39,7 +38,7 @@ public class Reference {
     System.out.println("" + li.size() + li.toString()); // [4, 5]
   }
 
-  public static void main(String[] argv) {
+  public static void main(String[] args) {
     new Reference().run();
   }
 }

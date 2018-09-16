@@ -1,8 +1,7 @@
 package com.attiresoft.amazon;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.function.IntUnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -11,17 +10,16 @@ public class Amazon {
         new OddNumbersTest(); // OddNumbers: 1:3 2:7 3:9 4:15 5:21 6:27
         new BitMaskTest(); // BitMask: 1:2 23:43
         /*
-        Deck: HEARTS1 HEARTS2 HEARTS3 HEARTS4 HEARTS5 HEARTS6 SPADES1 SPADES2 SPADES3 SPADES4 SPADES5 SPADES6
+        Deck: 24: HEARTS1 HEARTS2 HEARTS3 HEARTS4 HEARTS5 HEARTS6 SPADES1 SPADES2 SPADES3 SPADES4 SPADES5 SPADES6
         DIAMONDS1 DIAMONDS2 DIAMONDS3 DIAMONDS4 DIAMONDS5 DIAMONDS6 CLUBS1 CLUBS2 CLUBS3 CLUBS4 CLUBS5 CLUBS6
-        Deck500: HEARTS1 HEARTS5 HEARTS6 SPADES1 SPADES5 SPADES6 DIAMONDS1 DIAMONDS5 DIAMONDS6
-        CLUBS1 CLUBS5 CLUBS6 joker joker
+        Deck500: 14: HEARTS1 HEARTS5 HEARTS6 SPADES1 SPADES5 SPADES6 DIAMONDS1 DIAMONDS5 DIAMONDS6 CLUBS1 CLUBS5 CLUBS6 joker joker
          */
         new CardGameTest();
     }
 
     public static class BitMask {
         // A Java int is 4 bytes, 32 bits, 8 hex digits
-        protected static final int lowerBits = 0x55555555; // ...010101b
+        protected static final int lowerBits = 0x55_55_55_55; // ...010101b
 
         public static int swapBits(int i) {
             // shift has higher priority than bitwise and, and bitwise or is the lowest
@@ -34,50 +32,57 @@ public class Amazon {
 
         public BitMaskTest() {
             System.out.printf("BitMask: %s\n", Arrays.stream(values)
-                .mapToObj(i -> String.format("%d:%d", i, BitMask.swapBits(i)))
-                .collect(Collectors.joining(" ")));
+                    .mapToObj(i -> String.format("%d:%d", i, BitMask.swapBits(i)))
+                    .collect(Collectors.joining(" ")));
         }
     }
 
-    public static class OddNumbers {
-        protected static class Counter {
-            protected final int step;
+    public static class OddNumbers { // OddNumbers: 1:3 2:7 3:9 4:15 5:21 6:27
+        protected static class Counter implements PrimitiveIterator.OfInt {
             protected int value;
+            protected final IntUnaryOperator f;
 
-            protected Counter(int step) {
-                value = this.step = step;
+            protected Counter(int seed, IntUnaryOperator f) {
+                this.value = seed;
+                this.f = f;
             }
 
-            protected int increment() {
-                int theValue = value;
-                value += step;
-                return theValue;
+            @Override
+            public int nextInt() {
+                int currentValue = value;
+                value = f.applyAsInt(value);
+                return currentValue;
             }
 
             protected static int compareTo(Counter a, Counter b) {
                 return a.value < b.value ? -1 : a.value == b.value ? 0 : 1;
             }
+
+            @Override
+            public boolean hasNext() {
+                return true;
+            }
         }
 
-        public static class Counters {
-            protected final Counter[] counters;
-            protected int lastValue = 0;
+        protected final Queue<Counter> counters;
+        protected int lastValue = 0;
 
-            public Counters(int[] counterInts) {
-                counters = Arrays.stream(counterInts) // IntStream: stream of primitive int
-                        .mapToObj(Counter::new) // Stream<Counter>
-                        .toArray(Counter[]::new); // output is Counter[]
-            }
+        public OddNumbers(int[] divisors) {
+            counters = Arrays.stream(divisors) // IntStream: stream of primitive int
+                    .mapToObj(step -> new Counter(step, value -> value + step)) // StreamInterface<Counter>
+                    .collect(Collectors.toCollection(() -> new PriorityQueue<Counter>(divisors.length, Counter::compareTo)));
+            //int i = IntStream.iterate(3, n -> n + 3).iterator();
+        }
 
-            public int getNextValue() {
-                int nextValue;
-                for (; ; ) {
-                    nextValue = Arrays.stream(counters).min(Counter::compareTo).get().increment();
-                    if ((nextValue & 1) != 0 && // must be odd
-                            nextValue > lastValue) break; // must be a new value
-                }
-                return (lastValue = nextValue);
-            }
+        public int getNextValue() {
+            int nextValue;
+            do {
+                Counter counter = counters.remove(); // get lowest value counter
+                nextValue = counter.nextInt(); // get the value
+                counters.add(counter); // re-enqueue the counter
+            } while (!((nextValue & 1) != 0 && // must be odd and
+                    nextValue > lastValue)); // must not be a repeated value
+            return (lastValue = nextValue);
         }
     }
 
@@ -86,10 +91,10 @@ public class Amazon {
         protected static final int valueCount = 6;
 
         public OddNumbersTest() {
-            OddNumbers.Counters counters = new OddNumbers.Counters(divisors);
-            System.out.printf("OddNumbers: %s\n", IntStream.range(1, valueCount + 1)
-                .mapToObj(i -> String.format("%d:%d", i, counters.getNextValue()))
-                .collect(Collectors.joining(" ")));
+            OddNumbers oddNumbers = new OddNumbers(divisors);
+            System.out.printf("OddNumbers: %s\n", IntStream.rangeClosed(1, valueCount)
+                    .mapToObj(i -> String.format("%d:%d", i, oddNumbers.getNextValue()))
+                    .collect(Collectors.joining(" ")));
         }
     }
 
@@ -138,7 +143,7 @@ public class Amazon {
             }
 
             public String toString() {
-                return cards.stream().map(c -> c.toString()).collect(Collectors.joining(" "));
+                return String.format("%d: %s", cards.size(), cards.stream().map(c -> c.toString()).collect(Collectors.joining(" ")));
             }
         }
 

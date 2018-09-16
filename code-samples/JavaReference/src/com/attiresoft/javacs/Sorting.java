@@ -1,8 +1,7 @@
-package com.attiresoft.javareference;
+package com.attiresoft.javacs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Sorting {
     public int[] bubbleSort(int[] array) { // average O(n**2)

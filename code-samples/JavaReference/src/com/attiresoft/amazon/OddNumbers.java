@@ -5,6 +5,19 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class OddNumbers {
+    /*
+    The last value must be accessible
+    - used to sort in PriorityQueue
+    - used to generate the next value
+
+    Step needs to be stored
+
+    A stream or Iterator cannot peek at the next value
+    Therefore, there must be a class that has value as a public instance value
+    The class must have a constructor and a public method to get the next value
+
+    A lambda function cannot modify an instance value, this then have to be an array
+     */
     protected static class Counter {
         protected final int step;
         protected int value;
@@ -30,8 +43,8 @@ public class OddNumbers {
 
         public Counters(int[] counterInts) {
             counters =
-                Arrays.stream(counterInts).boxed() // IntStream: stream of primitive int to Stream<Integer>
-                .map(Counter::new) // Stream<Counter>, map does not work for IntStream
+                Arrays.stream(counterInts).boxed() // IntStream: stream of primitive int to StreamInterface<Integer>
+                .map(Counter::new) // StreamInterface<Counter>, map does not work for IntStream
                 .toArray(Counter[]::new); // output is Counter[]
         }
 
@@ -82,7 +95,7 @@ class CardGame {
     boolean isJoker;
     int value; // 1-13, 0
     Color color;
-    String id;
+    StringClass id;
     CardGame(int value, Color color) {
         this.value = value=;
         this.color = color;

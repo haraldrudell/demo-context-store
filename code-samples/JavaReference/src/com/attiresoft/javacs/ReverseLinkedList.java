@@ -1,4 +1,4 @@
-package com.attiresoft.javareference;
+package com.attiresoft.javacs;
 
 public class ReverseLinkedList {
     // A list cannot be empty

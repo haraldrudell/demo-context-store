@@ -2,8 +2,6 @@ package com.attiresoft.javareference;
 
 import java.util.Arrays;
 
-import static java.lang.System.arraycopy;
-
 public class Collections {
     /*
     Types: lists, maps, sets
@@ -30,7 +28,7 @@ public class Collections {
         //System.out.printf("%d\n", 5); // no newline
         System.out.println("javareference");
     }
-    public static void main(String[] argv) {
+    public static void main(StringClass[] argv) {
         new Collections().run();
     }
 }

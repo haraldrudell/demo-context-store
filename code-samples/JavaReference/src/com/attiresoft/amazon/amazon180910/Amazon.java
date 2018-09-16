@@ -68,8 +68,8 @@ public class Amazon {
                 // counters is an array of primitive int so we get an IntStream primitive stream
                 this.counters = // output should be Counter[]
                         Arrays.stream(counters) // IntStream: stream of primitive int
-                                .boxed() // Stream<Integer>
-                                .map(Counter::new) // Stream<Counter>, map does not work for IntStream
+                                .boxed() // StreamInterface<Integer>
+                                .map(Counter::new) // StreamInterface<Counter>, map does not work for IntStream
                                 .toArray(Counter[]::new); // output is Counter[]
             }
 
