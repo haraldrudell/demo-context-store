@@ -3,6 +3,7 @@
 All rights reserved.
 */
 export const SET_AREA = 'SET_AREA'
+export const SHOW_FORM = 1
 
 export function setArea(display) {
   console.log('action:', SET_AREA, display)

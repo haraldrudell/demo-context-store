@@ -3,14 +3,17 @@
 All rights reserved.
 */
 import React, { Fragment } from 'react'
-import {area} from './areastore'
+import {area, SHOW_FORM} from './areastore'
 import { connect } from 'react-redux'
 import JobResult from './JobResult'
+import JobForm from './JobForm'
 
 export default connect(mapStateToProps)(({display}) => // string id or null
   display === null
     ? <Fragment />
-    : <JobResult id={display} />
+    : display === SHOW_FORM
+      ? <JobForm />
+      : <JobResult id={display} />
 )
 
 function mapStateToProps(state) {

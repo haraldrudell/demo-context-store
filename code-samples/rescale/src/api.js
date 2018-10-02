@@ -4,8 +4,12 @@ All rights reserved.
 */
 import axios from 'axios'
 
-const jobsEndpoint = 'http://localhost:3001/api/jobs'
-const baseUrl = ''//'http://localhost:3001'
+const baseUrl = 'http://localhost:3001'
+const baseImageUrl = '' //baseUrl
+const baseApiUrl = `${baseUrl}/api`
+const jobsEndpoint = `${baseApiUrl}/jobs`
+const softwareEndpoint = `${baseApiUrl}/software`
+const hardwareEndpoint = `${baseApiUrl}/hardware`
 
 export async function getJobs() {
   // {"data":{"jobs":[{"name":
@@ -15,6 +19,17 @@ export async function getJobs() {
   throw new Error('Bad jobs response')
 }
 
+export const getSoftware = () => getOptions(softwareEndpoint)
+export const getHardware = () => getOptions(hardwareEndpoint)
+
+export async function getOptions(endPoint) {
+  // {"options":[{"label":
+  const resp = await axios.get(endPoint)
+  const {list} = Object(Object(resp).options)
+  if (Array.isArray(list)) return list
+  throw new Error(`Bad response from: ${endPoint}`)
+}
+
 export function makeUrl(uri) {
-  return `${baseUrl}${uri}`
+  return `${baseImageUrl}${uri}`
 }

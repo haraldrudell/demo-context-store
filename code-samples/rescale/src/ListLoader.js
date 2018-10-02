@@ -9,15 +9,23 @@ import './ListLoader.css'
 import {loadJobs, eSlice, dataSlice, jobs} from './jobsstore'
 import { connect } from 'react-redux'
 import {Map} from 'immutable'
+import {setArea, SHOW_FORM} from  './areastore'
 
 export class ListLoader extends PureComponent {
+  showFormAction = this.showFormAction.bind(this)
+
   componentDidMount() {
     const {dispatch} = this.props
     dispatch(loadJobs) // returns promise that does not throw
   }
 
+  showFormAction() {
+    const {dispatch} = this.props
+    dispatch(setArea(SHOW_FORM))
+  }
+
   renderChild(child, data) {
-    return React.cloneElement(child, {jobs: data})
+    return React.cloneElement(child, {jobs: data, action: this.showFormAction})
   }
 
   render() {
@@ -37,14 +45,6 @@ export class ListLoader extends PureComponent {
     const map = jobsValue instanceof Map ? jobsValue : Map()
     return {e: map.get(eSlice), data: map.get(dataSlice)}
   }
-
-  /*
-  static mapDispatchToProps(dispatch) {
-    return {
-        fetchData: () => dispatch(loadJobs),
-    }
-  }
-  */
 }
 
 export default connect(ListLoader.mapStateToProps/*, ListLoader.mapDispatchToProps*/)(ListLoader)

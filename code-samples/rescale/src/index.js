@@ -14,6 +14,6 @@ render(
   <Fragment>
     <CssBaseline />
     <Provider store={store}>
-      <App />
+      <App store={store}/>
     </Provider>
   </Fragment>, document.getElementById('root'))
