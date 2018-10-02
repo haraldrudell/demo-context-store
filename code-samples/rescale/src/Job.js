@@ -30,11 +30,14 @@ results
   - '/images/data2.jpg'
 */
 
-export default ({name, id, results: {status}}) =>
-  <Card><CardContent>
+// job is immutable Map
+export default ({job}) => {
+  console.log(typeof job, job.constructor.name)
+  const {name, id, results: {status}} = job.toJSON()
+  return <Card><CardContent>
     <Typography variant='title' align='center' gutterBottom>
       {name}
     </Typography>
     {status}<br/>
     id: {id}
-  </CardContent></Card>
+  </CardContent></Card>}

@@ -5,28 +5,14 @@ All rights reserved.
 import React, {Component, Fragment, Children} from 'react'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import axios from 'axios'
 import './ListLoader.css'
+import {loadJobs, eSlice, dataSlice, reducer} from './jobsstore'
+import { connect } from 'react-redux'
 
-export default class ListLoader extends Component {
-  static url = 'http://localhost:3001/api/jobs'
-  state = {}
-
+export class ListLoader extends Component {
   componentDidMount() {
-    const {url} = ListLoader
-    return this.loadData(url).catch(e => this.setState({data: e}))
-  }
-
-  async loadData(url) {
-    const resp = await axios.get(url)
-    const data = this.processData(Object(resp).data)
-    this.setState({data})
-  }
-
-  processData(data) {
-    const jobs = Object(data).jobs
-    if (Array.isArray(jobs)) return jobs
-    throw new Error('Bad jobs response')
+    const {dispatch} = this.props
+    dispatch(loadJobs) // returns promise that does not throw
   }
 
   renderChild(child, data) {
@@ -34,14 +20,30 @@ export default class ListLoader extends Component {
   }
 
   render() {
-    const {data} = this.state
-    const {children} = this.props
-    return data === undefined
+    const {children, data, e} = this.props
+    console.log('ListLoader.render data:', data, 'e:', e && e.message)
+    return data === undefined && !e
       ? <CircularProgress />
-      : data instanceof Error
+      : e
         ? <div className="ListLoader-error"><div>
-            <TextField value={data.message || 'error'} error fullWidth helperText='Data loading failed' />
+            <TextField value={e.message || 'error'} error fullWidth helperText='Data loading failed' />
           </div></div>
         : <Fragment>{Children.map(children, child => this.renderChild(child, data))}</Fragment>
   }
+
+  static mapStateToProps(state) {
+    const {[eSlice]: e, [dataSlice]: data} = Object(state[reducer.name])
+    console.log('mapStateToProps state:', state, 'data:', data, 'e:', !!e)
+    return {e, data}
+  }
+
+  /*
+  static mapDispatchToProps(dispatch) {
+    return {
+        fetchData: () => dispatch(loadJobs),
+    }
+  }
+  */
 }
+
+export default connect(ListLoader.mapStateToProps/*, ListLoader.mapDispatchToProps*/)(ListLoader)

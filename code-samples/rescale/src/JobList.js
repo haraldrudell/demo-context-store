@@ -7,14 +7,17 @@ import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import Job from './Job'
 
-export default ({jobs}) => <Fragment>
+// jobs is immutable List
+export default ({jobs}) => {
+  console.log('jobs:', jobs)
+  return <Fragment>
       <Typography variant='display1' align='center' gutterBottom>
         jobs
       </Typography>
       <div style={{display: 'flex'}}>
-        {jobs.map((job, i) => <Job {...job} key={i} />)}
+        {jobs.map((job, i) => <Job job={job} key={i} />)}
       </div>
       <Paper>
         End of job list
       </Paper>
-    </Fragment>
+    </Fragment>}
