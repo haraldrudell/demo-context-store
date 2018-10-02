@@ -1,0 +1,29 @@
+/*
+© 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
+All rights reserved.
+*/
+.rescale-svg > g {
+  transform: matrix(.13333, 0, 0, -.13333, 0, 123.133);
+}
+.rescale-svg > g > path {
+  fill-rule: evenodd;
+}
+.rescale-blue {
+  fill: #479abd
+}
+.rescale-logo-main-color {
+  fill: #3c3a3c;
+}
+.rescale-logo-lightest-gray {
+  fill: #b2b2b1 }
+.rescale-logo-mid-gray {
+  fill: #878888
+}
+.rescale-logo-darkest-gray {
+  fill: #5c5d5f
+}
+
+.rescale-logo-spin {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}

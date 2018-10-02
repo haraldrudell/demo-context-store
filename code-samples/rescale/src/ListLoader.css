@@ -1,0 +1,7 @@
+.ListLoader-error {
+  display: flex;
+  justify-content: center;
+}
+.ListLoader-error > div {
+  width: 500px;
+}
