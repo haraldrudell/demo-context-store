@@ -2,14 +2,15 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import React, {Component, Fragment, Children} from 'react'
+import React, {PureComponent, Fragment, Children} from 'react'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import './ListLoader.css'
-import {loadJobs, eSlice, dataSlice, reducer} from './jobsstore'
+import {loadJobs, eSlice, dataSlice, jobs} from './jobsstore'
 import { connect } from 'react-redux'
+import {Map} from 'immutable'
 
-export class ListLoader extends Component {
+export class ListLoader extends PureComponent {
   componentDidMount() {
     const {dispatch} = this.props
     dispatch(loadJobs) // returns promise that does not throw
@@ -32,9 +33,9 @@ export class ListLoader extends Component {
   }
 
   static mapStateToProps(state) {
-    const {[eSlice]: e, [dataSlice]: data} = Object(state[reducer.name])
-    console.log('mapStateToProps state:', state, 'data:', data, 'e:', !!e)
-    return {e, data}
+    const jobsValue = state[jobs.name] // undefined or Map
+    const map = jobsValue instanceof Map ? jobsValue : Map()
+    return {e: map.get(eSlice), data: map.get(dataSlice)}
   }
 
   /*

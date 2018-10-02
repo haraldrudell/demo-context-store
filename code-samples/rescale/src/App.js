@@ -7,6 +7,7 @@ import './App.css'
 import RLogo from './RLogo'
 import JobList from './JobList'
 import ListLoader from './ListLoader'
+import DataArea from './DataArea'
 
 export default class App extends Component {
   render() {
@@ -14,6 +15,7 @@ export default class App extends Component {
       <div className="App">
         <div><RLogo svgClass={'App-logoBox'} /></div>
         <ListLoader><JobList /></ListLoader>
+        <DataArea />
       </div>
     )
   }

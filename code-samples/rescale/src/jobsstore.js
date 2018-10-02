@@ -2,7 +2,7 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import {fromJS} from 'immutable'
+import {fromJS, OrderedMap, Map} from 'immutable'
 import {getJobs} from './api'
 
 export const eSlice = 'jobserror'
@@ -19,10 +19,11 @@ async function doGetJobs(dispatch) {
 }
 
 function setResult(e, data) {
-  console.log('setResult')
+  console.log('action:', SET_RESULT, 'e:', e && e.message, 'data:', data)
   if (data != null) {
     if (Array.isArray(data)) {
-      data = fromJS(data)
+      data = new OrderedMap(data.map(job => [job.id, fromJS(job)]))
+      //data = fromJS(data)
     } else if (!e) e = new Error('setResult: data not array')
   }
   if (e && !(e instanceof Error)) e = new Error(`value: ${e}`)
@@ -33,18 +34,21 @@ function setResult(e, data) {
   }
 }
 
-export function reducer(state = {}, action) {
-  console.log('reducer state:', state, 'action:', action)
-  if (action.type === SET_RESULT) {
-    const {e, data} = action
-    let isChanged
-    const newState = {...state}
-    e !== undefined && (isChanged = true) && (newState[eSlice] = e)
-    data !== undefined && (isChanged = true) && (newState[dataSlice] = data)
-    if (isChanged) {
-      console.log('reducer state-out:', newState)
-      return newState
+export function jobs(stateSlice = Map(), action) { // jobs store-slice reducer
+  console.log('jobs reducer state:', stateSlice, 'action:', action)
+  // eslint-disable-next-line
+  switch(action.type) {
+  case SET_RESULT:
+    let {e, data} = action
+    if (e !== undefined || data !== undefined) {
+      const oldMap = stateSlice[jobs.name] || Map()
+      e === undefined && (e = oldMap.get(eSlice))
+      data === undefined && (data = oldMap.get(dataSlice))
+      return new Map([
+        [eSlice, e],
+        [dataSlice, data],
+      ])
     }
   }
-  return state
+  return stateSlice
 }

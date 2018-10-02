@@ -4,11 +4,13 @@ All rights reserved.
 */
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
-import {reducer} from './jobsstore'
+import {jobs} from './jobsstore'
+import {area} from './areastore'
 
 export const store = createStore(
   combineReducers({
-    reducer,
+    jobs,
+    area,
   }),
   {},
   applyMiddleware(thunk)
