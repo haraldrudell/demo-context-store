@@ -3,9 +3,11 @@ package com.attiresoft.javareference;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Concurrency {
-    // TODO
-    public Concurrency() {
+public class ConcurrentProgramming {
+    /*
+    TODO
+    */
+    public static void main(String[] args) {
         AtomicBoolean a;
         ConcurrentMap m = new ConcurrentHashMap();
         ArrayBlockingQueue<Integer> ab;

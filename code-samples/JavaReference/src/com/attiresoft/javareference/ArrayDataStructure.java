@@ -2,7 +2,7 @@ package com.attiresoft.javareference;
 
 import java.util.Arrays;
 
-public class ArrayStructure {
+public class ArrayDataStructure {
     /*
     Array Structure: java.util.Arrays
     https://docs.oracle.com/javase/10/docs/api/java/util/Arrays.html

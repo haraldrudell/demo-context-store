@@ -24,7 +24,7 @@ public class PrimitiveDataTypes {
         new FloatingPointTest(); // Floating point: 0f 0. 1e1f Float.MAX_VALUE Float.NEGATIVE_INFINITY Float.NaN
         /*
         CharacterTest: a'$¢¢€€𐍈
-        Unmatched utf-16 surrogate: a?b
+        Unmatched utf-16 surrogate: a?reference
         Unicode Code Point: s.codePointAt: U+10348
         Surrogate pair length vs. Normalized .codePointCount: 2 1
          */
@@ -121,7 +121,7 @@ public class PrimitiveDataTypes {
                 'a', // utf-16
                 /*
                 escape sequences:
-                b backspace \u0008
+                reference backspace \u0008
                 t tab \u0009
                 n newline \u000a
                 f form feed \u000c

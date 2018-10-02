@@ -65,12 +65,12 @@ public class Amazon {
             Counter[] counters;
 
             Counters(int[] counters) {
-                // counters is an array of primitive int so we get an IntStream primitive stream
-                this.counters = // output should be Counter[]
+                // intSeries is an array of primitive int so we get an IntStream primitive stream
+                this.counters = // output should be IntSeries[]
                         Arrays.stream(counters) // IntStream: stream of primitive int
                                 .boxed() // StreamInterface<Integer>
-                                .map(Counter::new) // StreamInterface<Counter>, map does not work for IntStream
-                                .toArray(Counter[]::new); // output is Counter[]
+                                .map(Counter::new) // StreamInterface<IntSeries>, map does not work for IntStream
+                                .toArray(Counter[]::new); // output is IntSeries[]
             }
 
             int getNextValue() {

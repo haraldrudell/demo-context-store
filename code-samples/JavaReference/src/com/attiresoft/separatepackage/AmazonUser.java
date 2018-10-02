@@ -3,7 +3,7 @@ package com.attiresoft.separatepackage;
 import com.attiresoft.amazon.Amazon;
 import com.attiresoft.amazon.Amazon.BitMask;
 import com.attiresoft.separatepackage2.ConstructorAccess;
-import com.attiresoft.amazon.Amazon.OddNumbers;
+//import com.attiresoft.amazon.amazon180911.Amazon.OddNumbers;
 import com.attiresoft.amazon.Amazon.CardGame.Deck;
 
 public class AmazonUser {
@@ -25,7 +25,11 @@ public class AmazonUser {
         System.out.printf("BitMask: %d\n", new BitMask().swapBits(23));
 
         // Counters is a static inner class of OddNumbers
-        System.out.printf("Counters: %d\n", new OddNumbers(new int[]{3, 7}).getNextValue());
+        /*
+        TODO class was removed
+        find another inner class: protected static class
+         */
+        //System.out.printf("Counters: %d\n", new OddNumbers(new int[]{3, 7}).getNextValue());
 
         // use OddNumbers.Test
         new Amazon.OddNumbersTest();

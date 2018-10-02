@@ -44,8 +44,8 @@ public class OddNumbers {
         public Counters(int[] counterInts) {
             counters =
                 Arrays.stream(counterInts).boxed() // IntStream: stream of primitive int to StreamInterface<Integer>
-                .map(Counter::new) // StreamInterface<Counter>, map does not work for IntStream
-                .toArray(Counter[]::new); // output is Counter[]
+                .map(Counter::new) // StreamInterface<IntSeries>, map does not work for IntStream
+                .toArray(Counter[]::new); // output is IntSeries[]
         }
 
         public int getNextValue() {
@@ -95,7 +95,7 @@ class CardGame {
     boolean isJoker;
     int value; // 1-13, 0
     Color color;
-    StringClass id;
+    StringDataStructure id;
     CardGame(int value, Color color) {
         this.value = value=;
         this.color = color;

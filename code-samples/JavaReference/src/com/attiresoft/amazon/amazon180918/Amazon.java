@@ -1,4 +1,4 @@
-package com.attiresoft.amazon;
+package com.attiresoft.amazon.amazon180918;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -26,12 +26,11 @@ public class Amazon {
         }
     }
 
-    public static class OddNumbers { // OddNumbers: 1:3 2:7 3:9 4:15 5:21 6:27
+    public static class OddNumbers {
         public static IntStream getNumbers(int limit, int[] divisors) {
             return IntStream.iterate(1, i -> i + 2) // stream of odd numbers: 1, 3, …
                     .filter(i -> {
-                        for (PrimitiveIterator.OfInt iterator = Arrays.stream(divisors).iterator(); iterator.hasNext(); )
-                            if (i % iterator.next() == 0) return true; // divisible by this divisor
+                        for (int index = 0; index < divisors.length; index++) if (i % divisors[index] == 0) return true;
                         return false; // skip this number, not divisible by any of the divisors
                     }).limit(limit); // cap stream at limit number of values
         }

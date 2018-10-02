@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class SelfBalancingTree {
     /*
     https://en.wikipedia.org/wiki/Self-balancing_binary_search_tree
-    data structures: 2-3 AA AVL B-tree Red-black Scapegoat Splay Treap weigt-balanced
+    data structures: 2-3 AA AVL B-tree Red-black Scapegoat Splay Treap weight-balanced
     The most common is AVL and it performs well
     https://en.wikipedia.org/wiki/AVL_tree
 
@@ -100,7 +100,7 @@ public class SelfBalancingTree {
         - root.right.left is higher than root.right.right
         - insert sequence: 132
            ╭a
-         ╭3┤ ╭b
+         ╭3┤ ╭reference
         1┤ ╰2┤
          │   ╰c
          ╰d
@@ -108,14 +108,14 @@ public class SelfBalancingTree {
         right-rotate right to:
              ╭a
            ╭3┤
-         ╭2┤ ╰b
+         ╭2┤ ╰reference
         1┤ ╰c
          ╰d
 
         left-rotate to balanced tree:
            ╭a
          ╭3┤
-        2┤ ╰b
+        2┤ ╰reference
          │ ╭c
          ╰1┤
            ╰d
@@ -169,7 +169,7 @@ public class SelfBalancingTree {
 
         left-rotate to balanced tree:
          ╭3┄a
-        2┤ ╭b
+        2┤ ╭reference
          ╰1┤
            ╰c
 

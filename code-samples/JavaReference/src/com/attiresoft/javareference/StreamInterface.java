@@ -1,11 +1,15 @@
 package com.attiresoft.javareference;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
-import java.util.function.IntUnaryOperator;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class StreamInterface {
     /*
@@ -36,15 +40,15 @@ public class StreamInterface {
     Traversal of the pipeline source occurs when the terminal operation of the pipeline is executed
      */
     public static void main(String[] args) {
-        new IntStreamCreation(); // Stream creation: of range rangeClosed generate builder concat empty iterate
+        new StaticIntStreamCreation(); // Stream creation: of range rangeClosed generate builder concat empty iterate
+        new StreamCreation();
         new IntStreamIntermediate();
         new IntStreamTerminal();
         new StreamTest();
         new ReactiveStreamTest();
-        new OddNumbersTest();
     }
 
-    public static class IntStreamCreation {
+    public static class StaticIntStreamCreation {
         /*
         java.util.stream.IntStream
         https://docs.oracle.com/javase/10/docs/api/java/util/stream/IntStream.html
@@ -62,7 +66,7 @@ public class StreamInterface {
         the architecture is lazy pull stream, there is no push stream
         - push stream need all new code
          */
-        public IntStreamCreation() {
+        public StaticIntStreamCreation() {
             //testArrayEquals();
 
             int[] result = {1, 2, 3};
@@ -85,7 +89,7 @@ public class StreamInterface {
             if (!Arrays.equals(IntStream.concat(IntStream.empty(), IntStream.rangeClosed(1, 3)).toArray(), result)) throw new AssertionError();
             if (!Arrays.equals(IntStream.iterate(1, i -> i + 1).limit(3L).toArray(), result)) throw new AssertionError();
 
-            System.out.printf("Stream creation: of range rangeClosed generate builder concat empty iterate\n");
+            System.out.printf("Static stream creation: .of .range .rangeClosed .generate .builder .concat .empty .iterate\n");
         }
 
         void testArrayEquals() {
@@ -118,6 +122,23 @@ public class StreamInterface {
             Class<?> c = o.getClass();
             if (!c.isArray()) return "notArray";
             return String.format("Array: %s", c.getComponentType());
+        }
+    }
+
+    public static class StreamCreation {
+        public StreamCreation() {
+            IntStream is = Arrays.stream(new int[]{1}); // from array of primitive
+            Stream<Integer> isBoxed = Arrays.stream(new Integer[]{1}); // from array of object
+            Stream<Integer> isList = new ArrayList<Integer>().stream(); // from Collection
+            IntStream isRandom = new Random().ints();
+            IntStream isChar = "a".chars();
+            Stream<String> isString = Pattern.compile("a*").splitAsStream("123");
+            try {
+                Stream<String> isFile = Files.lines(Paths.get("/"));
+            } catch (IOException e) {
+                throw new AssertionError("File i/o failed", e);
+            }
+            System.out.printf("Stream creation: Arrays.stream CollectionsInterface.stream random.ints string.chars pattern.splitAsStrem file.lines\n");
         }
     }
 
@@ -169,7 +190,7 @@ public class StreamInterface {
             IntStream.empty().mapToLong();
             IntStream.empty().parallel();
             IntStream.empty().peek();
-            IntStream.empty().reduce(a, b);
+            IntStream.empty().reduce(a, reference);
             IntStream.empty().sequential();
             IntStream.empty().skip();
             IntStream.empty().sorted();
@@ -177,7 +198,8 @@ public class StreamInterface {
             IntStream.empty().onClose();
             IntStream.empty().unordered();
             */
-            System.out.printf("IntStreamIntermediate complete\n");
+            System.out.printf("Intermediate 23: mapToObj map boxed allMatch anyMatch asDoubleStream asLongStream distinct dropWhile filter flatMap limit mapToDouble mapToLong" +
+                    "parallel peek reduce sequential skip sorted takeWhile onClose unordered\n");
         }
 
         void onlyOnce() {
@@ -254,7 +276,7 @@ public class StreamInterface {
             IntStream.empty().close();
             IntStream.empty().isParallel();
             */
-            System.out.printf("IntStreamTerminal complete\n");
+            System.out.printf("Terminal 21: toArray max min collect count iterator finAny findFirst forEach forEachOrdered average anyMatch allMatch toArray noneMatch reduce spliterator sum summaryStatistics close isParallel\n");
         }
     }
 
@@ -266,62 +288,6 @@ public class StreamInterface {
                      .collect(Collectors.joining(" ")));
         }
     }
-
-    public static class Counter {
-        public int value = 0;
-        protected final IntUnaryOperator f;
-
-        public Counter(IntUnaryOperator f) {
-            this.f = f;
-            this.getValue();
-        }
-
-        public int getValue() {
-            int currentValue = value;
-            value = f.applyAsInt(value);
-            return currentValue;
-        }
-
-        public static int compareTo(Counter a, Counter b) {
-            return a.value < b.value ? -1 : a.value == b.value ? 0 : 1;
-        }
-    }
-
-    public static class Counters {
-        protected final Queue<Counter> counters;
-        protected int lastValue = 0;
-
-        public Counters(int[] divisors) {
-            counters = Arrays.stream(divisors)
-                    .mapToObj(step -> new Counter(value -> value + step))
-                    .collect(Collectors.toCollection(() -> new PriorityQueue<Counter>(Counter::compareTo)));
-        }
-
-        public int getNextValue() {
-            int nextValue;
-            for (; ; ) {
-                Counter counter = counters.remove(); // get lowest value counter
-                nextValue = counter.getValue(); // get the value
-                counters.add(counter); // re-enqueue the counter
-                if ((nextValue & 1) != 0 && // must be odd
-                        nextValue > lastValue) break; // must be a new value
-            }
-            return (lastValue = nextValue);
-        }
-    }
-
-    public static class OddNumbersTest {
-        protected static final int[] divisors = {3, 7};
-        protected static final int valueCount = 6;
-
-        public OddNumbersTest() {
-            Counters counters = new Counters(divisors);
-            System.out.printf("OddNumbers: %s\n", IntStream.range(1, valueCount + 1)
-                    .mapToObj(i -> String.format("%d:%d", i, counters.getNextValue()))
-                    .collect(Collectors.joining(" ")));
-        }
-    }
-
 
     public static class ReactiveStreamTest {
         IntSupplier getIntSupplier(int step) {

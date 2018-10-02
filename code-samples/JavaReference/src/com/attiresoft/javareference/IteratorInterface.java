@@ -41,6 +41,10 @@ public class IteratorInterface {
             // custom iterator
             for (Integer i : new CustomIterable()) ;
 
+            // next beyond end
+            //IntStream.empty().iterator().next(); java.util.NoSuchElementException
+            //new ArrayList<Integer>().iterator().next(); java.util.NoSuchElementException
+
             System.out.printf("Iterable Creation: Collection Arrays.stream().forEach stream.iterator PrimitiveIterator.forEachRemaining\n");
         }
 
