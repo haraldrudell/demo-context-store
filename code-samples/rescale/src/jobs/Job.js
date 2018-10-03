@@ -7,9 +7,9 @@ import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { connect } from 'react-redux'
-import {jobs, dataSlice} from './jobsstore'
+import {sliceName, dataSlice} from './jobsStore'
 import {Map, OrderedMap} from 'immutable'
-import {setArea} from  './areastore'
+import {setArea} from  '../dataarea/areaStore'
 
 /*
 name: 'Chair Structural Test',
@@ -58,7 +58,7 @@ class Job extends PureComponent {
 
   static mapStateToProps(state, ownProps) {
     const {id} = ownProps
-    const map = state[jobs.name] || Map()
+    const map = state[sliceName] || Map()
     const oMap = map.get(dataSlice) || OrderedMap()
     return {job: oMap.get(id)} // job immutable Map
   }

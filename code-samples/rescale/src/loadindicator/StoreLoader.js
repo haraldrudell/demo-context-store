@@ -2,14 +2,16 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import {OrderedMap, fromJS} from 'immutable'
+import {OrderedMap, fromJS, Map} from 'immutable'
 
 export default class StoreLoader {
-  static SET_RESULT = 'SET_RESULT'
+  reducer = this.reducer.bind(this)
+  load = this.load.bind(this)
 
   constructor({sliceName, apiMethod}) {
     this.eSlice = `${sliceName}error`
     this.dataSlice = `${sliceName}`
+    this.SET_RESULT = `SET_RESULT_${sliceName}`
     Object.assign(this, {sliceName, apiMethod})
   }
 
@@ -22,7 +24,7 @@ export default class StoreLoader {
   }
 
   _setResult(e, data) { // action creator
-    const {SET_RESULT} = StoreLoader
+    const {SET_RESULT} = this
     console.log('action:', SET_RESULT, 'e:', e && e.message, 'data:', data)
     if (data != null) {
       if (Array.isArray(data)) {
@@ -38,10 +40,9 @@ export default class StoreLoader {
     }
   }
 
-  _reducer(stateSlice = Map(), action) { // jobs store-slice reducer
-    const {SET_RESULT} = StoreLoader
-    const {sliceName, eSlice, dataSlice} = this
-    console.log('jobs reducer state:', stateSlice, 'action:', action)
+  reducer(stateSlice = Map(), action) { // jobs store-slice reducer
+    const {sliceName, eSlice, dataSlice, SET_RESULT} = this
+    console.log(`${sliceName} reducer state:`, stateSlice, 'action:', action)
     // eslint-disable-next-line
     switch(action.type) {
     case SET_RESULT:

@@ -11,10 +11,20 @@ const jobsEndpoint = `${baseApiUrl}/jobs`
 const softwareEndpoint = `${baseApiUrl}/software`
 const hardwareEndpoint = `${baseApiUrl}/hardware`
 
+async function get(url) {
+  console.log(`GET ${url}`)
+  const resp = await axios.get(url)
+  return Object(Object(resp).data)
+}
+/*
+async function post(url) {
+  console.log(`POST ${url}`)
+  return axios.post(url)
+}
+*/
 export async function getJobs() {
   // {"data":{"jobs":[{"name":
-  const resp = await axios.get(jobsEndpoint)
-  const {jobs} = Object(Object(resp).data)
+  const {jobs} = await get(jobsEndpoint)
   if (Array.isArray(jobs)) return jobs
   throw new Error('Bad jobs response')
 }
@@ -24,9 +34,8 @@ export const getHardware = () => getOptions(hardwareEndpoint)
 
 export async function getOptions(endPoint) {
   // {"options":[{"label":
-  const resp = await axios.get(endPoint)
-  const {list} = Object(Object(resp).options)
-  if (Array.isArray(list)) return list
+  const {options} = await get(endPoint)
+  if (Array.isArray(options)) return options
   throw new Error(`Bad response from: ${endPoint}`)
 }
 

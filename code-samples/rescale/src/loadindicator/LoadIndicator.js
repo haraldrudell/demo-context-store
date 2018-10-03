@@ -5,18 +5,19 @@ All rights reserved.
 import React, {PureComponent, Fragment, Children} from 'react'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import './ListLoader.css'
-import {loadJobs, eSlice, dataSlice, jobs} from './jobsstore'
+import './LoadIndicator.css'
 import { connect } from 'react-redux'
 import {Map} from 'immutable'
-import {setArea, SHOW_FORM} from  './areastore'
+import {setArea, SHOW_FORM} from  '../dataarea/areaStore'
 
-export class ListLoader extends PureComponent {
+export class LoadIndicator extends PureComponent {
   showFormAction = this.showFormAction.bind(this)
 
   componentDidMount() {
-    const {dispatch} = this.props
-    dispatch(loadJobs) // returns promise that does not throw
+    const {dispatch, loader} = this.props
+    console.log('LoadIndicator.componentDidMount loader:', typeof loader)
+    const isFunction = typeof loader === 'function'
+    isFunction && loader({dispatch}) // returns promise that does not throw
   }
 
   showFormAction() {
@@ -40,11 +41,12 @@ export class ListLoader extends PureComponent {
         : <Fragment>{Children.map(children, child => this.renderChild(child, data))}</Fragment>
   }
 
-  static mapStateToProps(state) {
-    const jobsValue = state[jobs.name] // undefined or Map
+  static mapStateToProps(state, ownProps) {
+    const {eSlice, dataSlice, sliceName} = ownProps
+    const jobsValue = state[sliceName] // undefined or Map
     const map = jobsValue instanceof Map ? jobsValue : Map()
     return {e: map.get(eSlice), data: map.get(dataSlice)}
   }
 }
 
-export default connect(ListLoader.mapStateToProps/*, ListLoader.mapDispatchToProps*/)(ListLoader)
+export default connect(LoadIndicator.mapStateToProps)(LoadIndicator)

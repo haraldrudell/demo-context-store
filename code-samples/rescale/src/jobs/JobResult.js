@@ -5,9 +5,9 @@ All rights reserved.
 import React, {Fragment} from 'react'
 import Typography from '@material-ui/core/Typography'
 import { connect } from 'react-redux'
-import {jobs, dataSlice} from './jobsstore'
+import {sliceName, dataSlice} from './jobsStore'
 import {Map, OrderedMap, List} from 'immutable'
-import {makeUrl} from './api'
+import {makeUrl} from '../api'
 
 const Img = ({uri}) => <img alt='resultImage' src={makeUrl(uri)} />
 
@@ -27,7 +27,7 @@ export default connect(mapStateToProps)(({job, id}) => { // job is immutable Map
 function mapStateToProps(state, ownProps) {
   // get the immutable job
   const {id} = ownProps
-  const map = state[jobs.name] || Map()
+  const map = state[sliceName] || Map()
   const oMap = map.get(dataSlice) || OrderedMap()
   return {job: oMap.get(id)} // job immutable Map
 }
