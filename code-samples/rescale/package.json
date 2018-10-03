@@ -21,6 +21,7 @@
   "scripts": {
     "start": "react-scripts start",
     "api-server": "node ./src/server.js",
+    "zip": "zip -r HaraldRudell.zip package.json src public yarn.lock",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -10,8 +10,25 @@ import { connect } from 'react-redux'
 import {Map} from 'immutable'
 import {storeLoader as swLoader} from './swStore'
 import {storeLoader as hwLoader} from './hwStore'
+import {createJob} from '../api'
+import {storeLoader} from '../jobs/jobsStore'
 
 export class OptionsLoader extends PureComponent {
+  start = this.start.bind(this)
+
+  start(createObject) {
+    this.doStart(createObject).catch(console.error)
+  }
+
+  async doStart(createObject) {
+    const newJob = await createJob(createObject)
+    console.log(JSON.stringify(newJob))
+    const {dispatch} = this.props
+    const dResult = dispatch(storeLoader.addOne(undefined, newJob))
+    console.log('dispatchResult', dResult)
+    return newJob
+  }
+
   renderChild(child, props) {
     return React.cloneElement(child, props)
   }
@@ -25,7 +42,7 @@ export class OptionsLoader extends PureComponent {
         ? <div className="ListLoader-error"><div>
             <TextField value={e.message || 'error'} error fullWidth helperText='Data loading failed' />
           </div></div>
-        : <Fragment>{Children.map(children, child => this.renderChild(child, {hw, sw}))}</Fragment>
+        : <Fragment>{Children.map(children, child => this.renderChild(child, {hw, sw, start: this.start}))}</Fragment>
   }
 
   static getSlice(state, loader) {

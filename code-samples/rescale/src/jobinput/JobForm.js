@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import DropDown from './DropDown'
 import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 
 /*
 software and hardware endpoints to retrieve the possible selections so that your
@@ -27,6 +28,9 @@ const styles = theme => ({
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
   },
+  button: {
+    margin: theme.spacing.unit,
+  },
 })
 
 /*
@@ -35,6 +39,7 @@ hw: id, label, max
 */
 class JobForm extends Component {
   handleChange = this.handleChange.bind(this)
+  submit = this.submit.bind(this)
 
   constructor(props) {
     super()
@@ -53,6 +58,13 @@ class JobForm extends Component {
       apps,
     }
     if (!this.state.applicationId) throw new Error('APPIDConstr')
+  }
+
+  submit(e) {
+    e.preventDefault()
+    const {name, softwareId, applicationId, hardwareId, cores} = this.state
+    const {start} = this.props
+    start({name, softwareId, applicationId, hardwareId, cores})
   }
 
   updateMaxCores(hardwareId) {
@@ -116,6 +128,9 @@ class JobForm extends Component {
         <DropDown {...hwProps} />
         <TextField label='Cores' value={this.state.cores} className={classes.textField}
           onChange={handleChange} name='cores' margin="dense" type='number' helperText={`max: ${this.state.max}`} />
+        <Button onClick={this.submit} type='submit' variant="contained" color="primary" className={classes.button}>
+          Primary
+        </Button>
     </form></Fragment>
   }
 }

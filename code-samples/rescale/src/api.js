@@ -10,18 +10,24 @@ const baseApiUrl = `${baseUrl}/api`
 const jobsEndpoint = `${baseApiUrl}/jobs`
 const softwareEndpoint = `${baseApiUrl}/software`
 const hardwareEndpoint = `${baseApiUrl}/hardware`
+const createEndpoint = `${baseApiUrl}/create`
 
 async function get(url) {
   console.log(`GET ${url}`)
   const resp = await axios.get(url)
   return Object(Object(resp).data)
 }
-/*
-async function post(url) {
+
+async function post(url, data) {
   console.log(`POST ${url}`)
-  return axios.post(url)
+  const resp = await axios.post(url, data)
+  return Object(Object(resp).data)
 }
-*/
+
+export async function createJob(o) {
+  return post(createEndpoint, o)
+}
+
 export async function getJobs() {
   // {"data":{"jobs":[{"name":
   const {jobs} = await get(jobsEndpoint)
