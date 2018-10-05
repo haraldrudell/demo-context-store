@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper'
 import Job from './Job'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
+import TakeAction from  './TakeAction'
 
 export default class JobList extends PureComponent {
   addJobHandler = this.addJobHandler.bind(this)
@@ -22,6 +23,7 @@ export default class JobList extends PureComponent {
     const {jobs, classes = {}} = this.props // jobs is immutable OrderedMap
     console.log('JobList:', jobs)
     return <Fragment>
+        <TakeAction />
         <Typography variant='display1' align='center' gutterBottom>
           jobs
           &nbsp;

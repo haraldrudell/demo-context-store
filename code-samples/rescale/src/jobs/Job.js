@@ -43,6 +43,8 @@ class Job extends PureComponent {
   }
 
   render() {
+    const {actions} = this.props.dispatch
+    console.log('Available actions:', actions)
     const {job, id} = this.props // job is immutable Map
     const name = job && job.get('name')
     const results = job && job.get('results')

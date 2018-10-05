@@ -19,3 +19,9 @@ export const store = createStore(
   {},
   applyMiddleware(thunk)
 )
+
+// added action functions:
+function callAbramov() {console.log('callAbramov')}
+store.dispatch.actions = {
+  callAbramov,
+}
