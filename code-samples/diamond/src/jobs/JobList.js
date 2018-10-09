@@ -32,20 +32,20 @@ export default class JobList extends PureComponent {
     const {jobs, classes = {}} = this.props // jobs is immutable OrderedMap
     console.log('JobList.render:', jobs)
     return <Fragment>
-        <Typography variant='display1' gutterBottom>
-          jobs
-          <ButtonWrapper>
-            <Button onClick={this.addJobHandler} variant="fab" color="primary" aria-label="Add" className={classes.button}>
-              <AddIcon />
-            </Button>
-          </ButtonWrapper>
-        </Typography>
-        <JobsContainer>
-          {jobs.keySeq().map(id => <Job id={id} action={this.jobAction} key={id} />)}
-        </JobsContainer>
-        <Paper>
-          End of job list
-        </Paper>
-      </Fragment>
+      <Typography variant='display1' gutterBottom>
+        jobs
+        <ButtonWrapper>
+          <Button onClick={this.addJobHandler} variant="fab" color="primary" aria-label="Add" className={classes.button}>
+            <AddIcon />
+          </Button>
+        </ButtonWrapper>
+      </Typography>
+      <JobsContainer>
+        {jobs.keySeq().map(id => <Job id={id} action={this.jobAction} key={id} />)}
+      </JobsContainer>
+      <Paper>
+        End of job list
+      </Paper>
+    </Fragment>
   }
 }

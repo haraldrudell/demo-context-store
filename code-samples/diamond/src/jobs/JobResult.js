@@ -16,7 +16,6 @@ export default connect(mapStateToProps)(({job, id}) => { // job is immutable Map
   const results = job && job.get('results') // Map
   const imageUrls = (results && results.get('images')) || List()
   return <Fragment>
-    &nbsp;
     <Typography variant='title' align='center' gutterBottom>
       Results: {name} {id}
     </Typography>

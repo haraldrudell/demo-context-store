@@ -27,8 +27,8 @@ export class LoadIndicator extends PureComponent {
   }
 
   showFormAction() {
-    const {dispatch} = this.props
-    dispatch.actions.showDataAreaForm()
+    const {showDataAreaForm} = this.props.dispatch.actions
+    showDataAreaForm()
   }
 
   renderChild(child, data) {

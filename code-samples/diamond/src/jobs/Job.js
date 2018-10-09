@@ -37,8 +37,8 @@ class Job extends PureComponent {
   handleJobAction = this.handleJobAction.bind(this)
 
   handleJobAction() {
-    const {dispatch, id} = this.props
-    dispatch.actions.setDataAreaDisplay(id)
+    const {dispatch: {actions: {setDataAreaDisplay}}, id} = this.props
+    setDataAreaDisplay(id)
   }
 
   render() {

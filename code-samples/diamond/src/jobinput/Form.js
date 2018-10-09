@@ -119,13 +119,12 @@ class Form extends Component {
       defVal: this.state.applicationId, handleChange,
       opts: this.state.apps}
     return <Fragment>
-      &nbsp;
       <Typography variant='display1' align='center' gutterBottom>
         New Job
       </Typography>
       <form className={classes.root}>
-          <TextField label='Name' defaultValue={defaultName} className={classes.textField}
-            onChange={handleChange} name={'name'} margin="dense" />
+        <TextField label='Name' defaultValue={defaultName} className={classes.textField}
+          onChange={handleChange} name={'name'} margin="dense" />
         <DropDown {...swProps} />
         <DropDown {...apProps} />
         <DropDown {...hwProps} />

@@ -9,13 +9,16 @@ import DataArea from 'dataarea/DataArea'
 import styled from 'styled-components'
 
 const AppWrapper = styled.div`
-padding-top: 10px
+padding: 10px
 text-align: center
+max-width: 10in
 `
-const AppLogo = styled.div``
+const AppLogo = styled.div`
+`
 
 const JobsPad = styled.div`
 padding-top: 10px
+padding-bottom: 10px
 `
 
 export default class App extends Component {
