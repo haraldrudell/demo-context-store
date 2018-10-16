@@ -1,0 +1,42 @@
+{
+  "name": "gql",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "compile": "truffle compile",
+    "devnetwork": "truffle develop",
+    "devmigrate": "truffle migrate --network development",
+    "server": "node --experimental-modules src/server/server",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:3001",
+  "dependencies": {
+    "@material-ui/core": "^3.1.2",
+    "apollo-boost": "^0.1.16",
+    "fs-extra": "^7.0.0",
+    "graphql": "^14.0.2",
+    "graphql-tag": "^2.10.0",
+    "koa": "^2.5.3",
+    "koa-graphql": "^0.7.5",
+    "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.6",
+    "react": "^16.5.2",
+    "react-apollo": "^2.2.4",
+    "react-dom": "^16.5.2",
+    "react-scripts": "2.0.4",
+    "styled-components": "^3.4.9",
+    "truffle": "^4.1.14"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

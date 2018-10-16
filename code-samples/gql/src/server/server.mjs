@@ -15,13 +15,13 @@ const certFile = path.join(dir, 'localhost.crt')
 startServer().catch(errorHandler)
 
 async function startServer() {
-  await new KoaQL({
+  const {url} = await new KoaQL({
     http2: {
       key: await fs.readFile(keyFile),
       cert: await fs.readFile(certFile),
     }
   }).listen(port)
-  console.log('listening')
+  console.log(`listening: ${url}`)
 }
 
 function errorHandler(e) {

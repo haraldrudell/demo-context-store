@@ -8,6 +8,16 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import {injectGlobal} from 'styled-components'
 import { ApolloProvider } from 'react-apollo'
 import ApolloClient from 'apollo-boost'
+import { create } from "jss";
+import JssProvider from "react-jss/lib/JssProvider";
+import { createGenerateClassName, jssPreset } from "@material-ui/core/styles";
+
+// https://github.com/cssinjs/jss/blob/master/docs/setup.md#specify-dom-insertion-point
+// TODO 181007: does not work
+// https://github.com/mui-org/material-ui/pull/8993/files
+const generateClassName = createGenerateClassName()
+const jss = create(jssPreset())
+jss.setup({insertionPoint: 'custom-insertion-point'})
 
 injectGlobal`
 body {
@@ -30,8 +40,12 @@ const client = new ApolloClient({
 
 export default () =>
   <Fragment>
-    <CssBaseline />
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+   <JssProvider jss={jss} generateClassName={generateClassName}>
+      <div>
+      <CssBaseline />
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+      </div>
+    </JssProvider>
   </Fragment>

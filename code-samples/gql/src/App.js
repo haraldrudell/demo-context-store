@@ -4,20 +4,29 @@ All rights reserved.
 */
 import React, { Component} from 'react'
 import Data from 'data/Data'
+import Styling from 'data/Styling'
 import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
 
-const Div = styled.div`
+const PageHeight = styled.div`
+  display: grid
+  grid-template-rows: 100vh auto auto
+`
+const Margins = styled.div`
   padding: 1em
+  max-width: 8.5in
 `
 
 export default class App extends Component {
   render() {
-    return <Div>
+    return (
+    <PageHeight><Margins>
       <Typography variant='display1' align='center' gutterBottom>
         React with GraphQL over http/2
       </Typography>
-      <Data />
-    </Div>
+      <Styling />
+      <Data/>
+    </Margins></PageHeight>
+    )
   }
 }

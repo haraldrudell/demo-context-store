@@ -8,14 +8,18 @@
     "fs-extra": "^7.0.0",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
+    "graphql-tools": "^4.0.0",
+    "immutable": "^3.8.2",
     "koa": "^2.5.3",
     "koa-graphql": "^0.7.5",
+    "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
     "koa2-cors": "^2.0.6",
     "react": "^16.5.2",
     "react-apollo": "^2.2.4",
     "react-dom": "^16.5.2",
     "react-scripts": "2.0.4",
+    "react-sizeme": "^2.5.2",
     "styled-components": "^3.4.9"
   },
   "scripts": {
@@ -25,7 +29,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3001",
   "eslintConfig": {
     "extends": "react-app"
   },

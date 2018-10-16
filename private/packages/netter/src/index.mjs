@@ -28,7 +28,7 @@ const optionsData = {
   ].join('\n'),
 }
 
-launchProcess({run, name: pjson && pjson.name, version: pjson && pjson.version})
+launchProcess({run, name: Object(pjson).name, version: Object(pjson).version})
 
 async function run({name, version, OnRejected}) {
   const options = await new OptionsParser({optionsData, name, version}).parseOptions(process.argv.slice(2))
