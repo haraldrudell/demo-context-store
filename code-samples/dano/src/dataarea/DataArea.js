@@ -3,29 +3,32 @@
 All rights reserved.
 */
 import React, {Fragment, PureComponent} from 'react'
-import {instance} from './AreaSlice'
+import {stateToSlice, isShowForm, isBlank} from './AreaSlice'
 import { connect } from 'react-redux'
 import JobResult from 'jobs/JobResult'
-import JobForm, {preloadJobInput} from 'jobinput/JobForm'
+import JobForm from 'jobinput/JobForm'
+import {loadSw} from 'jobinput/swSlice'
+import {loadHw} from 'jobinput/hwSlice'
 
 class DataArea extends PureComponent  {
   componentDidMount() {
-    preloadJobInput() // preload hw/.sw options. Errors stored in the store
+    const {dispatch} = this.props
+    dispatch(loadSw()) // thunk-promise does not throw. Error in store
+    dispatch(loadHw())
   }
 
-  render() { // string id or null
-    const {display} = this.props
+  render() {
+    const {display} = this.props // string id / null / non-string value
 
-    return display === null // display: null: show nothing
+    return isBlank(display) // show nothing
       ? <Fragment />
-      : instance.isShowForm(display) // show the new job form
+      : isShowForm(display) // show the new job form
         ? <JobForm />
         : <JobResult id={display} /> // show the image results from a job
   }
 
   static mapStateToProps(state) {
-    const {sliceName} = instance
-    return {display: state[sliceName] || null}
+    return {display: stateToSlice(state)}
   }
 }
 

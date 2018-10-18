@@ -2,22 +2,35 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import React, {Component} from 'react'
-import OptionsLoader from 'jobinput/OptionsLoader'
+import React, {PureComponent} from 'react'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { connect } from 'react-redux'
+import {getSliceData as swData} from './swSlice'
+import {getSliceData as hwData} from './hwSlice'
+import ErrorText from 'apputil/ErrorText'
+import {createJob} from 'jobs/jobsSlice'
 import Form from './Form'
-import {instance as swSlice} from './SwSlice'
-import {instance as hwSlice} from './HwSlice'
 
-export default class JobForm extends Component  {
+class JobForm extends PureComponent  {
+  action = o => this.props.dispatch(createJob(o))
+
   render() {
-    return <OptionsLoader><Form /></OptionsLoader>
+    const {action, props: {hw, sw, e}} = this
+    const formProps = {hw, sw, action}
+    console.log('ListLoader.render hw:', hw, 'sw:', sw, 'e:', e && e.message)
+    return (hw === undefined || sw === undefined) && !e
+      ? <CircularProgress />
+      : e
+        ? <ErrorText e={e} text='Options loading failed' />
+        : <Form {...formProps} />
   }
 
-  static preloadJobInput() {
-    console.log('jobinput.preloadJobInput')
-    swSlice.load()
-    hwSlice.load()
+  static mapStateToProps(state) {
+    const hw = hwData(state)
+    const sw =  swData(state)
+    const e = hw.e || sw.e
+    return {e, hw: hw.data, sw: sw.data}
   }
 }
 
-export const preloadJobInput = JobForm.preloadJobInput
+export default connect(JobForm.mapStateToProps)(JobForm)

@@ -6,34 +6,23 @@ import React, { Component } from 'react'
 import Logo from './Logo'
 import Jobs from 'jobs/Jobs'
 import DataArea from 'dataarea/DataArea'
+import Grid from '@material-ui/core/Grid'
 import styled from 'styled-components'
 
-const AppWrapper = styled.div`
-padding: 10px
-text-align: center
-max-width: 10in
+const GridMax = styled(Grid)`
+&& {
+  max-width: 10.5in
+  margin: 0
+}
 `
-const AppLogo = styled.div`
-`
-
-const JobsPad = styled.div`
-padding-top: 10px
-padding-bottom: 10px
-`
-
 export default class App extends Component {
   render() {
     return (
-      <AppWrapper>
-        <AppLogo><Logo /></AppLogo>
-
-        {/* get existing jobs/simulations, their names, ids, and results
-        (for this exercise all results will be images) */}
-        <JobsPad><Jobs /></JobsPad>
-
-        {/* area below for results or input form */}
-        <DataArea />
-      </AppWrapper>
+      <GridMax container direction='column' alignItems='center' spacing={40}>
+        <Grid item><Logo /></Grid>
+        <Grid item><Jobs /></Grid>
+        <Grid item><DataArea /></Grid>
+      </GridMax>
     )
   }
 }

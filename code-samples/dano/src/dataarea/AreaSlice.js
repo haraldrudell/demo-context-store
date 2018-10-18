@@ -2,55 +2,51 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import StoreSlice from 'loadindicator/StoreSlice'
 
-export let instance
+let sliceName
 
-export default class AreaSlice extends StoreSlice {
-  static SET_AREA = 'AreaSlice_set' // action type
-  static SHOW_FORM = 'AreaSlice_showForm' // class-local value
+// action types
+let SET_AREA
 
-  constructor(o) {
-    super(o)
-    instance = this
+const SHOW_FORM = {AreaSlice_showForm: true} // class-local value: non-string
+
+setSliceName('area')
+
+export function setSliceName(sn) {
+  sliceName = sn = String(sn || '')
+  SET_AREA = `${sn}_SET_AREA`
+}
+
+export function stateToSlice(state) {
+  return Object(state)[sliceName]
+}
+
+export function isShowForm(value) {
+  return value === SHOW_FORM
+}
+
+export function isBlank(value) {
+  return value == null
+}
+
+// action values
+
+export const showDataAreaForm = {type: SET_AREA, display: SHOW_FORM} // an action object
+
+export function setDataAreaContent(display) {
+  console.log('setDataAreaDisplay:', display)
+  if (display !== null &&
+    !display && typeof display !== 'string') {
+      const e = new Error('bad setArea')
+      console.error(e)
+      return {type: SET_AREA, payload: e}
   }
+  return {type: SET_AREA, display}
+}
 
-  showDataAreaForm = () => this.setArea(AreaSlice.SHOW_FORM)
-
-  getActions() {
-    return {
-      showDataAreaForm: this.showDataAreaForm,
-      setDataAreaDisplay: this.setArea.bind(this),
-    }
-  }
-
-  isShowForm(value) {
-    return value === AreaSlice.SHOW_FORM
-  }
-
-  setArea(display) {
-    const {SET_AREA} = AreaSlice
-    console.log('setDataAreaDisplay:', display)
-    if (display !== null &&
-      !display && typeof display !== 'string') {
-        const e = new Error('bad setArea')
-        console.error(e)
-        return this.dispatch({payload: e})
-    }
-    this.dispatch({type: SET_AREA, display})
-  }
-
-  areaDisplaysResult(v) {
-    return v && typeof v === 'string'
-  }
-
-  reducer(state = null, action) { // jobs store-slice reducer
-    const {SET_AREA} = AreaSlice
-    // eslint-disable-next-line
-    switch(action.type) {
-    case SET_AREA:
-      return action.display
-    }
-    return state
+export function reducer(state = null, action) {
+  switch(action.type) {
+  case SET_AREA: return action.display
+  default: return state
   }
 }

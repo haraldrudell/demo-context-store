@@ -2,64 +2,49 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import React, {Component, Fragment} from 'react'
+import React, {PureComponent, Fragment} from 'react'
 import Typography from '@material-ui/core/Typography'
-import { withStyles } from '@material-ui/core/styles'
 import DropDown from './DropDown'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import styled from 'styled-components'
 
-/*
-software and hardware endpoints to retrieve the possible selections so that your
-end user can name their new job, select the software & application of the
-job/simulations they would like to run and then choose hardware and the
-amount of cores they would like to use. This information can then be passed
-back to the server to create a new job/simulation.
-*/
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
-  },
-  button: {
-    margin: theme.spacing.unit,
-  },
-})
-
-/*
-sw: label, id, info, applications:[{label, id, image}]
-hw: id, label, max
-*/
-class Form extends Component {
+const FlexForm = styled.form`
+&& {
+  display: flex
+  flex-wrap: wrap
+  align-items: flex-start
+  > * {
+    margin-left: 20px
+    margin-bottom: 20px
+  }
+  > button {
+    margin-top: 20px
+  }
+}
+`
+export default class Form extends PureComponent {
   handleChange = this.handleChange.bind(this)
   submit = this.submit.bind(this)
   static defaultName = 'Noname'
 
   constructor(props) {
-    const {defaultName} = Form
-    super()
+    super(props)
+    const {defaultName: name} = Form
     const {hw, sw} = props
-    const hw0 = hw.valueSeq().first()
+
+    // get hw and cores
+    const hw0 = hw.valueSeq().first() // the first hardware
+    const hardwareId = hw0.get('id')
+    const max = hw0.get('max') // max cores on this hw
+    const cores = 1
+
+    // get sw and application
     const sw0 = sw.valueSeq().first()
     const softwareId = sw0.get('id')
     const {apps, applicationId} = this.updateApp(softwareId, sw)
-    this.state = {
-      name: defaultName,
-      softwareId,
-      hardwareId: hw0.get('id'),
-      applicationId,
-      cores: 1,
-      max: hw0.get('max'),
-      apps,
-    }
-    if (!this.state.applicationId) throw new Error('APPIDConstr')
+
+    this.state = {name, softwareId, hardwareId, applicationId, cores, max, apps}
   }
 
   submit(e) {
@@ -70,20 +55,24 @@ class Form extends Component {
   }
 
   updateMaxCores(hardwareId) {
+    // find max for this hardware
     const {hw} = this.props
     const thisHw = hw.get(hardwareId)
     const max = thisHw.get('max')
-    if (this.state.max !== max) this.setState({max})
-    if (this.state.cores > max) this.setState({cores: max})
+
+    // ensure state is compliant
+    const {max: smax, cores} = this.state
+    if (smax !== max) this.setState({max})
+    if (cores > max) this.setState({cores: max})
   }
 
   updateApp(softwareId, sw, applicationId) {
-    const swx = sw.get(softwareId)
-    if (!swx) throw new Error('UPDATEAPP')
-    const apps = swx.get('applications')
-    if (!apps) throw new Error('UPDATEAPPS')
+    // get allowed appIds
+    const thisSw = sw.get(softwareId)
+    const apps = thisSw.get('applications')
     const appIds = apps.map(app => app.get('id'))
-    if (appIds.size === 0) throw new Error('UPDATEAPPIDS')
+
+    // return apps and a valid appId
     if (!appIds.has(applicationId)) applicationId = appIds.get(0)
     return {apps, applicationId}
   }
@@ -92,49 +81,52 @@ class Form extends Component {
     let {name, value} = e.target // value is an id
     const {max} = this.state
     console.log(`handleChange: '${name}' ${typeof value} '${value}'`)
-    if (name === 'cores') {
+    if (name === 'cores') { // check cores against max
       value = Number(value)
       if (value > max) value = max
-    }
-    if (name === 'softwareId') {
+    } else if (name === 'softwareId') {
       const apid0 = this.state.apid0
+
+      // determine what apps are available with this sw
       const {sw} = this.props
       const {apps, applicationId} = this.updateApp(value, sw)
       this.setState({apps})
+
+      // if change in appId, uopdate state
       if (applicationId !== apid0) this.setState({applicationId})
     }
     this.setState({[name]: value})
+
+    // update cores if there was a change in hardware
     if (name === 'hardwareId') this.updateMaxCores(value)
   }
 
   render() {
-    const {classes = {}, hw, sw} = this.props
+    const {hw, sw} = this.props
     const {handleChange} = this
     const {defaultName} = Form
     //console.log(sw.toJS())
     console.log('Form.render state:', this.state)
-    const swProps = {classes, label: 'Software', name: 'softwareId', defVal: sw.keySeq().first(), handleChange, opts: sw}
-    const hwProps = {classes, label: 'Hardware', name: 'hardwareId', defVal: hw.keySeq().first(), handleChange, opts: hw}
-    const apProps = {classes, label: 'Application', name: 'applicationId',
+    const swProps = {label: 'Software', name: 'softwareId', defVal: sw.keySeq().first(), handleChange, opts: sw}
+    const hwProps = {label: 'Hardware', name: 'hardwareId', defVal: hw.keySeq().first(), handleChange, opts: hw}
+    const apProps = {label: 'Application', name: 'applicationId',
       defVal: this.state.applicationId, handleChange,
       opts: this.state.apps}
+
     return <Fragment>
       <Typography variant='display1' align='center' gutterBottom>
         New Job
       </Typography>
-      <form className={classes.root}>
-        <TextField label='Name' defaultValue={defaultName} className={classes.textField}
-          onChange={handleChange} name={'name'} margin="dense" />
+      <FlexForm>
+        <TextField label='Name' name={'name'} defaultValue={defaultName} onChange={handleChange} />
         <DropDown {...swProps} />
         <DropDown {...apProps} />
         <DropDown {...hwProps} />
-        <TextField label='Cores' value={this.state.cores} className={classes.textField}
-          onChange={handleChange} name='cores' margin="dense" type='number' helperText={`max: ${this.state.max}`} />
-        <Button onClick={this.submit} type='submit' variant="contained" color="primary" className={classes.button}>
-          Primary
+        <TextField label='Cores' name='cores' value={this.state.cores}
+          onChange={handleChange} type='number' helperText={`max: ${this.state.max}`} />
+        <Button onClick={this.submit} type='submit' variant="contained" color="primary">
+          Create
         </Button>
-    </form></Fragment>
+    </FlexForm></Fragment>
   }
 }
-
-export default withStyles(styles)(Form)
