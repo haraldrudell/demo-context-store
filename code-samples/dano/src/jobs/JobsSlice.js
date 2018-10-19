@@ -11,12 +11,10 @@ class JobsSlice extends StoreSlice {
   }
 
   // create job thunk
-  createJob = o => async (dispatch) => this._createJob(dispatch, o).catch(e => dispatch(this.addOne({e}))).catch(console.error)
+  createJob = o => async (dispatch) => this._createJob(dispatch, o).catch(e => dispatch({type: this.SET_RESULT, e})).catch(console.error)
 
   async _createJob(dispatch, createObject) {
-    console.log('JobsSlice.createJob')
     const newJob = await createJobApi(createObject)
-    console.log('JobsSlice.createJob result:', JSON.stringify(newJob))
     dispatch(this.addOne({data: newJob, dispatch}))
   }
 }
@@ -27,7 +25,4 @@ export const setSliceName = instance.setSliceName
 export const reducer = instance.reducer
 export const createJob = instance.createJob
 export const loadJobs = instance.load
-export const eSlice = instance.eSlice
-export const dataSlice = instance.dataSlice
-export const sliceName = instance.sliceName
 export const getSliceData = instance.getSliceData

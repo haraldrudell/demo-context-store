@@ -63,7 +63,6 @@ class Jobs extends Component {
 
   static mapStateToProps(state) {
     const {e, data} = getSliceData(state)
-    console.log('Jobs map:', {e, data}, state)
     return {e, jobs: data}
   }
 }

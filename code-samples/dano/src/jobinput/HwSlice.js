@@ -16,6 +16,4 @@ const instance = new HwSlice()
 export const setSliceName = instance.setSliceName
 export const reducer = instance.reducer
 export const loadHw = instance.load
-export const eSlice = instance.eSlice
-export const dataSlice = instance.dataSlice
 export const getSliceData = instance.getSliceData
