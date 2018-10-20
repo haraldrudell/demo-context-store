@@ -22,12 +22,12 @@ export default class ThemeApplicator extends Component {
 
   setTheme(theme) { // id number 0…
     const {state: {theme: oldTheme}, themeData} = this
-    if (!((theme = +theme) >= 0) || theme === oldTheme) return
+    if (!((theme = +theme) >= 0) || theme === oldTheme) return // bad or same theme id
     const td = themeData.themes[theme]
-    if (!td) return
-    this.themeValues = td.theme
-    themeData.theme = theme
-    this.setState({theme})
+    if (!td) return // no such theme
+    this.themeValues = td.theme // set styled components theme injected by ThemeProvider
+    themeData.theme = theme // save current theme id in context
+    this.setState({theme}) // force redraw
   }
 
   render() {
@@ -35,7 +35,7 @@ export default class ThemeApplicator extends Component {
     const {BodyStyle} = themeValues
 
     return (
-    <SwitchProvider value={themeData}>{/* inject data for the theme switcher */}
+    <SwitchProvider value={themeData}>{/* inject context for the theme switcher */}
       <BodyStyle />{/* apply theme styling to body element */}
       <ThemeProvider theme={themeValues}>{/* styled components theme provider */}
         <Fragment>{/* Fragment since ThemeProvider only supports a single child */}
