@@ -3,26 +3,30 @@
 All rights reserved.
 */
 import React, { Fragment } from 'react'
+import {getDomElement} from './getElement'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import BodyFont from './roboto'
-import ThemeForceUpdate from './ThemeForceUpdate'
+import ThemeApplicator from './ThemeApplicator'
 import JssProvider from 'react-jss/lib/JssProvider'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 import { create } from 'jss'
+import App from 'App'
 
 // get a jss provider with a custom insertion point
-const materialUIPointId = 'jss-insertion-point'
-const insertionPoint = document.getElementById(materialUIPointId)
-if (insertionPoint == null) throw new Error(`Failed to find html element with id ${materialUIPointId} for Material-UI css insertion`)
+const materialUIPointId = 'jss-insertion-point' // id for element in html
+const insertionPointDomElement = getDomElement(materialUIPointId, 'Material-UI css insertion')
 const generateClassName = createGenerateClassName()
 const jss = create(jssPreset())
-jss.options.insertionPoint = insertionPoint // this inserts at this very element
+jss.options.insertionPoint = insertionPointDomElement // this inserts at this very element
+const jssProps = {jss, generateClassName}
 
-export default () => // JssProvider first so that Material-UI css has lower prioprity than styled components
-  <JssProvider jss={jss} generateClassName={generateClassName}>
+export default () =>
+  <JssProvider {...jssProps}>{/* JssProvider first so that Material-UI css has lower prioprity than styled components */}
     <Fragment>{/* Fragment since JssProvider only supports a single child */}
       <CssBaseline />{/* Material-UI normalize css reset */}
-      <BodyFont />{/* styled componentys global fonts: roboto */}
-      <ThemeForceUpdate />{/* redraws itself when the theme is changed */}
+      <BodyFont />{/* styled components global fonts: roboto */}
+      <ThemeApplicator>{/* redraws itself when the theme is changed */}
+        <App />{/* redrawn on theme switching */}
+      </ThemeApplicator>
     </Fragment>
   </JssProvider>

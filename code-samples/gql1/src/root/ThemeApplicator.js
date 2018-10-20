@@ -2,12 +2,12 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import React, { Component } from 'react'
-import App from 'App'
+import React, { Component, Fragment, Children, cloneElement } from 'react'
 import {ThemeProvider} from 'styled-components'
-import {SwitchProvider, getThemeData} from './themer'
+import {SwitchProvider} from './themeContext'
+import {getThemeData} from './themeData'
 
-export default class Root extends Component {
+export default class ThemeApplicator extends Component {
   constructor(props) {
     super(props)
 
@@ -20,27 +20,28 @@ export default class Root extends Component {
     this.state = {theme} // id of current theme
   }
 
-  setTheme(theme) {
+  setTheme(theme) { // id number 0…
     const {state: {theme: oldTheme}, themeData} = this
     if (!((theme = +theme) >= 0) || theme === oldTheme) return
     const td = themeData.themes[theme]
     if (!td) return
-    console.log(`Root.setTheme: ${theme}`)
     this.themeValues = td.theme
     themeData.theme = theme
     this.setState({theme})
   }
 
-  render() { // JssProvider can not have multiple children
-    const {themeValues, themeData} = this
+  render() {
+    const {themeValues, themeData, props: {children}} = this
     const {BodyStyle} = themeValues
 
     return (
-      <SwitchProvider value={themeData}>
-        <BodyStyle />{/* theme styled for body element */}
-        <ThemeProvider theme={themeValues}>{/* styled compionents theme provider */}
-          <App />
-        </ThemeProvider>
-      </SwitchProvider>)
+    <SwitchProvider value={themeData}>{/* inject data for the theme switcher */}
+      <BodyStyle />{/* apply theme styling to body element */}
+      <ThemeProvider theme={themeValues}>{/* styled components theme provider */}
+        <Fragment>{/* Fragment since ThemeProvider only supports a single child */}
+          {Children.map(children, child => cloneElement(child))}
+        </Fragment>
+      </ThemeProvider>
+    </SwitchProvider>)
   }
 }

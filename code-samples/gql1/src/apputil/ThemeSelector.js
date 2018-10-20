@@ -3,7 +3,7 @@
 All rights reserved.
 */
 import React, { Component, Fragment } from 'react'
-import {SwitchConsumer} from 'root/themer'
+import {SwitchConsumer} from 'root'
 
 class ThemeSelector extends Component {
   switchTheme = this.switchTheme.bind(this) // TODO create-react-app does not have babel 7 function-bind transform: ::this.switchTheme
@@ -15,10 +15,10 @@ class ThemeSelector extends Component {
 
   render() {
     const {theme, themes} = this.props.themeData
-    const {name: n} = themes[theme]
+    const {name: nameNow} = themes[theme]
 
     return <Fragment>
-      <p>Current theme: {n}</p>{themes.map(({value, name}) =>
+      <p>Current theme: {nameNow}</p>{themes.map(({value, name}) =>
         <button value={value} onClick={this.switchTheme} key={value}>{name}</button>
     )}</Fragment>
   }

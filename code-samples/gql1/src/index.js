@@ -4,6 +4,6 @@ All rights reserved.
 */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Root from 'root/Root'
+import Root, {getDomElement} from 'root'
 
-ReactDOM.render(<Root />, document.getElementById('root'))
+ReactDOM.render(<Root />, getDomElement('root', 'rendering React'))
