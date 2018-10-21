@@ -19,6 +19,7 @@ export function getThemeData() {
         }
       `,
       color: 'green',
+      backgroundColor: '#fce5cd',
     }}, {value: 1, name: 'Alternate Theme', theme: {
       BodyStyle: createGlobalStyle`
         body {
@@ -28,6 +29,7 @@ export function getThemeData() {
         }
       `,
       color: 'red',
+      backgroundColor: 'black',
     }}],
   }
 }
