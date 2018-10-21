@@ -3,10 +3,9 @@
 All rights reserved.
 */
 import React, { Fragment } from 'react'
-import {getDomElement} from './getElement'
+import {getDomElement, } from 'apputil'
+import { ThemeContext } from 'themeutil'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import BodyFont from './roboto'
-import ThemeApplicator from './ThemeApplicator'
 import JssProvider from 'react-jss/lib/JssProvider'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 import { create } from 'jss'
@@ -24,9 +23,8 @@ export default () =>
   <JssProvider {...jssProps}>{/* JssProvider first so that Material-UI css has lower prioprity than styled components */}
     <Fragment>{/* Fragment since JssProvider only supports a single child */}
       <CssBaseline />{/* Material-UI normalize css reset */}
-      <BodyFont />{/* styled components global fonts: roboto */}
-      <ThemeApplicator>{/* redraws itself when the theme is changed */}
+      <ThemeContext>{/* Provide context to theme selector, render-once-css from themes */}
         <App />{/* redrawn on theme switching */}
-      </ThemeApplicator>
+      </ThemeContext>
     </Fragment>
   </JssProvider>

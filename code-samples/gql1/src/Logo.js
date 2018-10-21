@@ -20,9 +20,10 @@ Swedish flag yellow: #fecc00
 Light pink background: #fce5cd
 Turqoise: #cde4fc 205, 228, 252
 Dark blue: #003e80 0, 62, 128
+Purple: #800080 128, 0, 128
 */
 const bg3val = '205, 228, 252'
-const fg3val = '0, 62, 128'
+const fg3val = '128, 0, 128'
 
 const Row = styled.div`
 display: flex
