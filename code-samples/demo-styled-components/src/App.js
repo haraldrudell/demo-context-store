@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import styled, {css, ThemeProvider, withTheme} from 'styled-components'
+import './App.css' // add some non-interfering global styles
 
 const complexMixin = css`
   color: white
@@ -25,22 +26,21 @@ export default class App extends Component {
         <h2>Usage</h2>
         <h3>Applying css to elements and components</h3>
         <ul>
-          <li>Styling html elements using styled.h1 <a href="https://www.styled-components.com/docs/basics#getting-started">Element Styling</a><br />
+          <li>Styling html elements using <strong>styled.h1</strong> <a href="https://www.styled-components.com/docs/basics#getting-started">Element Styling</a><br />
             This adds a class property to the html element.
             <ul>
-              <li>as JSX prop can style as a different html element <a href="https://www.styled-components.com/docs/api#as-polymorphic-prop">as</a></li>
+              <li><strong>as</strong> JSX prop can style as a different html element <a href="https://www.styled-components.com/docs/api#as-polymorphic-prop">as</a></li>
             </ul>
           </li>
-          <li>Extend component styling using styled(Component) constructor <a href="https://www.styled-components.com/docs/basics#extending-styles">Extending Styles</a><br />
+          <li>Extend component styling using <strong>styled(Component)</strong> constructor <a href="https://www.styled-components.com/docs/basics#extending-styles">Extending Styles</a><br />
             The component gets a css class name in this.props.className that should be used on html element using the JSX prop className={'{'}className}
           </li>
-          <li>Global styles <a href="https://www.styled-components.com/docs/api#createglobalstyle">createGlobalStyle</a></li>
+          <li>Create a component that injects global css rules using <strong>createGlobalStyle</strong> <a href="https://www.styled-components.com/docs/api#createglobalstyle">createGlobalStyle</a><br />
+            const Component = createGlobalStyle`body {'{'}color: black}`
+          </li>
         </ul>
         <h3>Use of props to modify css</h3>
         <ul>
-          <li>High order component withTheme <a href="https://www.styled-components.com/docs/api#withtheme">withTheme</a><br />
-            withTheme makes a JSX prop theme available, that can be used for css styling or override with the passed props feature: `color: {'{'}this.props.theme.color}`
-          </li>
           <li>Use of props for css values <a href="https://www.styled-components.com/docs/basics#passed-props">Passed props</a><br />
               By using a function in the css, like {'{'}props => props.someProp | 'white'}, css can be based on or overriden by arbitrary JSX props</li>
           <li>Generate css inline <a href="https://www.styled-components.com/docs/api#css">css</a><br />
@@ -51,6 +51,11 @@ export default class App extends Component {
         <ul>
           <li>Pseudo selectors like :hover and ::before <a href="https://www.styled-components.com/docs/basics#pseudoelements-pseudoselectors-and-nesting">Pseudo Selectors</a></li>
           <li>Keyframes for animations <a href="https://www.styled-components.com/docs/basics#animations">Animations</a></li>
+          <li>In the css, ampersand refers to the css style rule name and styling can be applied to children<br />
+            > * {'{'}<br />
+            &emsp;margin-left: 20px<br />
+            }
+          </li>
         </ul>
         <h3>Theming</h3>
         <ul>
@@ -65,6 +70,9 @@ export default class App extends Component {
             {'<'}ThemeProvider theme={'{'}theme}><br />
             &emsp;css using styled in components here have props.theme available<br />
             {'<'}/ThemeProvider></li>
+            <li>High order component withTheme <a href="https://www.styled-components.com/docs/api#withtheme">withTheme</a><br />
+            withTheme makes a JSX prop theme available, that can be used for css styling or override with the passed props feature: `color: {'{'}this.props.theme.color}`
+          </li>
         </ul>
         </section>
       <section>
