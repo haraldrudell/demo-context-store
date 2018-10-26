@@ -1,189 +1,128 @@
+/*
+© 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
+*/
 import React, { Component, Fragment } from 'react'
 import Color from 'color'
 import styled from 'styled-components'
+import ColorWheel from './ColorWheel'
 
-// red hsl: hsl(0, 100%, 50%)
-//console.log('red hsl:', Color('red').hsl().string())
+// red hsl: hsl(0, 100%, 50%) Color {model: "hsl", color: Array(3), valpha: 1}
+//console.log('red hsl:', Color('red').hsl().string(), Color('red').hsl())
+
+// float rgb: rgb(0, 1, 1): rgb values are rounded to integers
+//console.log('float rgb:', Color.rgb(1/3, 2/3, 4/3).rgb().string())
 
 /*
 Find the hue30 theme on c87:
 find ~ -iname "*hue30*"
 ~/.vscode/extensions/hue30theme/hue30theme.tmTheme
 all colors:
+
+color wheel:
+https://stackoverflow.com/a/43266702
+
+Chromium conic-gradient not in
+https://twitter.com/malyw/status/849908979119640576
+
+scale svg discussion
+https://css-tricks.com/scale-svg/
 */
 
+const AppContainer = styled.div`
+padding: 20px
+background-color: #fce5cd
+max-width: 10.5in;
+li {
+  margin-top: 6pt;
+  margin-bottom: 6pt;
+}
+`
+
 export default class App extends Component {
-  colors1 = [
-    Color('#fce5cd'),
-    Color('#0055ff'),
-    Color('#000000'),
-    Color('#cde4fc'),
-    Color('#007bff'),
-    Color('#ff0000'),
-    Color('#00ff00'),
-    Color('#003E80'),
-    Color('#800080'),
-    Color('#ffccff'),
-    Color('#008000'),
-    Color('#ffffcc'),
-    Color('#A6E22E'),
-    Color('#ffff01'),
-    Color('#ffff02'),
-    Color('#ffff05'),
-    Color('#fff0f0'),
-  ]
+  hue30Colors = [
+    '#fce5cd', '#0055ff', '#000000', '#cde4fc', '#007bff',
+    '#ff0000', '#00ff00', '#003E80', '#800080', '#ffccff',
+    '#008000', '#ffffcc', '#A6E22E', '#ffff01', '#ffff02',
+    '#ffff05', '#fff0f0',
+  ].map(c => Color(c))
+  hue30Index = {
+    bg: 0,
+    fg: 2,
+    bgSelect: 3,
+    fgAlt1: 7,
+    fgAlt2: 8,
+    fgAlt3: 10,
+  }
 
   render() {
-    return (
-      <div className="App">
-        <h1>Colors</h1>
-        <ul>
-          <li>Contrast is a combination of hue and brightness difference</li>
-          <li>High contrast is easier to read</li>
-          <li>For dark text on light background, pick an off-white background</li>
-          <li>Black text gives the highest contrast</li>
-          <li>Cold, blue colors are better for background and warm, red for foreground</li>
-          <li>Pick a first color, then dependeing on how many colors required, evenly spread in hue</li>
-        </ul>
-        <h2>Color format</h2>
-        <ul>
-          <li>rgb is 3 values 0…255 for each of red, green and blue</li>
-          <li>hsl is hue, a position 0 - 359 on the color wheel, saturation % from gary to bright color and luminance % from black to white</li>
-        </ul>
-        <HueCircle />
-        <ul>
-          <li>Hue 0 degrees, at the top is red</li>
-          <li>Hue 120 degrees, down to the right is green</li>
-          <li>Hue 240 degrees, down to the left is blue</li>
-        </ul>
-        <Saturation />
-        <ul>
-          <li>0% saturation is gray</li>
-          <li>100% saturation is the brightest color</li>
-        </ul>
-        <Luminance />
-        <ul>
-          <li>0% luminance is black</li>
-          <li>50% luminance has the brightest color</li>
-          <li>100% luminance is white</li>
-        </ul>
-        <h2>Hue30</h2>
-        <ColorDisplay color={this.colors1[0]} />
-        <ColorDisplay color={this.colors1[2]} />
-        <ul>
-          <li>I picked hue 30 for the first color, saturation about 90% and luminance about 90%</li>
-          <li>Primary text color is black for max contrast</li>
-        </ul>
-        <ColorDisplay color={this.colors1[3]} />
-        <ul>
-          <li>Selected background is the first color with hue 180 degrees off</li>
-        </ul>
-        <ColorDisplay color={this.colors1[7]} />
-        <ColorDisplay color={this.colors1[8]} />
-        <ColorDisplay color={this.colors1[10]} />
-        <ul>
-          <li>Various text colors in 90 degree hue steps with saturation 100% luminance 25%</li>
-        </ul>
-        <ColorScheme colors={this.colors1} />
-      </div>
-    )
+    const {hue30Colors, hue30Index} = this
+
+    return <AppContainer>
+      <h1>Colors</h1>
+      <ul>
+        <li>Contrast is a combination of hue and luminance difference</li>
+        <li>High contrast is easier to read</li>
+        <li>For dark text on light background, pick an off-white background</li>
+        <li>Black text gives the highest contrast</li>
+        <li>Cold, blue colors are better for background and warm, red for foreground</li>
+        <li>Pick a first color, then depending on how many colors required, evenly spread in hue</li>
+      </ul>
+      <h2>Color format</h2>
+      <ul>
+        <li><strong>rgb</strong> is 3 values 0…255 for each of <strong>red</strong>, <strong>green</strong> and <strong>blue</strong></li>
+        <li><strong>hsl</strong> is <strong>hue</strong>, a position 0 - 359 degrees on the color wheel, <strong>saturation</strong> % from gray to bright color and <strong>lightness</strong> % from black to white</li>
+      </ul>
+      <ColorWheel sectors={36} background='#fce5cd'/>
+      <ul>
+        <li>Hue 0 degrees, at the top is red</li>
+        <li>Hue 120 degrees, down to the right is green</li>
+        <li>Hue 240 degrees, down to the left is blue</li>
+      </ul>
+      <Saturation />
+      <ul>
+        <li>0% saturation is gray</li>
+        <li>100% saturation is the brightest color</li>
+      </ul>
+      <Luminance />
+      <ul>
+        <li>0% lightness is black</li>
+        <li>50% lightness has the brightest color</li>
+        <li>100% lightness is white</li>
+      </ul>
+      <p>Relative luminance: the brightness of a color in the range from black to white</p>
+      <h2>Hue30</h2>
+      <h3>Primary Colors</h3>
+      <ColorDisplay color={hue30Colors[hue30Index.bg]} />
+      <ColorDisplay color={hue30Colors[hue30Index.fg]} />
+      <ul>
+        <li>I picked hue 30 for the first color, saturation about 90% and lightness about 90%</li>
+        <li>Primary text color is black for max contrast</li>
+      </ul>
+      <h3>Selection Background Color</h3>
+      <ColorDisplay color={hue30Colors[hue30Index.bgSelect]} />
+      <ul>
+        <li>Selected background is the first color with hue 180 degrees off</li>
+      </ul>
+      <h3>Additional Foreground Colors</h3>
+      <ColorDisplay color={hue30Colors[hue30Index.fgAlt1]} />
+      <ColorDisplay color={hue30Colors[hue30Index.fgAlt2]} />
+      <ColorDisplay color={hue30Colors[hue30Index.fgAlt3]} />
+      <ul>
+        <li>Various text colors in 90 degree hue steps with saturation 100% lightness 25%</li>
+      </ul>
+      <h3>Complete Color Scheme</h3>
+      <ColorScheme colors={this.hue30Colors} />
+    </AppContainer>
   }
 }
-
-const ColorWheelWrapper = styled.div`
-height: 60px
-`
-const ColorWheel = styled.div`
-  height: 20px;
-  width: 20px;
-  left: 30px;
-  position: relative;
-  transform-origin: 10px 30px;
-  user-select: none;
-  transition: all 0.5s linear;
-  > span {
-    position: absolute;
-    transform-origin: 50% 50%;
-    border-style: solid;
-    border-width: 30px 10px;
-    box-sizing: border-box;
-  }
-  :before {
-    content: "";
-    width: 60px;
-    height: 60px;
-    overflow: hidden;
-    position: absolute;
-    top: -6px;
-    left: -26px;
-    border-radius: 100%;
-    border: 6px solid #ffffff;
-    z-index: 100;
-  }
-  :after {
-    content: "";
-    width: 20px;
-    height: 20px;
-    overflow: hidden;
-    position: absolute;
-    top: 20px;
-    left: 0px;
-    border-radius: 100%;
-    background: #ffffff;
-  }
-`
-const Span01 = styled.span`
-    border-color: hsl(0, 100%, 50%) transparent transparent transparent;
-`
-const Span02 = styled.span`
-  transform: rotate(36deg);
-  border-color: hsl(36, 100%, 50%) transparent transparent transparent;
-`
-const Span03 = styled.span`
-  transform: rotate(72deg);
-  border-color: hsl(72, 100%, 50%) transparent transparent transparent;
-`
-const Span04 = styled.span`
-  transform: rotate(108deg);
-  border-color: hsl(108, 100%, 50%) transparent transparent transparent;
-`
-const Span05 = styled.span`
-  transform: rotate(144deg);
-  border-color: hsl(144, 100%, 50%) transparent transparent transparent;
-`
-const Span06 = styled.span`
-  transform: rotate(180deg);
-  border-color: hsl(180, 100%, 50%) transparent transparent transparent;
-`
-const Span07 = styled.span`
-  transform: rotate(216deg);
-  border-color: hsl(216, 100%, 50%) transparent transparent transparent;
-`
-const Span08 = styled.span`
-  transform: rotate(252deg);
-  border-color: hsl(252, 100%, 50%) transparent transparent transparent;
-`
-const Span09 = styled.span`
-  transform: rotate(288deg);
-  border-color: hsl(288, 100%, 50%) transparent transparent transparent;
-`
-const Span10 = styled.span`
-  transform: rotate(324deg);
-  border-color: hsl(324, 100%, 50%) transparent transparent transparent;
-`
-const HueCircle = () =>
-  <ColorWheelWrapper>
-    <ColorWheel>
-      <Span01 /><Span02 /><Span03 /><Span04 /><Span05 />
-      <Span06 /><Span07 /><Span08 /><Span09 /><Span10 />
-    </ColorWheel>
-  </ColorWheelWrapper>
 
 const SatSwatch = styled.div`
   display: inline flow;
   width: 96px;
   height: 1em;
-  background-image: linear-gradient(to right, hsl(0, 0%, 50%), hsl(0, 100%, 50%))
+  background-image: linear-gradient(to right, hsl(0, 0%, 50%), hsl(0, 100%, 50%));
+  border: 1px solid black;
 `
 const Saturation = () => <div>Saturation: 0% <SatSwatch /> 100%</div>
 
@@ -191,21 +130,45 @@ const LumSwatch = styled.div`
   display: inline flow;
   width: 96px;
   height: 1em;
-  background-image: linear-gradient(to right, hsl(0, 100%, 0%), hsl(0, 50%, 50%), hsl(0, 100%, 100%))
+  background-image: linear-gradient(to right, hsl(0, 100%, 0%), hsl(0, 50%, 50%), hsl(0, 100%, 100%));
+  border: 1px solid black;
 `
-const Luminance = () => <div>Luminance: 0% <LumSwatch /> 100%</div>
+const Luminance = () => <div>Lightness: 0% <LumSwatch /> 100%</div>
 
 const ColorScheme = ({colors}) => {
   return <Fragment>
     {colors.map((c, i) => <ColorDisplay color={c} key={i} />)}
   </Fragment>
-
 }
 
+const getHsl = color => color.hsl().color // [hue, saturation, lightness]
+const hslText = (v, i) => `${Math.round(v)}${i > 0 ? '%' : '°'}` // '1°' or '1%'
+const colorToHslText = color => getHsl(color).map(hslText).join(', ') // '1°, 1%, 1%'
+const printableHsl = color => `hsl(${colorToHslText(color)})` // 'hsl(1°, 1%, 1%)'
+const printableLuminosity = color => `${Math.round(color.luminosity() * 100)}%`
+const ColorSwatch = styled.div`
+display: inline flow;
+background-color: ${props => props.color.rgb().string()};
+width: 1em
+height: 1em
+border: 1px solid black;
+box-sizing: border-box;
+`
+const ColorRgb = styled.div`
+display: inline flow;
+width: 18ex;
+`
+const ColorHsl = styled.div`
+display: inline flow;
+width: 21ex;
+`
 const ColorDisplay = ({color}) =>
-  <Fragment>
-    <div>
-      <div style={{display: 'inline-block', backgroundColor: color.rgb().string(), width: '1em', height: '1em'}} />
-      {color.rgb().string()}&emsp;{color.hsl().string()}
-    </div>
-  </Fragment>
+  <div>
+    <ColorSwatch color={color} />
+    &ensp;
+    <ColorRgb>{color.rgb().string()}</ColorRgb>
+    &emsp;
+    <ColorHsl>{printableHsl(color)}</ColorHsl>
+    &emsp;
+    Luminance: {printableLuminosity(color)}
+  </div>
