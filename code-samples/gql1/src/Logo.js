@@ -8,6 +8,8 @@ import styled from 'styled-components'
 /*
 linear gradients have half the distance in solid background then gradient to transparency
 radial has 35% solid then transparency at 70%
+- the length of the radial gradient is from corner-to-corner in a square
+- to get from the diagonal to a side of the square is 1/sqrt(2) = 0.7
 - solid background corner radius: 35% * 40 = 14px
 - at transparent corner radius: 70% * 40 = 28px
 */
