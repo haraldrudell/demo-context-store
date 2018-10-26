@@ -1,0 +1,9 @@
+body {
+  background-color: #fce5cd;
+  padding: 20px 40px 20px /* top | horizontal | bottom */
+}
+
+li {
+  margin-top: 6pt;
+  margin-bottom: 6pt
+}

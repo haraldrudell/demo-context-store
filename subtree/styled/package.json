@@ -1,0 +1,37 @@
+{
+  "name": "demo-styled-components",
+  "version": "0.1.0",
+  "description": "Styled Components Usage by Harald Rudell",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "ISC",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "keywords": [
+    "css",
+    "styled-components",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haraldrudell/styled-components"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "dependencies": {
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-scripts": "2.0.5",
+    "styled-components": "^4.0.2"
+  }
+}
