@@ -69,12 +69,24 @@ export default class App extends Component {
             </ul>
             {'<'}ThemeProvider theme={'{'}theme}><br />
             &emsp;css using styled in components here have props.theme available<br />
-            {'<'}/ThemeProvider></li>
-            <li>High order component withTheme <a href="https://www.styled-components.com/docs/api#withtheme">withTheme</a><br />
-            withTheme makes a JSX prop theme available, that can be used for css styling or override with the passed props feature: `color: {'{'}this.props.theme.color}`
+            {'<'}/ThemeProvider>
           </li>
         </ul>
-        </section>
+        <h3>Interoperability</h3>
+        <ul>
+          <li>The <strong>styled(Component)</strong> construct provides a className that can be applied to an arbitrary element. This styling can target child elements.</li>
+          <li>The high order component withTheme <a href="https://www.styled-components.com/docs/api#withtheme">withTheme</a><br />
+            withTheme makes a JSX prop theme available, allowing access to theme values outside of styled-components.
+          </li>
+        </ul>
+        <h3>Performance</h3>
+        <ul>
+          <li>Fonts should be loaded outside of styled-components using global css or link elements<br />
+            Otherwise, unnecessary font requests are issued when styled-components updates its css<br />
+            For production use, link elements provides the best performance
+          </li>
+        </ul>
+      </section>
       <section>
         <h2>Resources</h2>
         <ul>
