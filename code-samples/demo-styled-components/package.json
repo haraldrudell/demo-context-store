@@ -8,6 +8,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "diff": "diff --recursive --brief --exclude='node_modules' . ../../subtree/styled # only for author/macOS",
     "eject": "react-scripts eject"
   },
   "keywords": [
