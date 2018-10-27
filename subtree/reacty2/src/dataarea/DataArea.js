@@ -1,14 +1,13 @@
 /*
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
-All rights reserved.
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
 import React, {Fragment, PureComponent} from 'react'
 import {stateToSlice, isShowForm, isBlank} from './AreaSlice'
 import { connect } from 'react-redux'
-import JobResult from 'jobs/JobResult'
-import JobForm from 'jobinput/JobForm'
-import {loadSw} from 'jobinput/swSlice'
-import {loadHw} from 'jobinput/hwSlice'
+import { JobResult } from 'jobs'
+import { JobForm } from 'jobinput'
+import { loadSw, loadHw } from 'jobinput'
 
 class DataArea extends PureComponent  {
   componentDidMount() {

@@ -1,36 +1,26 @@
 {
-  "name": "dano",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@material-ui/core": "^3.1.2",
-    "@material-ui/icons": "^3.0.1",
-    "axios": "^0.18.0",
-    "immutable": "^3.8.2",
-    "koa": "^2.5.3",
-    "koa-body": "^4.0.4",
-    "koa-bodyparser": "^4.2.1",
-    "koa-logger": "^3.2.0",
-    "koa-router": "^7.4.0",
-    "npm-run-all": "^4.1.3",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-redux": "^5.0.7",
-    "react-scripts": "2.0.3",
-    "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0",
-    "shortid": "^2.2.13",
-    "styled-components": "^3.4.9",
-    "typeface-roboto": "^0.0.54"
-  },
+  "name": "reacty",
+  "version": "0.2.0",
+  "description": "React 16.6/Redux/immutable/Rest by Harald Rudell",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "ISC",
   "scripts": {
     "start": "npm-run-all --parallel start:*",
     "start:react": "react-scripts start",
-    "start:server": "node --experimental-modules src/server/server",
-    "zip": "zip -r HaraldRudell.zip package.json src public yarn.lock",
+    "start:server": "node --experimental-modules --no-warnings src/server",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "keywords": [
+    "react",
+    "redux",
+    "immutable",
+    "rest"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haraldrudell/reacty"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {
@@ -41,5 +31,29 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "dependencies": {
+    "@material-ui/core": "^3.1.2",
+    "@material-ui/icons": "^3.0.1",
+    "axios": "^0.18.0",
+    "immutable": "^3.8.2",
+    "koa": "^2.5.3",
+    "koa-body": "^4.0.4",
+    "koa-bodyparser": "^4.2.1",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "react": "^16.6",
+    "react-dom": "^16.6",
+    "react-jss": "^8.6.1",
+    "react-redux": "^5.0.7",
+    "react-scripts": "^2.0",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "shortid": "^2.2.13",
+    "styled-components": "^4.0"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.3",
+    "typeface-roboto": "^0.0.54"
+  }
 }

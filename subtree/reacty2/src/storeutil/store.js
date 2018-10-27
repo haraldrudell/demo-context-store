@@ -1,31 +1,29 @@
 /*
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
-All rights reserved.
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import {
   reducer as jobsReducer,
   setSliceName as jobsName,
-} from 'jobs/jobsSlice'
+} from 'jobs'
 import {
-  reducer as asReducer,
-  setSliceName as asName} from 'dataarea/AreaSlice'
+  reducer as areaReducer,
+  setSliceName as areaName} from 'dataarea'
 import {
-  reducer as swReducer,
-  setSliceName as swName
-} from 'jobinput/swSlice'
-import {
-  reducer as hwReducer,
-  setSliceName as hwName
-} from  'jobinput/hwSlice'
+  reducerHw,
+  setSliceNameHw,
+  reducerSw,
+  setSliceNameSw,
+} from  'jobinput'
 
 let reducers = {}
 
-addSlice('area', asReducer, asName)
+addSlice('area', areaReducer, areaName)
 addSlice('jobs', jobsReducer, jobsName)
-addSlice('hw', hwReducer, hwName)
-addSlice('sw', swReducer, swName)
+addSlice('hw', reducerHw, setSliceNameHw)
+addSlice('sw', reducerSw, setSliceNameSw)
 
 export const store = createStore(combineReducers(reducers), applyMiddleware(thunk))
 reducers = null

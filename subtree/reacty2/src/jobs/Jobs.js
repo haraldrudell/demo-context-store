@@ -1,19 +1,19 @@
 /*
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
-All rights reserved.
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
 import React, { Component, Fragment } from 'react'
 import {getSliceData, loadJobs} from './jobsSlice'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { connect } from 'react-redux'
-import ErrorText from 'apputil/ErrorText'
+import {ErrorText} from 'apputil'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import styled from 'styled-components'
 import Job from './Job'
 import Grid from '@material-ui/core/Grid'
-import {showDataAreaForm} from 'dataarea/AreaSlice'
+import {showDataAreaForm} from 'dataarea'
 
 const ButtonFixed = styled(Button)`
 && {
@@ -63,7 +63,6 @@ class Jobs extends Component {
 
   static mapStateToProps(state) {
     const {e, data} = getSliceData(state)
-    console.log('Jobs map:', {e, data}, state)
     return {e, jobs: data}
   }
 }
