@@ -3,13 +3,11 @@
 All rights reserved.
 */
 import {createGlobalStyle} from 'styled-components'
-import Roboto from './roboto'
 
 export function getThemeData() {
   return {
     theme: 0,
     themes: [{value: 0, name: 'Default Theme', theme: {
-      Once: Roboto,
       BodyStyle: createGlobalStyle`
         body {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
