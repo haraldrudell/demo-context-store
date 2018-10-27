@@ -1,44 +1,21 @@
 /*
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
-All rights reserved.
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
 import React, {PureComponent} from 'react'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { connect } from 'react-redux'
-import {instance} from './JobsSlice'
-import {Map, OrderedMap} from 'immutable'
+import {getSliceData} from './jobsSlice'
+import {setDataAreaContent} from 'dataarea'
 
-/*
-name: 'Chair Structural Test',
-id: 'rJK69pItf'
-software:
-  type:
-    label: 'Structural Analysis',
-    id: 'structural'
-  application:
-    label: 'Strength Analysis',
-    id: 'strength'
-hardware:
-  type:
-    label: 'Intel Xeon E4-1676  @ 2.3 GHz',
-    id: 'e4'
-  cores: 32,
-results
-  status: 'finished',
-  duration: 16,
-  images:
-  - '/images/strength2.jpg'
-  - '/images/strength1.jpg'
-  - '/images/data2.jpg'
-*/
 class Job extends PureComponent {
   handleJobAction = this.handleJobAction.bind(this)
 
   handleJobAction() {
-    const {dispatch: {actions: {setDataAreaDisplay}}, id} = this.props
-    setDataAreaDisplay(id)
+    const {dispatch, id} = this.props
+    dispatch(setDataAreaContent(id))
   }
 
   render() {
@@ -46,21 +23,20 @@ class Job extends PureComponent {
     const name = job && job.get('name')
     const results = job && job.get('results')
     const status = results && results.get('status')
+
     return <Card onClick={this.handleJobAction} ><CardContent>
       <Typography variant='title' align='center' gutterBottom>
         {name}
       </Typography>
-      {status}<br/>
+      status: {status}<br/>
       id: {id}
     </CardContent></Card>
   }
 
   static mapStateToProps(state, ownProps) {
-    const {sliceName, dataSlice} = instance
     const {id} = ownProps
-    const map = state[sliceName] || Map()
-    const oMap = map.get(dataSlice) || OrderedMap()
-    return {job: oMap.get(id)} // job immutable Map
+    const {data: oMap} = getSliceData(state)
+    return {job: oMap && oMap.get(id)} // job immutable Map
   }
 }
 

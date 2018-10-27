@@ -1,33 +1,32 @@
 /*
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
-All rights reserved.
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
 import React, {Fragment} from 'react'
 import Typography from '@material-ui/core/Typography'
 import { connect } from 'react-redux'
-import {instance} from './JobsSlice'
-import {Map, OrderedMap, List} from 'immutable'
-import {makeUrl} from 'api/api'
+import {getSliceData} from './jobsSlice'
+import {List} from 'immutable'
+import styled from 'styled-components'
 
-const Img = ({uri}) => <img alt='resultImage' src={makeUrl(uri)} />
-
+const Img = styled.img`
+max-width: 100%
+`
 export default connect(mapStateToProps)(({job, id}) => { // job is immutable Map
   const name = job && job.get('name') // string
   const results = job && job.get('results') // Map
   const imageUrls = (results && results.get('images')) || List()
+
   return <Fragment>
     <Typography variant='title' align='center' gutterBottom>
       Results: {name} {id}
     </Typography>
-    {imageUrls.map((uri, i) => <Img uri={uri} key={i} />)}
+    {imageUrls.map((uri, i) => <Img src={uri} alt='resultImage' key={i} />)}
   </Fragment>
 })
 
 function mapStateToProps(state, ownProps) {
-  const {sliceName, dataSlice} = instance
-  // get the immutable job
   const {id} = ownProps
-  const map = state[sliceName] || Map()
-  const oMap = map.get(dataSlice) || OrderedMap()
+  const {data: oMap} = getSliceData(state)
   return {job: oMap.get(id)} // job immutable Map
 }
