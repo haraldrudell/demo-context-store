@@ -10,6 +10,7 @@ import JssProvider from 'react-jss/lib/JssProvider'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 import { create } from 'jss'
 import App from 'App'
+import './fonts.css'
 
 // get a jss provider with a custom insertion point
 const materialUIPointId = 'jss-insertion-point' // id for element in html

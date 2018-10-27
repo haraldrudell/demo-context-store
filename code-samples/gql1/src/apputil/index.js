@@ -4,4 +4,5 @@ All rights reserved.
 */
 export {default as Grid} from './AppGrid'
 export {default as Portal} from './Portal'
+export {default as SprayPaint} from './SprayPaint'
 export * from './getDomElement'
