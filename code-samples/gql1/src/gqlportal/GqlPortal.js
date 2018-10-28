@@ -32,7 +32,7 @@ class GqlPortal extends PureComponent {
 
     return <Fragment>
       <Body>Current theme: {nameNow}</Body>
-      <Button value={value} onClick={this.switchThemeAction}>Switch to {name}</Button>
+      <Button value={value} variant='contained' onClick={this.switchThemeAction}>Switch to {name}</Button>
     </Fragment>
   }
 }
