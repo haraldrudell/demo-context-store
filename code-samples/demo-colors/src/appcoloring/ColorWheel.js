@@ -9,6 +9,12 @@ import styled from 'styled-components'
 The color wheel starts at 0 = red at the top
 To have sectors center on primary colors 120 - green and 240 - blue:
 - make sectors a multiple of 3
+
+color wheel:
+https://stackoverflow.com/a/43266702
+
+Chromium conic-gradient not in
+https://twitter.com/malyw/status/849908979119640576
 */
 
 export default class ColorWheel extends PureComponent {
