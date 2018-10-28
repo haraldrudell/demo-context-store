@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 import { ColorTheory } from 'appcolorschemes'
-import { hue30, ColorScheme } from 'appcolorschemes'
+import { hue30, ColorScheme, hue30react, evening } from 'appcolorschemes'
 
 const AppContainer = styled.div`
 padding: 20px
@@ -21,6 +21,8 @@ export default class App extends Component {
   render() {
     return <AppContainer>
       <ColorTheory />
+      <ColorScheme scheme={hue30react} />
+      <ColorScheme scheme={evening} />
       <ColorScheme scheme={hue30} />
     </AppContainer>
   }

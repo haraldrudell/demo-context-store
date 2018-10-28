@@ -8,6 +8,7 @@ import Color from 'color'
 import { ColorList } from 'appcoloring'
 
 import ColorEvent from './ColorEvent'
+import ColorPalette from './ColorPalette'
 
 /*
 Color api
@@ -26,7 +27,6 @@ properties:
 color: [255, 255, 255]
 model: 'rgb'
 valpha: 1
-
 
 instance methods:
 
@@ -76,10 +76,12 @@ export default class ColorScheme extends PureComponent {
       <h1>{name}</h1>
       <p>Date: {date}</p>
       {events && events.map((e, i) =>
-        <ColorEvent event={e} />)}
+        <ColorEvent event={e} key={i}/>)}
       {colors && <Fragment>
         <h3>Complete Color Scheme</h3>
         <ColorList colors={colors} />
+        <h3>Palette</h3>
+        <ColorPalette scheme={scheme} name={name} />
       </Fragment>}
     </Fragment>
   }

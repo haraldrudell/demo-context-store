@@ -7,6 +7,29 @@ import styled from 'styled-components'
 
 import {ColorWheel} from 'appcoloring'
 
+/*
+from color package source code:
+
+Luminance independent of hue
+https://www.w3.org/TR/WCAG20/#relativeluminancedef
+
+https://www.w3.org/TR/WCAG20/#contrast-ratiodef
+
+Contrast is luminance and color contrast
+https://en.wikipedia.org/wiki/Display_contrast
+
+Color theory: guidsance to color mixing
+https://en.wikipedia.org/wiki/Color_theory
+*/
+/*
+avoid contrast vibration
+color contrasts that vibrate:
+- high saturation
+- 180° hue difference
+
+equiluminant color combination aree difficult to read
+https://webdesign.tutsplus.com/articles/why-you-should-avoid-vibrating-color-combinations--cms-25621
+*/
 export default () =>
   <Fragment>
     <h1>Colors</h1>
