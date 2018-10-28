@@ -5,6 +5,15 @@ All rights reserved.
 import {createGlobalStyle, css} from 'styled-components'
 
 /*
+avoid contrast vibration
+color contrasts that vibrate:
+- high saturation
+- 180° hue difference
+
+equiluminant color combination aree difficult to read
+https://webdesign.tutsplus.com/articles/why-you-should-avoid-vibrating-color-combinations--cms-25621
+
+/*
 hue30 theme
 https://coolors.co/b1740f-ffd07b-fdb833-296eb4-1789fc
 
@@ -19,8 +28,22 @@ then a shaded bisque:
 url palette: https://i.pinimg.com/474x/bc/19/a2/bc19a2891ab62a609f4e1ac353337a9a--red-color-palettes-color-palette-fall.jpg
 the pink is: TextEdit - format - font - show colors, use pipette
 #f9a8c5 339° 33% 98%
+--
+move further away from purple in hue to 360°, pale to 20%: tea rose #f9c7c7
 */
 const nadeshikoPink = '#f9a8c5'
+const teaRose = '#f9c7c7'
+/*
+Work on logo color:
+do not want to change hue from 300°
+- 270° is too blue
+reduce saturation to 50%
+- less turn gray and color-less
+reduce brightness to 35%
+- less turns black and color-less
+japanese violet #592c59
+*/
+const japaneseViolet = '#592c59'
 /*
 Default button:
 Take the same green hue as for primary button:  120°
@@ -106,7 +129,8 @@ export function getThemeData() {
       `,
       body1,
       backgroundColor: bisque,
-      logoSpray: nadeshikoPink,
+      logoSpray: teaRose,
+      logoText: japaneseViolet,
       buttonDefault: css`
         background-color: ${lightMossGreen};
         :hover {
