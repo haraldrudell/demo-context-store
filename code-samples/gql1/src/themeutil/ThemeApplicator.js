@@ -2,7 +2,7 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import React, { Component, Fragment, Children, cloneElement } from 'react'
+import React, { Component, Fragment } from 'react'
 import {ThemeProvider} from 'styled-components'
 import {SwitchProvider} from './ThemeContext'
 
@@ -46,7 +46,7 @@ export default class ThemeApplicator extends Component {
         <BodyStyleComponent />{/* apply theme styling to body element */}
         <ThemeProvider theme={themeValues}>{/* styled components theme provider */}
           <Fragment>{/* Fragment since ThemeProvider only supports a single child */}
-            {Children.map(children, child => cloneElement(child))}
+            {children}
           </Fragment>
         </ThemeProvider>
         </SwitchProvider>

@@ -3,18 +3,23 @@
 All rights reserved.
 */
 import React, { Component, Fragment } from 'react'
-import {Grid, Portal} from 'apputil'
-import { ThemeSelector } from 'themeutil'
-import Logo from './Logo'
-import Clipboard from 'clipboard'
 import styled from 'styled-components'
 
-const containerStyles = `
-max-width: 10.5in
-margin: 0
-`
+import { Grid, Portal } from 'apputil'
+import Clipboard from 'clipboard'
+import GqlPortal from 'gqlportal'
+import Logo from './Logo'
+import MaterialUI from 'material-ui'
+
 const gridProps = { // props for Material-UI Grid component
-  containerStyles,
+  containerStyles: `
+    max-width: 10.5in
+    margin: 0
+    li {
+      margin-top: 6pt
+      margin-bottom: 6pt
+    }
+  `,
   direction: 'column',
   alignItems: 'center',
   spacing: 40,
@@ -29,13 +34,14 @@ background-color: ${props => props.theme.backgroundColor}
 export default class App extends Component {
   render() {
     return <Fragment>
-      <Portal>
-        <PortalUpperRight>
-          <ThemeSelector />
+      <Portal>{/* renders no elements */}
+        <PortalUpperRight>{/* a div in upper right corner of viewport */}
+          <GqlPortal />
         </PortalUpperRight>
       </Portal>
       <Grid {...gridProps}>
         <Logo />
+        <MaterialUI />
         <Clipboard />
       </Grid>
     </Fragment>
