@@ -41,6 +41,8 @@ export default class App extends Component {
     f: () => OrderedMap().set(2, {id: 2}).set(1, {id: 1}).sort((a, b) => a.id < b.id ? -1 : a.id === b.id ? 0 : 1)})
   sortByKey = new Func({t: `OrderedMap().set(2, 'two').set(1, 'one').sortBy((value, key) => key)`,
     f: () => OrderedMap().set(2, 'two').set(1, 'one').sortBy((value, key) => key)})
+  indexForKey = new Func({t: `OrderedMap().set(2, 'two').set(1, 'one').keySeq().findIndex(k => k === 1)`,
+    f: () => OrderedMap().set(2, 'two').set(1, 'one').keySeq().findIndex(k => k === 1)})
   iterationsText = '1e6'
   iterations = Number(this.iterationsText)
   benchmarks = [{
@@ -86,6 +88,12 @@ export default class App extends Component {
 
     return <AppContainer>
       <h1>Immutable</h1>
+      <Hanging>
+        Version: 3.8.2 of October 4, 2017<br />
+        <a href="https://facebook.github.io/immutable-js/">Website</a><br />
+        <a href="https://facebook.github.io/immutable-js/docs">Documentation</a><br />
+        <a href="https://github.com/facebook/immutable-js">repository</a>
+      </Hanging>
       <Hanging>Immutable exports: {exportsList.length}<br />
         {exportsList.join(', ')}</Hanging>
       <h2>Data Structures</h2>
@@ -141,9 +149,12 @@ export default class App extends Component {
         <li>Sequence algorithms<br />
           <CodeValue f={this.sequence}/>
         </li>
-        <li>Sorting<br />
+        <li>Sorting by value or key<br />
           <CodeValue f={this.sort}/><br />
           <CodeValue f={this.sortByKey}/>
+        </li>
+        <li>Index for key<br />
+          <CodeValue f={this.indexForKey}/>
         </li>
       </ul>
       <Export as='h4'>Map</Export>
@@ -156,7 +167,7 @@ export default class App extends Component {
       <h3>Other Data Structures</h3>
       <Export as='h4'>Record</Export>
       <Export as='h4'>Collection</Export>
-        <p>Keyed or indexed determine by factory function argument</p>
+        <p>Keyed or indexed determined by factory function argument</p>
       <h2>Other</h2>
       <Export as='h3'>Iterable</Export>
       <Export as='h3'>Seq</Export>
