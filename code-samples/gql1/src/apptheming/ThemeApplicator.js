@@ -2,18 +2,20 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import React, { Component, Fragment } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import {ThemeProvider} from 'styled-components'
-import {SwitchProvider} from './ThemeContext'
 
-export default class ThemeApplicator extends Component {
+import { SwitchProvider } from './context'
+
+export default class ThemeApplicator extends PureComponent {
+  static Empty = () => false // non-rendering component
+
   constructor(props) {
     super(props)
-    this.Empty = () => false
 
     // make setTheme action available
     const {initial} = props
-    if (!initial) throw new Error('ThemeApplicator: no initial, did ThemeContext render?')
+    if (!initial) throw new Error('ThemeApplicator: initial prop not set, did ThemeContext render?')
     initial.setTheme = this.setTheme.bind(this) // add this component's switch function
 
     // themeContext for SwitchProvider, themeValues for ThemeProvider (styled-components)
@@ -39,7 +41,7 @@ export default class ThemeApplicator extends Component {
   render() {
     const {themeContext, themeValues, props: {children}} = this
     const {BodyStyle} = themeValues
-    const BodyStyleComponent = BodyStyle || this.Empty
+    const BodyStyleComponent = BodyStyle || ThemeApplicator.Empty
 
     return <Fragment>
       <SwitchProvider value={themeContext}>{/* inject context for the theme switcher */}

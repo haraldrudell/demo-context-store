@@ -5,9 +5,7 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
-import {default as ButtonUI} from '@material-ui/core/Button'
-
-
+import ButtonUI from '@material-ui/core/Button'
 
 export const Button = styled(ButtonUI)`
 ${props => (props.color === 'default' || !props.color) && props.theme.buttonDefault}

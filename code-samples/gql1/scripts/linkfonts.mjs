@@ -7,15 +7,17 @@ import fs from 'fs-extra'
 import path from 'path'
 import {default as resolvePkg} from 'resolve'
 
-run({
-  arg: process.argv[2],
-  dir: path.join('src', 'root'),
+const project = {
+  dir: path.join('src', 'fonts'),
   pkg: 'typeface-roboto',
   symlink: 'fonts.css',
   emptyFile: 'empty.css',
+}
+
+run({
+  ...project,
+  arg: process.argv[2], // 'yes' load css from project.pkg or 'no': import fonts/fonts.css does nothing
 }).catch(errorHandler)
-
-
 
 async function run({arg, dir, pkg, symlink, emptyFile}) {
   const action = arg === 'yes' ? true : arg === 'no' ? false : undefined

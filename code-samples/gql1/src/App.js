@@ -8,8 +8,9 @@ import styled from 'styled-components'
 import { Grid, Portal } from 'apputil'
 import Clipboard from 'clipboard'
 import GqlPortal from 'gqlportal'
+import { MaterialUIControls } from 'appdemo'
+
 import Logo from './Logo'
-import MaterialUI from 'material-ui'
 
 const gridProps = { // props for Material-UI Grid component
   containerStyles: `
@@ -34,14 +35,14 @@ background-color: ${props => props.theme.backgroundColor}
 export default class App extends Component {
   render() {
     return <Fragment>
-      <Portal>{/* renders no elements */}
+      <Portal>{/* children into specific dom element, renders nothing */}
         <PortalUpperRight>{/* a div in upper right corner of viewport */}
           <GqlPortal />
         </PortalUpperRight>
       </Portal>
       <Grid {...gridProps}>
         <Logo />
-        <MaterialUI />
+        <MaterialUIControls />{/* a demo of all Material-UI control appearances */}
         <Clipboard />
       </Grid>
     </Fragment>

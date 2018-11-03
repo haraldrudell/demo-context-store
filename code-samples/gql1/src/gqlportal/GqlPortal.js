@@ -2,10 +2,10 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import React, { Fragment, memo, PureComponent } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 
-import { SwitchConsumer } from 'themeutil'
-import { Button, Body } from 'apputil'
+import { withThemeData } from 'apptheming'
+import { Button, Body } from 'appmaterial-ui'
 
 class GqlPortal extends PureComponent {
   switchThemeAction = this.switchThemeAction.bind(this) // TODO create-react-app does not have babel 7 function-bind transform: ::this.switchTheme
@@ -32,9 +32,11 @@ class GqlPortal extends PureComponent {
 
     return <Fragment>
       <Body>Current theme: {nameNow}</Body>
-      <Button value={value} variant='contained' onClick={this.switchThemeAction}>Switch to {name}</Button>
+      <Button value={value} variant='contained' onClick={this.switchThemeAction}>
+        Switch to {name}
+      </Button>
     </Fragment>
   }
 }
 
-export default memo(props => <SwitchConsumer>{t => <GqlPortal {...props} themeData={t}/>}</SwitchConsumer>)
+export default withThemeData(GqlPortal)

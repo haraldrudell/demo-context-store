@@ -3,7 +3,8 @@
 All rights reserved.
 */
 import React, { PureComponent, Fragment } from 'react'
-import {SwitchConsumer} from './ThemeContext'
+
+import { withThemeData } from 'apptheming'
 
 class ThemeSelector extends PureComponent {
   switchTheme = this.switchTheme.bind(this) // TODO create-react-app does not have babel 7 function-bind transform: ::this.switchTheme
@@ -29,4 +30,4 @@ class ThemeSelector extends PureComponent {
   }
 }
 
-export default props => <SwitchConsumer>{t => <ThemeSelector {...props} themeData={t}/>}</SwitchConsumer>
+export default withThemeData(ThemeSelector)

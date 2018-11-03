@@ -4,7 +4,14 @@ All rights reserved.
 */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Root from 'root'
-import {getDomElement} from 'apputil'
 
-ReactDOM.render(<Root />, getDomElement('root', 'rendering React'))
+import { Root } from 'appmaterial-ui'
+import { getDomElement } from 'apputil'
+import { hue30react, evening } from 'appthemes'
+
+import App from './App'
+import 'fonts/fonts.css' // develoment: loads fonts using global css, production: does nothing
+
+const themeList = {themes: [hue30react, evening]}
+
+ReactDOM.render(<Root {...themeList}><App /></Root>, getDomElement('root', 'rendering React'))
