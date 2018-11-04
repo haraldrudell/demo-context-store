@@ -1,0 +1,67 @@
+{
+  "name": "haraldreact",
+  "version": "0.0.1",
+  "description": "Reusable React constructs by Harald Rudell",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "ISC",
+  "main": "lib/haraldreact",
+  "module": "lib/haraldreact.mjs",
+  "scripts": {
+    "build": "rollup --config node:es2049package",
+    "clean": "clean lib",
+    "reinstall": "npm-run-all --serial reinstall:*",
+    "reinstall:clean": "clean node_modules",
+    "reinstall:install": "yarn",
+    "test": "jest"
+  },
+  "rollup": {
+    "node": true,
+    "target": {
+      "node": "8.5"
+    }
+  },
+  "babel": {
+    "env": {
+      "test": {
+        "presets": [
+          "env",
+          "react"
+        ]
+      }
+    }
+  },
+  "devEngines": {
+    "node": "9.x"
+  },
+  "engines": {
+    "node": ">= 8.5"
+  },
+  "keywords": [
+    "react",
+    "Material-UI",
+    "styled-components",
+    "css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haraldrudell/haraldreact"
+  },
+  "peerDependencies": {
+    "react": ">= 16.6",
+    "react-dom": ">= 16.6"
+  },
+  "dependencies": {
+    "@material-ui/core": "^3.3.2",
+    "styled-components": "^4.0.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "babel-core": "^7.0.0-bridge",
+    "babel-jest": "^23.6.0",
+    "babel-preset-env": "^7.0.0-beta.3",
+    "babel-preset-react": "^7.0.0-beta.3",
+    "es2049package": "^0.0.23",
+    "jest": "^23.6.0",
+    "npm-run-all": "^4.1.3"
+  }
+}
