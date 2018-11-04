@@ -110,11 +110,18 @@ export default class MaterialUIControls extends PureComponent {
               <li>Avoids too yellow</li>
             </ul>
           </li>
-          <li>Luminosity of (100, 100, 0): {(Color('#646400').luminosity() * 100).toFixed(1)}%</li>
-          <li>Luminosity of (200, 200, 0): {(Color('#c8c800').luminosity() * 100).toFixed(1)}%</li>
-          <li>Luminosity of ginger (174, 96, 0): {(Color('#ae6000').luminosity() * 100).toFixed(1)}%</li>
+          <li>Luminosity of <RelativeLuminance rgbHex='#646400' /></li>
+          <li>Luminosity of <RelativeLuminance rgbHex='#c8c800' /></li>
+          <li>Luminosity of ginger <RelativeLuminance rgbHex='#ae6000' /></li>
         </ul>
       </Body>
     </Fragment>
   }
+}
+
+const RelativeLuminance = ({rgbHex}) => { // rgbHex: '#c8c800'
+  const color = Color(rgbHex)
+  const rgbValues = color.rgb().array().join(', ') // '200, 200, 0'
+  const rLuminance = color.luminosity() * 100 // 0…100
+  return `(${rgbValues}): ${rLuminance.toFixed(1)}%` // '(200, 200, 0): 76.0%'
 }
