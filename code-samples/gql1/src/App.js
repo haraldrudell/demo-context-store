@@ -26,7 +26,7 @@ const gridProps = { // props for Material-UI Grid component
   spacing: 40,
 }
 const PortalUpperRight = styled.div`
-position: absolute
+position: fixed
 top: 0
 right: 0
 padding: 20px

@@ -7,6 +7,19 @@ import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
 import ButtonUI from '@material-ui/core/Button'
 
+/*
+color:
+default: black text on common button color
+primary (OK): white text on prominent green color
+secondary (Cancel): white text prominent red color
+disabled: bland gray
+
+variants:
+text: text on colored background
+outlined: with border
+contained: with shadow
+fab, extended fab: prominent shadow
+*/
 export const Button = styled(ButtonUI)`
 ${props => (props.color === 'default' || !props.color) && props.theme.buttonDefault}
 ${props => props.color === 'primary' && props.theme.buttonPrimary}
