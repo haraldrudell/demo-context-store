@@ -4,31 +4,19 @@
   "description": "Reusable React constructs by Harald Rudell",
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "ISC",
+  "files": [
+    "lib",
+    "LICENSE",
+    "README.md"
+  ],
   "main": "lib/haraldreact",
   "module": "lib/haraldreact.mjs",
   "scripts": {
-    "build": "rollup --config node:es2049package",
-    "clean": "clean lib",
+    "build": "node scripts/build.js",
     "reinstall": "npm-run-all --serial reinstall:*",
-    "reinstall:clean": "clean node_modules",
+    "reinstall:clean": "rimraf node_modules",
     "reinstall:install": "yarn",
-    "test": "jest"
-  },
-  "rollup": {
-    "node": true,
-    "target": {
-      "node": "8.5"
-    }
-  },
-  "babel": {
-    "env": {
-      "test": {
-        "presets": [
-          "env",
-          "react"
-        ]
-      }
-    }
+    "test": "node scripts/test.js"
   },
   "devEngines": {
     "node": "9.x"
@@ -46,22 +34,60 @@
     "type": "git",
     "url": "https://github.com/haraldrudell/haraldreact"
   },
-  "peerDependencies": {
-    "react": ">= 16.6",
-    "react-dom": ">= 16.6"
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
   },
-  "dependencies": {
-    "@material-ui/core": "^3.3.2",
-    "styled-components": "^4.0.3"
+  "peerDependencies": {
+    "@material-ui/core": ">= 3.3",
+    "react": ">= 16.6",
+    "react-dom": ">= 16.6",
+    "styled-components": ">= 4"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "babel-core": "^7.0.0-bridge",
+    "babel-eslint": "9.0.0",
     "babel-jest": "^23.6.0",
-    "babel-preset-env": "^7.0.0-beta.3",
-    "babel-preset-react": "^7.0.0-beta.3",
-    "es2049package": "^0.0.23",
+    "babel-loader": "8.0.4",
+    "babel-plugin-named-asset-import": "^0.2.3",
+    "babel-preset-react-app": "^6.1.0",
+    "bfj": "6.1.1",
+    "chalk": "2.4.1",
+    "css-loader": "1.0.0",
+    "eslint": "5.6.0",
+    "eslint-config-react-app": "^3.0.5",
+    "eslint-loader": "2.1.1",
+    "eslint-plugin-flowtype": "2.50.1",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jsx-a11y": "6.1.2",
+    "eslint-plugin-react": "7.11.1",
+    "file-loader": "2.0.0",
+    "fork-ts-checker-webpack-plugin-alt": "0.4.14",
+    "fs-extra": "7.0.0",
     "jest": "^23.6.0",
-    "npm-run-all": "^4.1.3"
-  }
+    "mini-css-extract-plugin": "0.4.3",
+    "npm-run-all": "^4.1.3",
+    "optimize-css-assets-webpack-plugin": "5.0.1",
+    "pnp-webpack-plugin": "1.1.0",
+    "postcss-loader": "3.0.0",
+    "postcss-safe-parser": "4.0.1",
+    "react-dev-utils": "^6.1.1",
+    "rimraf": "^2.6.2",
+    "sass-loader": "7.1.0",
+    "terser-webpack-plugin": "1.1.0",
+    "url-loader": "1.1.1",
+    "webpack": "4.19.1",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
