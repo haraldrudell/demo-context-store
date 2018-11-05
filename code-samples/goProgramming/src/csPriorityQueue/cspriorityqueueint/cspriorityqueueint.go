@@ -53,7 +53,7 @@ type PriorityQueueInt struct {
 	PriorityQueue
 }
 
-// New instantiuates a PriorityQueue for int
+// New instantiates a PriorityQueue for int
 func New() *PriorityQueueInt {
 	pqi := &PriorityQueueInt{PriorityQueue{isGreater: isGreaterInt}}
 	return pqi

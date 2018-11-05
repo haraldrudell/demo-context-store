@@ -583,9 +583,9 @@
       <method />
     </configuration>
     <list>
+      <item itemvalue="Application.Amazon" />
       <item itemvalue="Application.Nio" />
       <item itemvalue="Application.ListStackQueueDeque" />
-      <item itemvalue="Application.SortedDataStructure" />
       <item itemvalue="Application.MapInterface" />
       <item itemvalue="Application.ArrayDataStructure" />
     </list>
@@ -594,7 +594,6 @@
         <item itemvalue="Application.ArrayDataStructure" />
         <item itemvalue="Application.ListStackQueueDeque" />
         <item itemvalue="Application.MapInterface" />
-        <item itemvalue="Application.SortedDataStructure" />
         <item itemvalue="Application.Nio" />
       </list>
     </recent_temporary>

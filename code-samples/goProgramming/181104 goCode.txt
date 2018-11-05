@@ -1,0 +1,26 @@
+find /opt/foxyboy/sw/pri -name "*.go"
+/opt/foxyboy/sw/pri/code-samples/goProgramming
+  channel/channel.go
+
+/opt/foxyboy/sw/pri/code-samples/notebooks/
+  priorityQueueInt.go
+/opt/foxyboy/sw/pri/code-samples/notebooks/extend/extend.go
+/opt/foxyboy/sw/pri/code-samples/notebooks/encapsulation/encapsulation.go
+/opt/foxyboy/sw/pri/code-samples/notebooks/priorityQueue.go
+/opt/foxyboy/sw/pri/code-samples/notebooks/types.go
+/opt/foxyboy/sw/pri/code-samples/notebooks/polymorphism/polymorphism.go
+/opt/foxyboy/sw/pri/code-samples/notebooks/reverseLinkedList.go
+/opt/foxyboy/sw/pri/code-samples/notebooks/inheritance/inheritance.go
+/opt/foxyboy/sw/pri/code-samples/notebooks/thycotic/initial/thycotic181104.go
+/opt/foxyboy/sw/pri/code-samples/notebooks/thycotic/haraldrudell.go
+/opt/foxyboy/sw/pri/code-samples/notebooks/bubbleSort.go
+/opt/foxyboy/sw/pri/code-samples/notebooks/main.go
+/opt/foxyboy/sw/pri/code-samples/notebooks/typeassertion/typeassertion.go
+/opt/foxyboy/sw/pri/code-samples/notebooks/encapsulate/encapsulate.go
+
+/Users/foxyboy/go/src
+
+find Dox /opt/foxyboy/ownCloud -iname "*go *" | egrep "(odt|docx)$"
+/opt/foxyboy/ownCloud/ToXpc21/Development/Go Language.docx
+/opt/foxyboy/ownCloud/ToXpc21/Development/Go Packages.docx
+/opt/foxyboy/ownCloud/ToXpc21/Development/Go Programming.docx
