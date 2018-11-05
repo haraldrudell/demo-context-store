@@ -47,7 +47,7 @@ func main() {
 	count := len(cities)
 	valueCount := 0
 	accumulate := 0.
-	for i, city := range cities {
+	for _, city := range cities {
 		coord := city.Path("fields.coordinates").Data().([]interface{})
 		coo := Coordinate{
 			Latitude:  coord[0].(float64),
