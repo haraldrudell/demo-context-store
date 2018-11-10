@@ -8,5 +8,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="org.json:json:20180813" level="project" />
+    <orderEntry type="library" name="com.google.http-client:google-http-client:1.26.0" level="project" />
+    <orderEntry type="library" name="com.google.collections:google-collections:1.0" level="project" />
+    <orderEntry type="library" name="com.google.code.gson:gson:2.8.5" level="project" />
   </component>
 </module>
