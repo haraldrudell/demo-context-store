@@ -46,9 +46,9 @@ class ClassComponent extends PureComponent {
   }
 }
 
-const FunctionalComponent = (props) => <div>FunctionalComponent props: {propsToText(props)}</div>
+const FunctionalComponent = props => <div>FunctionalComponent props: {propsToText(props)}</div>
 
-const MemoComponent = memo((props) => <div>FunctionalComponent props: {propsToText(props)}</div>)
+const MemoComponent = memo(props => <div>FunctionalComponent props: {propsToText(props)}</div>)
 
 /*
 children are always object, so cloneElement should be used
