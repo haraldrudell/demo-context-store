@@ -10,10 +10,7 @@
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceRoot}/infmain.go",
-      "env": {
-        "GOPATH": "/Users/foxyboy/go"
-      },
-      "trace": "verbose",
+      "env": {},
       "args": []
     }
   ]

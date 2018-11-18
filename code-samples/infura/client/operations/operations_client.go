@@ -25,234 +25,31 @@ type Client struct {
 }
 
 /*
-GetV1Blacklist Return a blacklist of phishing sites. This list is maintained by GitHub user 409H at https://github.com/409H/EtherAddressLookup/blob/master/blacklists/domains.json .
+PostV3Projectid https://infura.io/docs/ethereum/json-rpc/eth_getBlockByNumber
 
 */
-func (a *Client) GetV1Blacklist(params *GetV1BlacklistParams) (*GetV1BlacklistOK, error) {
+func (a *Client) PostV3Projectid(params *PostV3ProjectidParams) (*PostV3ProjectidOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetV1BlacklistParams()
+		params = NewPostV3ProjectidParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetV1Blacklist",
-		Method:             "GET",
-		PathPattern:        "/v1/blacklist",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &GetV1BlacklistReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*GetV1BlacklistOK), nil
-
-}
-
-/*
-GetV1JsonrpcNetworkMethod A request using an "HTTP GET-compatible" (non-state-changing) JSON-RPC method. Most Ethereum JSON-RPC methods can be described in this way, since they query the blockchain for various pieces of information. Use the `/v1/jsonrpc/{network}/methods` endpoint to get the list of permitted methods.
-
-*/
-func (a *Client) GetV1JsonrpcNetworkMethod(params *GetV1JsonrpcNetworkMethodParams) (*GetV1JsonrpcNetworkMethodOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetV1JsonrpcNetworkMethodParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetV1JsonrpcNetworkMethod",
-		Method:             "GET",
-		PathPattern:        "/v1/jsonrpc/{network}/{method}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &GetV1JsonrpcNetworkMethodReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*GetV1JsonrpcNetworkMethodOK), nil
-
-}
-
-/*
-GetV1JsonrpcNetworkMethods The JSON-RPC methods supported by the `/v1/jsonrpc/{network}/{method}` (GET) and `/v1/jsonrpc/{network}` (POST) endpoints.
-
-*/
-func (a *Client) GetV1JsonrpcNetworkMethods(params *GetV1JsonrpcNetworkMethodsParams) (*GetV1JsonrpcNetworkMethodsOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetV1JsonrpcNetworkMethodsParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetV1JsonrpcNetworkMethods",
-		Method:             "GET",
-		PathPattern:        "/v1/jsonrpc/{network}/methods",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &GetV1JsonrpcNetworkMethodsReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*GetV1JsonrpcNetworkMethodsOK), nil
-
-}
-
-/*
-GetV1TickerSymbol Get pricing (ticker) data for various currency pairs (fiat, crypto, and tokens) using data from several exchanges. This endpoint shows the price at the exchange with the most volume for the symbol. Use the `/v1/ticker/symbols` endpoint for the full list of supported symbols.
-
-*/
-func (a *Client) GetV1TickerSymbol(params *GetV1TickerSymbolParams) (*GetV1TickerSymbolOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetV1TickerSymbolParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetV1TickerSymbol",
-		Method:             "GET",
-		PathPattern:        "/v1/ticker/{symbol}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &GetV1TickerSymbolReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*GetV1TickerSymbolOK), nil
-
-}
-
-/*
-GetV1TickerSymbolFull Get pricing (ticker) data for various currency pairs (fiat, crypto, and tokens) using data from several exchanges. This endpoint shows the price at various exchanges where the symbol is traded. Use the `/v1/ticker/symbols` endpoint for the full list of supported symbols.
-
-*/
-func (a *Client) GetV1TickerSymbolFull(params *GetV1TickerSymbolFullParams) (*GetV1TickerSymbolFullOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetV1TickerSymbolFullParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetV1TickerSymbolFull",
-		Method:             "GET",
-		PathPattern:        "/v1/ticker/{symbol}/full",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &GetV1TickerSymbolFullReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*GetV1TickerSymbolFullOK), nil
-
-}
-
-/*
-GetV1TickerSymbols Get a list of supported symbols (currency pairs), including fiat, crypto, and tokens
-
-*/
-func (a *Client) GetV1TickerSymbols(params *GetV1TickerSymbolsParams) (*GetV1TickerSymbolsOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetV1TickerSymbolsParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetV1TickerSymbols",
-		Method:             "GET",
-		PathPattern:        "/v1/ticker/symbols",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &GetV1TickerSymbolsReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*GetV1TickerSymbolsOK), nil
-
-}
-
-/*
-GetV2Blacklist Return a blacklist of phishing sites, as well as a whitelist and a fuzzylist. This list is maintained by the MetaMask project at https://github.com/MetaMask/eth-phishing-detect/blob/master/src/config.json .
-
-*/
-func (a *Client) GetV2Blacklist(params *GetV2BlacklistParams) (*GetV2BlacklistOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetV2BlacklistParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetV2Blacklist",
-		Method:             "GET",
-		PathPattern:        "/v2/blacklist",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &GetV2BlacklistReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*GetV2BlacklistOK), nil
-
-}
-
-/*
-PostV1JsonrpcNetwork A request using an "HTTP POST-compatible" (state-changing) JSON-RPC method. Use the `/v1/jsonrpc/{network}/methods` endpoint to get the list of permitted methods. Use the regular Ethereum JSON-RPC format for the POST body.
-
-*/
-func (a *Client) PostV1JsonrpcNetwork(params *PostV1JsonrpcNetworkParams) (*PostV1JsonrpcNetworkOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewPostV1JsonrpcNetworkParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PostV1JsonrpcNetwork",
+		ID:                 "PostV3Projectid",
 		Method:             "POST",
-		PathPattern:        "/v1/jsonrpc/{network}",
+		PathPattern:        "/v3/{projectid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
-		Reader:             &PostV1JsonrpcNetworkReader{formats: a.formats},
+		Reader:             &PostV3ProjectidReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	return result.(*PostV1JsonrpcNetworkOK), nil
+	return result.(*PostV3ProjectidOK), nil
 
 }
 

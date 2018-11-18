@@ -11,12 +11,25 @@ import (
 
 	infuraClient "github.com/INFURA/project-harald-rudell/client"
 	"github.com/INFURA/project-harald-rudell/client/operations"
+	httptransport "github.com/go-openapi/runtime/client"
 )
 
 // Fetch gets last block time from Ethereum mainnet
 func Fetch() (int, error) {
 	fmt.Printf("Preparing… ")
-	c := infuraClient.Default.Operations
+
+	useDebug := true
+	var c *operations.Client // from client/operations/operations_client.go
+	if useDebug {
+		cfg := infuraClient.DefaultTransportConfig()
+		transport := httptransport.New(cfg.Host, cfg.BasePath, cfg.Schemes)
+		transport.SetDebug(true)
+		ic := infuraClient.New(transport, nil)
+		c = ic.Operations
+	} else {
+		c = infuraClient.Default.Operations
+	}
+	// c.transport.SetDebug(true)
 	params := operations.NewGetV1JsonrpcNetworkMethodParams().
 		WithNetwork("mainnet").
 		WithMethod("eth_getBlockByNumber").

@@ -6,224 +6,40 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"bytes"
 	"encoding/json"
-	"io"
-	"io/ioutil"
 
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
-	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // JSONRPCRequest JSON RPC request
-// swagger:discriminator JSONRPCRequest method
-type JSONRPCRequest interface {
-	runtime.Validatable
+// swagger:model JSONRPCRequest
+type JSONRPCRequest struct {
 
 	// JSON-RPC request ID
 	// Required: true
-	ID() *int64
-	SetID(*int64)
+	ID *int64 `json:"id"`
 
 	// JSON-RPC version
 	// Required: true
 	// Enum: [2.0]
-	Jsonrpc() *string
-	SetJsonrpc(*string)
+	Jsonrpc *string `json:"jsonrpc"`
 
 	// Ethereum JSON-RPC method
 	// Required: true
-	// Enum: [eth_sendRawTransaction eth_estimateGas eth_submitWork eth_submitHashrate]
-	Method() string
-	SetMethod(string)
-/*
-	// x suppress
-	XSuppress() struct {
-		EthSendRawTransaction
+	// Enum: [eth_getBlockByNumber]
+	Method *string `json:"method"`
 
-		EthEstimateGas
-
-		EthSubmitWork
-
-		EthSubmitHashrate
-	}
-	SetXSuppress(struct {
-		EthSendRawTransaction
-
-		EthEstimateGas
-
-		EthSubmitWork
-
-		EthSubmitHashrate
-	})*/
-}
-
-type jsonRpcRequest struct {
-	idField *int64
-
-	jsonrpcField *string
-
-	methodField string
-
-	xSuppressField struct {
-		EthSendRawTransaction
-
-		EthEstimateGas
-
-		EthSubmitWork
-
-		EthSubmitHashrate
-	}
-}
-
-// ID gets the id of this polymorphic type
-func (m *jsonRpcRequest) ID() *int64 {
-	return m.idField
-}
-
-// SetID sets the id of this polymorphic type
-func (m *jsonRpcRequest) SetID(val *int64) {
-	m.idField = val
-}
-
-// Jsonrpc gets the jsonrpc of this polymorphic type
-func (m *jsonRpcRequest) Jsonrpc() *string {
-	return m.jsonrpcField
-}
-
-// SetJsonrpc sets the jsonrpc of this polymorphic type
-func (m *jsonRpcRequest) SetJsonrpc(val *string) {
-	m.jsonrpcField = val
-}
-
-// Method gets the method of this polymorphic type
-func (m *jsonRpcRequest) Method() string {
-	return "JSONRPCRequest"
-}
-
-// SetMethod sets the method of this polymorphic type
-func (m *jsonRpcRequest) SetMethod(val string) {
-
-}
-
-// XSuppress gets the x suppress of this polymorphic type
-func (m *jsonRpcRequest) XSuppress() struct {
-	EthSendRawTransaction
-
-	EthEstimateGas
-
-	EthSubmitWork
-
-	EthSubmitHashrate
-} {
-	return m.xSuppressField
-}
-
-// SetXSuppress sets the x suppress of this polymorphic type
-func (m *jsonRpcRequest) SetXSuppress(val struct {
-	EthSendRawTransaction
-
-	EthEstimateGas
-
-	EthSubmitWork
-
-	EthSubmitHashrate
-}) {
-	m.xSuppressField = val
-}
-
-// UnmarshalJSONRPCRequestSlice unmarshals polymorphic slices of JSONRPCRequest
-func UnmarshalJSONRPCRequestSlice(reader io.Reader, consumer runtime.Consumer) ([]JSONRPCRequest, error) {
-	var elements []json.RawMessage
-	if err := consumer.Consume(reader, &elements); err != nil {
-		return nil, err
-	}
-
-	var result []JSONRPCRequest
-	for _, element := range elements {
-		obj, err := unmarshalJSONRPCRequest(element, consumer)
-		if err != nil {
-			return nil, err
-		}
-		result = append(result, obj)
-	}
-	return result, nil
-}
-
-// UnmarshalJSONRPCRequest unmarshals polymorphic JSONRPCRequest
-func UnmarshalJSONRPCRequest(reader io.Reader, consumer runtime.Consumer) (JSONRPCRequest, error) {
-	// we need to read this twice, so first into a buffer
-	data, err := ioutil.ReadAll(reader)
-	if err != nil {
-		return nil, err
-	}
-	return unmarshalJSONRPCRequest(data, consumer)
-}
-
-func unmarshalJSONRPCRequest(data []byte, consumer runtime.Consumer) (JSONRPCRequest, error) {
-	buf := bytes.NewBuffer(data)
-	buf2 := bytes.NewBuffer(data)
-
-	// the first time this is read is to fetch the value of the method property.
-	var getType struct {
-		Method string `json:"method"`
-	}
-	if err := consumer.Consume(buf, &getType); err != nil {
-		return nil, err
-	}
-
-	if err := validate.RequiredString("method", "body", getType.Method); err != nil {
-		return nil, err
-	}
-
-	// The value of method is used to determine which type to create and unmarshal the data into
-	switch getType.Method {
-	case "JSONRPCRequest":
-		var result jsonRpcRequest
-		if err := consumer.Consume(buf2, &result); err != nil {
-			return nil, err
-		}
-		return &result, nil
-
-	case "eth_estimateGas":
-		var result EthEstimateGas
-		if err := consumer.Consume(buf2, &result); err != nil {
-			return nil, err
-		}
-		return &result, nil
-
-	case "eth_sendRawTransaction":
-		var result EthSendRawTransaction
-		if err := consumer.Consume(buf2, &result); err != nil {
-			return nil, err
-		}
-		return &result, nil
-
-	case "eth_submitHashrate":
-		var result EthSubmitHashrate
-		if err := consumer.Consume(buf2, &result); err != nil {
-			return nil, err
-		}
-		return &result, nil
-
-	case "eth_submitWork":
-		var result EthSubmitWork
-		if err := consumer.Consume(buf2, &result); err != nil {
-			return nil, err
-		}
-		return &result, nil
-
-	}
-	return nil, errors.New(422, "invalid method value: %q", getType.Method)
-
+	// params
+	// Required: true
+	Params []string `json:"params"`
 }
 
 // Validate validates this JSON RPC request
-func (m *jsonRpcRequest) Validate(formats strfmt.Registry) error {
+func (m *JSONRPCRequest) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateID(formats); err != nil {
@@ -234,7 +50,11 @@ func (m *jsonRpcRequest) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateXSuppress(formats); err != nil {
+	if err := m.validateMethod(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -244,9 +64,9 @@ func (m *jsonRpcRequest) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *jsonRpcRequest) validateID(formats strfmt.Registry) error {
+func (m *JSONRPCRequest) validateID(formats strfmt.Registry) error {
 
-	if err := validate.Required("id", "body", m.ID()); err != nil {
+	if err := validate.Required("id", "body", m.ID); err != nil {
 		return err
 	}
 
@@ -272,21 +92,21 @@ const (
 )
 
 // prop value enum
-func (m *jsonRpcRequest) validateJsonrpcEnum(path, location string, value string) error {
+func (m *JSONRPCRequest) validateJsonrpcEnum(path, location string, value string) error {
 	if err := validate.Enum(path, location, value, jsonRpcRequestTypeJsonrpcPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *jsonRpcRequest) validateJsonrpc(formats strfmt.Registry) error {
+func (m *JSONRPCRequest) validateJsonrpc(formats strfmt.Registry) error {
 
-	if err := validate.Required("jsonrpc", "body", m.Jsonrpc()); err != nil {
+	if err := validate.Required("jsonrpc", "body", m.Jsonrpc); err != nil {
 		return err
 	}
 
 	// value enum
-	if err := m.validateJsonrpcEnum("jsonrpc", "body", *m.Jsonrpc()); err != nil {
+	if err := m.validateJsonrpcEnum("jsonrpc", "body", *m.Jsonrpc); err != nil {
 		return err
 	}
 
@@ -297,7 +117,7 @@ var jsonRpcRequestTypeMethodPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["eth_sendRawTransaction","eth_estimateGas","eth_submitWork","eth_submitHashrate"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["eth_getBlockByNumber"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -307,32 +127,55 @@ func init() {
 
 const (
 
-	// JSONRPCRequestMethodEthSendRawTransaction captures enum value "eth_sendRawTransaction"
-	JSONRPCRequestMethodEthSendRawTransaction string = "eth_sendRawTransaction"
-
-	// JSONRPCRequestMethodEthEstimateGas captures enum value "eth_estimateGas"
-	JSONRPCRequestMethodEthEstimateGas string = "eth_estimateGas"
-
-	// JSONRPCRequestMethodEthSubmitWork captures enum value "eth_submitWork"
-	JSONRPCRequestMethodEthSubmitWork string = "eth_submitWork"
-
-	// JSONRPCRequestMethodEthSubmitHashrate captures enum value "eth_submitHashrate"
-	JSONRPCRequestMethodEthSubmitHashrate string = "eth_submitHashrate"
+	// JSONRPCRequestMethodEthGetBlockByNumber captures enum value "eth_getBlockByNumber"
+	JSONRPCRequestMethodEthGetBlockByNumber string = "eth_getBlockByNumber"
 )
 
 // prop value enum
-func (m *jsonRpcRequest) validateMethodEnum(path, location string, value string) error {
+func (m *JSONRPCRequest) validateMethodEnum(path, location string, value string) error {
 	if err := validate.Enum(path, location, value, jsonRpcRequestTypeMethodPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *jsonRpcRequest) validateXSuppress(formats strfmt.Registry) error {
+func (m *JSONRPCRequest) validateMethod(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.XSuppress()) { // not required
-		return nil
+	if err := validate.Required("method", "body", m.Method); err != nil {
+		return err
 	}
 
+	// value enum
+	if err := m.validateMethodEnum("method", "body", *m.Method); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *JSONRPCRequest) validateParams(formats strfmt.Registry) error {
+
+	if err := validate.Required("params", "body", m.Params); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (m *JSONRPCRequest) MarshalBinary() ([]byte, error) {
+	if m == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(m)
+}
+
+// UnmarshalBinary interface implementation
+func (m *JSONRPCRequest) UnmarshalBinary(b []byte) error {
+	var res JSONRPCRequest
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*m = res
 	return nil
 }
