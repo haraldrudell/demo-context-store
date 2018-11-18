@@ -40,7 +40,7 @@ type JSONRPCRequest interface {
 	// Enum: [eth_sendRawTransaction eth_estimateGas eth_submitWork eth_submitHashrate]
 	Method() string
 	SetMethod(string)
-
+/*
 	// x suppress
 	XSuppress() struct {
 		EthSendRawTransaction
@@ -59,7 +59,7 @@ type JSONRPCRequest interface {
 		EthSubmitWork
 
 		EthSubmitHashrate
-	})
+	})*/
 }
 
 type jsonRpcRequest struct {

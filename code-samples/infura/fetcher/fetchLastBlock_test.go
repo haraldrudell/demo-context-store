@@ -10,6 +10,9 @@ import (
 )
 
 func TestMain(*testing.T) {
-	actual := fetcher.Fetch()
+	actual, e := Fetch()
+	if e != nil {
+		panic(e)
+	}
 	fmt.Printf("actual: %#v\n", actual)
 }
