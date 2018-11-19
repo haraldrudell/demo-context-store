@@ -6,6 +6,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"sync/atomic"
@@ -18,6 +19,7 @@ import (
 
 var infura *fetcher.EndPoint
 var rq = uint64(0)
+var ec = uint64(0)
 
 func main() {
 	i, e := blocktime.GetEndPoint()
@@ -40,8 +42,11 @@ func get(w http.ResponseWriter, r *http.Request) {
 		e = json.NewEncoder(w).Encode(result)
 	}
 	if e != nil {
+		atomic.AddUint64(&ec, 1)
+		es := fmt.Sprintf("Error: %s", e)
+		log.Println(es)
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(e.Error()))
+		w.Write([]byte(es))
 	}
 	atomic.AddUint64(&rq, 1)
 }
@@ -49,6 +54,7 @@ func get(w http.ResponseWriter, r *http.Request) {
 func tickLog() {
 	ticker := time.NewTicker(time.Second)
 	lastValue := uint64(0)
+	lastE := uint64(0)
 	isFirst := true
 	for {
 		select {
@@ -58,8 +64,14 @@ func tickLog() {
 				log.Println("First tick - 1 s")
 			}
 			newValue := atomic.LoadUint64(&rq)
+			newE := atomic.LoadUint64(&ec)
 			if newValue != lastValue {
-				log.Printf("Requests per second: %d", newValue-lastValue)
+				s := fmt.Sprintf("Requests per second: %d", newValue-lastValue)
+				if lastE != newE {
+					s += fmt.Sprintf(" errors: %d", newE-lastE)
+					lastE = newE
+				}
+				log.Println(s)
 			}
 			lastValue = newValue
 		}

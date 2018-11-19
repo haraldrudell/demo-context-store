@@ -7,10 +7,10 @@ package main
 import (
 	"fmt"
 
-	"github.com/INFURA/project-harald-rudell/blocktimer"
+	"github.com/INFURA/project-harald-rudell/blocktime"
 )
 
 func main() {
 	fmt.Println("infmain 0.0.1 Retrieve data from Ethereum via Infura")
-	fmt.Println(fetcher.Fetch())
+	fmt.Println(blocktime.Fetch())
 }
