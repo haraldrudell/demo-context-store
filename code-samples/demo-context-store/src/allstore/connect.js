@@ -2,7 +2,10 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import React, { Component, PureComponent, createContext } from 'react'
+import React, { Component, PureComponent } from 'react'
+import { storeContext} from './context'
+
+export const connect = (mapStateToProps, options) => ConnectedComponent => getConnector({mapStateToProps, ConnectedComponent, options})
 
 function getConnector({mapStateToProps, ConnectedComponent, options}) {
   if (!options) options = {}
@@ -17,16 +20,15 @@ function getConnector({mapStateToProps, ConnectedComponent, options}) {
     next(state) {
       const {lastProps} = this
       const newProps = this.getSelectors(state)
-      console.log('Connect.next from:', lastProps, 'to:', newProps)
       const list = Object.entries(newProps)
       if (Object.keys(lastProps).length === list.length && list.every(([key, value]) => value === lastProps[key])) return // no change
       this.lastProps = newProps
-      this.setState({})
+      const a = this.a ? ++this.a : (this.a = 1)
+      this.setState({a})
     }
 
     render() {
       const {props, context: store} = this
-      console.log('Connect.render props:', props, 'state:', store && store.getState(), 'childprops:', {...props, ...Object(mapStateToProps(store.getState(), props))}, this.unsubscribe)
       return <ConnectedComponent {...props} {...Object(mapStateToProps(store.getState(), props))} />
     }
   }
@@ -34,4 +36,3 @@ function getConnector({mapStateToProps, ConnectedComponent, options}) {
   displayName && (Connect.displayName = displayName)
   return Connect
 }
-export const connect = (mapStateToProps, options) => ConnectedComponent => getConnector({mapStateToProps, ConnectedComponent, options})

@@ -5,4 +5,4 @@ All rights reserved.
 import { createContext } from 'react'
 
 export const storeContext = createContext()
-export const {Provider: StoreProvider, Consumer: StoreCosumer} = storeContext
+export const {Provider: StoreProvider, Consumer: StoreConsumer} = storeContext
