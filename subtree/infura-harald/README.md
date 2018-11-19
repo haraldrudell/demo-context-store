@@ -1,44 +1,82 @@
-# Infura Infrastructure Project
+# github.com/INFURA/project-harald-rudell
 
-This is a take-home project for the Infura backend+infrastructure team that we would like 
-you to attempt. You'll find a number of steps to complete below that will 
-require some coding on your part; return any code and/or documents you wrote 
-to us when you feel comfortable with the result.
+## Harald Rudell harugolden@icloud.com (415) 769-6398
 
-Feel free to use the programming/scripting language you're most comfortable 
-with (Go is preferred) and tools, libraries, or 
-frameworks you believe are best suited to the tasks listed below. There is no 
-strict time limit, but if possible please return this to us within one week.
-
-Please note and let us know how long you worked on the project; this is for 
-informational purposes and allows us to make adjustments and improvements for 
-future applicants (feel free to provide feedback on the project too).
+## Features
+* Fetching **block number** and **block Unix time stamp** from **Ethereum mainnet** via **Infura API v3**
+* **Command-line** and **REST** server invocation
+* Implementing protocol: **JSON-RPC** v2
+* Clever **declarative JSON parsing**
+* Code architected by concern: **endpoint** and **per api** processig using shared functions
+* REST server **logs requests per second** once per second
 
 
-1. Register for an [Infura API key](https://infura.io/signup)
-    1. You will have to use this key for subsequent requests to Infura endpoints, 
-    as briefly shown in the [Setup](https://infura.io/setup) section of the site
-2. Create an application that retrieves Ethereum Mainnet transaction and block 
-data via the Infura JSON-RPC API from 
-[https://pmainnet.infura.io](https://pmainnet.infura.io/)
-    1. Examples of useful methods include eth_getTransactionByBlockNumberAndIndex or eth_getBlockByNumber, but feel free to add any other methods (be advised that some RPC methods are not allowed via our endpoints -- for example, those that manage accounts)
-    2. See [the Infura API docs](https://infura.docs.apiary.io/#) for information on the supported APIs
-    3. See [the Ethereum docs](https://github.com/ethereum/wiki/wiki/JSON-RPC) for information on the 
-    Ethereum API itself
-3. Expose the retrieved transaction and block data via REST endpoints that your 
-application provides
-    1. To sanity check your results, feel free to use the similar functionality
-    at the [Infura Hub](https://hub.infura.io/mainnet)
-4. Set up your application to run in a [Docker container](https://www.docker.com)
-5. Create a load test for your application
-6. Run some load test iterations and document the testing approach and the 
-results obtained
-    1. Specify some performance expectations given the load test results: 
-    e.g., this application is able to support X requests per minute
-7. Write up a short document describing the general setup of the components 
-you've put together as well as instructions to run your application
-8. **Bonus points**: add unit tests to cover most of the code you've written
-9. Submit your application and load test code, as well as associated 
-documentation, to the master branch of the Github repository 
-we've set up for this purpose
+## Command-Line Interface
+**go run cmd/infmain/infmain.go**
 
+<pre>
+infmain 0.0.1 Retrieve data from Ethereum via Infura
+Last block number: 6,732,013 time stamp: 2018-11-18 22:28:59 -0800 PST
+</pre>
+
+## Docker
+
+* docker build --tag infura/haraldrudell:latest .
+* docker run --interactive --tty --publish 8000:8000 --name this --rm infura/haraldrudell:latest
+* browse to **http://127.0.0.1:8000**
+
+**docker run --interactive --tty --publish 8000:8000 --name this --rm infura/haraldrull:latest**
+<pre>
+2018/11/19 06:25:29 Listening at ':8000': ^C to exit…
+2018/11/19 06:25:30 First tick - 1 s
+2018/11/19 06:26:05 Requests per second: 1
+</pre>
+
+## Requirements
+* Go 1.11 modules
+
+## Project Development Flow
+* Began using **swagger-go** client and models
+* Discovered the swagger definition file **infura.yaml** fails validation
+* Added polymorphism and discriminators to make **infura.yaml** validate
+* Discovered v1 Infura API outdated, should use **v3**
+* Developed a v3 definition file, discovered **arrays of differing element type** not possible in Swagger 2.0
+* Rewrote using **http.Post**
+* Added **REST** server
+* **Dockerized**
+
+## Load Test
+
+go get -u github.com/tsenart/vegeta<br />
+echo 'GET http://localhost:8000' | /Users/foxyboy/go/bin/vegeta attack -duration 10s
+
+* macOS limits to 256 open files (ulimit -a)
+* No errors during API execution
+* Peaks at 124 requests during 1 s
+<pre>
+2018/11/18 20:01:53 Listening at ':8000': ^C to exit…
+2018/11/18 20:01:54 First tick - 1 s
+2018/11/18 20:02:00 Requests per second: 7
+2018/11/18 20:02:01 Requests per second: 13
+2018/11/18 20:02:02 Requests per second: 9
+2018/11/18 20:02:03 http: Accept error: accept tcp [::]:8000: accept: too many open files; retrying in 5ms
+2018/11/18 20:02:03 http: Accept error: accept tcp [::]:8000: accept: too many open files; retrying in 10ms
+2018/11/18 20:02:03 http: Accept error: accept tcp [::]:8000: accept: too many open files; retrying in 20ms
+2018/11/18 20:02:03 http: Accept error: accept tcp [::]:8000: accept: too many open files; retrying in 40ms
+2018/11/18 20:02:03 http: Accept error: accept tcp [::]:8000: accept: too many open files; retrying in 80ms
+2018/11/18 20:02:03 http: Accept error: accept tcp [::]:8000: accept: too many open files; retrying in 160ms
+2018/11/18 20:02:03 http: Accept error: accept tcp [::]:8000: accept: too many open files; retrying in 320ms
+2018/11/18 20:02:04 http: Accept error: accept tcp [::]:8000: accept: too many open files; retrying in 640ms
+2018/11/18 20:02:04 Requests per second: 18
+2018/11/18 20:02:04 http: Accept error: accept tcp [::]:8000: accept: too many open files; retrying in 1s
+2018/11/18 20:02:05 Requests per second: 27
+2018/11/18 20:02:05 http: Accept error: accept tcp [::]:8000: accept: too many open files; retrying in 1s
+2018/11/18 20:02:06 Requests per second: 32
+2018/11/18 20:02:06 http: Accept error: accept tcp [::]:8000: accept: too many open files; retrying in 1s
+2018/11/18 20:02:07 Requests per second: 49
+2018/11/18 20:02:07 http: Accept error: accept tcp [::]:8000: accept: too many open files; retrying in 1s
+2018/11/18 20:02:08 Requests per second: 116
+2018/11/18 20:02:08 http: Accept error: accept tcp [::]:8000: accept: too many open files; retrying in 1s
+2018/11/18 20:02:09 Requests per second: 124
+</pre>
+## Harald Rudell harugolden@icloud.com (415) 769-6398

@@ -1,0 +1,86 @@
+swagger: "2.0"
+info:
+  version: 0.0.1
+  title: "Infura v3 API"
+  description: Infura v3 eth_getBlockByNumber
+host: mainnet.infura.io
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /v3/{projectid}:
+    post:
+      description: |
+        https://infura.io/docs/ethereum/json-rpc/eth_getBlockByNumber
+      parameters:
+      - name: projectid
+        in: path
+        required: true
+        type: string
+      - name: payload
+        in: body
+        description: Regular JSON-RPC payload (POST body)
+        required: true
+        schema:
+          $ref: '#/definitions/JSONRPCRequest'
+      responses:
+        200:
+          description: JSON-RPC response
+          schema:
+            $ref: '#/definitions/JSONRPCResponse'
+        400:
+          description: Bad JSON in `params` query parameter
+        404:
+          description: JSON-RPC method is not a valid GET method
+        500:
+          description: Server error
+        502:
+          description: Ethereum client error
+
+definitions:
+  JSONRPCRequest:
+    type: object
+    properties:
+      jsonrpc:
+        type: string
+        description: JSON-RPC version
+        enum:
+        - "2.0"
+      id:
+        type: integer
+        description: JSON-RPC request ID
+      method:
+        type: string
+        description: Ethereum JSON-RPC method
+        enum:
+        - eth_getBlockByNumber
+      params:
+        type: array
+        items:
+          type: string
+    required:
+    - jsonrpc
+    - id
+    - method
+    - params
+  JSONRPCResponse:
+    type: object
+    properties:
+      jsonrpc:
+        type: string
+        description: JSON-RPC version
+        enum:
+        - "2.0"
+      id:
+        type: integer
+        description: JSON-RPC request ID
+      result:
+        type: string
+        description: JSON-RPC result (can also be an object)
+    required:
+    - jsonrpc
+    - id
