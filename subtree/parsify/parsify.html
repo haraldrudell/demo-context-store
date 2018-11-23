@@ -1,0 +1,810 @@
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script type='text/javascript'>
+	document.ANALYSIS_DATA = ;
+	document.CALLGRAPH = ;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/haraldrudell/parsify"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package parsify is a declarative, extensible JSON parser
+</p>
+<p>
+© 2018-present Harald Rudell &lt;harald.rudell@gmail.com&gt; (<a href="http://www.haraldrudell.com">http://www.haraldrudell.com</a>)
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
+</p>
+<h3 id="hdr-Package_parsify_is_a_declarative__extensible_JSON_parser">Package parsify is a declarative, extensible JSON parser</h3>
+<p>
+© 2018-present Harald Rudell &lt;harald.rudell@gmail.com&gt; (<a href="http://www.haraldrudell.com">http://www.haraldrudell.com</a>)
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
+</p>
+<h3 id="hdr-Package_parsify_is_a_declarative__extensible_JSON_parser">Package parsify is a declarative, extensible JSON parser</h3>
+<p>
+© 2018-present Harald Rudell &lt;harald.rudell@gmail.com&gt; (<a href="http://www.haraldrudell.com">http://www.haraldrudell.com</a>)
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
+</p>
+<h3 id="hdr-Package_parsify_is_a_declarative__extensible_JSON_parser">Package parsify is a declarative, extensible JSON parser</h3>
+<p>
+© 2018-present Harald Rudell &lt;harald.rudell@gmail.com&gt; (<a href="http://www.haraldrudell.com">http://www.haraldrudell.com</a>)
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
+</p>
+<h3 id="hdr-Package_parsify_is_a_declarative__extensible_JSON_parser">Package parsify is a declarative, extensible JSON parser</h3>
+<p>
+© 2018-present Harald Rudell &lt;harald.rudell@gmail.com&gt; (<a href="http://www.haraldrudell.com">http://www.haraldrudell.com</a>)
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="#pkg-variables">Variables</a></dd>
+			
+			
+			
+				
+				<dd><a href="#Fn">type Fn</a></dd>
+				
+				
+			
+				
+				<dd><a href="#Fns">type Fns</a></dd>
+				
+				
+			
+				
+				<dd><a href="#JSONData">type JSONData</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ParseByteStream">func ParseByteStream(reader io.Reader) (*JSONData, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ParseBytes">func ParseBytes(bytes []byte) (*JSONData, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.ArrayAt">func (j *JSONData) ArrayAt(i int) *JSONData</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.ArrayLength">func (j *JSONData) ArrayLength() *int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.Boolean">func (j *JSONData) Boolean() *bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.EnterArray">func (j *JSONData) EnterArray(i int) *JSONData</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.EnterObject">func (j *JSONData) EnterObject(key string) *JSONData</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.GetNumberObjectValue">func (j *JSONData) GetNumberObjectValue(key string) *float64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.GetNumericStringObjectValue">func (j *JSONData) GetNumericStringObjectValue(key string) *uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.GetStringObjectValue">func (j *JSONData) GetStringObjectValue(key string) *string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.IsNull">func (j *JSONData) IsNull() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.Number">func (j *JSONData) Number() *float64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.ObjectKeys">func (j *JSONData) ObjectKeys() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.ObjectValue">func (j *JSONData) ObjectValue(key string) *JSONData</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.Print">func (j *JSONData) Print()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.String">func (j *JSONData) String() *string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONData.Type">func (j *JSONData) Type() JSONType</a></dd>
+				
+			
+				
+				<dd><a href="#JSONType">type JSONType</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#JSONType.String">func (j JSONType) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#Step">type Step</a></dd>
+				
+				
+			
+				
+				<dd><a href="#Steps">type Steps</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#New">func New(header string, steps []Step, fns Fns, data *JSONData) *Steps</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Steps.Parsify">func (ps *Steps) Parsify() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Steps.ParsifyBytes">func (ps *Steps) ParsifyBytes(bytes []byte) (*JSONData, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Steps.ParsifyReader">func (ps *Steps) ParsifyReader(reader io.Reader) (*JSONData, error)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="/src/github.com/haraldrudell/parsify/json.go">json.go</a>
+			
+				<a href="/src/github.com/haraldrudell/parsify/jsonData.go">jsonData.go</a>
+			
+				<a href="/src/github.com/haraldrudell/parsify/jsonDataOps.go">jsonDataOps.go</a>
+			
+				<a href="/src/github.com/haraldrudell/parsify/parsifiers.go">parsifiers.go</a>
+			
+				<a href="/src/github.com/haraldrudell/parsify/parsifySteps.go">parsifySteps.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		<div id="pkg-callgraph" class="toggle" style="display: none">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Internal Call Graph section">Internal call graph ▹</h2>
+		</div> <!-- .expanded -->
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Internal Call Graph section">Internal call graph ▾</h2>
+			<p>
+			  In the call graph viewer below, each node
+			  is a function belonging to this package
+			  and its children are the functions it
+			  calls&mdash;perhaps dynamically.
+			</p>
+			<p>
+			  The root nodes are the entry points of the
+			  package: functions that may be called from
+			  outside the package.
+			  There may be non-exported or anonymous
+			  functions among them if they are called
+			  dynamically from another package.
+			</p>
+			<p>
+			  Click a node to visit that function's source code.
+			  From there you can visit its callers by
+			  clicking its declaring <code>func</code>
+			  token.
+			</p>
+			<p>
+			  Functions may be omitted if they were
+			  determined to be unreachable in the
+			  particular programs or tests that were
+			  analyzed.
+			</p>
+			<!-- Zero means show all package entry points. -->
+			<ul style="margin-left: 0.5in" id="callgraph-0" class="treeview"></ul>
+		</div>
+		</div> <!-- #pkg-callgraph -->
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+DefaultFns some basic JSON parsing functions
+</p>
+
+				<pre>var <span id="DefaultFns">DefaultFns</span> = <a href="#Fns">Fns</a>{
+    &#34;VerifyStringProperty&#34;: verifyStringProperty,
+    &#34;VerifyNumberProperty&#34;: verifyNumberProperty,
+    &#34;EnterKey&#34;:             enterKey,
+    &#34;StoreNumber&#34;:          storeNumber,
+}</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="Fn">type <a href="/src/target/parsifiers.go?s=355:388#L2">Fn</a>
+				<a class="permalink" href="#Fn">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Fn signature for JSON-parsing step functions
+</p>
+
+			<pre>type Fn func(*<a href="#Step">Step</a>, *<a href="#Steps">Steps</a>) <a href="/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Fns">type <a href="/src/target/parsifiers.go?s=445:467#L5">Fns</a>
+				<a class="permalink" href="#Fns">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Fns is a map for providing groups of step functions
+</p>
+
+			<pre>type Fns map[<a href="/pkg/builtin/#string">string</a>]<a href="#Fn">Fn</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="JSONData">type <a href="/src/target/jsonData.go?s=803:891#L19">JSONData</a>
+				<a class="permalink" href="#JSONData">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+JSONData hold parsed JSON data
+</p>
+
+			<pre>type JSONData struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="ParseByteStream">func <a href="/src/target/jsonData.go?s=439:496#L6">ParseByteStream</a>
+					<a class="permalink" href="#ParseByteStream">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func ParseByteStream(reader <a href="/pkg/io/">io</a>.<a href="/pkg/io/#Reader">Reader</a>) (*<a href="#JSONData">JSONData</a>, <a href="/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ParseByteStream data from a reader as JSON, the reader is typically resp.body from a http request
+</p>
+
+				
+				
+			
+				
+				<h3 id="ParseBytes">func <a href="/src/target/jsonData.go?s=645:693#L13">ParseBytes</a>
+					<a class="permalink" href="#ParseBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func ParseBytes(bytes []<a href="/pkg/builtin/#byte">byte</a>) (*<a href="#JSONData">JSONData</a>, <a href="/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ParseBytes coverts a utf-8 slice of bytes to objects
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="JSONData.ArrayAt">func (*JSONData) <a href="/src/target/jsonData.go?s=2463:2506#L103">ArrayAt</a>
+					<a class="permalink" href="#JSONData.ArrayAt">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) ArrayAt(i <a href="/pkg/builtin/#int">int</a>) *<a href="#JSONData">JSONData</a></pre>
+				<p>
+ArrayAt examines the current value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="JSONData.ArrayLength">func (*JSONData) <a href="/src/target/jsonData.go?s=2301:2338#L94">ArrayLength</a>
+					<a class="permalink" href="#JSONData.ArrayLength">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) ArrayLength() *<a href="/pkg/builtin/#int">int</a></pre>
+				<p>
+ArrayLength examines the current value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="JSONData.Boolean">func (*JSONData) <a href="/src/target/jsonData.go?s=1601:1635#L56">Boolean</a>
+					<a class="permalink" href="#JSONData.Boolean">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) Boolean() *<a href="/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Boolean examines the current value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="JSONData.EnterArray">func (*JSONData) <a href="/src/target/jsonData.go?s=2681:2727#L114">EnterArray</a>
+					<a class="permalink" href="#JSONData.EnterArray">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) EnterArray(i <a href="/pkg/builtin/#int">int</a>) *<a href="#JSONData">JSONData</a></pre>
+				<p>
+EnterArray examines the current value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="JSONData.EnterObject">func (*JSONData) <a href="/src/target/jsonData.go?s=3373:3425#L149">EnterObject</a>
+					<a class="permalink" href="#JSONData.EnterObject">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) EnterObject(key <a href="/pkg/builtin/#string">string</a>) *<a href="#JSONData">JSONData</a></pre>
+				<p>
+EnterObject zooms in to an object property value of the JSON
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="JSONData.GetNumberObjectValue">func (*JSONData) <a href="/src/target/jsonDataOps.go?s=823:883#L25">GetNumberObjectValue</a>
+					<a class="permalink" href="#JSONData.GetNumberObjectValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) GetNumberObjectValue(key <a href="/pkg/builtin/#string">string</a>) *<a href="/pkg/builtin/#float64">float64</a></pre>
+				<p>
+GetNumberObjectValue ensure object and property to be string value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="JSONData.GetNumericStringObjectValue">func (*JSONData) <a href="/src/target/jsonDataOps.go?s=1067:1133#L36">GetNumericStringObjectValue</a>
+					<a class="permalink" href="#JSONData.GetNumericStringObjectValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) GetNumericStringObjectValue(key <a href="/pkg/builtin/#string">string</a>) *<a href="/pkg/builtin/#uint64">uint64</a></pre>
+				<p>
+GetNumericStringObjectValue gets timestamp, block number
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="JSONData.GetStringObjectValue">func (*JSONData) <a href="/src/target/jsonDataOps.go?s=559:618#L14">GetStringObjectValue</a>
+					<a class="permalink" href="#JSONData.GetStringObjectValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) GetStringObjectValue(key <a href="/pkg/builtin/#string">string</a>) *<a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+GetStringObjectValue ensure object and property to be string value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="JSONData.IsNull">func (*JSONData) <a href="/src/target/jsonData.go?s=1489:1521#L51">IsNull</a>
+					<a class="permalink" href="#JSONData.IsNull">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) IsNull() <a href="/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsNull examines the current value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="JSONData.Number">func (*JSONData) <a href="/src/target/jsonData.go?s=1783:1819#L66">Number</a>
+					<a class="permalink" href="#JSONData.Number">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) Number() *<a href="/pkg/builtin/#float64">float64</a></pre>
+				<p>
+Number examines the current value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="JSONData.ObjectKeys">func (*JSONData) <a href="/src/target/jsonData.go?s=3091:3131#L135">ObjectKeys</a>
+					<a class="permalink" href="#JSONData.ObjectKeys">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) ObjectKeys() []<a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+ObjectKeys examines the current value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="JSONData.ObjectValue">func (*JSONData) <a href="/src/target/jsonData.go?s=3591:3643#L160">ObjectValue</a>
+					<a class="permalink" href="#JSONData.ObjectValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) ObjectValue(key <a href="/pkg/builtin/#string">string</a>) *<a href="#JSONData">JSONData</a></pre>
+				<p>
+ObjectValue examines the current value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="JSONData.Print">func (*JSONData) <a href="/src/target/jsonDataOps.go?s=1341:1367#L49">Print</a>
+					<a class="permalink" href="#JSONData.Print">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) Print()</pre>
+				<p>
+Print what do I have?
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="JSONData.String">func (*JSONData) <a href="/src/target/jsonData.go?s=1939:1974#L75">String</a>
+					<a class="permalink" href="#JSONData.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) String() *<a href="/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="JSONData.Type">func (*JSONData) <a href="/src/target/jsonData.go?s=943:977#L24">Type</a>
+					<a class="permalink" href="#JSONData.Type">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j *<a href="#JSONData">JSONData</a>) Type() <a href="#JSONType">JSONType</a></pre>
+				<p>
+Type determines the JSON type of current value
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="JSONType">type <a href="/src/target/json.go?s=340:358#L1">JSONType</a>
+				<a class="permalink" href="#JSONType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+JSONType describes underlyig JSON data type
+</p>
+
+			<pre>type JSONType <a href="/pkg/builtin/#uint">uint</a></pre>
+
+			
+				<p>
+constants
+</p>
+
+				<pre>const (
+    <span id="JSONnil">JSONnil</span>     <a href="#JSONType">JSONType</a> = 0 <span class="comment">// no data</span>
+    <span id="JSONnull">JSONnull</span>                 <span class="comment">// nil</span>
+    <span id="JSONboolean">JSONboolean</span>              <span class="comment">// bool</span>
+    <span id="JSONnumber">JSONnumber</span>               <span class="comment">// float64</span>
+    <span id="JSONstring">JSONstring</span>               <span class="comment">// string</span>
+    <span id="JSONarray">JSONarray</span>                <span class="comment">// array: []interface{}</span>
+    <span id="JSONobject">JSONobject</span>               <span class="comment">// map[string]interface{}</span>
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="JSONType.String">func (JSONType) <a href="/src/target/json.go?s=663:696#L13">String</a>
+					<a class="permalink" href="#JSONType.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (j <a href="#JSONType">JSONType</a>) String() <a href="/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Step">type <a href="/src/target/parsifySteps.go?s=1452:1594#L45">Step</a>
+				<a class="permalink" href="#Step">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Step instructions for parsing JSON
+</p>
+
+			<pre>type Step struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Steps">type <a href="/src/target/parsifySteps.go?s=1129:1412#L36">Steps</a>
+				<a class="permalink" href="#Steps">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Steps instructions for parsing JSON
+</p>
+
+			<pre>type Steps struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="/src/target/parsifySteps.go?s=360:429#L5">New</a>
+					<a class="permalink" href="#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(header <a href="/pkg/builtin/#string">string</a>, steps []<a href="#Step">Step</a>, fns <a href="#Fns">Fns</a>, data *<a href="#JSONData">JSONData</a>) *<a href="#Steps">Steps</a></pre>
+				<p>
+New creates a parsifier to be executed
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Steps.Parsify">func (*Steps) <a href="/src/target/parsifySteps.go?s=1626:1658#L53">Parsify</a>
+					<a class="permalink" href="#Steps.Parsify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ps *<a href="#Steps">Steps</a>) Parsify() <a href="/pkg/builtin/#error">error</a></pre>
+				<p>
+Parsify run a Parsify list
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Steps.ParsifyBytes">func (*Steps) <a href="/src/target/parsifySteps.go?s=915:977#L26">ParsifyBytes</a>
+					<a class="permalink" href="#Steps.ParsifyBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ps *<a href="#Steps">Steps</a>) ParsifyBytes(bytes []<a href="/pkg/builtin/#byte">byte</a>) (*<a href="#JSONData">JSONData</a>, <a href="/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ParsifyBytes parsifies from a utf-8 byte slice
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Steps.ParsifyReader">func (*Steps) <a href="/src/target/parsifySteps.go?s=679:746#L16">ParsifyReader</a>
+					<a class="permalink" href="#Steps.ParsifyReader">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ps *<a href="#Steps">Steps</a>) ParsifyReader(reader <a href="/pkg/io/">io</a>.<a href="/pkg/io/#Reader">Reader</a>) (*<a href="#JSONData">JSONData</a>, <a href="/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ParsifyReader instatiate and parsify
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="..">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="fakeGOPATH/">fakeGOPATH</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="fakeGOPATH/src/">src</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
