@@ -1,5 +1,6 @@
 /*
-Package namedstrings collects a hierarchy of named strings
+Package namedstrs collects a hierarchy of named strings
+
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 
@@ -9,29 +10,23 @@ package namedstrs
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 )
 
 // Create create a named string, value: string or *Strings
-func Create(name string, value interface{}) (*Strings, error) {
-	if name == "" {
-		return &Strings{[]named{}}, nil
+func Create(name string, value interface{}) *Strings {
+	names := []named{}
+	if name != "" { // empty key means empty result
+		names = []named{createName(name, value)}
 	}
-	ptName, e := createName(name, value)
-	if e != nil {
-		return nil, e
-	}
-	return &Strings{[]named{*ptName}}, nil
+	return &Strings{names}
 }
 
 // Append add a named string
-func (s *Strings) Append(name string, value interface{}) error {
-	ptName, e := createName(name, value)
-	if e != nil {
-		return e
-	}
-	s.strings = append(s.strings, *ptName)
-	return nil
+func (s *Strings) Append(name string, value interface{}) *Strings {
+	s.strings = append(s.strings, createName(name, value))
+	return s
 }
 
 var newLine = "\n"
@@ -70,16 +65,14 @@ type Strings struct {
 	strings []named
 }
 
-func createName(name string, value interface{}) (*named, error) {
-	if _, ok := value.(string); ok {
-		return &named{name, value}, nil
-	}
-	if value != nil {
-		if ptStrings, ok := value.(*Strings); ok {
-			return &named{name, ptStrings}, nil
+func createName(name string, value interface{}) named {
+	if _, ok := value.(string); !ok { // may need conversion
+		_, ok := value.(*Strings) // should not be converted
+		if value == nil || !ok {
+			value = fmt.Sprintf("%T %#[1]v", value)
 		}
 	}
-	return nil, errors.New("Bad value argument: not string or pointer to Strings")
+	return named{name, value}
 }
 
 type named struct {

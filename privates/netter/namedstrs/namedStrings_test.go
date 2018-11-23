@@ -13,10 +13,7 @@ import (
 
 func TestCreate(t *testing.T) {
 	expected := named{"Name", "Value"}
-	s, e := Create(expected.name, expected.value)
-	if e != nil {
-		panic(e)
-	}
+	s := Create(expected.name, expected.value)
 
 	if len(s.strings) != 1 ||
 		s.strings[0].name != expected.name ||
@@ -26,10 +23,7 @@ func TestCreate(t *testing.T) {
 	}
 
 	expected2 := "Name2"
-	s2, e := Create(expected2, s)
-	if e != nil {
-		panic(e)
-	}
+	s2 := Create(expected2, s)
 
 	if len(s.strings) != 1 ||
 		s2.strings[0].name != expected2 ||
@@ -41,10 +35,7 @@ func TestCreate(t *testing.T) {
 
 func TestAppend(t *testing.T) {
 	expected := named{"Name", "Value"}
-	s, e := Create(expected.name, expected.value)
-	if e != nil {
-		panic(e)
-	}
+	s := Create(expected.name, expected.value)
 
 	if len(s.strings) != 1 ||
 		s.strings[0].name != expected.name ||
@@ -54,10 +45,7 @@ func TestAppend(t *testing.T) {
 	}
 
 	expected2 := named{"Name2", "Value2"}
-	e = s.Append(expected2.name, expected2.value)
-	if e != nil {
-		panic(e)
-	}
+	s.Append(expected2.name, expected2.value)
 
 	if len(s.strings) != 2 ||
 		s.strings[1].name != expected2.name ||
@@ -75,16 +63,10 @@ func TestGetLines(t *testing.T) {
 		n1 + ":\n" +
 			"\x20\x20" + n2 + ": " + v2
 
-	s2, e := Create(n2, v2)
-	if e != nil {
-		panic(e)
-	}
-	s, e := Create(n1, s2)
-	if e != nil {
-		panic(e)
-	}
+	s2 := Create(n2, v2)
+	s := Create(n1, s2)
 
-	actual := s.GetLines()
+	actual := s.GetLines("")
 
 	if actual != expected {
 		fmt.Printf("GetLines failed:\na: \x27" + actual + "\x27\ne: \x27" + expected + "\x27\n")
