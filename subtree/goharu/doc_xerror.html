@@ -1,0 +1,308 @@
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script type='text/javascript'>
+	document.ANALYSIS_DATA = ;
+	document.CALLGRAPH = ;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/haraldrudell/goharu/xerror"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+© 2018-present Harald Rudell &lt;harald.rudell@gmail.com&gt; (<a href="http://www.haraldrudell.com">http://www.haraldrudell.com</a>)
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
+</p>
+<p>
+implements: type error interface{Error() string}
+</p>
+<p>
+Package xerror provides comprehesive error messages and data
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="#Data">type Data</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#New">func New(message string) *Data</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Data.AppendCause">func (ed *Data) AppendCause(e error) *Data</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Data.AppendText">func (ed *Data) AppendText(name string, value interface{}) *Data</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Data.Error">func (ed *Data) Error() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Data.FormatError">func (ed *Data) FormatError(format Format) string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Data.String">func (ed *Data) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#Format">type Format</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="/src/github.com/haraldrudell/goharu/xerror/error.go">error.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		<div id="pkg-callgraph" class="toggle" style="display: none">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Internal Call Graph section">Internal call graph ▹</h2>
+		</div> <!-- .expanded -->
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Internal Call Graph section">Internal call graph ▾</h2>
+			<p>
+			  In the call graph viewer below, each node
+			  is a function belonging to this package
+			  and its children are the functions it
+			  calls&mdash;perhaps dynamically.
+			</p>
+			<p>
+			  The root nodes are the entry points of the
+			  package: functions that may be called from
+			  outside the package.
+			  There may be non-exported or anonymous
+			  functions among them if they are called
+			  dynamically from another package.
+			</p>
+			<p>
+			  Click a node to visit that function's source code.
+			  From there you can visit its callers by
+			  clicking its declaring <code>func</code>
+			  token.
+			</p>
+			<p>
+			  Functions may be omitted if they were
+			  determined to be unreachable in the
+			  particular programs or tests that were
+			  analyzed.
+			</p>
+			<!-- Zero means show all package entry points. -->
+			<ul style="margin-left: 0.5in" id="callgraph-0" class="treeview"></ul>
+		</div>
+		</div> <!-- #pkg-callgraph -->
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Data">type <a href="/src/target/error.go?s=1987:2061#L75">Data</a>
+				<a class="permalink" href="#Data">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Data contains a string hierarchy and stack traces
+</p>
+
+			<pre>type Data struct {
+<span id="Data.Keys"></span>    Keys <a href="/pkg/github.com/haraldrudell/goharu/namedstrs/">namedstrs</a>.<a href="/pkg/github.com/haraldrudell/goharu/namedstrs/#Strings">Strings</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="/src/target/error.go?s=463:493#L9">New</a>
+					<a class="permalink" href="#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(message <a href="/pkg/builtin/#string">string</a>) *<a href="#Data">Data</a></pre>
+				<p>
+New Create elaborate error
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Data.AppendCause">func (*Data) <a href="/src/target/error.go?s=1643:1685#L59">AppendCause</a>
+					<a class="permalink" href="#Data.AppendCause">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="#Data">Data</a>) AppendCause(e <a href="/pkg/builtin/#error">error</a>) *<a href="#Data">Data</a></pre>
+				<p>
+AppendCause add another causing Error object
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Data.AppendText">func (*Data) <a href="/src/target/error.go?s=1800:1864#L67">AppendText</a>
+					<a class="permalink" href="#Data.AppendText">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="#Data">Data</a>) AppendText(name <a href="/pkg/builtin/#string">string</a>, value interface{}) *<a href="#Data">Data</a></pre>
+				<p>
+AppendText add another causing Error object
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Data.Error">func (*Data) <a href="/src/target/error.go?s=2250:2280#L90">Error</a>
+					<a class="permalink" href="#Data.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="#Data">Data</a>) Error() <a href="/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Data.FormatError">func (*Data) <a href="/src/target/error.go?s=2306:2355#L94">FormatError</a>
+					<a class="permalink" href="#Data.FormatError">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="#Data">Data</a>) FormatError(format <a href="#Format">Format</a>) <a href="/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Data.String">func (*Data) <a href="/src/target/error.go?s=597:628#L14">String</a>
+					<a class="permalink" href="#Data.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="#Data">Data</a>) String() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+String get string value of Error
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Format">type <a href="/src/target/error.go?s=2110:2127#L82">Format</a>
+				<a class="permalink" href="#Format">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Format describes how to format error output
+</p>
+
+			<pre>type Format <a href="/pkg/builtin/#uint8">uint8</a></pre>
+
+			
+				<p>
+Available formats
+</p>
+
+				<pre>const (
+    <span id="ONELINE">ONELINE</span> <a href="#Format">Format</a> = 0 <span class="comment">// single line</span>
+    <span id="LF">LF</span>                 <span class="comment">// multiple-lines, 2-space indent</span>
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
