@@ -1,0 +1,34 @@
+{
+  "name": "rollup-plugin-thatworks",
+  "version": "0.0.2",
+  "description": "Chmod + Directory Resolver + Shebang Rollup plugins by Harald Rudell",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "ISC",
+  "scripts": {
+    "build": "rollup --config node:es2049package",
+    "pub": "yarn publish --patch --access public"
+  },
+  "main": "lib/cjs.js",
+  "module": "lib/esm.js",
+  "keywords": [
+    "Create React App",
+    "React",
+    "Component",
+    "Library",
+    "lib",
+    "rollup"
+  ],
+  "rollup": {
+    "targets": "mini"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haraldrudell/lib-create-react-app"
+  },
+  "devDependencies": {
+    "es2049package": "^0.0.23"
+  },
+  "dependencies": {
+    "fs-extra": "^7.0.1"
+  }
+}
