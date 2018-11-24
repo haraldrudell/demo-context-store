@@ -3,28 +3,39 @@
 All rights reserved.
 */
 import React, { Fragment } from 'react'
-import { BrowserRouter as Router, Switch, Route, Link, NavLink, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, NavLink } from 'react-router-dom'
+
+import ReactFame from './ReactFame'
+import PlayGround from './PlayGround'
 
 const routeHome='/'
 const routeAllUsers='/users'
 const routeUserN = n => `/users/${n}`
 const userMatcher='/users/:user?'
+const routeFame='/fame'
+const routePlay='/play'
 const elementList = (e, i, o) => i !== o.length ? <Fragment key={i}>{e}&emsp;</Fragment> : {e}
 const navLink = {activeStyle: {background: 'yellow'}, exact: true}
 
 export default () =>
-  <><Router><>{[
-    <NavLink to={routeHome} {...navLink}>Home</NavLink>,
-    <NavLink to={routeAllUsers} {...navLink}>All Users</NavLink>,
-    <NavLink to={routeUserN(1)} {...navLink}>User 1</NavLink>,
-    <NavLink to={'/x'} {...navLink}>Broken link</NavLink>,
-    ].map(elementList)}
-    <Switch><>
-      <Route exact path={routeHome} component={Home} />
-      <Route path={userMatcher} component={Users} />
-      <Route component={NotFound} />
-    </></Switch>
-  </></Router></>
+  <><Router><Switch>{/* possibly render Fame that has no navigation */}
+    <Route exact path={routeFame} component={ReactFame} />
+  <Route exact path={routePlay} component={PlayGround} />
+    <Route><>{/* render navigation links and one destiation */[
+      <NavLink to={routeHome} {...navLink}>Home</NavLink>,
+      <NavLink to={routeAllUsers} {...navLink}>All Users</NavLink>,
+      <NavLink to={routeUserN(1)} {...navLink}>User 1</NavLink>,
+      <NavLink to={routeFame} {...navLink}>Fame</NavLink>,
+      <NavLink to={routePlay} {...navLink}>PlayGround</NavLink>,
+      <NavLink to={'/x'} {...navLink}>Broken link</NavLink>,
+      ].map(elementList)}
+      <Switch>{/* render one of the destiations */}
+        <Route exact path={routeHome} component={Home} />
+        <Route path={userMatcher} component={Users} />
+        <Route component={NotFound} />
+      </Switch>
+    </></Route>
+  </Switch></Router></>
 
 const Home = ({match}) => // because exact match and no paranmeters, match is always empty
   <>{console.log('Home.render')}
