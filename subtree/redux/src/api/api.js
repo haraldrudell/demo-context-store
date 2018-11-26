@@ -2,10 +2,6 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-/*
-© 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
-All rights reserved.
-*/
 import axios from 'axios'
 
 const baseUrl = 'http://localhost:3000'

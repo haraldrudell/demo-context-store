@@ -7,7 +7,7 @@ import logger from 'koa-logger'
 import Router from 'koa-router'
 import bodyParser from 'koa-body'
 import data from './data'
-import shortid from 'shortid'
+import { createJob } from './transforms'
 
 export default class ApiServer {
   constructor() {
@@ -30,20 +30,7 @@ export default class ApiServer {
       .get('/software', ctx => ctx.body = ({options: data.software}))
       .get('/hardware', ctx => ctx.body = ({options: data.hardware}))
       .post('/jobs', ctx => { // { name: 'Noname', softwareId: 'cfd', applicationId: 'icing', hardwareId: 'e4', cores: 1 }
-        const {name, softwareId, applicationId, hardwareId, cores} = ctx.request.body
-        const software0 = data.software.filter(({id}) => id === softwareId)[0]
-        const application = software0 && software0.applications.filter(({id}) => id === applicationId)[0]
-        const hardware = data.hardware.filter(({id}) => id === hardwareId)[0]
-        if (!name || !software0 || !application || !hardware || cores > hardware.max) ctx.throw(400)
-        const {label, id: i} = software0
-        const software = {type: {label, id: i}, application}
-        const id = shortid.generate()
-        const duration = this.duration(cores)
-        const {images} = data.results[softwareId][applicationId]
-        const status = 'finished'
-        const results = {duration, images, status}
-        const job = {name, id, software, hardware, cores, results}
-        ctx.body = job
+        ctx.body = createJob(ctx.request.body)
       })
   }
 
