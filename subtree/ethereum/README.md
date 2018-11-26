@@ -1,4 +1,4 @@
-# github.com/INFURA/project-harald-rudell
+# github.com/haraldrudell/ethereum
 
 ## © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 
