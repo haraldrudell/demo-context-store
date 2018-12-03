@@ -4,20 +4,19 @@ All rights reserved.
 */
 import fs from 'fs-extra'
 
-import { getTime } from './util'
+import FakeDb from './FakeDb'
 
-export default class Db { // TODO 181202: Node.js v11.3: no class properties
+export default class Db extends FakeDb { // TODO 181202: Node.js v11.3: no class properties
   constructor(config) {
+    super()
     const {dir, db, dirsBase, dirs} = Object(config)
-    const status = `up since ${getTime()}`
-    Object.assign(this, {dir, db, dirsBase, dirs, status})
+    console.log({dir, db, dirsBase, dirs})
+    Object.assign(this, {dir, db, dirsBase, dirs})
+    this.setStatus('up since')
   }
 
   async init() {
-    await fs.ensureDir(this.dir)
-  }
-
-  getStatus() {
-    return this.status
+    const {dir} = this
+    await fs.ensureDir(dir)
   }
 }

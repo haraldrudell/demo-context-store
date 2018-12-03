@@ -2,25 +2,31 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import path from 'path'
-import os from 'os'
 import Db from './Db'
+import FakeDb from './FakeDb'
+import { loadYaml, tildeExpand, arrayOfString } from './yamler'
 
-const config = {
-  dir: path.join(os.homedir(), '.local', 'share', 'movy'),
-  db: 'movy.db',
-  dirsBase: path.join('/', 'x', 'tostorage'),
-  dirs: [
-    'mobile_media',
-    'mobile_media-0',
-  ],
-}
+const appName = 'movy'
 
-let db
+let db = new FakeDb()
 
 export async function initDb() {
+  return doInit().catch(e => {
+    db.setStatus(e)
+    throw e
+  })
+}
+
+const expandProps = Object.keys({dir: 1, db: 1, dirsBase: 1})
+
+async function doInit() {
+  const {config} = await loadYaml(appName)
+  for (let p of expandProps) tildeExpand(config, p)
+  arrayOfString(config.dirs, 'dirs')
+
   db = new Db(config)
-  return db.init()
+  await db.init()
+  db.setStatus('init complete')
 }
 
 export function getDb() {

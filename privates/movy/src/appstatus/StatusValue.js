@@ -4,7 +4,7 @@ All rights reserved.
 */
 import {api} from 'api'
 
-import { getTime } from 'server'
+import { getTime } from './timeUtil'
 
 export default class StatusValue {
   status = `${getTime()} Disconnected`
