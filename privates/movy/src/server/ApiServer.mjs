@@ -7,7 +7,7 @@ import logger from 'koa-logger'
 import Router from 'koa-router'
 import bodyParser from 'koa-body'
 
-import { getFiles, initDb, getDb } from './dbWrapper'
+import { getFiles, initDb, getDb } from './db'
 
 export default class ApiServer {
   constructor() {

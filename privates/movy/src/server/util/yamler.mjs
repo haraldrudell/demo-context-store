@@ -32,21 +32,8 @@ async function doLoad(filename) {
   return Object(await yaml.safeLoad(await fs.readFile(filename, 'utf-8')))
 }
 
-function getShortHostname() {
+export function getShortHostname() {
   const long = String(os.hostname())
   const i = long.indexOf('.')
   return i < 0 ? long : long.substring(0, i)
-}
-
-export function tildeExpand(o, p) {
-  const value = Object(o)[p]
-  if (!value || typeof value !== 'string') throw new Error(`yaml property '${p}': not non-empty string`)
-  if (value.startsWith('~/')) o[p] = path.join(os.homedir(), value.substring(2))
-}
-
-export function arrayOfString(a, prop) {
-  if (!Array.isArray(a)) throw new Error(`yaml property not array: '${prop}'`)
-  a.forEach((s, i) => {
-    if (!s || typeof s !== 'string') throw new Error(`yaml property '${prop} item ${i + 1}: not non-empty string`)
-  })
 }

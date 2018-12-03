@@ -4,7 +4,9 @@ All rights reserved.
 */
 import Db from './Db'
 import FakeDb from './FakeDb'
-import { loadYaml, tildeExpand, arrayOfString } from './yamler'
+import { loadYaml } from '../util'
+import { parseConfig } from './parseConfig'
+import DbLoader from '../dbloader'
 
 const appName = 'movy'
 
@@ -17,16 +19,17 @@ export async function initDb() {
   })
 }
 
-const expandProps = Object.keys({dir: 1, db: 1, dirsBase: 1})
-
 async function doInit() {
   const {config} = await loadYaml(appName)
-  for (let p of expandProps) tildeExpand(config, p)
-  arrayOfString(config.dirs, 'dirs')
+  const c = parseConfig(config)
 
-  db = new Db(config)
-  await db.init()
+  db = new Db(c)
+  const models = await db.init()
   db.setStatus('init complete')
+
+  const {ssh} = c
+  return new DbLoader({models, ssh}).load()
+    .catch(e => console.error(e) || db.setStatus(`DbLoader error: ${e}`))
 }
 
 export function getDb() {
