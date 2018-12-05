@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'Blade Runner';
+    font-style: normal;
+    font-weight: 400;
+    src: local('☺'),
+        url(Blade+Runner.ttf) format('truetype');
+}

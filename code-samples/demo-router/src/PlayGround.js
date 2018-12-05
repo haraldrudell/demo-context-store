@@ -5,6 +5,7 @@ All rights reserved.
 import React, { createElement } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import './fonts/fonts.css'
+import './fonts/bladeRunner.css'
 
 const Margin = styled.div`
 padding: 5em
