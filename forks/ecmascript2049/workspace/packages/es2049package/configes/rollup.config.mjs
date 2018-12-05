@@ -10,10 +10,10 @@ import chmod from '../src/rollupChmodPlugin.mjs'
 
 import babel from 'rollup-plugin-babel'
 import commonjs from 'rollup-plugin-commonjs'
-import eslint from 'rollup-plugin-eslint'
+import { eslint } from 'rollup-plugin-eslint'
 import json from 'rollup-plugin-json'
 import resolve from 'rollup-plugin-node-resolve'
-import shebangPlugin from 'rollup-plugin-shebang'
+import { shebang as shebangPlugin } from 'rollup-plugin-thatworks'
 
 import path from 'path'
 import util from 'util'
@@ -48,11 +48,9 @@ function getConfig(config0) {
       json(), // required for import of .json files
       babel(babelOptions = Object.assign({
         babelrc: false, // unlike babel-node, rollup fails if an es2015 module transformer is included
-        runtimeHelpers: true,
-        presets: [['env', {modules: false, targets: {node: '4.8.1'}}]],
+        //runtimeHelpers: true,
+        presets: [['@babel/preset-env', {targets: {node: '8.5'}, modules: false}]],
         plugins: [
-          'transform-object-rest-spread',
-          'transform-runtime',
           ].concat(print ? babelPrintFilename : []),
       }, includeExclude)),
       commonjs(),

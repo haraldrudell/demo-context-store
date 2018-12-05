@@ -16,20 +16,14 @@ import sha256Plugin from './rollupSha256Plugin'
 import babel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
-import eslint from 'rollup-plugin-eslint'
+import { eslint } from 'rollup-plugin-eslint'
 import json from 'rollup-plugin-json'
-import shebangPlugin from 'rollup-plugin-shebang'
+import { shebang as shebangPlugin } from 'rollup-plugin-thatworks'
+
+import stage0Preset from './stage0Preset'
 
 // project-external babel presets and plugins
 //import babelEslint from 'babel-eslint'
-import env from 'babel-preset-env'
-import stage0 from 'babel-preset-stage-0'
-import externalHelpers from 'babel-plugin-external-helpers'
-import transformRuntime from 'babel-plugin-transform-runtime'
-import transformClassProperties from 'babel-plugin-transform-class-properties'
-import transformExportExtensions from 'babel-plugin-transform-export-extensions'
-import dynamicImportNode from 'babel-plugin-dynamic-import-node'
-import transformObjectRestSpread from 'babel-plugin-transform-object-rest-spread'
 
 import resolvePackage from 'resolve'
 
@@ -56,7 +50,6 @@ if (debug || printRollupResolve || printRollupLoad) {
 export default new RollupConfigurator().assembleConfig(getConfig)
 
 function getConfig({input, output, external, targets, shebang, clean, eslint: useEslint, dependenciesFlag}) {
-  const latestNode = targets && targets.node === 'current'
   const isMini = targets === 'mini'
   const includeExclude = {
     /*
@@ -115,17 +108,15 @@ function getConfig({input, output, external, targets, shebang, clean, eslint: us
         babelrc: false, // do not process package.json or .babelrc files, rollup has the canonical Babel configuraiton
         ...(isMini ? {} : {
           // bundle in Babel external helpers https://github.com/rollup/rollup-plugin-babel#usage
-          runtimeHelpers: true,
+          //runtimeHelpers: true,
         }),
         presets: isMini ? []
-          : [[env, {modules: false, targets}], stage0],
+          : [['@babel/preset-env', {modules: false, targets}], stage0Preset],
         plugins: (isMini ? [
-            dynamicImportNode,
-            transformClassProperties,
-            transformExportExtensions,
-            transformObjectRestSpread,
+          '@babel/plugin-syntax-dynamic-import',
+          ['@babel/plugin-proposal-class-properties', { loose: false }],
           ]
-          : [externalHelpers].concat(!latestNode ? [transformRuntime] : [])
+          : []
           ).concat(debug ? [babelPrintFilenames({debug})] : []),
         ...includeExclude}), // only process files from the project
       /*

@@ -1,6 +1,6 @@
 {
   "name": "es2049package",
-  "version": "0.0.23",
+  "version": "1.0.0",
   "description": "ECMAScript 2049 package: zero-configuration libraries and command-line utilies by Harald Rudell",
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "ISC",
@@ -9,7 +9,7 @@
     "clean": "rimraf bin lib",
     "clean:config": "rimraf config",
     "reinstall": "npm-run-all reinstall:clean reinstall:install",
-    "reinstall:clean": "rimraf node_modules",
+    "reinstall:clean": "rimraf node_modules ../../node_modules",
     "reinstall:install": "yarn",
     "test": "jest"
   },
@@ -30,31 +30,30 @@
     "type": "git",
     "url": "https://github.com/haraldrudell/ECMAScript2049"
   },
+  "jest": {
+    "rootDir": "./../.."
+  },
   "devDependencies": {
-    "allspawn": "0.2.4",
-    "es2049scripts": "^0.0.19",
-    "jest": "^22.4.2",
-    "js-yaml": "^3.10.0",
-    "npm-run-all": "^4.1.2",
+    "allspawn": "^1.0.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "es2049scripts": "^1.0.0",
+    "jest": "^23.6.0",
+    "js-yaml": "^3.12.0",
+    "npm-run-all": "^4.1.5",
     "rimraf": "^2.6.2"
   },
   "dependencies": {
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.2",
-    "babel-plugin-dynamic-import-node": "^1.2.0",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-export-extensions": "^6.22.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "rollup": "^0.56.3",
-    "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-commonjs": "^8.2.6",
-    "rollup-plugin-eslint": "^4.0.0",
-    "rollup-plugin-json": "^2.3.0",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-shebang": "^0.1.4"
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.9.0",
+    "rollup": "^0.67.4",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-eslint": "^5.0.0",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-thatworks": "^0.0.2"
   }
 }

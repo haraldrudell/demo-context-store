@@ -2,76 +2,25 @@
   "name": "ecmascript2049",
   "version": "0.0.1",
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "private": true,
   "workspaces": [
     "packages/*"
   ],
-  "babel": {
-    "env": {
-      "development": {
-        "babelrc": false,
-        "sourceMaps": true,
-        "presets": [
-          [
-            "env",
-            {
-              "targets": {
-                "node": "6"
-              }
-            }
-          ],
-          "stage-0"
-        ],
-        "plugins": [
-          "external-helpers",
-          "transform-runtime"
-        ]
-      },
-      "test": {
-        "babelrc": false,
-        "sourceMaps": true,
-        "presets": [
-          [
-            "env",
-            {
-              "targets": {
-                "node": "current"
-              }
-            }
-          ],
-          "stage-0"
-        ],
-        "plugins": [
-          "external-helpers",
-          "transform-runtime"
-        ]
-      },
-      "rollup": {
-        "babelrc": false,
-        "sourceMaps": true,
-        "presets": [
-          [
-            "env",
-            {
-              "targets": {
-                "node": "4.8.1"
-              },
-              "modules": false
-            }
-          ],
-          "stage-0"
-        ],
-        "plugins": [
-          "external-helpers",
-          "transform-runtime"
-        ]
-      }
-    }
+  "resolutions": {
+    "jest": "^23.6.0",
+    "babel-jest": "^23.6.0",
+    "babel-core": "^7.0.0-bridge.0"
   },
-  "devDependencies": {
-    "jest": "^22.0.4"
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": true
+          }
+        }
+      ]
+    ]
   }
 }

@@ -7,48 +7,99 @@ import nodeIgnores from '../src/nodepackages.mjs';
 import babelPrintFilename from '../src/babelPrintFilenamePlugin.mjs';
 import { convertYaml } from './convertYaml';
 import chmod from '../src/rollupChmodPlugin.mjs';
-
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
-import eslint from 'rollup-plugin-eslint';
+import { eslint } from 'rollup-plugin-eslint';
 import json from 'rollup-plugin-json';
 import resolve from 'rollup-plugin-node-resolve';
-import shebangPlugin from 'rollup-plugin-shebang';
-
+import { shebang as shebangPlugin } from 'rollup-plugin-thatworks';
 import path from 'path';
 import util from 'util';
-
 const srcRollupConfig = 'src/rollup.config.mjs';
-
 const print = !!process.env.DEBUG;
-
 convertYaml(path.resolve('src', 'eslintrc.yaml'), path.resolve('src', 'eslintrc.json'));
-
-export default [{ input: srcRollupConfig, output: { file: pjson.main, format: 'cjs' }, options: { dependencies: true } }, { input: srcRollupConfig, output: { file: pjson.module, format: 'es' }, options: { dependencies: true } }, { input: 'src/cleanbin.mjs', output: { file: 'bin/clean', format: 'cjs' }, options: { shebang: true } }, { input: 'src/rollup.mjs', output: { file: 'bin/rollup', format: 'cjs' }, options: { shebang: true } }].map(getConfig);
+export default [{
+  input: srcRollupConfig,
+  output: {
+    file: pjson.main,
+    format: 'cjs'
+  },
+  options: {
+    dependencies: true
+  }
+}, {
+  input: srcRollupConfig,
+  output: {
+    file: pjson.module,
+    format: 'es'
+  },
+  options: {
+    dependencies: true
+  }
+}, {
+  input: 'src/cleanbin.mjs',
+  output: {
+    file: 'bin/clean',
+    format: 'cjs'
+  },
+  options: {
+    shebang: true
+  }
+}, {
+  input: 'src/rollup.mjs',
+  output: {
+    file: 'bin/rollup',
+    format: 'cjs'
+  },
+  options: {
+    shebang: true
+  }
+}].map(getConfig);
 
 function getConfig(config0) {
-  const { options: { shebang, dependencies }, input, output } = config0;
+  const {
+    options: {
+      shebang,
+      dependencies
+    },
+    input,
+    output
+  } = config0;
   const includeExclude = {
     include: ['**/*.js', '**/*.mjs'],
     exclude: 'node_modules/**'
   };
   let babelOptions;
-
   const config = {
-    input, output,
+    input,
+    output,
     external: nodeIgnores.slice().concat(Object.keys(Object(Object(pjson).dependencies))),
-    plugins: [eslint(includeExclude), resolve({ extensions: ['.mjs', '.js', '.json'] }), json(), // required for import of .json files
+    plugins: [eslint(includeExclude), resolve({
+      extensions: ['.mjs', '.js', '.json']
+    }), json(), // required for import of .json files
     babel(babelOptions = Object.assign({
-      babelrc: false, // unlike babel-node, rollup fails if an es2015 module transformer is included
-      runtimeHelpers: true,
-      presets: [['env', { modules: false, targets: { node: '4.8.1' } }]],
-      plugins: ['transform-object-rest-spread', 'transform-runtime'].concat(print ? babelPrintFilename : [])
+      babelrc: false,
+      // unlike babel-node, rollup fails if an es2015 module transformer is included
+      //runtimeHelpers: true,
+      presets: [['@babel/preset-env', {
+        targets: {
+          node: '8.5'
+        },
+        modules: false
+      }]],
+      plugins: [].concat(print ? babelPrintFilename : [])
     }, includeExclude)), commonjs()].concat(shebang ? [shebangPlugin(), chmod()] : [])
   };
 
   if (print) {
-    console.log(`Rollup options for ${config.input}: ${util.inspect(config, { colors: true, depth: null })}`);
-    console.log('Rollup-Babel options:', util.inspect(babelOptions, { colors: true, depth: null }));
+    console.log(`Rollup options for ${config.input}: ${util.inspect(config, {
+      colors: true,
+      depth: null
+    })}`);
+    console.log('Rollup-Babel options:', util.inspect(babelOptions, {
+      colors: true,
+      depth: null
+    }));
   }
 
   return config;
