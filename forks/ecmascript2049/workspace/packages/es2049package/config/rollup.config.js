@@ -75,7 +75,8 @@ function getConfig(config0) {
     output,
     external: nodeIgnores.slice().concat(Object.keys(Object(Object(pjson).dependencies))),
     plugins: [eslint(includeExclude), resolve({
-      extensions: ['.mjs', '.js', '.json']
+      extensions: ['.mjs', '.js', '.json'],
+      jail: process.cwd()
     }), json(), // required for import of .json files
     babel(babelOptions = Object.assign({
       babelrc: false,

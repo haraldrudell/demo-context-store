@@ -44,7 +44,7 @@ function getConfig(config0) {
     external: nodeIgnores.slice().concat(Object.keys(Object(Object(pjson).dependencies))),
     plugins:  [
       eslint(includeExclude),
-      resolve({extensions: ['.mjs', '.js', '.json']}),
+      resolve({extensions: ['.mjs', '.js', '.json'], jail: process.cwd()}),
       json(), // required for import of .json files
       babel(babelOptions = Object.assign({
         babelrc: false, // unlike babel-node, rollup fails if an es2015 module transformer is included
