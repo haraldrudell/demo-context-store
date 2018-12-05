@@ -4,7 +4,7 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 */
 import babelEnv from './babelenv'
 
-import babel from 'babel-core'
+import babel from '@babel/core'
 import fs from 'fs-extra'
 
 import path from 'path'

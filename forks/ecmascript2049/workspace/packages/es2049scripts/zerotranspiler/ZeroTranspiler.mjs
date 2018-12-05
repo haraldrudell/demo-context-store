@@ -14,8 +14,8 @@ export default class ZeroTranspiler {
   configES = 'configes'
   mjs = '.mjs'
   js = '.js'
-  BABEL_ENV_rollup = 'rollup'
-  BABEL_ENV_ES = 'development'
+  babelrc = path.resolve('config/babel85.js')
+  babeles = path.resolve('config/babeles.js')
 
   constructor(o) {
     const {debug} = o || false
@@ -23,25 +23,22 @@ export default class ZeroTranspiler {
   }
 
   async transpile() {
-    const {config, configRollup, configES, BABEL_ENV_rollup, BABEL_ENV_ES} = this
-
-    process.env.BABEL_ENV = BABEL_ENV_rollup
-    await this.transpileFilesMjsToJs(configRollup, config)
-
-    process.env.BABEL_ENV = BABEL_ENV_ES
-    return this.transpileFilesMjsToJs(configES, config)
+    const {config, configRollup, configES, babelrc, babeles} = this
+    await this.transpileFilesMjsToJs(configRollup, config, babeles)
+    return this.transpileFilesMjsToJs(configES, config, babelrc)
   }
 
-  async transpileFilesMjsToJs(fromDirectory, toDirectory) {
+  async transpileFilesMjsToJs(fromDirectory, toDirectory, babelrc) {
     return Promise.all((await fs.readdir(fromDirectory))
       .map(file => this.transpileFile(
         path.join(fromDirectory, file),
         path.join(toDirectory, this.mjsToJs(file)),
+        babelrc,
       )))
   }
 
-  async transpileFile(from, to) {
-    return this.spawn(...this.getBabelCmd(from, to))
+  async transpileFile(from, to, babelrc) {
+    return this.spawn(...this.getBabelCmd(from, to, babelrc))
   }
 
   mjsToJs(filename) {
@@ -51,8 +48,8 @@ export default class ZeroTranspiler {
       : filename
   }
 
-  getBabelCmd(from, to) {
-    return ['babel', ['--out-file', to, from]]
+  getBabelCmd(from, to, babelrc) {
+    return ['babel', ['--out-file', to, '--config-file', babelrc, from]]
   }
 
   async spawn(cmd, args) {

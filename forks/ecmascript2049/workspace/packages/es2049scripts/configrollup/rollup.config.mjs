@@ -4,13 +4,14 @@ All rights reserved.
 */
 import pjson from '../package.json'
 import nodeIgnores from './nodepackages'
+import babel85 from './babel85es'
 
 import babel from 'rollup-plugin-babel'
-import eslint from 'rollup-plugin-eslint'
+import { eslint } from 'rollup-plugin-eslint'
 import json from 'rollup-plugin-json'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
-import shebangPlugin from 'rollup-plugin-shebang'
+import { shebang } from 'rollup-plugin-thatworks'
 
 import path from 'path'
 import fs from 'fs'
@@ -31,19 +32,17 @@ const paths = {
 const includeExclude = {include: ['**/*.js', '**/*.mjs'], exclude: 'node_modules/**'}
 const depExternals = Object.keys(Object(Object(pjson).dependencies))
 
-process.env.BABEL_ENV = 'rollup'
-
 export default {
   input: paths.srcIndexMjs,
   output: {file: paths.binary, format: 'cjs'},
   external: nodeIgnores.concat(depExternals),
   plugins:  [
-    resolve({extensions: ['.js', '.mjs', '.json']}),
+    resolve({extensions: ['.js', '.mjs', '.json'], jail: process.cwd()}),
     eslint(includeExclude),
     json(),
-    babel({runtimeHelpers: true, ...includeExclude}),
+    babel({/*runtimeHelpers: true, */ ...babel85, ...includeExclude}),
     commonjs(),
-    shebangPlugin(),
+    shebang(),
     function chmodPlugin(mode) {
       return {
         name: 'chmodPlugin',
