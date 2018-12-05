@@ -83,7 +83,7 @@ export default class SpawnAsync extends SpawnPipe {
   }
 
   getError({status, signal}, stderr) {
-    this.setErrorProps(new Error(`status code: ${status}${signal ? ` signal: ${signal}` : ''} '${this.cmdString()}'`),
+    return this.setErrorProps(new Error(`status code: ${status}${signal ? ` signal: ${signal}` : ''} '${this.cmdString()}'`),
       stderr, Object.assign({status}, signal ? {signal} : null))
   }
 
