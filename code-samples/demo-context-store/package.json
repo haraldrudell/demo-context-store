@@ -1,6 +1,7 @@
 {
   "name": "demo-context-store",
   "version": "0.1.1",
+  "description": "Single-truth store in 94% less code lines by Harald Rudell",
   "private": true,
   "dependencies": {
     "immutable": "^4.0.0-rc.12",
@@ -12,7 +13,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "pub": "npm-run-all --serial pub:build test pub:yarn",
+    "pub:build": "react-rollup",
+    "pub:yarn": "preplib publish"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -22,5 +26,10 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "lib-create-react-app": "^0.1.1",
+    "npm-run-all": "^4.1.5",
+    "react-rollup": "^0.0.6"
+  }
 }
