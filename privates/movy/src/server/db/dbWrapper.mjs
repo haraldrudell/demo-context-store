@@ -26,10 +26,11 @@ async function doInit() {
   db = new Db(c)
   const models = await db.init()
   db.setStatus('init complete')
-
+  /*
   const {ssh} = c
   return new DbLoader({models, ssh}).load()
     .catch(e => console.error(e) || db.setStatus(`DbLoader error: ${e}`))
+    */
 }
 
 export function getDb() {
