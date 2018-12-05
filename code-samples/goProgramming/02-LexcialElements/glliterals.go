@@ -11,6 +11,14 @@ go run 02-LexcialElements/glliterals.go
 - integer, floating-point, imaginary rune or string literals
 - octal, decimal or hexadecimal integer literals
 - raw or interpreted string literals
+predeclared types defines value spaces:
+boolean
+integral
+float
+complex
+string: utf-8 encoded
+- types that can be converted to 
+- pointer values converted to number
 
 1.2 composite literal
 Constructs values for structs, arrays, slices and maps
