@@ -1,7 +1,8 @@
 {
-  "name": "demo-context-store",
+  "name": "allstore",
   "version": "0.1.4",
-  "description": "A library developed using lib-create-react-app",
+  "description": "A React Single-Truth store in 94% less code-lines by Harald Rudell",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "ISC",
   "main": "lib/cjs.js",
   "module": "lib/esm.js",
@@ -11,12 +12,17 @@
     "Component",
     "Library"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haraldrudell/demo-context-store"
+  },
   "peerDependencies": {
     "react": ">=15",
     "react-dom": ">=15"
   },
   "dependencies": {
-    "immutable": "^4.0.0-rc.12"
+    "immutable": "^4.0.0-rc.12",
+    "rxjs": "^6.3.3"
   },
   "files": [
     "lib"

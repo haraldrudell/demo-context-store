@@ -1,3 +1,11 @@
+/*
+© 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
+*/
+html,  body {
+  height: 100%
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -6,6 +14,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  font-size: 15pt;
+  font-weight: bold;
+  min-height: 100%;
+  background: radial-gradient(100% 100% at left 15% top 15%, #f2e5cd, #f9c7c7);
 }
 
 code {
