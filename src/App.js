@@ -16,6 +16,7 @@ export default () =>
     <Store store={store0}>
       <DisplayValue />
       <DisplayRecord id={2} />
+      <div>Written by Harald Rudell harald.rudell@gmail.com (http://www.haraldrudell.com)</div>
     </Store>
   </div>
 
