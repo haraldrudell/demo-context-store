@@ -1,6 +1,6 @@
 /*
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
-All rights reserved.
+This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
 import React, { Component, PureComponent } from 'react'
 import { storeContext} from './context'
@@ -15,8 +15,8 @@ function getConnector({mapStateToProps, ConnectedComponent, options}) {
   else if (typeof mapStateToProps !== 'function') throw new Error('connect: mapStateToProps not function')
   class Connect extends (pure ? PureComponent : Component) {
     getSelectors = state => Object(mapStateToProps(state, this.props))
-    componentDidMount = () => (this.unsubscribe = this.context.subscribe(this)) + (this.lastProps = this.getSelectors(this.context.getState()))
-    componentWillUnmount = () => this.unsubscribe()
+    componentDidMount = () => (this.subscription = this.context.subscribe(this)) + (this.lastProps = this.getSelectors(this.context.getState()))
+    componentWillUnmount = () => this.subscription.unsubscribe()
     next(state) {
       const {lastProps} = this
       const newProps = this.getSelectors(state)
