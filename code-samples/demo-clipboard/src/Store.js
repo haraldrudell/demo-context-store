@@ -16,3 +16,5 @@ export default ({children}) => <Store store={store}>{children}</Store>
 export function createPastesValue({text, format}) {
   return Map([['text', text], ['format', format]])
 }
+
+export const defaultPastesValue = () => Map()
