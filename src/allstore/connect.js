@@ -3,8 +3,8 @@
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
 import React, { Component, PureComponent } from 'react'
-import { storeContext} from './context'
-
+import { storeContext} from './Store'
+// TODO 181210 haru: simplify this API
 export const connect = (mapStateToProps, options) => ConnectedComponent => getConnector({mapStateToProps, ConnectedComponent, options})
 
 function getConnector({mapStateToProps, ConnectedComponent, options}) {
