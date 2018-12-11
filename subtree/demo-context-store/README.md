@@ -1,12 +1,21 @@
 # Demo-Context-Store
 
-Single-truth store in 94% less code lines
+## © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 
-[click for **Video presentation**, 10 min](https://youtu.be/KVaOVjiH2SQ)
+&emsp;
+
+Demonstration project for allstore:
+**Single-truth store in 94% less code-lines**
+
+[allstore npm package link](https://www.npmjs.com/package/allstore)
+
+[allstore source code link](https://github.com/haraldrudell/demo-context-store/tree/master/src/allstore)
+
+&emsp;
 
 Published using **[Lib Create React App](https://www.npmjs.com/package/lib-create-react-app)** that allows React components to be publicly published as npm packages
 
-## © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
+[click for **Video presentation**, 10 min](https://youtu.be/KVaOVjiH2SQ)
 
 &emsp;
 

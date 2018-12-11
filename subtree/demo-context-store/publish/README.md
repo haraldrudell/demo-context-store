@@ -4,9 +4,13 @@
 
 &emsp;
 
-Single-truth store in 94% less code lines
+**Single-truth store in 94% less code-lines**
 
 Demonstration Project: [Demo-Context-Store](https://github.com/haraldrudell/demo-context-store)
+
+[Source code link](https://github.com/haraldrudell/demo-context-store/tree/master/src/allstore)
+
+[npm package link](https://www.npmjs.com/package/allstore)
 
 &emsp;
 
@@ -28,6 +32,24 @@ export default () =>
   &lt;Store store={store0}>
     …
   &lt;/Store></blockQuote>
+
+### API Reference
+import { Store, plainStore, connect, storeContext, StoreProvider, StoreConsumer } from 'allstore'
+
+* **Store**: component that makes the store context available, see Usage
+* **plainStore** the store instance
+  * **.getState()** gets the store plain object to allow for modifications
+  * **.notify()** all components evaluate the new store state for redraw
+  * **.subscribe()** rxjs Subject subscription for store changes, typically only used by connect
+* **connect(mapStateToProps, options)(Component)**: provides store properties as props to Component
+  * **mapStateToProps(Object state, Object props) Object**: defines what props the wrapped component needs based on the store state and its other props
+  * **options: {displayName: string, pure: boolean: default true}**
+
+&emsp;
+
+* **storeContext** for a class that wants to access the store context, used by connect
+* **StoreProvider StoreConsumer** for custom rendering of the React 16.3 context
+
 
 &emsp;
 
