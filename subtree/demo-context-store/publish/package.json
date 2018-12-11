@@ -1,6 +1,6 @@
 {
   "name": "allstore",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "A React Single-Truth store in 94% less code-lines by Harald Rudell",
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "ISC",
