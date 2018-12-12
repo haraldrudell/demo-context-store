@@ -24,20 +24,21 @@ Published using **[Lib Create React App](https://www.npmjs.com/package/lib-creat
 
 * **yarn add allstore**
 <blockQuote>
-import { Store, plainStore, connect } from 'allstore'
+import { Store, PlainStore, connect } from 'allstore'
 
-const store0 = {value: 1, records: OrderedMap([[1, 'One'], [2, 'Two']])}
+const store = new PlainStore()
+Object.assign(store.getState(), {value: 1})
 
 export default () =>
-  &lt;Store store={store0}>
+  &lt;Store store={store}>
     …
   &lt;/Store></blockQuote>
 
 ### API Reference
-import { Store, plainStore, connect, storeContext, StoreProvider, StoreConsumer } from 'allstore'
+import { Store, getStore, connect, storeContext, StoreProvider, StoreConsumer } from 'allstore'
 
 * **Store**: component that makes the store context available, see Usage
-* **plainStore** the store instance
+* **getStore()** the store instance (after rendering Store)
   * **.getState()** gets the store plain object to allow for modifications
   * **.notify()** all components evaluate the new store state for redraw
   * **.subscribe()** rxjs Subject subscription for store changes, typically only used by connect

@@ -5,9 +5,16 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 import React, { memo, useMemo, createContext } from 'react'
 import PlainStore from './PlainStore'
 
-export const plainStore = new PlainStore()
 export const storeContext = createContext()
 export const {Provider: StoreProvider, Consumer: StoreConsumer} = storeContext
+let store
+export const getStore = () => store
 
-export default memo(({children, store}) => useMemo(() => plainStore.state = {...store}, [store]) &&
-  <StoreProvider value={plainStore}>{children}</StoreProvider>)
+function createStore(storeProp) {
+  if (storeProp === undefined) return new PlainStore()
+  if (!(storeProp instanceof PlainStore)) throw new Error('Store: store prop not instanceof PlainStore')
+  return storeProp
+}
+
+export default memo(({children, store: storeProp}) => useMemo(() => store = createStore(storeProp), [storeProp]) &&
+  <StoreProvider value={store}>{children}</StoreProvider>)
