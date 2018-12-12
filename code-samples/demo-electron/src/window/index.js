@@ -2,10 +2,9 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import {app, BrowserWindow, BrowserView, ipcMain } from 'electron'
+import {app, BrowserWindow, ipcMain } from 'electron'
 
 const layout = {
-  size: {width: 800, height: 600},
   url: 'http://localhost:3000',
   box: {x: 0, y: 100, width: 800, height: 500},
   viewUrl: 'https://hire.surge.sh',
@@ -26,16 +25,13 @@ class Window {
   load() {
     const {size, url, box, viewUrl} = this
 
-    // top part of widow is React
-    const w = this.window = new BrowserWindow(size)
-    w.loadURL(url)
-    w.once('closed', () => this.window = null)
+    const parent = this.window = new BrowserWindow()
+      .once('closed', () => this.window = null)
+    parent.loadURL(url) // ReactJS
 
     // view at bottom
-    const view = this.view = new BrowserView({webPreferences: {nodeIntegration: false}})
-    w.setBrowserView(view)
-    view.setBounds(box)
-    this.navigate(viewUrl)
+    const child = new BrowserWindow({ parent })
+    console.log('loadURL', child.loadURL('https://hire.surge.sh'))
   }
 
   navigate(url) {
