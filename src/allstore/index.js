@@ -4,4 +4,4 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 */
 export * from './connect' // connect
 export { default as PlainStore } from './PlainStore'
-export { plainStore, storeContext, StoreProvider, StoreConsumer, default as Store } from './Store'
+export { getStore, storeContext, StoreProvider, StoreConsumer, default as Store } from './Store'
