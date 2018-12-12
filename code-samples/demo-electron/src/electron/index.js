@@ -2,54 +2,48 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-// Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, BrowserView, ipcMain } = require('electron')
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
-
-function createWindow () {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
-
-  // and load the index.html of the app.
-  mainWindow.loadURL('http://localhost:3000');
-  //mainWindow.loadFile('index.html')
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
-
-  // Emitted when the window is closed.
-  mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null
-  })
+const layout = {
+  size: {width: 800, height: 600},
+  url: 'http://localhost:3000',
+  box: {x: 0, y: 100, width: 800, height: 500},
+  viewUrl: 'https://hire.surge.sh',
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+const createWindow = () => Window.ensureWindow(layout)
 app.on('ready', createWindow)
+app.on('window-all-closed', () => process.platform !== 'darwin' && app.quit())
+app.on('activate', createWindow)
 
-// Quit when all windows are closed.
-app.on('window-all-closed', function () {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
+class Window {
+  // TODO static static w
+
+  constructor(layout) {
+    const {size, url, box, viewUrl} = Object(layout)
+    Object.assign(this, {size, url, box, viewUrl})
+    ipcMain.on('url', (event, url) => this.navigate(url))
   }
-})
 
-app.on('activate', function () {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow()
+  load() {
+    const {size, url, box, viewUrl} = this
+
+    // top part of widow is React
+    const w = this.window = new BrowserWindow(size)
+    w.loadURL(url)
+    w.once('closed', () => this.window = null)
+
+    // view at bottom
+    const view = this.view = new BrowserView({webPreferences: {nodeIntegration: false}})
+    w.setBrowserView(view)
+    view.setBounds(box)
+    this.navigate(viewUrl)
   }
-})
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+  navigate(url) {
+    return this.view && this.view.webContents.loadURL(url)
+  }
+
+  // TODO static ensureWindow
+}
+Window.ensureWindow = layout => !Window.w && (Window.w = new Window(layout)).load()

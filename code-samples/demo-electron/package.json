@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "npm-run-all --parallel 'start:*'",
-    "start:react": "react-scripts start",
+    "start:react": "BROWSER=none react-scripts start",
     "start:e": "npm-run-all --serial 'ele:*'",
     "ele:w": "sleep 2",
     "ele:go": "electron src/electron",
