@@ -1,10 +1,13 @@
 {
   "name": "observable",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Forward udp inside tcp by Harald Rudell",
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
   "scripts": {
+    "start": "node --experimental-modules --no-warnings src/index",
+    "exports": "node --experimental-modules --no-warnings src/exports",
+    "dobabel": "es2049scripts -active babel .",
     "test": "jest"
   },
   "keywords": [
@@ -30,36 +33,15 @@
       "^.+\\.m?js$": "babel-jest"
     }
   },
-  "babel": {
-    "env": {
-      "test": {
-        "presets": [
-          [
-            "es2015",
-            {
-              "modules": false
-            }
-          ]
-        ],
-        "plugins": [
-          [
-            "transform-es2015-modules-commonjs",
-            {
-              "spec": true
-            }
-          ]
-        ]
-      }
-    }
-  },
   "dependencies": {
     "rxjs": "^6.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-jest": "^22.4.3",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "babel-preset-es2015": "^6.24.1",
-    "jest": "^22.4.3"
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "es2049scripts": "^1.0.0",
+    "jest": "^23.6.0"
   }
 }
