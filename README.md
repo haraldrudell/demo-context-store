@@ -7,6 +7,8 @@
 Demonstration project for allstore:
 **Single-truth store in 94% less code-lines**
 
+[Live demo](https://haraldrudell.github.io/demo-context-store/)
+
 [allstore npm package link](https://www.npmjs.com/package/allstore)
 
 [allstore source code link](https://github.com/haraldrudell/demo-context-store/tree/master/src/allstore)

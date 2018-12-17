@@ -6,11 +6,13 @@
 
 **Single-truth store in 94% less code-lines**
 
-Demonstration Project: [Demo-Context-Store](https://github.com/haraldrudell/demo-context-store)
+Demonstration Project: Demo-Context-Store<br />
+&emsp;[Live](https://haraldrudell.github.io/demo-context-store/)<br />
+&emsp;[source code](https://github.com/haraldrudell/demo-context-store)
 
-[Source code link](https://github.com/haraldrudell/demo-context-store/tree/master/src/allstore)
+[Allstore source code](https://github.com/haraldrudell/demo-context-store/tree/master/src/allstore)
 
-[npm package link](https://www.npmjs.com/package/allstore)
+[Allstore npm package link](https://www.npmjs.com/package/allstore)
 
 ### Features
 

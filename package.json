@@ -18,12 +18,14 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "deploy": "gh-pages --dist build --depth 3",
     "eject": "react-scripts eject",
     "pub": "npm-run-all --serial pub:build test pub:yarn",
     "pub:build": "react-rollup",
-    "pub:yarn": "preplib publish"
+    "pub:yarn": "preplib publish",
+    "test": "react-scripts test"
   },
+  "homepage": "https://haraldrudell.github.io/demo-context-store",
   "eslintConfig": {
     "extends": "react-app"
   },

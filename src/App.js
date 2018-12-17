@@ -26,16 +26,25 @@ setRecords([{id: 1, record: 'One'}, {id: 2, record: 'Two'}])
 export default function App() {
   const [id, setId] = useState(2)
   const idActionBind = useMemo(() => idAction.bind(undefined, setId, id), [id])
-  return <div style={{padding: '3em', display: 'flex', height: '15em', flexDirection: 'column', justifyContent: 'space-between', alignContent: 'start'}}>
-    <div>Click Increment to update value with 1 s delay via connect store-subscription<br />
-      <button onClick={valueAction}>Increment</button></div>
-    <div>Click Change Id to display another record via useAllstore React 16.7 hook-subscription and OrderedMap access<br />
-      <button onClick={idActionBind}>Change Id</button></div>
+  return <div style={{padding: '3em', display: 'flex', height: '30em', flexDirection: 'column', alignContent: 'start'}}>
+    <h1>Demonstration of Allstore single-truth store</h1>
+    <p>94% less code-lines<br />
+      &emsp;<a href="https://www.npmjs.com/package/allstore">Allstore at npm</a><br />
+      &emsp;<a href="https://github.com/haraldrudell/demo-context-store/tree/master/src/allstore">Allstore source code</a><br />
+    </p>
+    <p>Click Increment to update value with 1 s delay via connect store-subscription<br />
+      <button onClick={valueAction}>Increment</button></p>
+    Click Change Id to display another record via:
+    <ul style={{marginBlockStart: 0, marginBlockEnd: 0}}>
+      <li>useAllstore React 16.7 hook-subscription and</li>
+      <li>OrderedMap access</li>
+    </ul>
+    <div style={{marginBottom: '1em'}}><button onClick={idActionBind}>Change Id</button></div>
     <Store>
       <DisplayValue />
       <DisplayRecord id={id} />
     </Store>
-    <div>Written by Harald Rudell harald.rudell@gmail.com (http://www.haraldrudell.com)</div>
+    <p>Written by Harald Rudell harald.rudell@gmail.com (http://www.haraldrudell.com)</p>
   </div>
 }
 const idAction = (setId, id, e) => setId(3 - id)
