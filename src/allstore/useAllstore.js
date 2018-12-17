@@ -33,7 +33,7 @@ export function useAllstore(selectorFn = store => store, props, pure) {
     }
     setCount(lastCount.current + 1)
   }
-  useEffect(() => console.log('useAllstore.useEffect') || (() => console.log('useAllstore.unsubscribe') || subscription.unsubscribe()), [1])
+  useEffect(() => () => subscription.unsubscribe(), [1])
 
   return propsFromStore
 }

@@ -16,7 +16,7 @@
   },
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
+    "start": "SKIP_PREFLIGHT_CHECK=true react-scripts start",
     "build": "react-scripts build",
     "deploy": "gh-pages --dist build --depth 3",
     "eject": "react-scripts eject",
@@ -24,7 +24,7 @@
     "pub:build": "react-rollup",
     "pub:yarn": "preplib publish",
     "testhook": "REACT_APP_TESTHOOK=1 react-scripts start",
-    "test": "react-scripts test"
+    "test": "SKIP_PREFLIGHT_CHECK=true react-scripts test"
   },
   "homepage": "https://haraldrudell.github.io/demo-context-store",
   "eslintConfig": {
@@ -40,7 +40,7 @@
     "immutable": "^4.0.0-rc.12",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
-    "react-scripts-port0": "^2.1.1"
+    "react-scripts-port0": "^2.1.2"
   },
   "devDependencies": {
     "gh-pages": "^2.0.1",
