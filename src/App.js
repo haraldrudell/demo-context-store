@@ -23,11 +23,16 @@ const getRecord = r => (r && r.toJS()) || {}
 setValue(1)
 setRecords([{id: 1, record: 'One'}, {id: 2, record: 'Two'}])
 
-export default function App() {
+export default () =>
+  <Store>
+    <Content />
+  </Store>
+
+function Content() {
   const [id, setId] = useState(2)
   const idActionBind = useMemo(() => idAction.bind(undefined, setId, id), [id])
   return <div style={{padding: '3em', display: 'flex', height: '30em', flexDirection: 'column', alignContent: 'start'}}>
-    <h1>Demonstration of Allstore single-truth store</h1>
+    <h1>Demonstration of Allstore Single-Truth Store</h1>
     <p>94% less code-lines<br />
       &emsp;<a href="https://www.npmjs.com/package/allstore">Allstore at npm</a><br />
       &emsp;<a href="https://github.com/haraldrudell/demo-context-store/tree/master/src/allstore">Allstore source code</a><br />
@@ -40,10 +45,8 @@ export default function App() {
       <li>OrderedMap access</li>
     </ul>
     <div style={{marginBottom: '1em'}}><button onClick={idActionBind}>Change Id</button></div>
-    <Store>
-      <DisplayValue />
-      <DisplayRecord id={id} />
-    </Store>
+    <DisplayValue />
+    <DisplayRecord id={id} />
     <p>Written by Harald Rudell harald.rudell@gmail.com (http://www.haraldrudell.com)</p>
   </div>
 }
