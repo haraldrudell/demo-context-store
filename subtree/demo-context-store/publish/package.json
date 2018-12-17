@@ -1,6 +1,6 @@
 {
   "name": "allstore",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A React Single-Truth store in 94% less code-lines by Harald Rudell",
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "ISC",
@@ -17,12 +17,11 @@
     "url": "https://github.com/haraldrudell/demo-context-store"
   },
   "peerDependencies": {
-    "react": ">=16.7",
-    "react-dom": ">=16.7"
+    "react": ">=16.7.0-alpha.2",
+    "react-dom": ">=16.7.0-alpha.2"
   },
   "dependencies": {
-    "immutable": "^4.0.0-rc.12",
-    "rxjs": "^6.3.3"
+    "immutable": "^4.0.0-rc.12"
   },
   "files": [
     "lib"
