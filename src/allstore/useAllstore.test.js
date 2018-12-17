@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom'
 import {store, notify, _subscriptions} from './plainStore'
 import Store, {storeContext} from './Store'
 import {useAllstore} from './useAllstore'
-/*
+
 it('useAllstore props should work', () => {
   const actual = []
   const key1 = 'a'
