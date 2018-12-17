@@ -49,7 +49,7 @@ async function fetchValue() {
 const second = async () => new Promise(resolve => setTimeout(resolve, 1e3))
 
 const DisplayValue = connect(valueSelector)(({value}) =>
-  <div>value: {String(value)}&emsp;</div>)
+  <div>value: {String(value)}</div>)
 
 function DisplayRecord({id}) {
   const {record: map} = useAllstore(recordsSelector, {id})
