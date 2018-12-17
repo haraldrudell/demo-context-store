@@ -2,44 +2,57 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
-import React, { memo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { OrderedMap, Map } from 'immutable'
 
-import { Store, PlainStore, connect } from 'allstore'
+import { store, Store, connect, notify, useAllstore } from './allstore'
 
-class DemoStore extends PlainStore { // encapsulates immutable and store slice names
-  setValue = v => (this.state.value = +v) & 0 || this
-  incValue = () => (this.state.value++) & 0 || this
-  valueSelector = ({value}) => ({value})
+// the value slice
+let sliceName = 'value' // modifiable to avoid collisions setSlicename(s)
+const setValue = v => !isNaN(v = +v) && (store[sliceName] = v)
+const incValue = () => ++store[sliceName]
+const valueSelector = state => ({value: state[sliceName]})
 
-  setRecords = list => (this.state.records = OrderedMap(list.map(o => [o.id, Map(o)]))) && this
-  recordsSelector = ({records}, {id}) => ({record: records.get(id)})
-  getRecord = r => (r && r.toJS()) || {}
-}
+// the records slice
+let sliceName1 = 'records' // modifiable to avoid collisions setSlicename(s)
+const setRecords = list => store[sliceName1] = OrderedMap(list.map(o => [o.id, Map(o)]))
+const recordsSelector = (state, {id}) => ({record: state[sliceName1].get(id)})
+const getRecord = r => (r && r.toJS()) || {}
 
-const store = new DemoStore().setValue(1).setRecords([{id: 1, record: 'One'}, {id: 2, record: 'Two'}])
+// initialize the store
+setValue(1)
+setRecords([{id: 1, record: 'One'}, {id: 2, record: 'Two'}])
 
-export default () =>
-  <div style={{padding: '3em', display: 'flex', height: '10em', flexDirection: 'column', justifyContent: 'space-between'}}>
-    <div>Click update to increment with 1 s delay<br />
-    Record demonstrates access of OrderedMap</div>
-    <Store store={store}>
+export default function App() {
+  const [id, setId] = useState(2)
+  const idActionBind = useMemo(() => idAction.bind(undefined, setId, id), [id])
+  return <div style={{padding: '3em', display: 'flex', height: '15em', flexDirection: 'column', justifyContent: 'space-between', alignContent: 'start'}}>
+    <div>Click Increment to update value with 1 s delay via connect store-subscription<br />
+      <button onClick={valueAction}>Increment</button></div>
+    <div>Click Change Id to display another record via useAllstore React 16.7 hook-subscription and OrderedMap access<br />
+      <button onClick={idActionBind}>Change Id</button></div>
+    <Store>
       <DisplayValue />
-      <DisplayRecord id={2} />
+      <DisplayRecord id={id} />
     </Store>
     <div>Written by Harald Rudell harald.rudell@gmail.com (http://www.haraldrudell.com)</div>
   </div>
+}
+const idAction = (setId, id, e) => setId(3 - id)
+const valueAction = () => fetchValue().catch(console.error)
 
 // fetch function, like a thunk
-const second = async () => new Promise(resolve => setTimeout(resolve, 1e3))
 async function fetchValue() {
   await second() // faked fetch delay
-  store.incValue().notify()
+  incValue(); notify()
 }
+const second = async () => new Promise(resolve => setTimeout(resolve, 1e3))
 
-const valueAction = () => fetchValue().catch(console.error)
-const DisplayValue = connect(store.valueSelector)(({value}) =>
-  <div>value: {String(value)}&emsp;<button onClick={valueAction}>Update</button></div>)
+const DisplayValue = connect(valueSelector)(({value}) =>
+  <div>value: {String(value)}&emsp;</div>)
 
-const DisplayRecord = connect(store.recordsSelector)(memo(({id, record}) =>
-  <div>id: {id} record: {store.getRecord(record).record || ''}</div>))
+function DisplayRecord({id}) {
+  const {record: map} = useAllstore(recordsSelector, {id})
+  const {record} = getRecord(map)
+  return <div>id: {id} record: {record || ''}</div>
+}

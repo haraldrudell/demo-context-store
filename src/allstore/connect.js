@@ -4,7 +4,7 @@ This source code is licensed under the ISC-style license found in the LICENSE fi
 */
 import React, { Component, PureComponent } from 'react'
 import { storeContext } from './Store'
-// TODO 181210 haru: simplify this API
+
 export const connect = (mapStateToProps, options) => ConnectedComponent => connect2(mapStateToProps, ConnectedComponent, options)
 
 export function connect2(mapStateToProps = store => store, ConnectedComponent, options) {

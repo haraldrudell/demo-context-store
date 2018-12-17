@@ -1,6 +1,6 @@
 {
   "name": "demo-context-store",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Single-truth store in 94% less code lines by Harald Rudell",
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "ISC",
@@ -15,13 +15,6 @@
     "url": "https://github.com/haraldrudell/demo-context-store"
   },
   "private": true,
-  "dependencies": {
-    "immutable": "^4.0.0-rc.12",
-    "react": "^16.7.0-alpha.2",
-    "react-dom": "^16.7.0-alpha.2",
-    "react-scripts": "2.1.1",
-    "rxjs": "^6.3.3"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -40,10 +33,16 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "dependencies": {
+    "immutable": "^4.0.0-rc.12",
+    "react": "^16.7.0-alpha.2",
+    "react-dom": "^16.7.0-alpha.2",
+    "react-scripts": "2.1.1"
+  },
   "devDependencies": {
     "gh-pages": "^2.0.1",
-    "lib-create-react-app": "^0.1.1",
+    "lib-create-react-app": "^0.1.4",
     "npm-run-all": "^4.1.5",
-    "react-rollup": "^0.0.6"
+    "react-rollup": "^0.0.14"
   }
 }
