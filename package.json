@@ -23,6 +23,7 @@
     "pub": "npm-run-all --serial pub:build test pub:yarn",
     "pub:build": "react-rollup",
     "pub:yarn": "preplib publish",
+    "testhook": "REACT_APP_TESTHOOK=1 react-scripts start",
     "test": "react-scripts test"
   },
   "homepage": "https://haraldrudell.github.io/demo-context-store",
@@ -39,7 +40,7 @@
     "immutable": "^4.0.0-rc.12",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
-    "react-scripts": "2.1.1"
+    "react-scripts-port0": "^2.1.1"
   },
   "devDependencies": {
     "gh-pages": "^2.0.1",

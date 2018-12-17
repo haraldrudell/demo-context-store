@@ -6,5 +6,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
+import UseAllstoreTest from './UseAllstoreTest'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(!process.env.REACT_APP_TESTHOOK ? <App /> : <UseAllstoreTest />, document.getElementById('root'))

@@ -10,5 +10,11 @@ export const {Provider: StoreProvider, Consumer: StoreConsumer} = storeContext
 
 const contextValue = { store, getState, subscribe, notify }
 
-export default memo(({children, store: storeProp}) => useMemo(() => Object.assign(store, {...storeProp}), [storeProp]) &&
+function applyStoreProp(storeProp) {
+  if (!storeProp) return
+  Object.getOwnPropertyNames(store).forEach(p => delete store[p])
+  Object.assign(store, {...storeProp})
+}
+
+export default memo(({children, store: storeProp}) => useMemo(() => applyStoreProp(storeProp), [storeProp]) ||
   <StoreProvider value={contextValue}>{children}</StoreProvider>)
