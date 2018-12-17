@@ -23,7 +23,7 @@
     "pub": "npm-run-all --serial pub:build test pub:yarn",
     "pub:build": "react-rollup",
     "pub:yarn": "preplib publish",
-    "testhook": "REACT_APP_TESTHOOK=1 react-scripts start",
+    "testhook": "REACT_APP_TESTHOOK=1 SKIP_PREFLIGHT_CHECK=true react-scripts start",
     "test": "SKIP_PREFLIGHT_CHECK=true react-scripts test"
   },
   "homepage": "https://haraldrudell.github.io/demo-context-store",

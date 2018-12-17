@@ -15,9 +15,11 @@ export function useAllstore(selectorFn = store => store, props, pure) {
   if (!contextValue) throw new Error('useAllstore: store context missing, did Store component render?')
   const {subscribe, store} = contextValue
 
-  // generate memoized count and propsFromStore
-  const lastCount = useRef()
+  // generate memoized props, count and propsFromStore
+  const lastProps = useRef()
+  lastProps.current = props
   const [count, setCount] = useState(0) // force redraw mechanic
+  const lastCount = useRef()
   lastCount.current = count
   const lastSeenProps = useRef() // static lastProps mechanic
   const propsFromStore = useMemo(() => lastSeenProps.current = selectorFn(store, props), pure ? [count, ...Object.values(props)] : undefined)
@@ -26,10 +28,9 @@ export function useAllstore(selectorFn = store => store, props, pure) {
   const subscription = useMemo(() => subscribe(next), [1])
   function next(state) {
     if (pure) {
-      const lastProps = lastSeenProps.current
-      const newProps = selectorFn(state, props)
-      const list = Object.entries(newProps)
-      if (Object.keys(propsFromStore).length === list.length && list.every(([key, value]) => value === lastProps[key])) return // no change
+      const lastStoreProps = lastSeenProps.current
+      const list = Object.entries(selectorFn(state, lastProps.current))
+      if (Object.keys(lastStoreProps).length === list.length && list.every(([key, value]) => value === lastStoreProps[key])) return // no change
     }
     setCount(lastCount.current + 1)
   }
