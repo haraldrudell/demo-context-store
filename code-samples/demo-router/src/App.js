@@ -41,7 +41,7 @@ export default () =>
     </></Route>
   </Switch></Router></>
 
-const Home = ({match}) => // because exact match and no paranmeters, match is always empty
+const Home = ({match}) => // because exact match and no parameters, match is always empty
   <>{console.log('Home.render')}
     <h1>Home</h1>
     <div>prop match: {JSON.stringify(match)}</div>
