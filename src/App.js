@@ -61,7 +61,6 @@ const DisplayValue = connect(valueSelector)(memo(({value}) =>
   <div>value: {String(value)}</div>))
 
 const DisplayRecord = memo(({id}) => {
-  const {record: map} = useAllstore(recordsSelector, {id})
-  const {record} = getRecord(map)
+  const {record} = getRecord(useAllstore(recordsSelector, {id}).record)
   return <div>id: {id} record: {record || ''}</div>
 })
