@@ -2,14 +2,14 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import React, { useState, useCallback, useMemo } from 'react'
+import React, {useState, useCallback, useMemo, memo} from 'react'
 
 function idAction(id, e) {
   console.log('clickAction e:', Object(Object(e).constructor).name,
     'id', id)
 }
 
-export default () => {
+export default memo(() => {
   console.log('render')
   const [id, setId] = useState(1)
   return <>
@@ -24,12 +24,12 @@ export default () => {
       Child component:<br />
       <Id id={id} />
     </div>
-  </>}
+  </>})
 
 
 let f
 let g
-const Id = ({id}) => {
+const Id = memo(({id}) => {
   /*
   useCallback takes two arguments
   - a function value
@@ -65,4 +65,4 @@ const Id = ({id}) => {
     <button onClick={idAction1}>idAction</button>
     <button onClick={incV}>redraw</button>
   </>
-}
+})

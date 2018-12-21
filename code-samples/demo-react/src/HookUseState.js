@@ -2,14 +2,14 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import React, { useState } from 'react'
+import React, {useState, memo} from 'react'
 
 function clickAction(e) {
   console.log('this:', this)
   console.log('props:')
 }
 
-export default () => {
+export default memo(() => {
   console.log('render this:', this)
   const [play, setPlay] = useState(false)
   return <>
@@ -19,4 +19,4 @@ export default () => {
     <div><button onClick={clickAction}>clickAction</button></div>
     <div><button onClick={() => setPlay(!play)}>set play state to: {String(!play)}</button></div>
   </>
-}
+})

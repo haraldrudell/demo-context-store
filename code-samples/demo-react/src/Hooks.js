@@ -2,7 +2,7 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import React from 'react'
+import React, {memo} from 'react'
 import styled from 'styled-components'
 
 const Styling = styled.div`
@@ -14,7 +14,7 @@ pre {
   font-family: inherit;
 }
 `
-export default () =>
+export default memo(() =>
   <Styling>
     <div>Demonstration of hooks: <a href="https://reactjs.org/docs/hooks-reference.html">https://reactjs.org/docs/hooks-reference.html</a></div>
     <dl>
@@ -102,4 +102,4 @@ FancyInput = forwardRef(FancyInput)`}
       <dt>useLayoutEffect</dt>
       <dd>The signature is identical to useEffect, but it fires synchronously after all DOM mutations</dd>
     </dl>
-  </Styling>
+  </Styling>)

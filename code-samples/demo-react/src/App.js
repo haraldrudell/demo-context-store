@@ -2,7 +2,7 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import React, { Fragment } from 'react'
+import React, { Fragment, memo } from 'react'
 import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import Hooks from './Hooks'
@@ -16,6 +16,7 @@ let routes = [
 ]
 
 const componentNames = {
+  0: 'Home',
   1: 'Hooks',
   3: 'HookUseState',
   4: 'HookBind',
@@ -61,10 +62,10 @@ export default () =>
     </Switch>
   </></Router></Margin>
 
-const Home = () => 'Please click a link above'
+const Home = memo(() => 'Please click a link above')
 
-const RouteName = ({location}) => <h1>{Object(routeMap[location.pathname]).name || 'Unknown'}</h1>
+const RouteName = memo(({location}) => <h1>{Object(routeMap[location.pathname]).name || 'Unknown'}</h1>)
 
-const NotFound = ({match}) => <div>Status code 404</div>
+const NotFound = memo(({match}) => <div>Status code 404</div>)
 
 routes = getRoutes() // once all constants present

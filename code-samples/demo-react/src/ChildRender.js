@@ -2,17 +2,21 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 All rights reserved.
 */
-import React, { Component, Fragment, PureComponent, memo, createElement, cloneElement, Children } from 'react'
+import React, { Fragment, PureComponent, memo, createElement, cloneElement, Children } from 'react'
 
-export default class ChildRenderDemo extends Component {
+export default class ChildRenderDemo extends PureComponent {
   render() {
     return <div style={{margin: '1em'}}>
       <h2>How to Render children prop</h2>
-      <p>Conclusion:</p>
+      <p>Concluded rules:</p>
       <ol>
       <li>As children, use cloneElement or just {'{'}children}</li>
       <li>As values, use createElement</li>
       </ol>
+      Observations:
+      <ul>
+        <li>The children prop is only available if the componnent has children where it was being rendered</li>
+      </ul>
       <h3>typeof components</h3>
       <p>In the real world, components are of different types:</p>
       <ul>
@@ -20,8 +24,9 @@ export default class ChildRenderDemo extends Component {
       <li>typeof FunctionalComponent: {typeof FunctionalComponent}</li>{/* function https://reactjs.org/docs/components-and-props.html#function-and-class-components */}
       <li>typeof MemoComponent: {typeof MemoComponent}</li>{/* object https://reactjs.org/docs/react-api.html#reactmemo */}
       </ul>
-      <p>As elements of <strong>children</strong> type is always object.<br />
-      Rendering a class, functional and memo component:</p>
+      <p>As elements of <strong>children</strong> type is always object.</p>
+      <h3>Render experiments</h3>
+      <p>Rendering a class, functional and memo component:</p>
       <ChildRender prop='ChildRender childProp'>
         <ClassComponent prop='ClassComponent childProp' />
         <FunctionalComponent prop="FunctionalComponent childProp" />
@@ -36,11 +41,14 @@ export default class ChildRenderDemo extends Component {
         https://reactjs.org/docs/react-api.html#createelement
       */
       [
-        createElement(ClassComponent, {providedProp: 1}),
-        createElement(FunctionalComponent, {providedProp: 1}),
-        //cloneElement(MemoComponent, {providedProp: 1}), // Expected ref to be a function, a string, an object returned by React.createRef(), or null
-        createElement(MemoComponent, {providedProp: 1}),
+        createElement(ClassComponent, {key: 1, providedProp: 1}),
+        createElement(FunctionalComponent, {key: 2, providedProp: 1}),
+        //cloneElement(MemoComponent, {key: 3, providedProp: 1}), // Expected ref to be a function, a string, an object returned by React.createRef(), or null
+        createElement(MemoComponent, {key: 4, providedProp: 1}),
       ]}
+      <FunctionalWithChild>
+        <FunctionalNoChild />
+      </FunctionalWithChild>
     </div>
   }
 }
@@ -79,3 +87,13 @@ const ChildRender = memo(({prop, children}) =>
       <li>render using cloneElement(chilld…): {Children.map(children, (child, i) => cloneElement(child, {mergedProp: 1}))}</li>
     </ul>
   </Fragment>)
+
+const FunctionalWithChild = memo(o => {
+  return <div>
+    FunctionalWithChild args: {Object.keys(Object(o)).join('\x20')}<br />
+    <FunctionalNoChild />
+  </div>
+})
+
+const FunctionalNoChild = memo(o =>
+  <div>FunctionalNoChild args: {Object.keys(Object(o)).join('\x20')}</div>)
