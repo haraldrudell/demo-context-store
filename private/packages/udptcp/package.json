@@ -46,12 +46,14 @@
     "es2049lib": "0.0.1",
     "es2049options": "0.0.1",
     "grpc": "^1.10.1",
-    "protobufjs": "6",
-    "rxjs": "^6.0.0"
+    "protobufjs": "^6.8.8",
+    "rxjs": "^6.3.3"
   },
   "devDependencies": {
-    "babel-jest": "^22.4.3",
-    "es2049package": "^0.0.23",
-    "jest": "^22.4.2"
+    "@babel/core": "^7.2.2",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "23.6.0",
+    "es2049package": "^1.0.1",
+    "jest": "^23.6.0"
   }
 }

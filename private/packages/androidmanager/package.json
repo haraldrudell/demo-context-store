@@ -33,10 +33,10 @@
   "private": true,
   "dependencies": {
     "adbkit": "^2.11.0",
-    "fs-extra": "^5.0.0",
-    "uuid": "^3.1.0"
+    "fs-extra": "^7.0.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "es2049package": "^0.0.23"
+    "es2049package": "^1.0.1"
   }
 }

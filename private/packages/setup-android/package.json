@@ -19,6 +19,6 @@
     "shebang": true
   },
   "devDependencies": {
-    "es2049package": "^0.0.23"
+    "es2049package": "^1.0.1"
   }
 }

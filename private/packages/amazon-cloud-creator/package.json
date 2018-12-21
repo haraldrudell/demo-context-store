@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.202.0",
-    "fs-extra": "^5.0.0"
+    "aws-sdk": "^2.381.0",
+    "fs-extra": "^7.0.1"
   }
 }

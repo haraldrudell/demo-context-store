@@ -1,18 +1,22 @@
 {
-  "name": "sudodns",
+  "name": "starter",
   "version": "0.0.1",
-  "description": "nping on overridden interface` by Harald Rudell",
+  "description": "Start services with their dependencies by Harald Rudell",
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "UNLICENSED",
-  "main": "bin/sudodns",
+  "main": "bin/starter",
   "scripts": {
     "build": "rollup --config node:es2049package",
+    "watch": "rollup --watch --config node:es2049package",
+    "reinstall": "npm-run-all --serial reinstall:*",
+    "reinstall:clean": "clean node_modules",
+    "reinstall:install": "yarn",
     "clean": "clean bin",
+    "tw": "jest --watch",
     "test": "jest"
   },
   "keywords": [
-    "nping",
-    "sudo"
+    "email"
   ],
   "repository": {
     "type": "git",
@@ -20,16 +24,16 @@
   },
   "rollup": {
     "dependencies": false,
-    "targets": "current",
+    "targets": "mini",
     "shebang": true
   },
   "dependencies": {
     "allspawn": "^1.0.1",
     "es2049lib": "0.0.1",
     "es2049options": "0.0.1",
-    "fs-extra": "^7.0.1",
-    "linesai": "0.0.1",
-    "network-portable": "0.0.1"
+    "network-portable": "0.0.1",
+    "node-fetch": "^2.3.0",
+    "uid-generator": "^1.0.0"
   },
   "devDependencies": {
     "es2049package": "^1.0.1",
