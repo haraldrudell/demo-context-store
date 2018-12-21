@@ -16,25 +16,25 @@ export function useAllstore(selectorFn = store => store, props, pure) {
   const {subscribe, store} = contextValue
 
   // generate memoized props, count and propsFromStore
-  const lastProps = useRef()
-  lastProps.current = props
-  const [count, setCount] = useState(0) // force redraw mechanic
+  const lastCompProps = useRef()
   const lastCount = useRef()
+  const lastStoreProps = useRef() // static lastProps mechanic
+  lastCompProps.current = props
+  const [count, setCount] = useState(0) // force redraw mechanic
   lastCount.current = count
-  const lastSeenProps = useRef() // static lastProps mechanic
-  const propsFromStore = useMemo(() => lastSeenProps.current = selectorFn(store, props), pure ? [count, ...Object.values(props)] : undefined)
+  const storeProps = useMemo(() => lastStoreProps.current = selectorFn(store, props), pure ? [count, ...Object.values(props)] : undefined)
 
   // subscribe to store and redraw on updates
   const subscription = useMemo(() => subscribe(next), [1])
   function next(state) {
     if (pure) {
-      const lastStoreProps = lastSeenProps.current
-      const list = Object.entries(selectorFn(state, lastProps.current))
-      if (Object.keys(lastStoreProps).length === list.length && list.every(([key, value]) => value === lastStoreProps[key])) return // no change
+      const lastProps = lastStoreProps.current
+      const newEntries = Object.entries(selectorFn(state, lastCompProps.current))
+      if (Object.keys(lastProps).length === newEntries.length && newEntries.every(([key, value]) => value === lastProps[key])) return // no change
     }
     setCount(lastCount.current + 1)
   }
   useEffect(() => () => subscription.unsubscribe(), [1])
 
-  return propsFromStore
+  return storeProps
 }

@@ -14,7 +14,8 @@ export function connect2(mapStateToProps = store => store, ConnectedComponent, o
   if (typeof mapStateToProps !== 'function') throw new Error('connect: mapStateToProps not function')
   class Connect extends (pure ? PureComponent : Component) {
     getSelectors = state => Object(mapStateToProps(state, this.props))
-    componentDidMount = () => (this.subscription = this.context.subscribe(this)) + (this.lastProps = this.getSelectors(this.context.getState()))
+    getStoreProps = () => this.getSelectors(this.context.getState())
+    componentDidMount = () => (this.subscription = this.context.subscribe(this)) && (this.lastProps = this.getStoreProps())
     componentWillUnmount = () => this.subscription.unsubscribe()
     next(state) {
       if (pure) {
@@ -24,13 +25,9 @@ export function connect2(mapStateToProps = store => store, ConnectedComponent, o
         if (Object.keys(lastProps).length === list.length && list.every(([key, value]) => value === lastProps[key])) return // no change
         this.lastProps = newProps
       }
-      this.setState({a: this.a ? ++this.a : (this.a = 1)})
+      this.setState({a: Object(this.state).a + 1 || 1})
     }
-
-    render() {
-      const {props, context: store} = this
-      return <ConnectedComponent {...props} {...Object(mapStateToProps(store.getState(), props))} />
-    }
+    render = () => <ConnectedComponent {...this.props} {...this.getStoreProps()} />
   }
   Connect.contextType = storeContext
   displayName && (Connect.displayName = displayName)
