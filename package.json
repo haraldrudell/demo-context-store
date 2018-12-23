@@ -38,8 +38,8 @@
   ],
   "dependencies": {
     "immutable": "^4.0.0-rc.12",
-    "react": "^16.7.0-alpha.2",
-    "react-dom": "^16.7.0-alpha.2",
+    "react": "=next",
+    "react-dom": "=next",
     "react-scripts-port0": "^2.1.2"
   },
   "devDependencies": {

@@ -17,8 +17,8 @@
     "url": "https://github.com/haraldrudell/demo-context-store"
   },
   "peerDependencies": {
-    "react": ">=16.7.0-alpha.2",
-    "react-dom": ">=16.7.0-alpha.2"
+    "react": "=next",
+    "react-dom": "=next"
   },
   "dependencies": {
     "immutable": "^4.0.0-rc.12"
