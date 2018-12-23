@@ -7,6 +7,8 @@
   "main": "bin/starter",
   "scripts": {
     "build": "rollup --config node:es2049package",
+    "runbuild": "node bin/starter -d -yamlfile default.yaml",
+    "dojest": "es2049scripts -active jest .",
     "watch": "rollup --watch --config node:es2049package",
     "reinstall": "npm-run-all --serial reinstall:*",
     "reinstall:clean": "clean node_modules",
@@ -15,9 +17,7 @@
     "tw": "jest --watch",
     "test": "jest"
   },
-  "keywords": [
-    "email"
-  ],
+  "keywords": [],
   "repository": {
     "type": "git",
     "url": "gt:sw"
@@ -31,12 +31,11 @@
     "allspawn": "^1.0.1",
     "es2049lib": "0.0.1",
     "es2049options": "0.0.1",
-    "network-portable": "0.0.1",
-    "node-fetch": "^2.3.0",
-    "uid-generator": "^1.0.0"
+    "fs-extra": "^7.0.1"
   },
   "devDependencies": {
     "es2049package": "^1.0.1",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "test": "0.0.1"
   }
 }
