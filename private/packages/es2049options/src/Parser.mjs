@@ -45,12 +45,13 @@ export default class Parser extends ParserYaml {
     const i = {options, argv, index: 0}
     let yamlProfiles, s
 
-    if (readYaml) {
-      const {yamlDisableOption} = Parser
+    if (readYaml) { // readYaml was provided in static optionsData
+      const {yamlDisableOption, yamlFileOption, readYamlOption} = Parser
       if (!argv.includes(yamlDisableOption)) {
-        const optionsFile = await this.getYamlFilename()
+        const file = this.getOptionFromArgv(argv, yamlFileOption)
+        const optionsFile = file || await this.getYamlFilename()
         if (optionsFile) {
-          const optionsFileProp = typeof readYaml === 'string' ? readYaml : Parser.defaultYamlKey
+          const optionsFileProp = typeof readYaml === 'string' ? readYaml : (this.getOptionFromArgv(argv, readYamlOption) || Parser.defaultYamlKey)
           const data = Object(await this.getYaml(optionsFile))
           yamlProfiles = Object(data.profiles)
           const yamlOptions = Object(data[optionsFileProp])
@@ -102,5 +103,15 @@ export default class Parser extends ParserYaml {
     if (optionsFileDefault || optionsFileProfile) options.optionsFileProfiles = Object(yamlProfiles) // -profile strings provided
 
     return options
+  }
+
+  getOptionFromArgv(argv, option) {
+    for (let [i, s] of argv.entries()) {
+      if (!s.startsWith(option)) continue
+      if (s.charAt(option.length) === '=') return s.substring(option.length + 1)
+      const s1 = argv[i + 1]
+      if (s1.startsWith('-')) continue
+      return s1
+    }
   }
 }

@@ -13,9 +13,9 @@ import path from 'path'
 export default class ParserYaml extends ParserDefaults {
   constructor(o) {
     super(o)
-    const {optionsData} = o || false
-    const {readYaml} = optionsData || false
-    if (readYaml != null) this.readYaml = readYaml
+    const {optionsData} = Object(o)
+    const {readYaml} = Object(optionsData)
+    readYaml && (this.readYaml = readYaml)
   }
 
   getYamlBasenames() {
@@ -25,6 +25,8 @@ export default class ParserYaml extends ParserDefaults {
   }
 
   async getYamlFilename(noneIsOk = true) {
+    const {optionsYamlFile} = this
+    if (optionsYamlFile) return optionsYamlFile
     // get path list
     const paths = []
     for (let basename of this.getYamlBasenames())

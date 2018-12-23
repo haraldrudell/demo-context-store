@@ -12,11 +12,7 @@ get-around: import from the transpiled CommonJS library
 //import OptionsParser from './OptionsParser.mjs'
 import pjson from '../package.json'
 
-import fs from 'fs-extra'
-
 import path from 'path'
-import childProcess from 'child_process'
-const {ChildProcess, execSync} = childProcess
 
 const {main} = Object(pjson)
 if (!main || typeof main !== 'string') throw new Error(`package.json main not non-empty string`)

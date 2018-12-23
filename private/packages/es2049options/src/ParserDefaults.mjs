@@ -9,6 +9,8 @@ import OptionHelp from './OptionHelp'
 export default class ParserDefaults extends ParserUsage {
   static defaultYamlKey = 'options'
   static yamlDisableOption = '-no-yaml'
+  static yamlFileOption = '-yamlfile'
+  static readYamlOption = '-readyaml'
 
   static helpOption = {
     names: ['-help', '--help'],
@@ -27,6 +29,20 @@ export default class ParserDefaults extends ParserUsage {
     property: 'optionsFileProfile',
     valueName: 'key',
   }
+  static optionsYamlFile = {
+    names: [ParserDefaults.yamlFileOption],
+    type: 'nestring',
+    valueName: 'path',
+    help: 'specify path to yaml file',
+  }
+  static optionReadYaml = {
+    names: [ParserDefaults.readYamlOption],
+    type: 'string',
+    valueName: 'key',
+    hasValue: valueFlags.may,
+    property: 'readYaml',
+    help: 'do read yaml, optional top-level key to be read, default \'options\'',
+  }
   static noYamlOption = {
     names: [ParserDefaults.yamlDisableOption],
     type: 'true',
@@ -38,13 +54,13 @@ export default class ParserDefaults extends ParserUsage {
     const {optionsData} = o || false
     const {defaults, profiles, readYaml} = optionsData || false
     const doAddDefaults = defaults !== false
-    const {helpOption, debugOption, profileOption, noYamlOption} = ParserDefaults
+    const {helpOption, debugOption, profileOption, optionsYamlFile, noYamlOption, optionReadYaml} = ParserDefaults
 
     const optionList = []
     if (doAddDefaults) {
       optionList.push({...helpOption, fn: this.doUsage.bind(this)}, debugOption)
     }
-    if (profiles || (profiles === undefined && readYaml)) optionList.push({...profileOption, help: this.profileHelp.bind(this)}, noYamlOption)
+    if (profiles || (profiles === undefined && readYaml)) optionList.push({...profileOption, help: this.profileHelp.bind(this)}, noYamlOption, optionsYamlFile, optionReadYaml)
     for (let option of optionList) this.createOption(option)
   }
 

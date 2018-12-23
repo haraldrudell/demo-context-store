@@ -58,6 +58,7 @@ export default class OnRejected {
   }
 
   onRejected(e) {
+    if (!(e instanceof Error)) e = new Error(`es2049options OnRejected.onRejected: reject value not Error object: ${typeof e} '${e}'`)
     OnRejected.invokeExit(e, this)
   }
 
