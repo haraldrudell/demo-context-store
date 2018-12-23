@@ -6,6 +6,12 @@ const m = 'typeVerifiers'
 
 import util from 'util'
 
+/*
+instance is the class instance being instantiated
+instance.debug initialized to true if debug requested
+instace.m initialized to name from argument object or the provided default name
+return value: the argument ensured to be an object
+*/
 export function setMDebug(o, instance, name) {
   o = Object(o)
   const ti = typeof instance
@@ -117,6 +123,10 @@ function getSNameValue(firstArgument) {
   return {name, value, s}
 }
 
+/*
+if debug is true, and thisValue is instantiated by const (ie. the class is not being extended),
+then does log of inspection of dataValue or thisValue
+*/
 export function classLogger(thisValue, constr, dataValue) {
   const {debug, constructor, m: thisM} = thisValue
   dataValue === undefined && (dataValue = thisValue)
