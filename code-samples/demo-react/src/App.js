@@ -10,9 +10,11 @@ import ChildRender from './ChildRender'
 import HookUseState from './HookUseState'
 import HookBind from './HookBind'
 import ReRender from './ReRender'
+import Ssr from './Ssr'
+import FunctionalComponent from './FunctionalComponent'
 
 let routes = [
-  Hooks, ChildRender, HookUseState, HookBind, ReRender,
+  Hooks, ChildRender, HookUseState, HookBind, ReRender, Ssr, FunctionalComponent,
 ]
 
 const componentNames = {
@@ -21,6 +23,8 @@ const componentNames = {
   3: 'HookUseState',
   4: 'HookBind',
   5: 'ReRender',
+  6: 'Server-Side Rendering',
+  7: 'FunctionalComponent',
 }
 const routeMap = {}
 const homeRoute = '/'
