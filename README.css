@@ -1,0 +1,27 @@
+body, html {
+  min-height: 100%;
+  background: radial-gradient(100% 100% at left 15% top 15%, #f2e5cd, #f9c7c7);
+}
+
+body {
+  font: 15pt sans-serif;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd > dl {
+  margin-top: 0;
+  display: grid;
+}
+
+dd > dl > dt {
+  color: red;
+}
+
+dd > dl > dd {
+  color: red;
+  break-after: always;
+  /*::after: <br/>*/
+}
