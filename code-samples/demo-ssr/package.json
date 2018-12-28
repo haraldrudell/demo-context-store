@@ -1,0 +1,51 @@
+{
+  "name": "ssr-create-react-app",
+  "version": "0.1.0",
+  "private": true,
+  "main": "buildbin/server",
+  "dependencies": {
+    "allspawn": "^1.0.1",
+    "chokidar": "^2.0.4",
+    "fs-extra": "^7.0.1",
+    "koa": "^2.6.2",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "koa2-cors": "^2.0.6",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-scripts": "2.1.2",
+    "react-scripts-harussr": "../ssr2/packages/react-scripts",
+    "react-scripts-port0": "^2.1.2"
+  },
+  "scripts": {
+    "start": "npm-run-all --parallel 'start:*'",
+    "start:dev": "react-scripts start",
+    "start:buildssr": "npm-run-all --serial 'ssr:*'",
+    "ssr:build": "rollup --config node:es2049package",
+    "ssr:render": "es2049scripts src/render buildbin",
+    "ssr:copy": "cp -a pki/* buildbin",
+    "xssr:run": "node --inspect-brk buildbin/server",
+    "ssr:run": "node buildbin/server",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "rollup": {
+    "input": "src/server/server"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "es2049package": "^1.0.1",
+    "es2049scripts": "^1.0.0",
+    "npm-run-all": "^4.1.5"
+  }
+}
