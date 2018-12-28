@@ -1,0 +1,35 @@
+<!doctype html>
+<title>es2049lib Exports</title>
+<h1>es2049lib Exports</h1>
+<h2>Instructions</h2>
+<p>browse to:
+<a href=file:///opt/foxyboy/sw/pri/private/packages/es2049lib/README>file:///opt/foxyboy/sw/pri/private/packages/es2049lib/README</a></p>
+<!-- node -p "Object.keys(require('/opt/foxyboy/sw/pri/private/packages/es2049lib')).sort().map(s => '<dt>' + s + '</dt><dd></dt>').join('\n')" -->
+node -p "Object.keys(require('/opt/foxyboy/sw/pri/private/packages/es2049lib')).sort().map(s => '&lt;dt>' + s + '&lt;/dt>&lt;dd>&lt;/dt>').join('\n')"
+
+<h2>Exports</h2>
+<dl>
+<dt>classLogger</dt><dd></dt>
+<dt>doSudo</dt><dd></dt>
+<dt>getAbsolute</dt><dd></dt>
+<dt>getArrayOfNonEmptyString</dt><dd></dt>
+<dt>getArrayOfString</dt><dd></dt>
+<dt>getFn</dt><dd></dt>
+<dt>getISOLocal</dt><dd></dt>
+<dt>getNonEmptyString</dt><dd></dt>
+<dt>getNonEmptyStringOrArrayOfAsArray</dt><dd></dt>
+<dt>getNonEmptyStringOrUndefined</dt><dd></dt>
+<dt>getPortNumber</dt><dd></dt>
+<dt>getRegExp</dt><dd></dt>
+<dt>getStringOrFunctionOrUndefined</dt><dd></dt>
+<dt>getTimeval</dt><dd></dt>
+<dt>launchSudo</dt><dd></dt>
+<dt>loadYaml</dt><dd></dt>
+<dt>patchCommand</dt><dd></dt>
+<dt>Queue</dt><dd></dt>
+<dt>setMDebug</dt><dd></dt>
+<dt>throwWithMethod</dt><dd></dt>
+<dt>WriteBs</dt><dd></dt>
+<dt>writeBs</dt><dd></dt>
+<dt>writeYaml</dt><dd></dt>
+</dl>

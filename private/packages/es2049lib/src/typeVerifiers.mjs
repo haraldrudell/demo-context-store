@@ -64,6 +64,18 @@ export function getNonEmptyStringOrArrayOfAsArray(firstArgument, defaultValue) {
   }
 }
 
+export function getNonEmptyStringRegExpUndefinedAsArray(firstArgument, defaultValue) {
+  const {name, value: value0 = defaultValue, s} = getSNameValue(firstArgument)
+  if (value0 === undefined) return
+  const value = Array.isArray(value0) ? value0 : [value0]
+  for (let [index, aValue] of value.entries()) {
+    if (aValue instanceof RegExp) continue
+    const vt = typeof aValue
+    if (!aValue || vt !== 'string') return s.text = `index #${index}: not non-empty string or RegExp: type: ${vt}`
+  }
+  s.properties[name] = value
+}
+
 export function getArrayOfNonEmptyString(firstArgument, defaultValue) {
   const {name, value = defaultValue, s} = getSNameValue(firstArgument)
   if (!Array.isArray(value)) return s.text = `not array`

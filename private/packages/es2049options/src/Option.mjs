@@ -27,7 +27,10 @@ export class Option extends ValueFlagHOC(NumeralityHOC(OptionBase)) {
     delete s.properties.type
     if (typeof (this.names = s.text = this._getOptionNames(names, property, key)) === 'string') throw new Error(`${this.m} option type: ${type}: names property: ${s.text}`)
     if (getNonEmptyStringOrUndefined({property, s}, key)) throw new Error(`${this.m} property: ${s.text}`)
-    if (value !== undefined) this.value = value // any type
+    if (value !== undefined) {
+      this.value = value // any type
+      this.isDefaultValue = true
+    }
     if (getStringOrFunctionOrUndefined({valueName, s})) throw new Error(`${this.m} valueName property: ${s.text}`)
     if (valueName === undefined && !this.isHasValueNever) this.valueName = Option.valueName
     if (getStringOrFunctionOrUndefined({help, s})) throw new Error(`${this.m}: help property: ${s.text}`)

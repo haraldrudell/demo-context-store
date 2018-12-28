@@ -15,6 +15,10 @@ export default class OptionString extends Option {
     if (value === undefined) value = ''
     const {property} = this
     if (property) {
+      if (this.isDefaultValue) {
+        this.isDefaultValue = false
+        delete options[property]
+      }
       const optionsValue = options[property]
       if (optionsValue === undefined) options[property] = value
       else if (!Array.isArray(optionsValue)) options[property] = [optionsValue, value]

@@ -24,6 +24,10 @@ export default class OptionInteger extends Option {
     if (typeof max === 'number' && value > max) return `${m}: ${value} cannot be greater than ${max}`
 
     // store in property
+    if (this.isDefaultValue) {
+      this.isDefaultValue = false
+      delete options[property]
+    }
     const value0 = options[property]
     if (value0 == null) options[property] = number
     else if (!Array.isArray(value0)) options[property] = [value0, number]

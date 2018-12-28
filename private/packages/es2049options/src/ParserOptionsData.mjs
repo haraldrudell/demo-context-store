@@ -6,7 +6,7 @@ import ParserBase from './ParserBase'
 import {NumeralityHOC} from './NumeralityHOC'
 import {Option} from './Option'
 import OptionHOC from './OptionHOC'
-import * as builtInOptions from './OptionBuiltIn'
+import * as builtInOptions from './builtInOptions'
 
 import {getNonEmptyString, getFn} from 'es2049lib'
 
