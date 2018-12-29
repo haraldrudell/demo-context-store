@@ -1,19 +1,31 @@
 {
   "name": "animation",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.7.0-alpha.2",
-    "react-dom": "^16.7.0-alpha.2",
-    "react-scripts": "2.1.1",
-    "styled-components": "^4.1.1"
+  "description": "css3 aimations gradients and fonts by Harald Rudell",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "ISC",
+  "keywords": [
+    "Create React App",
+    "React",
+    "Animation",
+    "Font",
+    "Gradient"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haraldrudell/animation.git"
   },
+  "private": true,
   "scripts": {
     "start": "npm-run-all --serial localfonts start:s",
     "start:s": "react-scripts start",
     "build": "npm-run-all --serial onlinefonts build:b",
     "build:b": "react-scripts build",
-    "deploy": "gh-pages --dist build --depth 3",
+    "deploy": "npm-run-all --serial testall build 'deploy:*'",
+    "deploy:push": "git subtree push --prefix ",
+    "deployX": "gh-pages --dist build --depth 3",
+    "testall": "npm-run-all --serial localfonts testall:t",
+    "testall:t": "CI=1 react-scripts test --all",
     "test": "npm-run-all --serial localfonts test:t",
     "test:t": "react-scripts test",
     "localfonts": "node --experimental-modules --no-warnings scripts/linkfonts yes",
@@ -30,6 +42,12 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "dependencies": {
+    "react": "^16.7.0-alpha.2",
+    "react-dom": "^16.7.0-alpha.2",
+    "react-scripts": "2.1.1",
+    "styled-components": "^4.1.1"
+  },
   "devDependencies": {
     "fs-extra": "^7.0.1",
     "gh-pages": "^2.0.1",
