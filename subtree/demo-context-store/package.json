@@ -1,0 +1,51 @@
+{
+  "name": "demo-context-store",
+  "version": "0.1.4",
+  "description": "Single-truth store in 94% less code lines by Harald Rudell",
+  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "license": "ISC",
+  "keywords": [
+    "Create React App",
+    "React",
+    "Component",
+    "Library"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haraldrudell/demo-context-store"
+  },
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "deploy": "gh-pages --dist build --depth 3",
+    "eject": "react-scripts eject",
+    "pub": "npm-run-all --serial pub:build test pub:yarn",
+    "pub:build": "react-rollup",
+    "pub:yarn": "preplib publish",
+    "testhook": "REACT_APP_TESTHOOK=1 react-scripts start",
+    "test": "react-scripts test"
+  },
+  "homepage": "https://haraldrudell.github.io/demo-context-store",
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "dependencies": {
+    "immutable": "^4.0.0-rc.12",
+    "react": "next",
+    "react-dom": "next",
+    "react-scripts-port0": "^2.1.2"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.0.1",
+    "lib-create-react-app": "^0.1.4",
+    "npm-run-all": "^4.1.5",
+    "react-rollup": "^0.0.15"
+  }
+}
