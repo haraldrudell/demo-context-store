@@ -148,7 +148,9 @@ export default memo(() =>
           <a href="https://github.com/haraldrudell/lib-create-react-app">lib-create-react-app video (10 min)</a>
         </div>
         <LoudSpeaker />
-        </Row></dd>
+      </Row></dd>
+      <dt><a href="https://www.npmjs.com/package/nodegod">nodegod</a></dt>
+      <dd>An app that manages remote Node.js instances written in 2012</dd>
       <dt><a href="https://www.npmjs.com/package/react-rollup">react-rollup</a></dt>
       <dd>
         A Rollup preset for transpiling React applications server-side
@@ -167,13 +169,25 @@ export default memo(() =>
         </div>
         <Img src={cover} alt="faksimile" />
       </Row></dd>
+      <dt><a href="https://www.npmjs.com/package/tagfinder">tagfinder</a></dt>
+      <dd>An html5 parser using RegExp from 2012</dd>
     </dl>
 
     <h2>Other Open-Source Projects</h2>
     <dl>
       <dt><a href="https://github.com/haraldrudell/">github Profile</a></dt>
       <dd>haraldrudell 64+ repositories since 2011</dd>
+      <dt><a href="https://github.com/haraldrudell/ethereum">ethereum</a></dt>
+      <dd>
+        An api gateway for Ethereum written in Golang<br />
+        features phased deployment to Docker and Go 1.11 modules
+      </dd>
+      <dt><a href="https://github.com/haraldrudell/parsify">parsify</a></dt>
+      <dd>A declarative JSON parser written in Golang</dd>
+      <dt><a href="https://github.com/haraldrudell/CSipSimple-usb">CSipSimple-usb</a></dt>
+      <dd>An Android Java app providing SIP calling via usb cable</dd>
     </dl>
+
     <p>
       This page was created using unreleased <strong>react@next</strong>,&nbsp;
       <strong>styled-components</strong> and&nbsp;
