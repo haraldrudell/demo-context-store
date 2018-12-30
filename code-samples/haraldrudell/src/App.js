@@ -25,6 +25,9 @@ const pinkTones = keyframes`
 const Margin = styled.div`
 max-width: 8.5in;
 padding: 0 3em;
+> h2 {
+  margin-top: 2em;
+}
 > dl {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -75,21 +78,30 @@ export default memo(() =>
     <dl>
       <dt><a href="https://hire.surge.sh/">Hire Harald</a></dt>
       <dd>A site serving my resume</dd>
-      <dt><a href="https://haraldrudell.github.io/redux/">Redux</a></dt>
+      <dt>
+        <a href="https://haraldrudell.github.io/redux/">Redux</a><br />
+        November 2018
+      </dt>
       <dd>
         <Row>
           A React/Redux site with some complex forms
           <LogoElement src={logo} alt="React logo" />
         </Row>
       </dd>
-      <dt><a href="https://haraldrudell.github.io/demo-context-store/">Allstore</a></dt>
+      <dt>
+        <a href="https://haraldrudell.github.io/demo-context-store/">Allstore</a><br />
+        December 2018
+      </dt>
       <dd>
         A single-truth store in <strong>94% less</strong> code-lines<br />
         featuring both <strong>react@next hooks</strong> and traditional connect <strong>high-order component</strong><br />
         on npm as <a href="https://www.npmjs.com/package/allstore">allstore</a><br />
         on github as <a href="https://github.com/haraldrudell/demo-context-store">demo-context-store</a><br />
         deep link to <a href="https://github.com/haraldrudell/demo-context-store/tree/master/src/allstore">allstore source code</a></dd>
-      <dt><a href="https://haraldrudell.github.io/react-fame/">React Fame</a></dt>
+      <dt>
+        <a href="https://haraldrudell.github.io/react-fame/">React Fame</a><br />
+        December 2018
+      </dt>
       <dd><Row>
         <div>
           A React app published to npm as <a href="https://www.npmjs.com/package/react-fame">react-fame</a><br />
@@ -101,9 +113,15 @@ export default memo(() =>
           fame
         </ReactFame>
       </Row></dd>
-      <dt><a href="https://haraldrudell.github.io/animation/">Animation</a></dt>
+      <dt>
+        <a href="https://haraldrudell.github.io/animation/">Animation</a><br />
+        November 2018
+      </dt>
       <dd>A React application demonstrating css3: custom fonts, gradients and animations</dd>
-      <dt><a href="https://haraldrudell.github.io/ssr/">Record Sleeve</a></dt>
+      <dt>
+        <a href="https://haraldrudell.github.io/ssr/">Record Sleeve</a><br />
+        December 2018
+      </dt>
       <dd><Row>
         <div>
           Cover-page for a server-side rendering project for Create React App<br />
