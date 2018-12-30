@@ -1,8 +1,0 @@
-module.exports = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkiIGhlaWdodD0iODUiIHZpZXdCb3g9IjAgMCAxOSA4NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCAwaDNsMTYgNDEuNDRMMyA4NUgwbDE2LTQzLjU2IiBmaWxsPSIjZmZmIiAvPjwvc3ZnPgo="
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./app/components/ComponentCarousel/svg/arrow.svg
-// module id = ./app/components/ComponentCarousel/svg/arrow.svg
-// module chunks = commons

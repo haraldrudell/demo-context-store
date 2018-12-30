@@ -1,4 +1,0 @@
-User-Agent: *
-Disallow: /dom
-
-Sitemap: http://sugar.haraldrudell.com/sitemap.xml

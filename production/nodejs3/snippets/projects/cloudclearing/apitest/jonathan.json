@@ -1,7 +1,0 @@
-{
-	"consumerKey": "ywwxofmt8h8w",
-	"consumerSecret": "DqJsrmpDZ0p1D1MX",
-	"hostUrl": "http://localhost:3009",
-	"authenticateUri": "/authenticate",
-	"completedUri": "/"
-}

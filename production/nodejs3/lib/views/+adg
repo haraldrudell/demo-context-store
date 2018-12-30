@@ -1,7 +1,0 @@
-<!DOCTYPE html><html><head><title>Google+ Badge for Gmail-Type Account</title>
-<script src=https://apis.google.com/js/plusone.js></script>
-</head><body>
-before g:plus
-<g:plus href="https://plus.google.com/105697781484373359212" rel="author" width="300" height="69"></g:plus>
-after g:plus
-</body></html>

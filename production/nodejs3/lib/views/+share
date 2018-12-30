@@ -1,5 +1,0 @@
-<!DOCTYPE html><html><head><title>Google+ Share</title>
-<script src=https://apis.google.com/js/plusone.js></script>
-</head><body>
-<g:plus action="share"></g:plus>
-</body></html>

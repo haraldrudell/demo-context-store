@@ -1,6 +1,0 @@
-bootstrap
-react-joyride: some css
-amplitude 3.0.1
-bugmuncher.js
-cron-ui.js
-raven.js

@@ -1,5 +1,0 @@
-body-parser
-chokidar
-cookie-parser
-express
-morgan

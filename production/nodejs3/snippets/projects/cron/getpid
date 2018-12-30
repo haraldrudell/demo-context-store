@@ -1,4 +1,0 @@
-#echo "cmd:ps h $$ -o ppid"
-#echo "$(ps h $$ -o pid)"
-echo "$(ps h -o ppid $$)"
-#echo "$(ps h $$)"

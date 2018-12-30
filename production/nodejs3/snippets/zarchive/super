@@ -1,2 +1,0 @@
-#!/bin/bash
-supervisor --watch app.js,lib,$HOME/nodejs3.json,package.json,node3.json app.js
