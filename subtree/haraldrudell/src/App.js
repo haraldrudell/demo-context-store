@@ -46,6 +46,7 @@ padding: 0 3em;
 export default memo(() =>
   <Margin>
     <h1>Harald Rudell’s Online Portfolio</h1>
+
     <h2>Online Projects</h2>
     <dl>
       <dt><a href="https://hire.surge.sh/">Hire Harald</a></dt>
@@ -73,6 +74,7 @@ export default memo(() =>
         tweeted to <strong>Dan Abramov</strong> after he said “<a href="https://twitter.com/dan_abramov/status/953296173116276736">SSR is hard</a>”<br />
         video: <a href="https://youtu.be/sn9InqfNtSQ">Server-side rendering for create react app, 11 min</a></dd>
     </dl>
+
     <h2>Video</h2>
     <dl>
       <dt><a href="https://youtu.be/sn9InqfNtSQ">Server-side rendering for create react app, 11 min</a></dt><dd />
@@ -80,10 +82,16 @@ export default memo(() =>
       <dt><a href="https://youtu.be/WaKGjhEaP4U">Theming React 16.6, 3 min</a></dt><dd />
       <dt><a href="https://youtu.be/cVPG2eWHd3Q">React 16.5.2 Material UI, 3 min</a></dt><dd />
     </dl>
+
     <h2>Npm Packages for Node.js and React</h2>
     <dl>
       <dt><a href="https://www.npmjs.com/~haraldrudell">Package List</a></dt>
       <dd>npm package list: 34+ since 2011</dd>
+      <dt><a href="https://www.npmjs.com/package/ssr-create-react-app">ssr-create-react-app</a></dt>
+      <dd>
+        Adds server-side rendering to a Create React App<br />
+        Demonstration project: <a href="https://github.com/haraldrudell/ssr">demo-ssr</a>
+      </dd>
     </dl>
     <h2>Other Open-Source Projects</h2>
     <dl>
