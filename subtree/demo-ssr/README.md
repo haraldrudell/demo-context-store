@@ -1,6 +1,7 @@
 <html lang=en>
   <meta charset=utf-8>
   <h1>Server-Side Rendering Demonstration Project</h1>
+
 ## © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 
   &emsp;
