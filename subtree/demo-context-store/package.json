@@ -18,7 +18,17 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "gh-pages --dist build --depth 3",
+    "deploy": "npm-run-all --serial 'deploy:*'",
+    "deploy:test": "CI=1 react-scripts test --all",
+    "deploy:build": "yarn build",
+    "deploy:reset": "rimraf /tmp/demo-context-store",
+    "deploy:clone": "git clone --branch=gh-pages --single-branch --depth=1 https://github.com/haraldrudell/demo-context-store.git /tmp/demo-context-store",
+    "deploy:remove": "rm -r /tmp/demo-context-store/*",
+    "deploy:copy": "cp -a build/. /tmp/demo-context-store",
+    "deploy:add": "git --git-dir=/tmp/demo-context-store/.git --work-tree=/tmp/demo-context-store add /tmp/demo-context-store",
+    "deploy:commit": "git --git-dir=/tmp/demo-context-store/.git commit --message=Update",
+    "deploy:push": "git --git-dir=/tmp/demo-context-store/.git push origin gh-pages",
+    "deploy:cleanup": "rimraf /tmp/demo-context-store",
     "eject": "react-scripts eject",
     "pub": "npm-run-all --serial pub:build test pub:yarn",
     "pub:build": "react-rollup",
@@ -38,14 +48,13 @@
   ],
   "dependencies": {
     "immutable": "^4.0.0-rc.12",
-    "react": "next",
-    "react-dom": "next",
+    "react": "16.7.0-alpha.2",
+    "react-dom": "16.7.0-alpha.2",
     "react-scripts-port0": "^2.1.2"
   },
   "devDependencies": {
-    "gh-pages": "^2.0.1",
     "lib-create-react-app": "^0.1.4",
     "npm-run-all": "^4.1.5",
-    "react-rollup": "^0.0.15"
+    "react-rollup": "^0.0.16"
   }
 }
