@@ -1,6 +1,6 @@
 {
   "name": "ssr-create-react-app",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Server-Side Rendering for Create React App by Harald Rudell",
   "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
   "license": "ISC",
