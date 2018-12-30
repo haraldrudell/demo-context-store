@@ -7,13 +7,41 @@
   <p>Browse to <a href=file:///opt/foxyboy/sw/pri/README.html>file:///opt/foxyboy/sw/pri/README.html</a></p>
   <h2>What Goes in Which Directory?</h2>
   <dl>
-    <dt>code-samples</dt><dd />
+    <dt>code-samples</dt>
+    <dd>
+      Stand-alone private projects, typically React
+    </dd>
     <dt>forks</dt><dd />
+    <dd>
+        A public project that is not tracked in the gt:sw monorepo
+        <ul>
+          <li>A large project that I do not want to add to my own repository</li>
+          <li>A project that cannot be in a monorepo, like using gh-pages package</li>
+        </ul>
+      </dd>
     <dt>obsolete</dt><dd />
-    <dt>private</dt><dd />
-    <dt>privates</dt><dd />
-    <dt>production</dt><dd />
-    <dt>subtree</dt><dd />
+    <dd>
+      Code that is no longer used
+    </dd>
+    <dt>private</dt>
+    <dd>
+      Private code in a yarn workspace, typically server-side Node.js projects
+    </dd>
+    <dt>privates</dt>
+    <dd>
+      Private stand-alone code, like Go projects
+    </dd>
+    <dt>production</dt>
+    <dd>
+      Projects that are publicly hosted
+    </dd>
+    <dt>subtree</dt>
+    <dd>
+      A public project that is also tracked in the gt:sw monorepo
+      <ul>
+        <li>A project I created that was made public</li>
+      </ul>
+    </dd>
   </dl>
   <h2>Other Top-Level Entries</h2>
   <dl>
