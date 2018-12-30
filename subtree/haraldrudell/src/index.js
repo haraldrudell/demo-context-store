@@ -6,6 +6,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import {createGlobalStyle} from 'styled-components'
+import './bladeRunner.css'
 
 const GlobalStyle = createGlobalStyle`
 body, html {
