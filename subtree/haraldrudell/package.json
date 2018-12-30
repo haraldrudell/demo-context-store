@@ -28,6 +28,7 @@
     "deploy:add": "git --git-dir=/tmp/haraldrudell/.git --work-tree=/tmp/haraldrudell add /tmp/haraldrudell",
     "deploy:commit": "git --git-dir=/tmp/haraldrudell/.git commit --message=Update",
     "deploy:push": "git --git-dir=/tmp/haraldrudell/.git push origin gh-pages",
+    "deploy:cleanup": "rimraf /tmp/haraldrudell",
     "test": "react-scripts test"
   },
   "homepage": "https://haraldrudell.github.io/haraldrudell",
