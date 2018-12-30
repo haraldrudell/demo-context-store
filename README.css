@@ -1,10 +1,11 @@
-body, html {
+html {
   min-height: 100%;
   background: radial-gradient(100% 100% at left 15% top 15%, #f2e5cd, #f9c7c7);
 }
 
 body {
   font: 15pt sans-serif;
+  padding: 0 3em;
 }
 
 dt {
@@ -23,5 +24,4 @@ dd > dl > dt {
 dd > dl > dd {
   color: red;
   break-after: always;
-  /*::after: <br/>*/
 }
