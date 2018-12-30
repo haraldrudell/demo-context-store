@@ -19,6 +19,6 @@ export default memo(() =>
       <div>
         <a href="https://twitter.com/dan_abramov/status/953296173116276736"><img src={logo} alt="logo" /></a>
       </div>
-      <span><a href="https://listenonrepeat.com/?v=R8fLOJswWtk#The_Sex_Pistols_-_God_Save_The_Queen">We love our Queen: God saves</a></span>
+      <span><a href="http://www.tubereplay.com/replay.php?tqr=https%3A%2F%2Fyoutube.com%2F%3Fv%3DR8fLOJswWtk">We love our Queen: God saves</a></span>
     </div>
   </>)

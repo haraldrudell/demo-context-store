@@ -28,7 +28,7 @@ export default class Renderer {
     ]).catch(e => [e])
     if (html instanceof Error) console.error(`${this.m} rendering failed:`, html)
     else {
-      html.splice(1, 0, markup)
+      html.splice (1, 0, markup)
       this.array = html
       this._resolve()
     }
@@ -57,6 +57,7 @@ export default class Renderer {
   getStream = async () => {
     if (!this.array) await this.promise
     const {array} = this
+    console.log('Renderer.getStream', array)
     return new ArrayStream({array, string: true})
   }
 

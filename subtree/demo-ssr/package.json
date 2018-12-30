@@ -1,7 +1,6 @@
 {
-  "name": "demo-ssr",
-  "version": "0.0.1",
-  "author": "Harald Rudell <harald.rudell@gmail.com> (http://haraldrudell.com)",
+  "name": "ssr-create-react-app",
+  "version": "0.1.0",
   "private": true,
   "main": "buildbin/server",
   "dependencies": {
@@ -10,13 +9,11 @@
     "fs-extra": "^7.0.1",
     "koa": "^2.6.2",
     "koa-logger": "^3.2.0",
-    "koa-mount": "^4.0.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "koa2-cors": "^2.0.6",
-    "react": "^16.7.0-alpha.2",
-    "react-dom": "^16.7.0-alpha.2",
-    "react-scripts": "2.1.2",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "react-scripts-harussr": "^2.1.2",
     "react-scripts-port0": "^2.1.2"
   },
@@ -27,10 +24,21 @@
     "ssr:build": "rollup --config node:es2049package",
     "ssr:render": "es2049scripts src/render buildbin",
     "ssr:copy": "cp -a pki/* buildbin",
-    "xssr:run": "node --inspect-brk buildbin/server",
     "ssr:run": "node buildbin/server",
+    "ssrdebug": "node --inspect-brk buildbin/server",
+    "deploy": "npm-run-all --serial 'deploy:*'",
+    "deploy:test": "CI=1 react-scripts test --all",
+    "deploy:build": "yarn build",
+    "deploy:readme": "cp src/README.md build",
+    "deploy:reset": "rimraf /tmp/ssr",
+    "deploy:clone": "git clone --branch=gh-pages --single-branch --depth=1 https://github.com/haraldrudell/ssr.git /tmp/ssr",
+    "deploy:remove": "rm -r /tmp/ssr/*",
+    "deploy:copy": "cp -a build/. /tmp/ssr",
+    "deploy:add": "git --git-dir=/tmp/ssr/.git --work-tree=/tmp/ssr add /tmp/ssr",
+    "deploy:commit": "git --git-dir=/tmp/ssr/.git commit --message=Update",
+    "deploy:push": "git --git-dir=/tmp/ssr/.git push origin gh-pages",
+    "deploy:cleanup": "rimraf /tmp/ssr",
     "build": "react-scripts build",
-    "deploy": "gh-pages --dist build --depth 3",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -50,7 +58,6 @@
   "devDependencies": {
     "es2049package": "^1.0.1",
     "es2049scripts": "^1.0.0",
-    "gh-pages": "^2.0.1",
     "npm-run-all": "^4.1.5"
   }
 }

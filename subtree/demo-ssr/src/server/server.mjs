@@ -2,19 +2,13 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
-import pj from '../../package.json'
-
+// node --experimental-modules src/server/server
 import SSRServer from './SSRServer'
 import Renderer from './Renderer'
 import Builder from './Builder'
 
 import path from 'path'
 import fs from 'fs-extra'
-
-const {homepage} = pj
-const theUrl = homepage && typeof homepage === 'string' ? homepage : '/'
-const urlObject = new URL(theUrl)
-const staticUri = urlObject.pathname // '/uri'
 
 const options = {
   loadKeyCert: true,
@@ -27,7 +21,6 @@ const options = {
       key: path.join(__dirname, '127.0.0.1.key'),
       cert: path.join(__dirname, '127.0.0.1.crt'),
     },
-    staticUri,
     staticFs: path.resolve('build'),
   },
   builder: {
