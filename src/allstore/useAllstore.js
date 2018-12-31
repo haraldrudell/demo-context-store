@@ -17,16 +17,16 @@ export function useAllstore(selectorFn = store => store, props, pure) {
 
   // generate memoized props, count and propsFromStore
   const closure = useRef()
-  const [count, setCount] = useState(0) // force redraw mechanic
-  Object.assign(closure.current || (closure.current = {}), {lastCompProps: props, lastCount: count})
-  const storeProps = useMemo(() => closure.current.lastProps = selectorFn(store, props), pure ? [count, ...Object.values(props)] : undefined)
+  const [lastCount, setCount] = useState(0) // force redraw mechanic
+  Object.assign(closure.current || (closure.current = {}), {propsArg: props, lastCount})
+  const storeProps = useMemo(() => closure.current.lastProps = Object(selectorFn(store, props)), pure ? [lastCount, ...Object.values(props)] : undefined)
 
   // subscribe to store and redraw on updates
   const subscription = useMemo(() => subscribe(next), [1])
   function next(state) {
-    const {lastCompProps, lastCount, lastProps} = closure.current
+    const {propsArg, lastCount, lastProps} = closure.current
     if (pure) {
-      const newEntries = Object.entries(selectorFn(state, lastCompProps))
+      const newEntries = Object.entries(Object(selectorFn(state, propsArg)))
       if (Object.keys(lastProps).length === newEntries.length && newEntries.every(([key, value]) => value === lastProps[key])) return // no change
     }
     setCount(lastCount + 1)
