@@ -16,13 +16,13 @@ export function useAllstore(selectorFn = store => store, props, pure) {
   const {subscribe, store} = contextValue
 
   // generate memoized props, count and propsFromStore
-  const closure = useRef()
+  const closure = useRef({})
   const [lastCount, setCount] = useState(0) // force redraw mechanic
-  Object.assign(closure.current || (closure.current = {}), {propsArg: props, lastCount})
-  const storeProps = useMemo(() => closure.current.lastProps = Object(selectorFn(store, props)), pure ? [lastCount, ...Object.values(props)] : undefined)
+  Object.assign(closure.current, {propsArg: props, lastCount})
+  const storeProps = useMemo(() => closure.current.lastProps = Object(selectorFn(store, props)), pure ? [lastCount, ...Object.values(props)] : null)
 
   // subscribe to store and redraw on updates
-  const subscription = useMemo(() => subscribe(next), [1])
+  const subscription = useMemo(() => subscribe(next), [])
   function next(state) {
     const {propsArg, lastCount, lastProps} = closure.current
     if (pure) {
@@ -31,7 +31,7 @@ export function useAllstore(selectorFn = store => store, props, pure) {
     }
     setCount(lastCount + 1)
   }
-  useEffect(() => () => subscription.unsubscribe(), [1])
+  useEffect(() => () => subscription.unsubscribe(), [])
 
   return storeProps
 }

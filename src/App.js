@@ -2,7 +2,7 @@
 © 2018-present Harald Rudell <harald.rudell@gmail.com> (http://www.haraldrudell.com)
 This source code is licensed under the ISC-style license found in the LICENSE file in the root directory of this source tree.
 */
-import React, {useState, useMemo, memo} from 'react'
+import React, {useState, useCallback, useRef, memo} from 'react'
 import {OrderedMap, Map} from 'immutable'
 
 import {store, Store, connect, notify, useAllstore} from './allstore'
@@ -25,7 +25,9 @@ setRecords([{id: 1, record: 'One'}, {id: 2, record: 'Two'}])
 
 export default memo(() => {
   const [id, setId] = useState(2)
-  const idActionBind = useMemo(() => idAction.bind(undefined, setId, id), [id])
+  const idRef = useRef(id)
+  idRef.current = id
+  const idAction = useCallback(e => setId(3 - idRef.current), [])
   return <Store>
     <div style={{padding: '3em', display: 'flex', height: '30em', flexDirection: 'column', alignContent: 'start'}}>
       <h1>Demonstration of Allstore Single-Truth Store</h1>
@@ -40,14 +42,13 @@ export default memo(() => {
         <li>useAllstore React 16.7 hook-subscription and</li>
         <li>OrderedMap access</li>
       </ul>
-      <div style={{marginBottom: '1em'}}><button onClick={idActionBind}>Change Id</button></div>
+      <div style={{marginBottom: '1em'}}><button onClick={idAction}>Change Id</button></div>
       <DisplayValue />
       <DisplayRecord id={id} />
       <p>Written by Harald Rudell harald.rudell@gmail.com (http://www.haraldrudell.com)</p>
     </div>
   </Store>
 })
-const idAction = (setId, id, e) => setId(3 - id)
 const valueAction = e => fetchValue().catch(console.error)
 
 // fetch function, like a thunk
